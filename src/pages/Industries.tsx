@@ -13,15 +13,16 @@ import {
   Droplet // Water
 } from 'lucide-react';
 
+// Use Unsplash/Pexels images for each industry
 const industryImages = {
-  power: '/assets/power_plants.jpg',
-  steel: '/assets/steel_plants.jpg',
-  chemical: '/assets/chemical_plants.jpg',
-  cooling: '/assets/cooling_towers.jpg',
-  automobile: '/assets/automobile_industries.jpg',
-  renewable: '/assets/renewable_energy.jpg',
-  material: '/assets/bulk_material_handling.jpg',
-  water: '/assets/water_treatment_plants.jpg',
+  power: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80', // Power plant
+  steel: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80', // Steel plant
+  chemical: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80', // Chemical plant
+  cooling: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80', // Cooling tower
+  automobile: 'https://images.unsplash.com/photo-1518459031867-a89b944bffe4?auto=format&fit=crop&w=800&q=80', // Automobile industry
+  renewable: 'https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=800&q=80', // Renewable energy
+  material: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=800&q=80', // Bulk material handling
+  water: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80', // Water treatment
 };
 
 const Industries = () => {
