@@ -43,7 +43,7 @@ const Projects = () => {
         'Improved material flow and reduced downtime',
       ],
       impact: 'Boosted operational efficiency and reliability for ACC Ametha.',
-      image: '/assets/steel_plants.jpg',
+      image: 'https://img.freepik.com/free-photo/steelworks-heavy-industry_1127-3212.jpg?w=1800',
     },
     {
       id: '2',
@@ -56,7 +56,7 @@ const Projects = () => {
         'On-time commissioning',
       ],
       impact: 'Enabled uninterrupted fuel supply and improved plant performance.',
-      image: '/assets/power_plants.jpg',
+      image: 'https://img.freepik.com/free-photo/energy-power-station-night_1127-3211.jpg?w=1800',
     },
     {
       id: '3',
@@ -69,7 +69,7 @@ const Projects = () => {
         'Reduced operational downtime',
       ],
       impact: 'Increased material handling throughput and system reliability.',
-      image: '/assets/consultant-engineering.jpg',
+      image: 'https://images.unsplash.com/photo-1666219462105-2909c2d72d01?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     },
     {
       id: '4',
@@ -82,7 +82,7 @@ const Projects = () => {
         'Minimized power outages',
       ],
       impact: 'Ensured reliable power for critical medical operations.',
-      image: '/assets/renovation-revamping.jpg',
+      image: 'https://img.freepik.com/free-photo/renovation-electrical-substation_169016-53047.jpg?w=1800',
     },
     {
       id: '5',
@@ -95,7 +95,7 @@ const Projects = () => {
         'Enhanced monitoring and control',
       ],
       impact: 'Improved plant automation and operational efficiency.',
-      image: '/assets/automation.jpg',
+      image: 'https://img.freepik.com/free-photo/automation-robotic-arm-industry_53876-14684.jpg?w=1800',
     },
     {
       id: '6',
@@ -108,7 +108,7 @@ const Projects = () => {
         'Reduced maintenance costs',
       ],
       impact: 'Enhanced cleaning efficiency and plant safety.',
-      image: '/assets/steel_plants.jpg',
+      image: 'https://img.freepik.com/free-photo/steelworks-heavy-industry_1127-3212.jpg?w=1800',
     },
     {
       id: '7',
@@ -121,7 +121,7 @@ const Projects = () => {
         'Efficient water recycling',
       ],
       impact: 'Promoted sustainability and regulatory compliance.',
-      image: '/assets/water_treatment_plants.jpg',
+      image: 'https://img.freepik.com/free-photo/modern-water-treatment-plant_1127-3213.jpg?w=1800',
     },
     {
       id: '8',
@@ -134,7 +134,7 @@ const Projects = () => {
         'Reduced manual intervention',
       ],
       impact: 'Increased plant safety and productivity.',
-      image: '/assets/chemical_plants.jpg',
+      image: 'https://img.freepik.com/free-photo/chemical-plant-night_1127-3214.jpg?w=1800',
     },
     {
       id: '9',
@@ -147,7 +147,7 @@ const Projects = () => {
         'Strict environmental compliance',
       ],
       impact: 'Helped Cochin Refinery meet environmental standards.',
-      image: '/assets/water_treatment_plants.jpg',
+      image: 'https://img.freepik.com/free-photo/modern-water-treatment-plant_1127-3213.jpg?w=1800',
     },
     {
       id: '10',
@@ -160,7 +160,7 @@ const Projects = () => {
         'Reduced downtime',
       ],
       impact: 'Enabled safer and more efficient chemical processing.',
-      image: '/assets/chemical_plants.jpg',
+      image: 'https://img.freepik.com/free-photo/chemical-plant-night_1127-3214.jpg?w=1800',
     },
   ];
 

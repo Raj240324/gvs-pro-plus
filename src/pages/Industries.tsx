@@ -15,14 +15,14 @@ import {
 
 // Use Unsplash/Pexels images for each industry
 const industryImages = {
-  power: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80', // Power plant
-  steel: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80', // Steel plant
-  chemical: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80', // Chemical plant
-  cooling: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80', // Cooling tower
-  automobile: 'https://images.unsplash.com/photo-1518459031867-a89b944bffe4?auto=format&fit=crop&w=800&q=80', // Automobile industry
-  renewable: 'https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=800&q=80', // Renewable energy
-  material: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=800&q=80', // Bulk material handling
-  water: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80', // Water treatment
+  power: 'https://img.freepik.com/free-photo/view-nuclear-power-plant-with-towers-letting-out-steam-from-process_23-2150957646.jpg?t=st=1745587331~exp=1745590931~hmac=3998ea38e82d33cc5f7ae709776fd1b62e180cd61746f10952f25520559894ac&w=2000', // Power plant
+  steel: 'https://img.freepik.com/free-photo/heavy-machinery-steel-plant-produces-electricity-generated-by-ai_188544-26156.jpg?t=st=1745587416~exp=1745591016~hmac=21bcbdda71397c081eba8d5d5ffb7be07cd55b6d3f9e82cbae95420701633f72&w=2000', // Steel plant
+  chemical: 'https://img.freepik.com/free-psd/modern-interior-science-laboratory-generative-ai_587448-1846.jpg?t=st=1745587484~exp=1745591084~hmac=661ba4938ef5eb9b0042437c281fb12f068b50c93f01eb5ff26c25b2dab3d214&w=1800', // Chemical plant
+  cooling: 'https://img.freepik.com/free-photo/electricity-generated-through-solar-panels-blue-sky-generated-by-ai_188544-26194.jpg?t=st=1745587579~exp=1745591179~hmac=41e7d7727b347250bf3e76ad327d3516fa070c38c6bee9d6556965e4ba9bd20c&w=2000', // Cooling tower
+  automobile: 'https://img.freepik.com/free-photo/engineer-working-with-robot-modern-industrial-facility_23-2151962519.jpg?t=st=1745587708~exp=1745591308~hmac=16c1e51b29f5f882344c2a5d90b7d24c5ed5c317146023d12daf851e2f9d25ee&w=1800', // Automobile industry
+  renewable: 'https://img.freepik.com/free-photo/representation-ecology-sustainability_23-2151896739.jpg?t=st=1745587849~exp=1745591449~hmac=0c26a38b871f08db5b855e2c22af590c507f775e4de8b4524854e1aa474bef7c&w=1800', // Renewable energy
+  material: 'https://img.freepik.com/free-photo/warehouse-worker-operating-forklift-storage-facility_23-2151962537.jpg?t=st=1745587904~exp=1745591504~hmac=9e0feee8436ff25bb333f50aa436cac91098f3c44d26f8e54b782865c5c4d3a1&w=1800', // Bulk material handling
+  water: 'https://images.pexels.com/photos/12634302/pexels-photo-12634302.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2', // Water treatment
 };
 
 const Industries = () => {

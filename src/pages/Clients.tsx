@@ -57,21 +57,33 @@ const Clients: React.FC = () => {
   }, []);
 
   const clients: Client[] = [
-    { name: 'Aumund Engineering', location: 'Chennai', logo: '/assets/images/client_logo_1.svg', description: 'Material handling systems for cement production.' },
-    { name: 'Loesche Energy', location: 'Delhi & Chennai', logo: '/assets/images/client_logo_2.svg', description: 'Automation for energy production.' },
-    { name: 'Metco Roof', location: 'Chennai', logo: '/assets/images/client_logo_3.svg', description: 'Control systems for roofing manufacturing.' },
-    { name: 'Meenakshi Medical College', location: 'Kanchipuram', logo: '/assets/images/client_logo_4.svg', description: '11 KV substation revamping.' },
-    { name: 'Ultratech Cement', location: 'Gujarat', logo: '/assets/images/client_logo_5.svg', description: 'Feeders for cement operations.' },
-    { name: 'NTPC Limited', location: 'Darapalli', logo: '/assets/images/client_logo_6.svg', description: 'Electrical systems for power generation.' },
-    { name: 'JSW Cement', location: 'Dolvi', logo: '/assets/images/client_logo_7.svg', description: 'Stacker and reclaimer consultancy.' },
-    { name: 'Meenakshi Energy', location: 'Nellore', logo: '/assets/images/client_logo_8.svg', description: 'Custom paddle feeder solutions.' },
+    { name: 'Aumund Engineering', location: 'Chennai', logo: 'https://www.aumund.com/wp-content/uploads/2020/10/aumund-logo.svg', description: 'Material handling systems for cement production.' },
+    { name: 'Loesche Energy', location: 'Delhi & Chennai', logo: 'https://www.loesche.com/fileadmin/templates/img/logo-loesche.svg', description: 'Automation for energy production.' },
+    { name: 'Metco Roof', location: 'Chennai', logo: 'https://www.metco.co.in/images/logo.png', description: 'Control systems for roofing manufacturing.' },
+    { name: 'Meenakshi Medical College', location: 'Kanchipuram', logo: 'https://mmchri.ac.in/wp-content/uploads/2021/09/logo.png', description: '11 KV substation revamping.' },
+    { name: 'Ultratech Cement', location: 'Gujarat', logo: 'https://www.ultratechcement.com/content/dam/ultratechcementwebsite/logo.png', description: 'Feeders for cement operations.' },
+    { name: 'NTPC Limited', location: 'Darapalli', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6b/NTPC_Logo.svg', description: 'Electrical systems for power generation.' },
+    { name: 'JSW Cement', location: 'Dolvi', logo: 'https://www.jsw.in/sites/default/files/assets/logo/jsw_cement_logo.png', description: 'Stacker and reclaimer consultancy.' },
+    { name: 'Meenakshi Energy', location: 'Nellore', logo: 'https://meenakshienergy.com/images/logo.png', description: 'Custom paddle feeder solutions.' },
   ];
 
   const consultants: Consultant[] = [
-    { name: 'Engineers India Ltd (EIL)', logo: '/assets/images/consultant_1.svg' },
-    { name: 'MECON', logo: '/assets/images/consultant_2.svg' },
-    { name: 'Fichtner', logo: '/assets/images/consultant_3.svg' },
-    { name: 'Tata Consulting Engineers', logo: '/assets/images/consultant_4.svg' },
+    {
+      name: 'Engineers India Ltd (EIL)',
+      logo: 'https://ui-avatars.com/api/?name=EIL&background=6d28d9&color=fff&bold=true&rounded=true&size=96&length=3'
+    },
+    {
+      name: 'MECON',
+      logo: 'https://ui-avatars.com/api/?name=MECON&background=0e7490&color=fff&bold=true&rounded=true&size=96&length=2'
+    },
+    {
+      name: 'Fichtner',
+      logo: 'https://ui-avatars.com/api/?name=Fichtner&background=059669&color=fff&bold=true&rounded=true&size=96&length=1'
+    },
+    {
+      name: 'Tata Consulting Engineers',
+      logo: 'https://ui-avatars.com/api/?name=TCE&background=be185d&color=fff&bold=true&rounded=true&size=96&length=3'
+    },
   ];
 
   const testimonials: Testimonial[] = [
@@ -170,11 +182,19 @@ const Clients: React.FC = () => {
                 <div className="relative z-10">
                   <div className="h-20 flex items-center justify-center mb-4 relative">
                     <div className="absolute inset-0 bg-gradient-to-r from-teal-500/20 to-purple-500/20 rounded-full blur-md group-hover:blur-lg transition-all duration-300"></div>
-                    <img
-                      src={client.logo}
-                      alt={`${client.name} logo`}
-                      className="h-16 w-auto object-contain transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 bg-white/10 backdrop-blur-md p-2 rounded-full border border-teal-400/30 hover:border-teal-400/50 shadow-lg hover:shadow-xl"
-                    />
+                    {client.logo ? (
+                      <img
+                        src={client.logo}
+                        alt={`${client.name} logo`}
+                        className="h-16 w-auto object-contain transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 bg-white/10 backdrop-blur-md p-2 rounded-full border border-teal-400/30 hover:border-teal-400/50 shadow-lg hover:shadow-xl"
+                        onError={e => (e.currentTarget.style.display = 'none')}
+                      />
+                    ) : null}
+                    {(!client.logo || (typeof window !== 'undefined' && document && !document.querySelector(`img[src='${client.logo}']`))) && (
+                      <div className="h-16 w-16 flex items-center justify-center rounded-full bg-gradient-to-br from-teal-400/40 to-purple-400/40 text-white text-2xl font-bold shadow-lg">
+                        {client.name.split(' ').map(w => w[0]).join('').slice(0,2)}
+                      </div>
+                    )}
                     <div className="absolute w-24 h-24 border-2 border-teal-400/20 rounded-full animate-[spin_10s_linear_infinite] group-hover:border-teal-400/40"></div>
                   </div>
                   <h3 className="text-xl font-bold text-white mb-2 bg-clip-text text-transparent bg-gradient-to-r from-teal-300 to-purple-300 group-hover:from-teal-400 group-hover:to-purple-400 transition-all duration-300">

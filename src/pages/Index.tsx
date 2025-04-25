@@ -94,7 +94,7 @@ const Index = () => {
               About Us
             </span>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Engineering Excellence Since <span className="bg-gradient-to-r from-blue-400 to-green-400 text-transparent bg-clip-text">2017</span>
+              Engineering Excellence Since <span className="bg-gradient-to-r from-yellow-300 to-orange-500 text-transparent bg-clip-text drop-shadow-lg">2017</span>
             </h2>
             <p className="text-white/80 max-w-2xl mx-auto leading-relaxed animate-fade-in delay-200">
               M/s GVS Controls, founded in 2017, delivers innovative, cost-effective engineering solutions, redefining customer satisfaction through advanced automation and man-machine interfaces.
