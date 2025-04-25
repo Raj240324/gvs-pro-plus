@@ -59,7 +59,7 @@ const Footer = () => {
               whileHover={{ scale: 1.02 }}
             >
               <div className="flex items-center mb-4">
-                <img src="/assets/gvs_logo.png" alt="GVS Controls Logo" className="h-10 w-auto" />
+                <img src="public/assets/gvs_logo.png" alt="GVS Controls Logo" className="h-10 w-auto" />
                 <span className="gvs-title-red font-montserrat font-bold text-2xl ml-3">
                   GVS Controls
                 </span>

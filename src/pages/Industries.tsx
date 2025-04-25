@@ -14,14 +14,14 @@ import {
 } from 'lucide-react';
 
 const industryImages = {
-  power: '/assets/power_plants.jpg',
-  steel: '/assets/steel_plants.jpg',
-  chemical: '/assets/chemical_plants.jpg',
-  cooling: '/assets/cooling_towers.jpg',
-  automobile: '/assets/automobile_industries.jpg',
-  renewable: '/assets/renewable_energy.jpg',
-  material: '/assets/bulk_material_handling.jpg',
-  water: '/assets/water_treatment_plants.jpg',
+  power: '/public/assets/power_plants.jpg',
+  steel: '/public/assets/steel_plants.jpg',
+  chemical: '/public/assets/chemical_plants.jpg',
+  cooling: '/public/assets/cooling_towers.jpg',
+  automobile: '/public/assets/automobile_industries.jpg',
+  renewable: '/public/assets/renewable_energy.jpg',
+  material: '/public/assets/bulk_material_handling.jpg',
+  water: '/public/assets/water_treatment_plants.jpg',
 };
 
 const Industries = () => {
