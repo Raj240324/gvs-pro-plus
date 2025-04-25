@@ -70,10 +70,10 @@ const Hero: React.FC = () => {
 
   // Use Unsplash/Pexels images for hero section
   const heroImages = [
-    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80', // Power plant
-    'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=900&q=80', // Control panel manufacturing
-    'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=900&q=80', // Automation
-    'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=900&q=80', // Consultant engineering / project management
+    'https://img.freepik.com/free-photo/view-nuclear-power-plant-with-towers-letting-out-steam-from-process_23-2150957646.jpg?t=st=1745587331~exp=1745590931~hmac=3998ea38e82d33cc5f7ae709776fd1b62e180cd61746f10952f25520559894ac&w=2000', // Power plant
+    'https://img.freepik.com/free-photo/view-male-engineer-work-engineers-day-celebration_23-2151615008.jpg?t=st=1745590679~exp=1745594279~hmac=b15e7a620a6eb3776149eecae4b980feefb194287c110d60a616cd1ec6c2cf0a&w=2000', // Control panel manufacturing
+    'https://img.freepik.com/free-photo/standard-quality-control-collage-concept_23-2149595830.jpg?t=st=1745585695~exp=1745589295~hmac=5a01e5cf07004b710b77a39aeaca731e478cbf354d2479bbd94ba677cc062f84&w=2000', // Automation
+    'https://img.freepik.com/free-photo/business-scene-top-view_23-2147626514.jpg?t=st=1745586095~exp=1745589695~hmac=9fbbef3474487cc88e277bcb89b4c266cf145a99a8c81a326f6d0deaf832026c&w=1800', // Consultant engineering / project management
   ];
 
   const contents: Content[] = [

@@ -50,7 +50,7 @@ const Services = () => {
         'Procurement Assistance and Equipment Inspection'
       ],
       stats: { projects: '150+', years: '30+' },
-      image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80', // Consultancy
+      image: 'https://img.freepik.com/free-photo/business-scene-top-view_23-2147626514.jpg?t=st=1745586095~exp=1745589695~hmac=9fbbef3474487cc88e277bcb89b4c266cf145a99a8c81a326f6d0deaf832026c&w=1800', // Consultancy
       ctaLink: '#consultancy-engineering'
     },
     {
@@ -66,7 +66,7 @@ const Services = () => {
         'APFC, AMF, Relay Logic & PLC Control Panels'
       ],
       stats: { panelsBuilt: '500+', industriesServed: '10+' },
-      image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80', // Panel manufacturing
+      image: 'https://img.freepik.com/free-photo/factory-workshop-interior-machines-glass-production-background_645730-396.jpg?t=st=1745586095~exp=1745589695~hmac=0e20537e5489d3a63f6a04bd86f94fefd745123f2dbefaa7f00d39c0110f3c73&w=2000', // Panel manufacturing
       ctaLink: '#panel-manufacturing'
     },
     {
@@ -82,7 +82,7 @@ const Services = () => {
         'Revamping of Old Electrical Systems'
       ],
       stats: { sitesCommissioned: '200+', downtimeReduced: '98%' },
-      image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80', // Installation/commissioning
+      image: 'https://img.freepik.com/free-photo/man-electrical-working-switchboard-with-fuses-uses-tablet_169016-51730.jpg?t=st=1745586095~exp=1745589695~hmac=9cf40c4afac9c0d0ab012cd5bff2edaabc2d28ccc93a2f207f262d0f61b8a875&w=2000', // Installation/commissioning
       ctaLink: '#installation-commissioning'
     },
     {
@@ -98,7 +98,7 @@ const Services = () => {
         'Real-Time Monitoring and Control Systems'
       ],
       stats: { systemsAutomated: '100+', efficiencyGain: '40%' },
-      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80', // Automation
+      image: 'https://img.freepik.com/free-photo/standard-quality-control-collage-concept_23-2149595830.jpg?t=st=1745585695~exp=1745589295~hmac=5a01e5cf07004b710b77a39aeaca731e478cbf354d2479bbd94ba677cc062f84&w=2000', // Automation
       ctaLink: '#automation-solutions'
     },
     {
@@ -114,7 +114,7 @@ const Services = () => {
         'Compliance with Safety Standards'
       ],
       stats: { systemsRevamped: '80+', energySaved: '25%' },
-      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80', // Renovation/revamping
+      image: 'https://img.freepik.com/free-photo/young-adult-electrician-civil-engineer-screwing-equipment-into-fuse-box_169016-53047.jpg?t=st=1745585755~exp=1745589355~hmac=048dabfce0a93992c396eba68142e7ef429bce814077cb8e9fbcbbb1e367aa25&w=2000', // Renovation/revamping
       ctaLink: '#renovation-revamping'
     },
     {
@@ -130,7 +130,7 @@ const Services = () => {
         'Expert On-Demand Assistance'
       ],
       stats: { clientsSupported: '50+', uptimeGuaranteed: '99.9%' },
-      image: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80', // Support/supply
+      image: 'https://img.freepik.com/free-photo/standard-quality-control-concept-m_23-2150041853.jpg?t=st=1745586031~exp=1745589631~hmac=b2a90da487951e12f04fba95a06e0f86ab5e5ae6ed795e0c1d8f9528030ffb46&w=1800', // Support/supply
       ctaLink: '#support-supply'
     }
   ];
@@ -201,7 +201,8 @@ const Services = () => {
                   <img
                     src={card.image}
                     alt={card.title}
-                    className="h-32 w-32 sm:h-40 sm:w-40 rounded-lg object-cover object-top border-2 border-teal-400 dark:border-teal-600 transition-transform duration-500 group-hover:scale-110"
+                    className="h-32 w-32 sm:h-40 sm:w-40 rounded-lg object-cover object-center border-2 border-teal-400 dark:border-teal-600 transition-transform duration-500 group-hover:scale-110 bg-white"
+                    style={{ aspectRatio: '1/1', objectFit: 'cover', objectPosition: 'center' }}
                     loading="lazy"
                   />
                 </div>
@@ -276,7 +277,13 @@ const Services = () => {
               </div>
               <div className={`${index % 2 === 0 ? 'aos-fade-left' : 'aos-fade-right'} order-1 lg:order-${index % 2 === 0 ? '2' : '1'}`}>
                 <div className="relative rounded-xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-500 group">
-                  <img src={service.image} alt={service.title} className="w-full h-64 sm:h-80 md:h-96 object-cover transition-opacity group-hover:opacity-80" loading="lazy" />
+                  <img 
+                    src={service.image} 
+                    alt={service.title} 
+                    className="w-full h-64 sm:h-80 md:h-96 object-cover object-center rounded-xl transition-opacity group-hover:opacity-80 bg-white"
+                    style={{ aspectRatio: '4/3', objectFit: 'cover', objectPosition: 'center' }}
+                    loading="lazy" 
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4 sm:p-6">
                     <p className="text-white font-semibold text-sm sm:text-base md:text-lg">{service.description}</p>
                   </div>
