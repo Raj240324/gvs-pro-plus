@@ -622,12 +622,7 @@ img {
   transition: transform 0.1s ease-out;
 }
 
-/* Grid pattern for background (optional: create a grid-pattern.png or use CSS) */
-.bg-grid {
-  background-image: url('/assets/grid-pattern.png');
-  background-size: 40px 40px;
-  background-repeat: repeat;
-}
+
 
 /* Pulse animation for buttons */
 @keyframes pulse {
