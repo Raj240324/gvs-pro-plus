@@ -1,20 +1,20 @@
 "use client";
 import * as React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 import { useMotionTemplate, useMotionValue, motion } from "framer-motion";
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
     const radius = 100; // Radius of the radial gradient
     const [visible, setVisible] = React.useState(false);
 
-    let mouseX = useMotionValue(0);
-    let mouseY = useMotionValue(0);
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
 
-    function handleMouseMove({ currentTarget, clientX, clientY }: any) {
-      let { left, top } = currentTarget.getBoundingClientRect();
+    function handleMouseMove({ currentTarget, clientX, clientY }: { currentTarget: EventTarget & HTMLDivElement; clientX: number; clientY: number }) {
+      const { left, top } = currentTarget.getBoundingClientRect();
       mouseX.set(clientX - left);
       mouseY.set(clientY - top);
     }
@@ -30,7 +30,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             )
           `,
         }}
-        onMouseMove={handleMouseMove}
+        onMouseOver={handleMouseMove}
         onMouseEnter={() => setVisible(true)}
         onMouseLeave={() => setVisible(false)}
         className="group/input rounded-lg p-[2px] transition duration-300"
@@ -44,13 +44,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             className
           )}
           ref={ref}
-          {...props}
-          animate={visible ? {
-            boxShadow: "0 0 15px rgba(59, 130, 246, 0.5)", // Glow effect
-          } : {
-            boxShadow: "0 0 0 rgba(59, 130, 246, 0)"
+          {...(props as React.ComponentPropsWithoutRef<typeof motion.input>)}
+          style={{
+            ...(props.style || {}),
+            boxShadow: visible
+              ? "0 0 15px rgba(59, 130, 246, 0.5)"
+              : "0 0 0 rgba(59, 130, 246, 0)",
           }}
-          transition={{ duration: 0.3 }}
         />
       </motion.div>
     );

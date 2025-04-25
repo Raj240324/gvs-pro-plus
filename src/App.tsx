@@ -2,7 +2,7 @@ import { Toaster } from "../src/components/ui/toaster";
 import { Toaster as SonnerToaster } from "../src/components/ui/sonner"; // Renamed to avoid confusion
 import { TooltipProvider } from "../src/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Routes, Route } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CookieConsent from "react-cookie-consent";
 
@@ -45,9 +45,9 @@ const App = () => {
   useEffect(() => {
     if (!isLoading) {
       // Debounce scroll handler to optimize performance
-      const debounce = (func: (...args: any[]) => void, wait: number) => {
+      const debounce = <T extends unknown[]>(func: (...args: T) => void, wait: number) => {
         let timeout: NodeJS.Timeout | null;
-        return (...args: any[]) => {
+        return (...args: T) => {
           if (timeout) clearTimeout(timeout);
           timeout = setTimeout(() => func(...args), wait);
         };
@@ -135,21 +135,7 @@ const App = () => {
             </CookieConsent>
             <Header />
             <main id="main-content" tabIndex={-1} className="focus:outline-none">
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/services" element={<Services />} />
-                <Route path="/industries" element={<Industries />} />
-                <Route path="/projects" element={<Projects />} />
-                <Route path="/clients" element={<Clients />} />
-                <Route path="/why-us" element={<WhyUs />} />
-                <Route path="/gallery" element={<Gallery />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                <Route path="/terms-of-service" element={<TermsOfService />} />
-                <Route path="/cookie-policy" element={<CookiePolicy />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+              <Outlet />
             </main>
             <Footer />
             <BackToTop />

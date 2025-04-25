@@ -1,5 +1,5 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
 
@@ -70,7 +70,7 @@ export const ImagesSlider = ({
 
     window.addEventListener("keydown", handleKeyDown);
 
-    let interval: any;
+    let interval: ReturnType<typeof setInterval>;
     if (autoplay) {
       interval = setInterval(() => {
         handleNext();

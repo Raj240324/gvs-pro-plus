@@ -125,7 +125,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
         setIsSubmitted(false);
         onOpenChange(false);
       }, 2000);
-    } catch (error: any) {
+    } catch (error: unknown) {
       setIsSubmitting(false);
       toast({
         title: "Error",
@@ -133,14 +133,17 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
         variant: "destructive",
       });
       console.error('EmailJS error:', error);
-      console.error('Error details:', {
-        errorText: error.text || 'No error text provided',
-        errorStatus: error.status || 'No status provided',
-        serviceID,
-        customerTemplateID,
-        ownerTemplateID,
-        templateParams,
-      });
+      if (typeof error === 'object' && error !== null) {
+        const err = error as { text?: string; status?: string };
+        console.error('Error details:', {
+          errorText: err.text || 'No error text provided',
+          errorStatus: err.status || 'No status provided',
+          serviceID,
+          customerTemplateID,
+          ownerTemplateID,
+          templateParams,
+        });
+      }
     }
   };
 

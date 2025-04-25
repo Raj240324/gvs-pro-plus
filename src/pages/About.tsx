@@ -43,7 +43,7 @@ const About = () => {
         <div>
           <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">Founded GVS Controls</h3>
           <p className="text-gray-600 mt-2">Established as a proprietary company with a vision for innovative, cost-effective engineering solutions.</p>
-          <img src="/public/assets/founded_about.jpg" alt="Founded GVS Controls" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
+          <img src="/assets/founded_about.jpg" alt="Founded GVS Controls" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
         </div>
       ),
     },
@@ -53,7 +53,7 @@ const About = () => {
         <div>
           <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">Early Projects</h3>
           <p className="text-gray-600 mt-2">Collaborated with Shriram EPC Ltd., Black Stone Group, and L&T on power plants and material handling systems.</p>
-          <img src="/public/assets/power_plants.jpg" alt="Early Projects" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
+          <img src="/assets/power_plants.jpg" alt="Early Projects" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
         </div>
       ),
     },
@@ -63,7 +63,7 @@ const About = () => {
         <div>
           <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">Expansion</h3>
           <p className="text-gray-600 mt-2">Executed projects for SAIL, TISCO, and RINL in renewable energy and steel sectors.</p>
-          <img src="/public/assets/renewable_energy.jpg" alt="Expansion" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
+          <img src="/assets/renewable_energy.jpg" alt="Expansion" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
         </div>
       ),
     },
@@ -73,7 +73,7 @@ const About = () => {
         <div>
           <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">Automation Leadership</h3>
           <p className="text-gray-600 mt-2">Introduced advanced PLC and VFD control systems for process plants.</p>
-          <img src="/public/assets/automation.jpg" alt="Automation Leadership" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
+          <img src="/assets/automation.jpg" alt="Automation Leadership" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
         </div>
       ),
     },
@@ -83,7 +83,7 @@ const About = () => {
         <div>
           <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">Global Reach</h3>
           <p className="text-gray-600 mt-2">Partnered with international clients like Titan Cement (Egypt) and Republic Cement (Philippines).</p>
-          <img src="/public/assets/clients_about.jpg" alt="Global Reach" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
+          <img src="/assets/clients_about.jpg" alt="Global Reach" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
         </div>
       ),
     },
