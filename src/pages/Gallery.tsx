@@ -43,16 +43,16 @@ const Gallery = () => {
   const [headerHeight, setHeaderHeight] = useState(0);
 
   const galleryImages: GalleryImage[] = [
-    { id: '1', src: '/assets/photo_gallery/gal_1.png', alt: 'Control Panel Manufacturing', category: 'Manufacturing' },
-    { id: '2', src: '/assets/photo_gallery/gal_2.png', alt: 'Electrical Installation at Power Plant', category: 'Installation' },
-    { id: '3', src: '/assets/photo_gallery/gal_3.png', alt: 'Automation System Design', category: 'Automation' },
-    { id: '4', src: '/assets/photo_gallery/gal_4.png', alt: 'Switchgear Panel Testing', category: 'Testing' },
-    { id: '5', src: '/assets/photo_gallery/gal_5.png', alt: 'Electrical Panel Wiring', category: 'Manufacturing' },
-    { id: '6', src: '/assets/photo_gallery/gal_6.png', alt: 'Site Installation Work', category: 'Installation' },
-    { id: '7', src: '/assets/photo_gallery/gal_7.png', alt: 'Control System Programming', category: 'Automation' },
-    { id: '8', src: '/assets/photo_gallery/gal_8.png', alt: 'Quality Inspection Process', category: 'Testing' },
-    { id: '9', src: '/assets/photo_gallery/gal_9.png', alt: 'Motor Control Center', category: 'Manufacturing' },
-    { id: '10', src: '/assets/photo_gallery/gal_10.png', alt: 'Panel Installation at Client Site', category: 'Installation' },
+    { id: '1', src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80', alt: 'Control Panel Manufacturing', category: 'Manufacturing' },
+    { id: '2', src: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80', alt: 'Electrical Installation at Power Plant', category: 'Installation' },
+    { id: '3', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80', alt: 'Automation System Design', category: 'Automation' },
+    { id: '4', src: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=400&q=80', alt: 'Switchgear Panel Testing', category: 'Testing' },
+    { id: '5', src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80', alt: 'Electrical Panel Wiring', category: 'Manufacturing' },
+    { id: '6', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80', alt: 'Site Installation Work', category: 'Installation' },
+    { id: '7', src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80', alt: 'Control System Programming', category: 'Automation' },
+    { id: '8', src: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80', alt: 'Quality Inspection Process', category: 'Testing' },
+    { id: '9', src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80', alt: 'Motor Control Center', category: 'Manufacturing' },
+    { id: '10', src: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=400&q=80', alt: 'Panel Installation at Client Site', category: 'Installation' },
   ];
 
   const categories = ['All', ...new Set(galleryImages.map(image => image.category))];
