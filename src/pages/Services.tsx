@@ -50,7 +50,7 @@ const Services = () => {
         'Procurement Assistance and Equipment Inspection'
       ],
       stats: { projects: '150+', years: '30+' },
-      image: '/assets/consultant_engineering.jpg',
+      image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80', // Consultancy
       ctaLink: '#consultancy-engineering'
     },
     {
@@ -66,7 +66,7 @@ const Services = () => {
         'APFC, AMF, Relay Logic & PLC Control Panels'
       ],
       stats: { panelsBuilt: '500+', industriesServed: '10+' },
-      image: '/assets/panel_manufacturing.jpg',
+      image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80', // Panel manufacturing
       ctaLink: '#panel-manufacturing'
     },
     {
@@ -82,7 +82,7 @@ const Services = () => {
         'Revamping of Old Electrical Systems'
       ],
       stats: { sitesCommissioned: '200+', downtimeReduced: '98%' },
-      image: '/assets/installation_commission.jpg',
+      image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80', // Installation/commissioning
       ctaLink: '#installation-commissioning'
     },
     {
@@ -98,7 +98,7 @@ const Services = () => {
         'Real-Time Monitoring and Control Systems'
       ],
       stats: { systemsAutomated: '100+', efficiencyGain: '40%' },
-      image: '/assets/automation.jpg',
+      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80', // Automation
       ctaLink: '#automation-solutions'
     },
     {
@@ -114,7 +114,7 @@ const Services = () => {
         'Compliance with Safety Standards'
       ],
       stats: { systemsRevamped: '80+', energySaved: '25%' },
-      image: '/assets/renovation_revamping.jpg',
+      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80', // Renovation/revamping
       ctaLink: '#renovation-revamping'
     },
     {
@@ -130,7 +130,7 @@ const Services = () => {
         'Expert On-Demand Assistance'
       ],
       stats: { clientsSupported: '50+', uptimeGuaranteed: '99.9%' },
-      image: '/assets/support_supply.jpg',
+      image: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80', // Support/supply
       ctaLink: '#support-supply'
     }
   ];

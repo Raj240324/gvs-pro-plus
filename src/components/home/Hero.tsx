@@ -68,11 +68,12 @@ const Hero: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const navigate = useNavigate();
 
+  // Use Unsplash/Pexels images for hero section
   const heroImages = [
-    '/assets/power_plants.jpg',
-    '/assets/panel_manufacturing.jpg',
-    '/assets/automation.jpg',
-    '/assets/consultant_engineering.jpg',
+    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80', // Power plant
+    'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=900&q=80', // Control panel manufacturing
+    'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=900&q=80', // Automation
+    'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=900&q=80', // Consultant engineering / project management
   ];
 
   const contents: Content[] = [
