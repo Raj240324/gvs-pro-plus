@@ -4,10 +4,6 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import ContactModal from "../ContactModal";
-import PowerPlants from '../../assets/power_plants.jpg';
-import PanelManufacturing from '../../assets/panel-manufacturing.jpg';
-import Automation from '../../assets/automation.jpg';
-import ConsultantEngineering from '../../assets/consultant-engineering.jpg';
 
 interface Content {
   title: string;
@@ -72,6 +68,13 @@ const Hero: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const navigate = useNavigate();
 
+  const heroImages = [
+    '/assets/power_plants.jpg',
+    '/assets/panel-manufacturing.jpg',
+    '/assets/automation.jpg',
+    '/assets/consultant-engineering.jpg',
+  ];
+
   const contents: Content[] = [
     {
       title: "GVS Controls - Powering Industries",
@@ -79,7 +82,7 @@ const Hero: React.FC = () => {
       description:
         "With over 30 years of expertise in EPC projects, we deliver cutting-edge electrical and automation solutions for power plants, renewable energy, steel, cement, and more. Trust us for innovative consultancy, manufacturing, and system integration.",
       images: [
-        PowerPlants // industrial plant
+        heroImages[0] // industrial plant
       ],
     },
     {
@@ -88,7 +91,7 @@ const Hero: React.FC = () => {
       description:
         "We design and manufacture Medium Voltage Panels, Power Control Centers, and Motor Control Centers for seamless industrial operations. Our panels ensure reliability and efficiency across power plants, cement, and steel industries.",
       images: [
-        PanelManufacturing // electrical control panel manufacturing
+        heroImages[1] // electrical control panel manufacturing
       ],
     },
     {
@@ -97,7 +100,7 @@ const Hero: React.FC = () => {
       description:
         "Our process automation and instrumentation solutions optimize operations in chemical plants, water treatment, and automobile industries. From PLC control panels to field instruments, we deliver tailored automation systems.",
       images: [
-        Automation // automation
+        heroImages[2] // automation
       ],
     },
     {
@@ -106,7 +109,7 @@ const Hero: React.FC = () => {
       description:
         "From consultancy to commissioning, we manage turnkey projects with precision. Our services include system design, equipment sizing, installation, and revamping of electrical systems for industries like renewable energy and cooling towers.",
       images: [
-        ConsultantEngineering // project management
+        heroImages[3] // project management
       ],
     },
   ];
@@ -297,67 +300,67 @@ const Hero: React.FC = () => {
 
       {/* Toggleable button stack with arrow icon */}
       <div
-  className={`fixed bottom-6 right-0 z-50 transition-opacity duration-300 ${
-    isHeroVisible ? "opacity-100" : "opacity-0 pointer-events-none"
-  }`}
->
-  {/* Arrow Toggle Button */}
-  <motion.button
-    onClick={() => setIsExpanded(!isExpanded)}
-    onKeyDown={(e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        setIsExpanded(!isExpanded);
-      }
-    }}
-    aria-label={isExpanded ? "Collapse menu" : "Expand menu"}
-    className="relative inline-flex items-center justify-center w-12 h-12 rounded-l-xl bg-gradient-to-br from-teal-500 to-blue-600 text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500/50 shadow-[0_0_12px_rgba(255,255,255,0.3)]"
-    whileHover={{ scale: 1.1, boxShadow: "0 0 25px rgba(255,255,255,0.5)" }}
-    whileTap={{ scale: 0.9 }}
-  >
-    <motion.div
-      animate={{ rotate: isExpanded ? 180 : 0 }}
-      transition={{ duration: 0.3 }}
-    >
-      <ArrowLeft size={24} />
-    </motion.div>
-  </motion.button>
-
-  {/* Button Stack */}
-  <AnimatePresence>
-    {isExpanded && (
-      <motion.div
-        variants={buttonStackVariants}
-        initial="hidden"
-        animate="visible"
-        exit="hidden"
-        className="absolute bottom-20 right-12 flex flex-col gap-3" // Adjusted right to align with button
+        className={`fixed bottom-6 right-0 z-50 transition-opacity duration-300 ${
+          isHeroVisible ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
       >
-        {buttons.map((button, idx) => {
-          const Icon = iconMap[button.icon];
-          const tooltip = button.text;
-          return (
-            <motion.button
-              key={button.id}
-              onClick={button.action}
-              aria-label={button.text}
-              className={`relative flex items-center justify-center w-14 h-14 rounded-full glassmorphism transition-transform duration-300 hover:scale-110 focus:outline-none animate-float`}
-              whileHover={{ scale: 1.18 }}
-              whileTap={{ scale: 0.92 }}
-              tabIndex={0}
+        {/* Arrow Toggle Button */}
+        <motion.button
+          onClick={() => setIsExpanded(!isExpanded)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              setIsExpanded(!isExpanded);
+            }
+          }}
+          aria-label={isExpanded ? "Collapse menu" : "Expand menu"}
+          className="relative inline-flex items-center justify-center w-12 h-12 rounded-l-xl bg-gradient-to-br from-teal-500 to-blue-600 text-white transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500/50 shadow-[0_0_12px_rgba(255,255,255,0.3)]"
+          whileHover={{ scale: 1.1, boxShadow: "0 0 25px rgba(255,255,255,0.5)" }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <motion.div
+            animate={{ rotate: isExpanded ? 180 : 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <ArrowLeft size={24} />
+          </motion.div>
+        </motion.button>
+
+        {/* Button Stack */}
+        <AnimatePresence>
+          {isExpanded && (
+            <motion.div
+              variants={buttonStackVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              className="absolute bottom-20 right-12 flex flex-col gap-3" // Adjusted right to align with button
             >
-              {Icon && <Icon size={28} />}
-              <span className="sr-only">{tooltip}</span>
-              {/* Tooltip */}
-              <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1 rounded-md bg-black/80 text-white text-xs opacity-0 pointer-events-none group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                {tooltip}
-              </span>
-            </motion.button>
-          );
-        })}
-      </motion.div>
-    )}
-  </AnimatePresence>
-</div>
+              {buttons.map((button, idx) => {
+                const Icon = iconMap[button.icon];
+                const tooltip = button.text;
+                return (
+                  <motion.button
+                    key={button.id}
+                    onClick={button.action}
+                    aria-label={button.text}
+                    className={`relative flex items-center justify-center w-14 h-14 rounded-full glassmorphism transition-transform duration-300 hover:scale-110 focus:outline-none animate-float`}
+                    whileHover={{ scale: 1.18 }}
+                    whileTap={{ scale: 0.92 }}
+                    tabIndex={0}
+                  >
+                    {Icon && <Icon size={28} />}
+                    <span className="sr-only">{tooltip}</span>
+                    {/* Tooltip */}
+                    <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1 rounded-md bg-black/80 text-white text-xs opacity-0 pointer-events-none group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+                      {tooltip}
+                    </span>
+                  </motion.button>
+                );
+              })}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
       <ContactModal open={showModal} onOpenChange={setShowModal} />
     </section>

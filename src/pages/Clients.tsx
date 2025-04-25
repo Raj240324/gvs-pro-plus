@@ -2,20 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle2, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 
-// Import images from src/assets
-import ClientLogo1 from '../assets/images/client-logo-1.svg';
-import ClientLogo2 from '../assets/images/client-logo-2.svg';
-import ClientLogo3 from '../assets/images/client-logo-3.svg';
-import ClientLogo4 from '../assets/images/client-logo-4.svg';
-import ClientLogo5 from '../assets/images/client-logo-5.svg';
-import ClientLogo6 from '../assets/images/client-logo-6.svg';
-import ClientLogo7 from '../assets/images/client-logo-7.svg';
-import ClientLogo8 from '../assets/images/client-logo-8.svg';
-import ConsultantLogo1 from '../assets/images/consultant-1.svg';
-import ConsultantLogo2 from '../assets/images/consultant-2.svg';
-import ConsultantLogo3 from '../assets/images/consultant-3.svg';
-import ConsultantLogo4 from '../assets/images/consultant-4.svg';
-
 // Define interfaces for type safety
 interface Client {
   name: string;
@@ -71,21 +57,21 @@ const Clients: React.FC = () => {
   }, []);
 
   const clients: Client[] = [
-    { name: 'Aumund Engineering', location: 'Chennai', logo: ClientLogo1, description: 'Material handling systems for cement production.' },
-    { name: 'Loesche Energy', location: 'Delhi & Chennai', logo: ClientLogo2, description: 'Automation for energy production.' },
-    { name: 'Metco Roof', location: 'Chennai', logo: ClientLogo3, description: 'Control systems for roofing manufacturing.' },
-    { name: 'Meenakshi Medical College', location: 'Kanchipuram', logo: ClientLogo4, description: '11 KV substation revamping.' },
-    { name: 'Ultratech Cement', location: 'Gujarat', logo: ClientLogo5, description: 'Feeders for cement operations.' },
-    { name: 'NTPC Limited', location: 'Darapalli', logo: ClientLogo6, description: 'Electrical systems for power generation.' },
-    { name: 'JSW Cement', location: 'Dolvi', logo: ClientLogo7, description: 'Stacker and reclaimer consultancy.' },
-    { name: 'Meenakshi Energy', location: 'Nellore', logo: ClientLogo8, description: 'Custom paddle feeder solutions.' },
+    { name: 'Aumund Engineering', location: 'Chennai', logo: '/assets/images/client-logo-1.svg', description: 'Material handling systems for cement production.' },
+    { name: 'Loesche Energy', location: 'Delhi & Chennai', logo: '/assets/images/client-logo-2.svg', description: 'Automation for energy production.' },
+    { name: 'Metco Roof', location: 'Chennai', logo: '/assets/images/client-logo-3.svg', description: 'Control systems for roofing manufacturing.' },
+    { name: 'Meenakshi Medical College', location: 'Kanchipuram', logo: '/assets/images/client-logo-4.svg', description: '11 KV substation revamping.' },
+    { name: 'Ultratech Cement', location: 'Gujarat', logo: '/assets/images/client-logo-5.svg', description: 'Feeders for cement operations.' },
+    { name: 'NTPC Limited', location: 'Darapalli', logo: '/assets/images/client-logo-6.svg', description: 'Electrical systems for power generation.' },
+    { name: 'JSW Cement', location: 'Dolvi', logo: '/assets/images/client-logo-7.svg', description: 'Stacker and reclaimer consultancy.' },
+    { name: 'Meenakshi Energy', location: 'Nellore', logo: '/assets/images/client-logo-8.svg', description: 'Custom paddle feeder solutions.' },
   ];
 
   const consultants: Consultant[] = [
-    { name: 'Engineers India Ltd (EIL)', logo: ConsultantLogo1 },
-    { name: 'MECON', logo: ConsultantLogo2 },
-    { name: 'Fichtner', logo: ConsultantLogo3 },
-    { name: 'Tata Consulting Engineers', logo: ConsultantLogo4 },
+    { name: 'Engineers India Ltd (EIL)', logo: '/assets/images/consultant-1.svg' },
+    { name: 'MECON', logo: '/assets/images/consultant-2.svg' },
+    { name: 'Fichtner', logo: '/assets/images/consultant-3.svg' },
+    { name: 'Tata Consulting Engineers', logo: '/assets/images/consultant-4.svg' },
   ];
 
   const testimonials: Testimonial[] = [

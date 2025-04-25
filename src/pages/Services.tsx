@@ -10,14 +10,6 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// Import images from src/assets
-import ConsultantEngineering from '@/assets/consultant-engineering.jpg';
-import PanelManufacturing from '@/assets/panel-manufacturing.jpg';
-import InstallationCommission from '@/assets/installation-commission.jpg';
-import Automation from '@/assets/automation.jpg';
-import RenovationRevamping from '@/assets/renovation-revamping.jpg';
-import SupportSupply from '@/assets/support-supply.jpg';
-
 const Services = () => {
   useEffect(() => {
     document.title = 'Services - GVS Controls';
@@ -58,7 +50,7 @@ const Services = () => {
         'Procurement Assistance and Equipment Inspection'
       ],
       stats: { projects: '150+', years: '30+' },
-      image: ConsultantEngineering,
+      image: '/assets/consultant-engineering.jpg',
       ctaLink: '#consultancy-engineering'
     },
     {
@@ -74,7 +66,7 @@ const Services = () => {
         'APFC, AMF, Relay Logic & PLC Control Panels'
       ],
       stats: { panelsBuilt: '500+', industriesServed: '10+' },
-      image: PanelManufacturing,
+      image: '/assets/panel-manufacturing.jpg',
       ctaLink: '#panel-manufacturing'
     },
     {
@@ -90,7 +82,7 @@ const Services = () => {
         'Revamping of Old Electrical Systems'
       ],
       stats: { sitesCommissioned: '200+', downtimeReduced: '98%' },
-      image: InstallationCommission,
+      image: '/assets/installation-commission.jpg',
       ctaLink: '#installation-commissioning'
     },
     {
@@ -106,7 +98,7 @@ const Services = () => {
         'Real-Time Monitoring and Control Systems'
       ],
       stats: { systemsAutomated: '100+', efficiencyGain: '40%' },
-      image: Automation,
+      image: '/assets/automation.jpg',
       ctaLink: '#automation-solutions'
     },
     {
@@ -122,7 +114,7 @@ const Services = () => {
         'Compliance with Safety Standards'
       ],
       stats: { systemsRevamped: '80+', energySaved: '25%' },
-      image: RenovationRevamping,
+      image: '/assets/renovation-revamping.jpg',
       ctaLink: '#renovation-revamping'
     },
     {
@@ -138,7 +130,7 @@ const Services = () => {
         'Expert On-Demand Assistance'
       ],
       stats: { clientsSupported: '50+', uptimeGuaranteed: '99.9%' },
-      image: SupportSupply,
+      image: '/assets/support-supply.jpg',
       ctaLink: '#support-supply'
     }
   ];
