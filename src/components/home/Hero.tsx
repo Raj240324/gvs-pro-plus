@@ -69,10 +69,10 @@ const Hero: React.FC = () => {
   const navigate = useNavigate();
 
   const heroImages = [
-    '/assets/power_plants.jpg',
-    '/assets/panel_manufacturing.jpg',
-    '/assets/automation.jpg',
-    '/assets/consultant_engineering.jpg',
+    '/public/assets/power_plants.jpg',
+    '/public/assets/panel_manufacturing.jpg',
+    '/public/assets/automation.jpg',
+    '/public/assets/consultant_engineering.jpg',
   ];
 
   const contents: Content[] = [
