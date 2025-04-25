@@ -6,7 +6,6 @@ import { cn } from "../../lib/utils";
 import Button from "../../components/ui/Button";
 import ContactModal from "../../components/ContactModal";
 import { useContactModal } from "../../hooks/use-contact-modal";
-import logo from '../../assets/GVS-logo.png';
 import { SiX } from "react-icons/si";
 
 function debounce<T extends (...args: any[]) => void>(func: T, wait: number): (...args: Parameters<T>) => void {
@@ -295,7 +294,7 @@ const Header = () => {
                 onClick={handleNavClick}
               >
                 <img
-                  src={logo} // Served from public/assets/GVS-logo.png
+                  src="/assets/GVS-logo.png"
                   alt="GVS Controls Logo"
                   className="h-12 w-auto max-w-[150px] transition-transform hover:scale-105"
                 />
@@ -386,7 +385,7 @@ const Header = () => {
                   <XIcon size={26} />
                 </motion.button>
                 <div className="flex flex-col items-center pt-8 pb-2 px-4 shrink-0">
-                  <img src={logo} alt="GVS Controls Logo" className="h-12 w-auto mb-2 rounded-xl shadow-lg bg-white/80" />
+                  <img src="/assets/GVS-logo.png" alt="GVS Controls Logo" className="h-12 w-auto mb-2 rounded-xl shadow-lg bg-white/80" />
                   <span className="gvs-title-red text-[18px] leading-tight">GVS Controls</span>
                   <span className="gvs-slogan-yellow text-sm font-medium mb-2 leading-tight">Our Vision To Your Solution</span>
                 </div>

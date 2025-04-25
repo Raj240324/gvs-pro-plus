@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import logo from '../../src/assets/GVS-logo.png';
 
 const spinTransition = {
   repeat: Infinity,
@@ -51,7 +50,7 @@ const Preloader = () => {
         </div>
         {/* Logo with pulse/float animation */}
         <img
-          src={logo}
+          src="/assets/GVS-logo.png"
           alt="GVS Controls Logo"
           className="w-28 h-28 z-10 mb-4 animate-float"
           style={{ filter: 'drop-shadow(0 2px 16px #22d3ee66)' }}

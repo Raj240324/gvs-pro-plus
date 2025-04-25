@@ -13,15 +13,16 @@ import {
   Droplet // Water
 } from 'lucide-react';
 
-// Import images from src/assets
-import PowerPlants from '@/assets/power_plants.jpg';
-import SteelPlants from '@/assets/steel_plants.jpg';
-import ChemicalPlants from '@/assets/chemical_plants.jpg';
-import CoolingTowers from '@/assets/cooling_towers.jpg';
-import AutomobileIndustries from '@/assets/automobile_industries.jpg';
-import RenewableEnergy from '@/assets/renewable_energy.jpg';
-import BulkMaterialHandling from '@/assets/bulk_material_handling.jpg';
-import WaterTreatmentPlants from '@/assets/water_treatment_plants.jpg';
+const industryImages = {
+  power: '/assets/power_plants.jpg',
+  steel: '/assets/steel_plants.jpg',
+  chemical: '/assets/chemical_plants.jpg',
+  cooling: '/assets/cooling_towers.jpg',
+  automobile: '/assets/automobile_industries.jpg',
+  renewable: '/assets/renewable_energy.jpg',
+  material: '/assets/bulk_material_handling.jpg',
+  water: '/assets/water_treatment_plants.jpg',
+};
 
 const Industries = () => {
   useEffect(() => {
@@ -54,7 +55,7 @@ const Industries = () => {
       description: 'Optimized electrical and automation systems for reliable power generation.',
       longDescription: 'We deliver cutting-edge solutions for power plants, ensuring seamless operations across thermal, biomass, solar, and hydroelectric facilities. Our expertise includes turbine control, grid synchronization, and energy management systems tailored to maximize efficiency and uptime.',
       icon: <Zap size={50} strokeWidth={2} className="text-amber-600" />,
-      image: PowerPlants,
+      image: industryImages.power,
       examples: ['Thermal Power Stations', 'Biomass Energy Plants', 'Solar Farms', 'Hydroelectric Dams'],
       stats: { projects: '120+', uptime: '99.8%' },
       color: [[255, 165, 0] as [number, number, number]], // Orange
@@ -65,7 +66,7 @@ const Industries = () => {
       description: 'Robust automation for steel production processes.',
       longDescription: 'Our control systems enhance steel plant operations, from coke ovens to rolling mills. We provide rugged PLC-based solutions, real-time monitoring, and safety integrations to ensure precision, durability, and compliance in high-demand environments.',
       icon: <Hammer size={50} strokeWidth={2} className="text-gray-700" />,
-      image: SteelPlants,
+      image: industryImages.steel,
       examples: ['Coke Oven Automation', 'Blast Furnace Controls', 'Rolling Mills', 'Continuous Casting'],
       stats: { systemsInstalled: '80+', safetyRating: '100%' },
       color: [[169, 169, 169] as [number, number, number]], // Gray
@@ -76,7 +77,7 @@ const Industries = () => {
       description: 'Safe, efficient automation for complex chemical processes.',
       longDescription: 'We specialize in automation for chemical manufacturing, pharmaceuticals, and petrochemical plants. Our solutions include process control, hazardous area instrumentation, and compliance with stringent safety standards, ensuring operational excellence.',
       icon: <FlaskConical size={50} strokeWidth={2} className="text-emerald-600" />,
-      image: ChemicalPlants,
+      image: industryImages.chemical,
       examples: ['Chemical Manufacturing', 'Pharmaceutical Production', 'Petrochemical Refining', 'Fertilizer Plants'],
       stats: { plantsSupported: '50+', compliance: '99%' },
       color: [[0, 128, 0] as [number, number, number]], // Green
@@ -87,7 +88,7 @@ const Industries = () => {
       description: 'Advanced monitoring for cooling tower efficiency.',
       longDescription: 'Our systems optimize concrete and FRP cooling towers used in HVAC and industrial applications. We provide real-time monitoring, vibration analysis, and energy-efficient controls to extend equipment life and reduce operational costs.',
       icon: <Fan size={50} strokeWidth={2} className="text-cyan-500" />,
-      image: CoolingTowers,
+      image: industryImages.cooling,
       examples: ['Concrete Cooling Towers', 'FRP Cooling Systems', 'HVAC Integration', 'Industrial Cooling'],
       stats: { towersManaged: '90+', efficiencyGain: '30%' },
       color: [[135, 206, 235] as [number, number, number]], // Sky Blue
@@ -98,7 +99,7 @@ const Industries = () => {
       description: 'Automation driving automotive manufacturing excellence.',
       longDescription: 'We enhance automobile production with automation for assembly lines, testing, and component manufacturing. Our solutions reduce cycle times, improve quality control, and integrate seamlessly with Industry 4.0 technologies.',
       icon: <Truck size={50} strokeWidth={2} className="text-rose-600" />,
-      image: AutomobileIndustries,
+      image: industryImages.automobile,
       examples: ['Production Lines', 'Assembly Automation', 'Quality Testing', 'Component Fabrication'],
       stats: { linesAutomated: '60+', productivityBoost: '35%' },
       color: [[255, 0, 0] as [number, number, number]], // Red
@@ -109,7 +110,7 @@ const Industries = () => {
       description: 'Sustainable solutions for green energy production.',
       longDescription: 'We support renewable energy projects with solutions for biomass gasification, solar tracking, wind turbine control, and hybrid systems. Our focus is on sustainability, efficiency, and integrating renewable sources into existing grids.',
       icon: <Sun size={50} strokeWidth={2} className="text-lime-600" />,
-      image: RenewableEnergy,
+      image: industryImages.renewable,
       examples: ['Biomass Gasification', 'Solar Energy Systems', 'Wind Turbines', 'Hybrid Power Plants'],
       stats: { projects: '70+', carbonSaved: '20K Tons' },
       color: [[34, 139, 34] as [number, number, number]], // Forest Green
@@ -120,7 +121,7 @@ const Industries = () => {
       description: 'Efficient systems for material movement and storage.',
       longDescription: 'Our control systems streamline bulk material handling for conveyors, stackers, and storage facilities. We optimize throughput, reduce downtime, and enhance safety for industries like mining, cement, and logistics.',
       icon: <Box size={50} strokeWidth={2} className="text-amber-800" />,
-      image: BulkMaterialHandling,
+      image: industryImages.material,
       examples: ['Conveyor Systems', 'Stacker-Reclaimers', 'Loading/Unloading', 'Storage Management'],
       stats: { systemsDeployed: '100+', throughputIncrease: '25%' },
       color: [[139, 69, 19] as [number, number, number]], // Brown
@@ -131,7 +132,7 @@ const Industries = () => {
       description: 'Automation ensuring clean and compliant water systems.',
       longDescription: 'We provide automation for sewage treatment (STP), effluent treatment (ETP), and water treatment plants (WTP), including desalination. Our systems ensure regulatory compliance, efficient water management, and reliable operation.',
       icon: <Droplet size={50} strokeWidth={2} className="text-blue-600" />,
-      image: WaterTreatmentPlants,
+      image: industryImages.water,
       examples: ['Sewage Treatment (STP)', 'Effluent Treatment (ETP)', 'Water Treatment (WTP)', 'Desalination Plants'],
       stats: { plantsAutomated: '85+', waterProcessed: '500M Liters' },
       color: [[0, 191, 255] as [number, number, number]], // Deep Sky Blue
@@ -296,7 +297,6 @@ const Industries = () => {
                 <div className="relative rounded-xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-500 group">
                   <img src={industry.image} alt={industry.name} className="w-full h-64 sm:h-80 md:h-96 object-cover transition-opacity group-hover:opacity-80" loading="lazy" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4 sm:p-6">
-                    <p className="text-white font-semibold text-sm sm:text-base md:text-lg">{industry.description}</p>
                   </div>
                 </div>
               </div>
