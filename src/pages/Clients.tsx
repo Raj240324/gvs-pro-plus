@@ -57,21 +57,21 @@ const Clients: React.FC = () => {
   }, []);
 
   const clients: Client[] = [
-    { name: 'Aumund Engineering', location: 'Chennai', logo: '/assets/images/client-logo-1.svg', description: 'Material handling systems for cement production.' },
-    { name: 'Loesche Energy', location: 'Delhi & Chennai', logo: '/assets/images/client-logo-2.svg', description: 'Automation for energy production.' },
-    { name: 'Metco Roof', location: 'Chennai', logo: '/assets/images/client-logo-3.svg', description: 'Control systems for roofing manufacturing.' },
-    { name: 'Meenakshi Medical College', location: 'Kanchipuram', logo: '/assets/images/client-logo-4.svg', description: '11 KV substation revamping.' },
-    { name: 'Ultratech Cement', location: 'Gujarat', logo: '/assets/images/client-logo-5.svg', description: 'Feeders for cement operations.' },
-    { name: 'NTPC Limited', location: 'Darapalli', logo: '/assets/images/client-logo-6.svg', description: 'Electrical systems for power generation.' },
-    { name: 'JSW Cement', location: 'Dolvi', logo: '/assets/images/client-logo-7.svg', description: 'Stacker and reclaimer consultancy.' },
-    { name: 'Meenakshi Energy', location: 'Nellore', logo: '/assets/images/client-logo-8.svg', description: 'Custom paddle feeder solutions.' },
+    { name: 'Aumund Engineering', location: 'Chennai', logo: '/assets/images/client_logo_1.svg', description: 'Material handling systems for cement production.' },
+    { name: 'Loesche Energy', location: 'Delhi & Chennai', logo: '/assets/images/client_logo_2.svg', description: 'Automation for energy production.' },
+    { name: 'Metco Roof', location: 'Chennai', logo: '/assets/images/client_logo_3.svg', description: 'Control systems for roofing manufacturing.' },
+    { name: 'Meenakshi Medical College', location: 'Kanchipuram', logo: '/assets/images/client_logo_4.svg', description: '11 KV substation revamping.' },
+    { name: 'Ultratech Cement', location: 'Gujarat', logo: '/assets/images/client_logo_5.svg', description: 'Feeders for cement operations.' },
+    { name: 'NTPC Limited', location: 'Darapalli', logo: '/assets/images/client_logo_6.svg', description: 'Electrical systems for power generation.' },
+    { name: 'JSW Cement', location: 'Dolvi', logo: '/assets/images/client_logo_7.svg', description: 'Stacker and reclaimer consultancy.' },
+    { name: 'Meenakshi Energy', location: 'Nellore', logo: '/assets/images/client_logo_8.svg', description: 'Custom paddle feeder solutions.' },
   ];
 
   const consultants: Consultant[] = [
-    { name: 'Engineers India Ltd (EIL)', logo: '/assets/images/consultant-1.svg' },
-    { name: 'MECON', logo: '/assets/images/consultant-2.svg' },
-    { name: 'Fichtner', logo: '/assets/images/consultant-3.svg' },
-    { name: 'Tata Consulting Engineers', logo: '/assets/images/consultant-4.svg' },
+    { name: 'Engineers India Ltd (EIL)', logo: '/assets/images/consultant_1.svg' },
+    { name: 'MECON', logo: '/assets/images/consultant_2.svg' },
+    { name: 'Fichtner', logo: '/assets/images/consultant_3.svg' },
+    { name: 'Tata Consulting Engineers', logo: '/assets/images/consultant_4.svg' },
   ];
 
   const testimonials: Testimonial[] = [

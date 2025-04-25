@@ -43,7 +43,7 @@ const About = () => {
         <div>
           <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">Founded GVS Controls</h3>
           <p className="text-gray-600 mt-2">Established as a proprietary company with a vision for innovative, cost-effective engineering solutions.</p>
-          <img src="/assets/founded-about.jpg" alt="Founded GVS Controls" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
+          <img src="/assets/founded_about.jpg" alt="Founded GVS Controls" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
         </div>
       ),
     },
@@ -83,7 +83,7 @@ const About = () => {
         <div>
           <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">Global Reach</h3>
           <p className="text-gray-600 mt-2">Partnered with international clients like Titan Cement (Egypt) and Republic Cement (Philippines).</p>
-          <img src="/assets/clients-about.jpg" alt="Global Reach" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
+          <img src="/assets/clients_about.jpg" alt="Global Reach" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
         </div>
       ),
     },

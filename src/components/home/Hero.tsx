@@ -70,9 +70,9 @@ const Hero: React.FC = () => {
 
   const heroImages = [
     '/assets/power_plants.jpg',
-    '/assets/panel-manufacturing.jpg',
+    '/assets/panel_manufacturing.jpg',
     '/assets/automation.jpg',
-    '/assets/consultant-engineering.jpg',
+    '/assets/consultant_engineering.jpg',
   ];
 
   const contents: Content[] = [
@@ -161,12 +161,12 @@ const Hero: React.FC = () => {
     },
     {
       id: "catalogue",
-      href: "/catalogue/gvs-catalogue.pdf",
+      href: "/catalogue/gvs_catalogue.pdf",
       icon: "BookOpen",
       color: "#f28e38",
       hoverColor: "#d67a30",
       text: "Catalogue",
-      action: () => window.open("/catalogue/gvs-catalogue.pdf", "_blank"),
+      action: () => window.open("/catalogue/gvs_catalogue.pdf", "_blank"),
     },
     {
       id: "call",

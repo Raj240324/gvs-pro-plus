@@ -50,7 +50,7 @@ const Services = () => {
         'Procurement Assistance and Equipment Inspection'
       ],
       stats: { projects: '150+', years: '30+' },
-      image: '/assets/consultant-engineering.jpg',
+      image: '/assets/consultant_engineering.jpg',
       ctaLink: '#consultancy-engineering'
     },
     {
@@ -66,7 +66,7 @@ const Services = () => {
         'APFC, AMF, Relay Logic & PLC Control Panels'
       ],
       stats: { panelsBuilt: '500+', industriesServed: '10+' },
-      image: '/assets/panel-manufacturing.jpg',
+      image: '/assets/panel_manufacturing.jpg',
       ctaLink: '#panel-manufacturing'
     },
     {
@@ -82,7 +82,7 @@ const Services = () => {
         'Revamping of Old Electrical Systems'
       ],
       stats: { sitesCommissioned: '200+', downtimeReduced: '98%' },
-      image: '/assets/installation-commission.jpg',
+      image: '/assets/installation_commission.jpg',
       ctaLink: '#installation-commissioning'
     },
     {
@@ -114,7 +114,7 @@ const Services = () => {
         'Compliance with Safety Standards'
       ],
       stats: { systemsRevamped: '80+', energySaved: '25%' },
-      image: '/assets/renovation-revamping.jpg',
+      image: '/assets/renovation_revamping.jpg',
       ctaLink: '#renovation-revamping'
     },
     {
@@ -130,7 +130,7 @@ const Services = () => {
         'Expert On-Demand Assistance'
       ],
       stats: { clientsSupported: '50+', uptimeGuaranteed: '99.9%' },
-      image: '/assets/support-supply.jpg',
+      image: '/assets/support_supply.jpg',
       ctaLink: '#support-supply'
     }
   ];
