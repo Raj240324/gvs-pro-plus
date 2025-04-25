@@ -69,10 +69,10 @@ const Hero: React.FC = () => {
   const navigate = useNavigate();
 
   const heroImages = [
-    '/public/assets/power_plants.jpg',
-    '/public/assets/panel_manufacturing.jpg',
-    '/public/assets/automation.jpg',
-    '/public/assets/consultant_engineering.jpg',
+    '/assets/power_plants.jpg',
+    '/assets/panel_manufacturing.jpg',
+    '/assets/automation.jpg',
+    '/assets/consultant_engineering.jpg',
   ];
 
   const contents: Content[] = [
@@ -252,49 +252,51 @@ const Hero: React.FC = () => {
 
         {/* Right Side - Content */}
         <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-12">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentContent}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -50 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="w-full max-w-lg bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-2xl border border-white/20"
-            >
-              <motion.span
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-teal-400 to-blue-600 text-white text-sm font-semibold mb-6 shadow-lg"
-              >
-                {current.badge}
-              </motion.span>
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
+          <div className="w-full max-w-lg">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentContent}
+                initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="text-3xl lg:text-4xl font-extrabold leading-tight mb-6 tracking-tight text-white font-roboto"
+                exit={{ opacity: 0, y: -50 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-2xl border border-white/20"
               >
-                {current.title}
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-                className="text-base lg:text-lg text-gray-200 mb-8 leading-relaxed font-light"
-              >
-                {current.description}
-              </motion.p>
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 1.4 }}
-                className="text-sm text-gray-300 mt-6 italic"
-              >
-                Trusted by SAIL, NTPC, Aditya Birla Group, and more
-              </motion.p>
-            </motion.div>
-          </AnimatePresence>
+                <motion.span
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-teal-400 to-blue-600 text-white text-sm font-semibold mb-6 shadow-lg"
+                >
+                  {current.badge}
+                </motion.span>
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  className="text-3xl lg:text-4xl font-extrabold leading-tight mb-6 tracking-tight text-white font-roboto"
+                >
+                  {current.title}
+                </motion.h1>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                  className="text-base lg:text-lg text-gray-200 mb-8 leading-relaxed font-light"
+                >
+                  {current.description}
+                </motion.p>
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 1.4 }}
+                  className="text-sm text-gray-300 mt-6 italic"
+                >
+                  Trusted by SAIL, NTPC, Aditya Birla Group, and more
+                </motion.p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
 
@@ -306,10 +308,10 @@ const Hero: React.FC = () => {
       >
         {/* Arrow Toggle Button */}
         <motion.button
-          onClick={() => setIsExpanded(!isExpanded)}
+          onClick={() => setIsExpanded((prev) => !prev)}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
-              setIsExpanded(!isExpanded);
+              setIsExpanded((prev) => !prev);
             }
           }}
           aria-label={isExpanded ? "Collapse menu" : "Expand menu"}
@@ -333,7 +335,7 @@ const Hero: React.FC = () => {
               initial="hidden"
               animate="visible"
               exit="hidden"
-              className="absolute bottom-20 right-12 flex flex-col gap-3" // Adjusted right to align with button
+              className="absolute bottom-20 right-12 flex flex-col gap-3"
             >
               {buttons.map((button, idx) => {
                 const Icon = iconMap[button.icon];

@@ -194,7 +194,7 @@ const Contact = () => {
         description: "Your message has been sent. You'll receive a confirmation email shortly.",
       });
       setTimeout(() => setIsSubmitted(false), 5000);
-    } catch (error: any) {
+    } catch (error: unknown) {
       setIsSubmitting(false);
       toast({
         title: "Error",
@@ -202,9 +202,19 @@ const Contact = () => {
         variant: "destructive",
       });
       console.error('EmailJS error:', error);
+      let errorText = 'No error text provided';
+      let errorStatus = 'No status provided';
+      if (typeof error === 'object' && error !== null) {
+        if ('text' in error && typeof (error as { text?: string }).text === 'string') {
+          errorText = (error as { text?: string }).text ?? errorText;
+        }
+        if ('status' in error && typeof (error as { status?: string }).status === 'string') {
+          errorStatus = (error as { status?: string }).status ?? errorStatus;
+        }
+      }
       console.error('Error details:', {
-        errorText: error.text || 'No error text provided',
-        errorStatus: error.status || 'No status provided',
+        errorText,
+        errorStatus,
         serviceID,
         customerTemplateID,
         ownerTemplateID,

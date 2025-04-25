@@ -14,14 +14,14 @@ import {
 } from 'lucide-react';
 
 const industryImages = {
-  power: '/public/assets/power_plants.jpg',
-  steel: '/public/assets/steel_plants.jpg',
-  chemical: '/public/assets/chemical_plants.jpg',
-  cooling: '/public/assets/cooling_towers.jpg',
-  automobile: '/public/assets/automobile_industries.jpg',
-  renewable: '/public/assets/renewable_energy.jpg',
-  material: '/public/assets/bulk_material_handling.jpg',
-  water: '/public/assets/water_treatment_plants.jpg',
+  power: '/assets/power_plants.jpg',
+  steel: '/assets/steel_plants.jpg',
+  chemical: '/assets/chemical_plants.jpg',
+  cooling: '/assets/cooling_towers.jpg',
+  automobile: '/assets/automobile_industries.jpg',
+  renewable: '/assets/renewable_energy.jpg',
+  material: '/assets/bulk_material_handling.jpg',
+  water: '/assets/water_treatment_plants.jpg',
 };
 
 const Industries = () => {
@@ -208,7 +208,7 @@ const Industries = () => {
     );
   };
 
-  const Icon = ({ className, ...rest }: { className?: string; [key: string]: any }) => (
+  const Icon = ({ className, ...rest }: { className?: string; [key: string]: unknown }) => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={className} {...rest}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
     </svg>
