@@ -49,7 +49,6 @@ const AnimatedMenuButton = ({ open, onClick }: { open: boolean; onClick: () => v
     whileTap={{ scale: 0.9 }}
     style={{ outline: "none", border: "none", background: "none" }}
   >
-    {/* Hamburger to X animation */}
     <motion.svg
       width="32"
       height="32"
@@ -86,7 +85,6 @@ const AnimatedMenuButton = ({ open, onClick }: { open: boolean; onClick: () => v
 const TopContactBar = () => (
   <div className="hidden lg:block bg-gradient-to-r from-white/80 via-[#f8fafc]/80 to-white/80 dark:from-black/40 dark:via-[#23272f]/60 dark:to-black/40 backdrop-blur-xl border-b border-white/40 dark:border-white/10 shadow-sm relative">
     <div className="container mx-auto px-8 flex items-center justify-between h-14 text-sm font-inter text-[#2d2250] dark:text-white/90 relative">
-      {/* Socials */}
       <div className="flex items-center gap-3 pr-6 border-r border-[#e0e0e0] dark:border-[#333] z-10">
         <span className="font-semibold text-xs text-[#4a0e78] dark:text:white/80 mr-2 tracking-wide">Follow</span>
         <motion.a
@@ -138,13 +136,11 @@ const TopContactBar = () => (
           </motion.span>
         </motion.a>
       </div>
-      {/* Slogan - absolutely centered horizontally */}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center w-full pointer-events-none">
         <span className="text-xs font-bold tracking-wide text-[#4a0e78] dark:text:white/90 px-6 py-1 rounded-full bg-white/70 dark:bg-black/40 shadow border border-white/30 dark:border-white/10 backdrop-blur-md drop-shadow-sm uppercase pointer-events-auto">
           Leading Electrical Control Panel Manufacturer
         </span>
       </div>
-      {/* Contact Info */}
       <div className="flex items-center gap-2 pl-4 border-l border-[#e0e0e0] dark:border-[#333] z-10 min-w-0">
         <motion.a
           href="mailto:gvscontrols@gmail.com"
@@ -294,7 +290,6 @@ const Header = () => {
         <TopContactBar />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center justify-between min-h-[60px]">
-            {/* Logo and Title (Desktop) */}
             <div className="flex items-center shrink-0">
               <NavLink
                 to="/"
@@ -312,22 +307,16 @@ const Header = () => {
                 </div>
               </NavLink>
             </div>
-
-            {/* Title and Slogan (Centered in Mobile) */}
             <div className="flex-1 flex justify-center items-center lg:hidden">
               <div className="text-center">
                 <span className="block gvs-title-red">GVS Controls</span>
                 <span className="block gvs-slogan-yellow">Our Vision To Your Solution</span>
               </div>
             </div>
-
-            {/* Hamburger Menu */}
             <AnimatedMenuButton
               open={mobileMenuOpen}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             />
-
-            {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center justify-end w-full lg:w-auto mt-2 lg:mt-0">
               <nav className="flex items-center">
                 <div className="flex items-center gap-1 bg-white/20 border border-white/30 rounded-full py-1 px-2">
@@ -377,38 +366,41 @@ const Header = () => {
             />
             <motion.div
               className="lg:hidden fixed inset-0 flex items-center justify-center z-[2000]"
+              style={{
+                paddingTop: "env(safe-area-inset-top)",
+                paddingBottom: "env(safe-area-inset-bottom)",
+              }}
               initial={{ opacity: 0, scale: 0.7 }}
               animate={{ opacity: 1, scale: 1, transition: { type: "spring", stiffness: 300, damping: 30 } }}
               exit={{ opacity: 0, scale: 0.7, transition: { type: "spring", stiffness: 300, damping: 30 } }}
               layout
             >
-              <div className="relative flex flex-col w-full max-w-md h-[98vh] max-h-[98vh] bg-gradient-to-br from-white/95 via-[#f8fafc]/95 to-[#e9ecef]/95 shadow-2xl rounded-3xl border border-[#4ecdc4]/30 backdrop-blur-2xl p-0 overflow-hidden">
-                {/* Animated Close Icon */}
+              <div className="relative flex flex-col w-full max-w-[360px] h-[90vh] max-h-[90vh] bg-gradient-to-br from-white/95 via-[#f8fafc]/95 to-[#e9ecef]/95 shadow-2xl rounded-3xl border border-[#4ecdc4]/30 backdrop-blur-2xl p-0 overflow-hidden">
                 <motion.button
                   onClick={() => setMobileMenuOpen(false)}
                   aria-label="Close menu"
-                  className="absolute top-4 right-4 z-50 p-2 rounded-full bg-white shadow border border-[#4ecdc4]/30 focus:outline-none focus:ring-2 focus:ring-[#ff6f61]"
+                  role="button"
+                  className="absolute top-3 right-3 z-50 p-1.5 rounded-full bg-white shadow border border-[#4ecdc4]/30 focus:outline-none focus:ring-2 focus:ring-[#ff6f61]"
                   initial={{ opacity: 0, scale: 0.7, rotate: -90 }}
                   animate={{ opacity: 1, scale: 1, rotate: 0, transition: { delay: 0.1, type: "spring", stiffness: 300 } }}
                   exit={{ opacity: 0, scale: 0.7, rotate: 90, transition: { duration: 0.15 } }}
                   style={{ pointerEvents: "auto" }}
                 >
-                  <XIcon size={26} />
+                  <XIcon size={22} />
                 </motion.button>
-                <div className="flex flex-col items-center pt-8 pb-2 px-4 shrink-0">
+                <div className="flex flex-col items-center pt-4 pb-1 px-4 shrink-0">
                   <img
                     src="/assets/gvs_logo.png"
                     alt="GVS Controls Logo"
-                    className="h-12 w-auto mb-2 rounded-xl shadow-lg bg-white/80"
+                    className="h-8 w-auto mb-1.5 rounded-lg shadow-md bg-white/80"
                   />
-                  <span className="gvs-title-red text-[18px] leading-tight">GVS Controls</span>
-                  <span className="gvs-slogan-yellow text-sm font-medium mb-2 leading-tight">
+                  <span className="gvs-title-red text-[16px] leading-tight">GVS Controls</span>
+                  <span className="gvs-slogan-yellow text-xs font-medium mb-1.5 leading-tight">
                     Our Vision To Your Solution
                   </span>
                 </div>
-                {/* Scrollable content area for nav and info */}
-                <div className="flex-1 min-h-0 flex flex-col gap-0 px-0 justify-start items-stretch overflow-y-auto">
-                  <nav className="flex flex-col gap-2 px-5 mt-2 mb-2">
+                <div className="flex-1 min-h-0 flex flex-col gap-0 px-0 justify-start items-stretch overflow-y-auto pb-14">
+                  <nav className="flex flex-col gap-1 px-4 mt-1.5 mb-1.5">
                     {navLinks.map((link, index) => (
                       <motion.div
                         key={link.name}
@@ -416,17 +408,20 @@ const Header = () => {
                         animate={{
                           opacity: 1,
                           y: 0,
-                          transition: { delay: 0.10 + index * 0.04, type: "spring", stiffness: 200 },
+                          transition: { delay: 0.10 + index * 0.04, duration: 0.3, ease: "easeInOut" },
                         }}
                         exit={{ opacity: 0, y: 16, transition: { duration: 0.10 } }}
+                        whileTap={{ scale: 0.95 }}
+                        style={{ willChange: "transform, opacity" }}
                       >
                         <NavLink
                           to={link.path}
                           end
                           onClick={handleNavClick}
+                          aria-current={location.pathname === link.path ? "page" : undefined}
                           className={({ isActive }) =>
                             cn(
-                              "block text-[16px] font-semibold px-4 py-2 rounded-xl transition-all duration-300 text-left shadow-sm hover:scale-[1.04]",
+                              "block text-[15px] font-semibold px-3 py-1.5 rounded-lg transition-all duration-300 text-left shadow-sm hover:scale-[1.04] border-b border-[#4ecdc4]/10",
                               isActive
                                 ? "bg-gradient-to-r from-[#ff6f61]/40 to-[#ffd700]/40 text-[#ff6f61] shadow-md"
                                 : "text-[#4a0e78] hover:bg-[#4ecdc4]/20 hover:text-[#ff6f61] hover:shadow"
@@ -438,23 +433,23 @@ const Header = () => {
                       </motion.div>
                     ))}
                   </nav>
-                  <div className="flex flex-col gap-1 text-[#4a0e78] text-[14px] font-medium mb-2 px-5">
+                  <div className="flex flex-col gap-0.5 text-[#4a0e78] text-[13px] font-medium mb-1.5 px-4">
                     <a
                       href="tel:+919087772798"
-                      className="flex items-center gap-1.5 hover:text-[#ff6f61] transition-colors"
+                      className="flex items-center gap-1 hover:text-[#ff6f61] transition-colors py-1"
                     >
-                      <Phone size={15} />
+                      <Phone size={14} />
                       +91 90877 72798
                     </a>
                     <a
                       href="mailto:gvscontrols@gmail.com"
-                      className="flex items-center gap-1.5 hover:text-[#ff6f61] transition-colors"
+                      className="flex items-center gap-1 hover:text-[#ff6f61] transition-colors py-1"
                     >
-                      <Mail size={15} />
+                      <Mail size={14} />
                       gvscontrols@gmail.com
                     </a>
                   </div>
-                  <div className="flex justify-center gap-4 mb-3 mt-2 px-5">
+                  <div className="flex justify-center gap-3 mb-2 mt-1 px-4">
                     <a
                       href="https://facebook.com"
                       target="_blank"
@@ -462,7 +457,7 @@ const Header = () => {
                       className="text-[#4a0e78] hover:text-[#ff6f61] transition-colors"
                       aria-label="Facebook"
                     >
-                      <Facebook size={18} />
+                      <Facebook size={16} />
                     </a>
                     <a
                       href="https://x.com"
@@ -471,7 +466,7 @@ const Header = () => {
                       className="text-[#4a0e78] hover:text-[#ff6f61] transition-colors"
                       aria-label="X"
                     >
-                      <SiX size={18} />
+                      <SiX size={16} />
                     </a>
                     <a
                       href="https://instagram.com"
@@ -480,15 +475,14 @@ const Header = () => {
                       className="text-[#4a0e78] hover:text-[#ff6f61] transition-colors"
                       aria-label="Instagram"
                     >
-                      <Instagram size={18} />
+                      <Instagram size={16} />
                     </a>
                   </div>
                 </div>
-                {/* Sticky Contact Us button at the bottom */}
-                <div className="px-5 pt-3 pb-6 border-t border-[#4ecdc4]/20 bg-white/60 backdrop-blur-xl rounded-b-3xl sticky bottom-0 z-10">
+                <div className="px-4 pt-2 pb-4 border-t border-[#4ecdc4]/20 bg-white/60 backdrop-blur-xl rounded-b-3xl sticky bottom-0 z-10">
                   <Button
                     variant="gradient"
-                    className="w-full bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white hover:from-[#4a0e78] hover:to-[#ff6f61] rounded-xl py-2 text-[16px] font-semibold shadow-lg"
+                    className="w-full bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white hover:from-[#4a0e78] hover:to-[#ff6f61] rounded-lg py-1.5 text-[15px] font-semibold shadow-lg"
                     onClick={(e) => {
                       e.stopPropagation();
                       setMobileMenuOpen(false);
