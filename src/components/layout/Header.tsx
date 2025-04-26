@@ -294,7 +294,7 @@ const Header = () => {
                 onClick={handleNavClick}
               >
                 <img
-                  src="https://placehold.co/120x40/png?text=Logo"
+                  src="/assets/gvs_logo.png"
                   alt="GVS Controls Logo"
                   className="h-12 w-auto max-w-[150px] transition-transform hover:scale-105"
                 />
