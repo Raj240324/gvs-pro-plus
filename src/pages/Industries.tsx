@@ -15,7 +15,7 @@ import {
 
 // Use Unsplash/Pexels images for each industry
 const industryImages = {
-  power: 'https://img.freepik.com/free-photo/view-nuclear-power-plant-with-towers-letting-out-steam-from-process_23-2150957646.jpg?t=st=1745587331~exp=1745590931~hmac=3998ea38e82d33cc5f7ae709776fd1b62e180cd61746f10952f25520559894ac&w=2000', // Power plant
+  power: '/assets/power_plant.jpg', // Power plant (local image)
   steel: 'https://img.freepik.com/free-photo/heavy-machinery-steel-plant-produces-electricity-generated-by-ai_188544-26156.jpg?t=st=1745587416~exp=1745591016~hmac=21bcbdda71397c081eba8d5d5ffb7be07cd55b6d3f9e82cbae95420701633f72&w=2000', // Steel plant
   chemical: 'https://img.freepik.com/free-psd/modern-interior-science-laboratory-generative-ai_587448-1846.jpg?t=st=1745587484~exp=1745591084~hmac=661ba4938ef5eb9b0042437c281fb12f068b50c93f01eb5ff26c25b2dab3d214&w=1800', // Chemical plant
   cooling: 'https://img.freepik.com/free-photo/electricity-generated-through-solar-panels-blue-sky-generated-by-ai_188544-26194.jpg?t=st=1745587579~exp=1745591179~hmac=41e7d7727b347250bf3e76ad327d3516fa070c38c6bee9d6556965e4ba9bd20c&w=2000', // Cooling tower
