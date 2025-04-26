@@ -2,6 +2,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
+import logo from "../../../public/assets/gvs_logo.png"
 
 const Footer = () => {
   const location = useLocation();
@@ -59,7 +60,7 @@ const Footer = () => {
               whileHover={{ scale: 1.02 }}
             >
               <div className="flex items-center mb-4">
-                <img src="/assets/gvs_logo.png" alt="GVS Controls Logo" className="h-10 w-auto" />
+                <img src={logo} alt="GVS Controls Logo" className="h-10 w-auto" />
                 <span className="gvs-title-red font-montserrat font-bold text-2xl ml-3">
                   GVS Controls
                 </span>
