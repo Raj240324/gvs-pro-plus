@@ -96,8 +96,12 @@ const Gallery = () => {
   }, [activeCategory]);
 
   const openLightbox = (image: GalleryImage) => {
+    const newIndex = filteredImages.findIndex(img => img.id === image.id);
     setSelectedImage(image);
-    setCurrentImageIndex(filteredImages.findIndex(img => img.id === image.id));
+    setCurrentImageIndex(newIndex);
+    // Increment the index for the next image (wrap around to 0 if at the end)
+    const nextIndex = newIndex < filteredImages.length - 1 ? newIndex + 1 : 0;
+    setCurrentImageIndex(nextIndex);
     document.body.style.overflow = 'hidden';
   };
 
@@ -244,58 +248,58 @@ const Gallery = () => {
 
       {/* Lightbox */}
       <AnimatePresence>
-        {selectedImage && (
-          <motion.div
-            className="fixed inset-0 z-50 bg-gray-950/95 backdrop-blur-lg flex items-center justify-center p-4 sm:p-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            onClick={closeLightbox}
-          >
-            <motion.div
-              className="relative w-full max-w-5xl sm:max-w-6xl md:max-w-7xl max-h-[90vh]"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <img
-                src={selectedImage.src}
-                alt={selectedImage.alt}
-                className="w-full max-h-[80vh] sm:max-h-[85vh] object-contain rounded-xl shadow-2xl border border-cyan-500/30"
-                loading="lazy"
-              />
-              <button
-                className="absolute top-4 right-4 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-3 rounded-full transition-colors"
-                onClick={closeLightbox}
-                aria-label="Close lightbox"
-              >
-                <X size={24} />
-              </button>
-              <button
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-3 rounded-full transition-colors"
-                onClick={goToPreviousImage}
-                aria-label="Previous image"
-              >
-                <ChevronLeft size={24} />
-              </button>
-              <button
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-3 rounded-full transition-colors"
-                onClick={goToNextImage}
-                aria-label="Next image"
-              >
-                <ChevronRight size={24} />
-              </button>
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900/90 to-transparent text-white p-4 sm:p-6 rounded-b-xl">
-                <h3 className="font-mono text-xl sm:text-2xl md:text-3xl text-cyan-300">{selectedImage.alt}</h3>
-                <p className="text-violet-400 text-sm sm:text-base md:text-lg font-mono">{selectedImage.category}</p>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+  {selectedImage && (
+    <motion.div
+      className="fixed inset-0 z-[2500] bg-gray-950/95 backdrop-blur-lg flex items-center justify-center p-4 sm:p-6"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      onClick={closeLightbox}
+    >
+      <motion.div
+        className="relative w-full max-w-5xl sm:max-w-6xl md:max-w-7xl max-h-[90vh]"
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <img
+          src={selectedImage.src}
+          alt={selectedImage.alt}
+          className="w-full max-h-[80vh] sm:max-h-[85vh] object-contain rounded-xl shadow-2xl border border-cyan-500/30"
+          loading="lazy"
+        />
+        <button
+          className="absolute top-4 right-4 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-3 rounded-full transition-colors"
+          onClick={closeLightbox}
+          aria-label="Close lightbox"
+        >
+          <X size={24} />
+        </button>
+        <button
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-3 rounded-full transition-colors"
+          onClick={goToPreviousImage}
+          aria-label="Previous image"
+        >
+          <ChevronLeft size={24} />
+        </button>
+        <button
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-3 rounded-full transition-colors"
+          onClick={goToNextImage}
+          aria-label="Next image"
+        >
+          <ChevronRight size={24} />
+        </button>
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900/90 to-transparent text-white p-4 sm:p-6 rounded-b-xl">
+          <h3 className="font-mono text-xl sm:text-2xl md:text-3xl text-cyan-300">{selectedImage.alt}</h3>
+          <p className="text-violet-400 text-sm sm:text-base md:text-lg font-mono">{selectedImage.category}</p>
+        </div>
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
     </main>
   );
 };
