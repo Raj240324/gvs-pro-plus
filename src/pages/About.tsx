@@ -43,7 +43,7 @@ const About = () => {
         <div>
           <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">Founded GVS Controls</h3>
           <p className="text-gray-600 mt-2">Established as a proprietary company with a vision for innovative, cost-effective engineering solutions.</p>
-          <img src="https://unsplash.com/photos/low-angle-view-high-rise-buildings-nxZDMUQhN4o" alt="Founded GVS Controls" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
+          <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=2946&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Founded GVS Controls" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
         </div>
       ),
     },
@@ -53,7 +53,7 @@ const About = () => {
         <div>
           <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">Early Projects</h3>
           <p className="text-gray-600 mt-2">Collaborated with Shriram EPC Ltd., Black Stone Group, and L&T on power plants and material handling systems.</p>
-          <img src="https://unsplash.com/photos/the-control-panel-of-an-airplane-with-many-buttons--At4vx7KbAI" alt="Early Projects" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
+          <img src="https://images.unsplash.com/photo-1635277055420-230e79907552?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Early Projects" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
         </div>
       ),
     },
@@ -63,7 +63,7 @@ const About = () => {
         <div>
           <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">Expansion</h3>
           <p className="text-gray-600 mt-2">Executed projects for SAIL, TISCO, and RINL in renewable energy and steel sectors.</p>
-          <img src="https://unsplash.com/photos/a-picture-of-a-world-map-on-a-wall-7EkkL7ODPfc" alt="Expansion" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
+          <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Expansion" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
         </div>
       ),
     },
@@ -73,7 +73,7 @@ const About = () => {
         <div>
           <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">Automation Leadership</h3>
           <p className="text-gray-600 mt-2">Introduced advanced PLC and VFD control systems for process plants.</p>
-          <img src="https://unsplash.com/photos/a-factory-filled-with-lots-of-orange-machines-8gr6bObQLOI" alt="Automation Leadership" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
+          <img src="https://images.unsplash.com/photo-1714322148068-923f9f9bfc1a?q=80&w=3174&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Automation Leadership" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
         </div>
       ),
     },
@@ -83,7 +83,7 @@ const About = () => {
         <div>
           <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">Global Reach</h3>
           <p className="text-gray-600 mt-2">Partnered with international clients like Titan Cement (Egypt) and Republic Cement (Philippines).</p>
-          <img src="https://unsplash.com/photos/fish-eye-photography-of-city-KRELIShKxTM" alt="Global Reach" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
+          <img src="https://images.unsplash.com/photo-1727610542348-9636c3b65d2a?q=80&w=3179&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Global Reach" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
         </div>
       ),
     },
