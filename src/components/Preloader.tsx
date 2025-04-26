@@ -50,7 +50,7 @@ const Preloader = () => {
         </div>
         {/* Logo with pulse/float animation */}
         <img
-          src="https://placehold.co/120x120/png?text=Logo"
+          src="/assets/gvs_logo.png"
           alt="GVS Controls Logo"
           className="w-28 h-28 z-10 mb-4 animate-float"
           style={{ filter: 'drop-shadow(0 2px 16px #22d3ee66)' }}
