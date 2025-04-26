@@ -50,7 +50,7 @@ const Services = () => {
         'Procurement Assistance and Equipment Inspection'
       ],
       stats: { projects: '150+', years: '30+' },
-      image: 'https://img.freepik.com/free-photo/business-scene-top-view_23-2147626514.jpg?t=st=1745586095~exp=1745589695~hmac=9fbbef3474487cc88e277bcb89b4c266cf145a99a8c81a326f6d0deaf832026c&w=1800', // Consultancy
+      image: 'https://images.unsplash.com/photo-1586936893354-362ad6ae47ba?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Consultancy
       ctaLink: '#consultancy-engineering'
     },
     {
@@ -66,7 +66,7 @@ const Services = () => {
         'APFC, AMF, Relay Logic & PLC Control Panels'
       ],
       stats: { panelsBuilt: '500+', industriesServed: '10+' },
-      image: 'https://img.freepik.com/free-photo/factory-workshop-interior-machines-glass-production-background_645730-396.jpg?t=st=1745586095~exp=1745589695~hmac=0e20537e5489d3a63f6a04bd86f94fefd745123f2dbefaa7f00d39c0110f3c73&w=2000', // Panel manufacturing
+      image: 'https://images.unsplash.com/photo-1714322148068-923f9f9bfc1a?q=80&w=3174&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Panel manufacturing
       ctaLink: '#panel-manufacturing'
     },
     {
@@ -82,7 +82,7 @@ const Services = () => {
         'Revamping of Old Electrical Systems'
       ],
       stats: { sitesCommissioned: '200+', downtimeReduced: '98%' },
-      image: 'https://img.freepik.com/free-photo/man-electrical-working-switchboard-with-fuses-uses-tablet_169016-51730.jpg?t=st=1745586095~exp=1745589695~hmac=9cf40c4afac9c0d0ab012cd5bff2edaabc2d28ccc93a2f207f262d0f61b8a875&w=2000', // Installation/commissioning
+      image: 'https://images.unsplash.com/photo-1624397640148-949b1732bb0a?q=80&w=3174&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Installation/commissioning
       ctaLink: '#installation-commissioning'
     },
     {
@@ -98,7 +98,7 @@ const Services = () => {
         'Real-Time Monitoring and Control Systems'
       ],
       stats: { systemsAutomated: '100+', efficiencyGain: '40%' },
-      image: 'https://img.freepik.com/free-photo/standard-quality-control-collage-concept_23-2149595830.jpg?t=st=1745585695~exp=1745589295~hmac=5a01e5cf07004b710b77a39aeaca731e478cbf354d2479bbd94ba677cc062f84&w=2000', // Automation
+      image: 'https://images.unsplash.com/photo-1655393001768-d946c97d6fd1?q=80&w=2952&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Automation
       ctaLink: '#automation-solutions'
     },
     {
@@ -114,7 +114,7 @@ const Services = () => {
         'Compliance with Safety Standards'
       ],
       stats: { systemsRevamped: '80+', energySaved: '25%' },
-      image: 'https://img.freepik.com/free-photo/young-adult-electrician-civil-engineer-screwing-equipment-into-fuse-box_169016-53047.jpg?t=st=1745585755~exp=1745589355~hmac=048dabfce0a93992c396eba68142e7ef429bce814077cb8e9fbcbbb1e367aa25&w=2000', // Renovation/revamping
+      image: 'https://images.unsplash.com/photo-1667491295131-c6ccecd35f65?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Renovation/revamping
       ctaLink: '#renovation-revamping'
     },
     {
@@ -130,7 +130,7 @@ const Services = () => {
         'Expert On-Demand Assistance'
       ],
       stats: { clientsSupported: '50+', uptimeGuaranteed: '99.9%' },
-      image: 'https://img.freepik.com/free-photo/standard-quality-control-concept-m_23-2150041853.jpg?t=st=1745586031~exp=1745589631~hmac=b2a90da487951e12f04fba95a06e0f86ab5e5ae6ed795e0c1d8f9528030ffb46&w=1800', // Support/supply
+      image: 'https://images.unsplash.com/photo-1709715357479-591f9971fb05?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Support/supply
       ctaLink: '#support-supply'
     }
   ];
