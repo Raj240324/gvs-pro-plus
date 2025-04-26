@@ -1,13 +1,12 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { Phone, Mail, Facebook, Instagram, X } from "lucide-react";
+import { Phone, Mail, Facebook, Instagram } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../lib/utils";
 import Button from "../../components/ui/Button";
 import ContactModal from "../../components/ContactModal";
 import { useContactModal } from "../../hooks/use-contact-modal";
 import { SiX } from "react-icons/si";
-import logo from "../../../public/assets/gvs_logo.png"
 
 function debounce<T extends (...args: unknown[]) => void>(func: T, wait: number): (...args: Parameters<T>) => void {
   let timeout: ReturnType<typeof setTimeout>;
@@ -48,7 +47,7 @@ const AnimatedMenuButton = ({ open, onClick }: { open: boolean; onClick: () => v
     initial={false}
     animate={open ? "open" : "closed"}
     whileTap={{ scale: 0.9 }}
-    style={{ outline: 'none', border: 'none', background: 'none' }}
+    style={{ outline: "none", border: "none", background: "none" }}
   >
     {/* Hamburger to X animation */}
     <motion.svg
@@ -60,15 +59,23 @@ const AnimatedMenuButton = ({ open, onClick }: { open: boolean; onClick: () => v
       className="block"
     >
       <motion.rect
-        x="6" y="10" width="20" height="2.5" rx="1.25"
+        x="6"
+        y="10"
+        width="20"
+        height="2.5"
+        rx="1.25"
         animate={open ? { rotate: 45, y: 11, x: 6 } : { rotate: 0, y: 10, x: 6 }}
-        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+        transition={{ type: "spring", stiffness: 400, damping: 30 }}
         fill="currentColor"
       />
       <motion.rect
-        x="6" y="19.5" width="20" height="2.5" rx="1.25"
+        x="6"
+        y="19.5"
+        width="20"
+        height="2.5"
+        rx="1.25"
         animate={open ? { rotate: -45, y: 11, x: 6 } : { rotate: 0, y: 19.5, x: 6 }}
-        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+        transition={{ type: "spring", stiffness: 400, damping: 30 }}
         fill="currentColor"
       />
     </motion.svg>
@@ -88,11 +95,11 @@ const TopContactBar = () => (
           rel="noopener noreferrer"
           className="group focus:outline-none bg-transparent p-0 border-0 inline-flex items-center justify-center"
           aria-label="Facebook"
-          style={{ background: 'none', border: 'none' }}
+          style={{ background: "none", border: "none" }}
         >
           <motion.span
             className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#1877F3]/90 to-[#3b5998]/80 shadow-md transition-all duration-300 overflow-hidden"
-            whileHover={{ scale: 1.18, rotate: -8, boxShadow: '0 4px 16px #1877f355' }}
+            whileHover={{ scale: 1.18, rotate: -8, boxShadow: "0 4px 16px #1877f355" }}
             whileTap={{ scale: 0.95 }}
           >
             <Facebook size={20} className="text-white group-hover:text-[#ffd700] transition" />
@@ -104,11 +111,11 @@ const TopContactBar = () => (
           rel="noopener noreferrer"
           className="group focus:outline-none bg-transparent p-0 border-0 inline-flex items-center justify-center"
           aria-label="X (Twitter)"
-          style={{ background: 'none', border: 'none' }}
+          style={{ background: "none", border: "none" }}
         >
           <motion.span
             className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#000000]/90 to-[#23272f]/80 shadow-md transition-all duration-300 overflow-hidden"
-            whileHover={{ scale: 1.18, rotate: 8, boxShadow: '0 4px 16px #00000033' }}
+            whileHover={{ scale: 1.18, rotate: 8, boxShadow: "0 4px 16px #00000033" }}
             whileTap={{ scale: 0.95 }}
           >
             <SiX size={20} className="text-white group-hover:text-[#ffd700] transition" />
@@ -120,11 +127,11 @@ const TopContactBar = () => (
           rel="noopener noreferrer"
           className="group focus:outline-none bg-transparent p-0 border-0 inline-flex items-center justify-center"
           aria-label="Instagram"
-          style={{ background: 'none', border: 'none' }}
+          style={{ background: "none", border: "none" }}
         >
           <motion.span
             className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#E4405F]/90 via-[#fd1d1d]/80 to-[#fcb045]/80 shadow-md transition-all duration-300 overflow-hidden"
-            whileHover={{ scale: 1.18, rotate: -8, boxShadow: '0 4px 16px #E4405F55' }}
+            whileHover={{ scale: 1.18, rotate: -8, boxShadow: "0 4px 16px #E4405F55" }}
             whileTap={{ scale: 0.95 }}
           >
             <Instagram size={20} className="text-white group-hover:text-[#ffd700] transition" />
@@ -142,7 +149,7 @@ const TopContactBar = () => (
         <motion.a
           href="mailto:gvscontrols@gmail.com"
           className="flex items-center gap-1 px-2 py-0.5 rounded bg-gradient-to-r from-[#fff7e6] to-[#ffe0e0] dark:from-[#2a2a40] dark:to-[#3a2a3a] shadow-sm font-semibold text-[#4a0e78] dark:text-[#ffd700] text-xs group relative overflow-hidden whitespace-nowrap min-w-0"
-          whileHover={{ scale: 1.04, boxShadow: '0 2px 8px #ff6f6133' }}
+          whileHover={{ scale: 1.04, boxShadow: "0 2px 8px #ff6f6133" }}
           whileTap={{ scale: 0.97 }}
           aria-label="Email us at gvscontrols@gmail.com"
           style={{ maxWidth: 180 }}
@@ -150,7 +157,7 @@ const TopContactBar = () => (
           <motion.span
             className="flex items-center justify-center"
             animate={{ y: [0, -2, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
           >
             <Mail size={14} className="text-[#ff6f61] group-hover:scale-110 transition-transform duration-300" />
           </motion.span>
@@ -160,7 +167,7 @@ const TopContactBar = () => (
         <motion.a
           href="tel:+919087772798"
           className="flex items-center gap-1 px-2 py-0.5 rounded bg-gradient-to-r from-[#e6fff7] to-[#e0f7ff] dark:from-[#2a403a] dark:to-[#2a3a3a] shadow-sm font-semibold text-[#4a0e78] dark:text-[#ffd700] text-xs group relative overflow-hidden whitespace-nowrap min-w-0"
-          whileHover={{ scale: 1.04, boxShadow: '0 2px 8px #4a0e7833' }}
+          whileHover={{ scale: 1.04, boxShadow: "0 2px 8px #4a0e7833" }}
           whileTap={{ scale: 0.97 }}
           aria-label="Call us at +91 90877 72798"
           style={{ maxWidth: 140 }}
@@ -168,7 +175,7 @@ const TopContactBar = () => (
           <motion.span
             className="flex items-center justify-center"
             animate={{ y: [0, -2, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut', delay: 0.5 }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut", delay: 0.5 }}
           >
             <Phone size={14} className="text-[#4a0e78] group-hover:scale-110 transition-transform duration-300" />
           </motion.span>
@@ -295,7 +302,7 @@ const Header = () => {
                 onClick={handleNavClick}
               >
                 <img
-                  src={logo}
+                  src="/assets/gvs_logo.png"
                   alt="GVS Controls Logo"
                   className="h-12 w-auto max-w-[150px] transition-transform hover:scale-105"
                 />
@@ -315,7 +322,10 @@ const Header = () => {
             </div>
 
             {/* Hamburger Menu */}
-            <AnimatedMenuButton open={mobileMenuOpen} onClick={() => setMobileMenuOpen(!mobileMenuOpen)} />
+            <AnimatedMenuButton
+              open={mobileMenuOpen}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            />
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center justify-end w-full lg:w-auto mt-2 lg:mt-0">
@@ -368,8 +378,8 @@ const Header = () => {
             <motion.div
               className="lg:hidden fixed inset-0 flex items-center justify-center z-[2000]"
               initial={{ opacity: 0, scale: 0.7 }}
-              animate={{ opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 300, damping: 30 } }}
-              exit={{ opacity: 0, scale: 0.7, transition: { type: 'spring', stiffness: 300, damping: 30 } }}
+              animate={{ opacity: 1, scale: 1, transition: { type: "spring", stiffness: 300, damping: 30 } }}
+              exit={{ opacity: 0, scale: 0.7, transition: { type: "spring", stiffness: 300, damping: 30 } }}
               layout
             >
               <div className="relative flex flex-col w-full max-w-md h-[98vh] max-h-[98vh] bg-gradient-to-br from-white/95 via-[#f8fafc]/95 to-[#e9ecef]/95 shadow-2xl rounded-3xl border border-[#4ecdc4]/30 backdrop-blur-2xl p-0 overflow-hidden">
@@ -379,16 +389,22 @@ const Header = () => {
                   aria-label="Close menu"
                   className="absolute top-4 right-4 z-50 p-2 rounded-full bg-white shadow border border-[#4ecdc4]/30 focus:outline-none focus:ring-2 focus:ring-[#ff6f61]"
                   initial={{ opacity: 0, scale: 0.7, rotate: -90 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0, transition: { delay: 0.1, type: 'spring', stiffness: 300 } }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0, transition: { delay: 0.1, type: "spring", stiffness: 300 } }}
                   exit={{ opacity: 0, scale: 0.7, rotate: 90, transition: { duration: 0.15 } }}
-                  style={{ pointerEvents: 'auto' }}
+                  style={{ pointerEvents: "auto" }}
                 >
                   <XIcon size={26} />
                 </motion.button>
                 <div className="flex flex-col items-center pt-8 pb-2 px-4 shrink-0">
-                  <img src={logo} alt="GVS Controls Logo" className="h-12 w-auto mb-2 rounded-xl shadow-lg bg-white/80" />
+                  <img
+                    src="/assets/gvs_logo.png"
+                    alt="GVS Controls Logo"
+                    className="h-12 w-auto mb-2 rounded-xl shadow-lg bg-white/80"
+                  />
                   <span className="gvs-title-red text-[18px] leading-tight">GVS Controls</span>
-                  <span className="gvs-slogan-yellow text-sm font-medium mb-2 leading-tight">Our Vision To Your Solution</span>
+                  <span className="gvs-slogan-yellow text-sm font-medium mb-2 leading-tight">
+                    Our Vision To Your Solution
+                  </span>
                 </div>
                 {/* Scrollable content area for nav and info */}
                 <div className="flex-1 min-h-0 flex flex-col gap-0 px-0 justify-start items-stretch overflow-y-auto">
@@ -397,7 +413,11 @@ const Header = () => {
                       <motion.div
                         key={link.name}
                         initial={{ opacity: 0, y: 16 }}
-                        animate={{ opacity: 1, y: 0, transition: { delay: 0.10 + index * 0.04, type: 'spring', stiffness: 200 } }}
+                        animate={{
+                          opacity: 1,
+                          y: 0,
+                          transition: { delay: 0.10 + index * 0.04, type: "spring", stiffness: 200 },
+                        }}
                         exit={{ opacity: 0, y: 16, transition: { duration: 0.10 } }}
                       >
                         <NavLink
@@ -419,13 +439,49 @@ const Header = () => {
                     ))}
                   </nav>
                   <div className="flex flex-col gap-1 text-[#4a0e78] text-[14px] font-medium mb-2 px-5">
-                    <a href="tel:+919087772798" className="flex items-center gap-1.5 hover:text-[#ff6f61] transition-colors"><Phone size={15} />+91 90877 72798</a>
-                    <a href="mailto:gvscontrols@gmail.com" className="flex items-center gap-1.5 hover:text-[#ff6f61] transition-colors"><Mail size={15} />gvscontrols@gmail.com</a>
+                    <a
+                      href="tel:+919087772798"
+                      className="flex items-center gap-1.5 hover:text-[#ff6f61] transition-colors"
+                    >
+                      <Phone size={15} />
+                      +91 90877 72798
+                    </a>
+                    <a
+                      href="mailto:gvscontrols@gmail.com"
+                      className="flex items-center gap-1.5 hover:text-[#ff6f61] transition-colors"
+                    >
+                      <Mail size={15} />
+                      gvscontrols@gmail.com
+                    </a>
                   </div>
                   <div className="flex justify-center gap-4 mb-3 mt-2 px-5">
-                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-[#4a0e78] hover:text-[#ff6f61] transition-colors" aria-label="Facebook"><Facebook size={18} /></a>
-                    <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-[#4a0e78] hover:text-[#ff6f61] transition-colors" aria-label="X"><SiX size={18} /></a>
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-[#4a0e78] hover:text-[#ff6f61] transition-colors" aria-label="Instagram"><Instagram size={18} /></a>
+                    <a
+                      href="https://facebook.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#4a0e78] hover:text-[#ff6f61] transition-colors"
+                      aria-label="Facebook"
+                    >
+                      <Facebook size={18} />
+                    </a>
+                    <a
+                      href="https://x.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#4a0e78] hover:text-[#ff6f61] transition-colors"
+                      aria-label="X"
+                    >
+                      <SiX size={18} />
+                    </a>
+                    <a
+                      href="https://instagram.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#4a0e78] hover:text-[#ff6f61] transition-colors"
+                      aria-label="Instagram"
+                    >
+                      <Instagram size={18} />
+                    </a>
                   </div>
                 </div>
                 {/* Sticky Contact Us button at the bottom */}
