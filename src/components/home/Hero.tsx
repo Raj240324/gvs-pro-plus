@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { TextRotate } from "../../components/ui/text-rotate";
 import TypewriterEffectSmoothDemo from "../../components/ui/typewriter-effect-demo-1";
 import { TextRoll } from "../../components/ui/text-roll";
 import ContactModal from "../ContactModal";
@@ -23,35 +22,34 @@ const Hero = () => {
       </div>
 
       {/* Blue Parallelogram */}
-<div
-  className="absolute"
-  style={{
-    top: "200px",
-    left: "0",
-    width: "200px",
-    height: "300px",
-    backgroundColor: "#0046ad",
-    transform: "skewX(-325deg)",
-    transformOrigin: "top left",
-    boxShadow: "20px 20px 50px rgba(0,0,0,0.5)",
-  }}
-/>
+      <div
+        className="absolute"
+        style={{
+          top: "200px",
+          left: "0",
+          width: "200px",
+          height: "300px",
+          backgroundColor: "#0046ad",
+          transform: "skewX(-325deg)",
+          transformOrigin: "top left",
+          boxShadow: "20px 20px 50px rgba(0,0,0,0.5)",
+        }}
+      />
 
-{/* Green Parallelogram */}
-<div
-  className="absolute"
-  style={{
-    top: "150px",
-    left: "190px",
-    width: "200px",
-    height: "300px",
-    backgroundColor: "#7fc6a4",
-    transform: "skewX(-145deg)",
-    transformOrigin: "top left",
-    boxShadow: "20px 20px 50px rgba(0,0,0,0.5)",
-  }}
-/>
-
+      {/* Green Parallelogram */}
+      <div
+        className="absolute"
+        style={{
+          top: "150px",
+          left: "190px",
+          width: "200px",
+          height: "300px",
+          backgroundColor: "#7fc6a4",
+          transform: "skewX(-145deg)",
+          transformOrigin: "top left",
+          boxShadow: "20px 20px 50px rgba(0,0,0,0.5)",
+        }}
+      />
 
       {/* --- Main Content --- */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center z-10">
@@ -73,33 +71,13 @@ const Hero = () => {
               </span>
             </h1>
 
-            {/* Tagline */}
-            <p className="mb-2 italic text-lg" style={{ color: "#ffcc00" }}>
-              ( OUR VISION TO YOUR SOLUTION )
-            </p>
 
             {/* Typewriter */}
             <TypewriterEffectSmoothDemo />
 
             {/* Consultant Line */}
             <p className="text-xl lg:text-2xl font-medium mb-4 italic" style={{ color: "#00bfff" }}>
-              Consultatnt, Engineering, Manufacturing (
-              <TextRotate
-                texts={["Supply", "Services"]}
-                rotationInterval={2000}
-                initial={{ y: "100%", opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: "-120%", opacity: 0 }}
-                transition={{ type: "spring", damping: 30, stiffness: 400 }}
-                staggerDuration={0.025}
-                staggerFrom="last"
-                mainClassName="inline-flex text-xl lg:text-2xl font-medium italic px-2 bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] rounded-lg"
-                splitLevelClassName="overflow-hidden pb-0.5"
-                elementLevelClassName="inline-block"
-                loop
-                auto
-              />
-              )-
+              Consultant, Engineering, Manufacturing, Supply & Services
             </p>
 
             {/* Electrical Automation */}
