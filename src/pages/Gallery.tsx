@@ -7,7 +7,6 @@ interface GalleryImage {
   id: string;
   src: string;
   alt: string;
-  category: string;
 }
 
 const CustomCard = ({ title, src, onClick }: { title: string; src: string; onClick: () => void }) => {
@@ -35,27 +34,93 @@ const CustomCard = ({ title, src, onClick }: { title: string; src: string; onCli
 };
 
 const Gallery = () => {
-  const [activeCategory, setActiveCategory] = useState<string>('All');
-  const [filteredImages, setFilteredImages] = useState<GalleryImage[]>([]);
+  const [images, setImages] = useState<GalleryImage[]>([]);
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [headerHeight, setHeaderHeight] = useState(0);
 
-  const galleryImages: GalleryImage[] = [
-    { id: '1', src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80', alt: 'Control Panel Manufacturing', category: 'Manufacturing' },
-    { id: '2', src: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80', alt: 'Electrical Installation at Power Plant', category: 'Installation' },
-    { id: '3', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80', alt: 'Automation System Design', category: 'Automation' },
-    { id: '4', src: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=400&q=80', alt: 'Switchgear Panel Testing', category: 'Testing' },
-    { id: '5', src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80', alt: 'Electrical Panel Wiring', category: 'Manufacturing' },
-    { id: '6', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80', alt: 'Site Installation Work', category: 'Installation' },
-    { id: '7', src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80', alt: 'Control System Programming', category: 'Automation' },
-    { id: '8', src: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80', alt: 'Quality Inspection Process', category: 'Testing' },
-    { id: '9', src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80', alt: 'Motor Control Center', category: 'Manufacturing' },
-    { id: '10', src: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=400&q=80', alt: 'Panel Installation at Client Site', category: 'Installation' },
-  ];
-
-  const categories = ['All', ...new Set(galleryImages.map(image => image.category))];
+  // Define gallery images (15 images for Manufacturing)
+  const galleryImages: GalleryImage[] = useMemo(
+    () => [
+      {
+        id: '1',
+        src: '/assets/gallery/cop-1.jpg',
+        alt: 'PCC Panel Manufacturing for Industrial Power Distribution',
+      },
+      {
+        id: '2',
+        src: '/assets/gallery/cop-2.jpg',
+        alt: 'MCC Panel Manufacturing for Motor Control Systems',
+      },
+      {
+        id: '3',
+        src: '/assets/gallery/cop-3.jpg',
+        alt: 'PLC cum VFD Control Panel Manufacturing for Automation',
+      },
+      {
+        id: '4',
+        src: '/assets/gallery/cop-4.jpg',
+        alt: 'PCC Panel Assembly for Power Control Centers',
+      },
+      {
+        id: '5',
+        src: '/assets/gallery/cop-5.jpg',
+        alt: 'MCC Panel Fabrication for Industrial Applications',
+      },
+      {
+        id: '6',
+        src: '/assets/gallery/cop-6.jpg',
+        alt: 'VFD Control Panel Manufacturing for Process Control',
+      },
+      {
+        id: '7',
+        src: '/assets/gallery/cop-7.jpg',
+        alt: 'PCC Panel Manufacturing with Advanced Wiring',
+      },
+      {
+        id: '8',
+        src: '/assets/gallery/cop-8.jpg',
+        alt: 'MCC Panel Manufacturing for Heavy-Duty Motors',
+      },
+      {
+        id: '9',
+        src: '/assets/gallery/cop-9.jpg',
+        alt: 'PLC cum VFD Panel Manufacturing for Precision Automation',
+      },
+      {
+        id: '10',
+        src: '/assets/gallery/cop-10.jpg',
+        alt: 'PCC Panel Manufacturing for Energy Management',
+      },
+      {
+        id: '11',
+        src: '/assets/gallery/cop-11.jpg',
+        alt: 'MCC Panel Manufacturing for Industrial Automation',
+      },
+      {
+        id: '12',
+        src: '/assets/gallery/cop-12.jpg',
+        alt: 'VFD Control Panel Manufacturing for Power Plants',
+      },
+      {
+        id: '13',
+        src: '/assets/gallery/cop-13.jpg',
+        alt: 'PCC Panel Manufacturing for Process Industries',
+      },
+      {
+        id: '14',
+        src: '/assets/gallery/cop-14.jpg',
+        alt: 'MCC Panel Manufacturing for Bulk Material Handling',
+      },
+      {
+        id: '15',
+        src: '/assets/gallery/cop-15.jpg',
+        alt: 'PLC cum VFD Panel Manufacturing for Renewable Energy',
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
     const updateHeaderHeight = () => {
@@ -71,19 +136,17 @@ const Gallery = () => {
   }, []);
 
   useEffect(() => {
-    document.title = 'Photo Gallery - GVS Controls';
+    document.title = 'PCC, MCC & PLC cum VFD Control Panels Gallery - GVS Controls';
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Explore GVS Controls photo gallery showcasing our electrical engineering projects, control panels, and installations across various industries.');
+      metaDescription.setAttribute(
+        'content',
+        'Explore GVS Controls’ gallery showcasing innovative PCC, MCC, and PLC cum VFD control panels, manufactured for industrial automation, power management, and customer satisfaction.'
+      );
     }
 
     setTimeout(() => setLoading(false), 1000);
-
-    if (activeCategory === 'All') {
-      setFilteredImages(galleryImages);
-    } else {
-      setFilteredImages(galleryImages.filter(image => image.category === activeCategory));
-    }
+    setImages(galleryImages);
 
     const handleEscKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setSelectedImage(null);
@@ -93,15 +156,12 @@ const Gallery = () => {
     return () => {
       window.removeEventListener('keydown', handleEscKey);
     };
-  }, [activeCategory]);
+  }, [galleryImages]);
 
   const openLightbox = (image: GalleryImage) => {
-    const newIndex = filteredImages.findIndex(img => img.id === image.id);
+    const newIndex = images.findIndex((img) => img.id === image.id);
     setSelectedImage(image);
     setCurrentImageIndex(newIndex);
-    // Increment the index for the next image (wrap around to 0 if at the end)
-    const nextIndex = newIndex < filteredImages.length - 1 ? newIndex + 1 : 0;
-    setCurrentImageIndex(nextIndex);
     document.body.style.overflow = 'hidden';
   };
 
@@ -111,14 +171,14 @@ const Gallery = () => {
   };
 
   const goToPreviousImage = () => {
-    const newIndex = currentImageIndex > 0 ? currentImageIndex - 1 : filteredImages.length - 1;
-    setSelectedImage(filteredImages[newIndex]);
+    const newIndex = currentImageIndex > 0 ? currentImageIndex - 1 : images.length - 1;
+    setSelectedImage(images[newIndex]);
     setCurrentImageIndex(newIndex);
   };
 
   const goToNextImage = () => {
-    const newIndex = currentImageIndex < filteredImages.length - 1 ? currentImageIndex + 1 : 0;
-    setSelectedImage(filteredImages[newIndex]);
+    const newIndex = currentImageIndex < images.length - 1 ? currentImageIndex + 1 : 0;
+    setSelectedImage(images[newIndex]);
     setCurrentImageIndex(newIndex);
   };
 
@@ -144,13 +204,13 @@ const Gallery = () => {
             transition={{ duration: 0.8 }}
           >
             <span className="inline-block px-4 py-2 rounded-full bg-cyan-500/20 text-cyan-300 text-sm font-mono mb-6 border border-cyan-500/30">
-              Our Work
+              Our Expertise
             </span>
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold font-mono bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-violet-500">
-              Photo Gallery
+              PCC, MCC & PLC cum VFD Control Panels Gallery
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mt-4 max-w-3xl mx-auto">
-              Experience our cutting-edge electrical engineering projects in a futuristic showcase.
+              Discover GVS Controls’ innovative and cost-effective engineering solutions for power and automation systems, redefining customer satisfaction.
             </p>
           </motion.div>
         </div>
@@ -166,45 +226,11 @@ const Gallery = () => {
             className="text-center mb-16 sm:mb-20 md:mb-24"
           >
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold font-mono text-white mb-4">
-              Project Nexus
+              Manufacturing Showcase
             </h2>
             <p className="text-gray-400 max-w-2xl mx-auto text-lg sm:text-xl md:text-2xl">
-              A digital exploration of our innovative solutions.
+              A collection of our PCC, MCC, and PLC cum VFD control panels, manufactured for industrial excellence and reliability.
             </p>
-          </motion.div>
-
-          {/* Category Filters */}
-          <motion.div
-            className="flex justify-center mb-16 sm:mb-20"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <div className="inline-flex flex-wrap justify-center gap-3 p-4 bg-gray-900/50 backdrop-blur-md rounded-xl border border-cyan-500/20">
-              {categories.map(category => (
-                <motion.button
-                  key={category}
-                  className={`relative px-4 py-2 sm:px-5 sm:py-3 rounded-lg text-sm sm:text-base font-mono transition-all duration-300 ${
-                    activeCategory === category
-                      ? 'text-cyan-300'
-                      : 'text-gray-400 hover:text-cyan-400'
-                  }`}
-                  onClick={() => setActiveCategory(category)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {category}
-                  {activeCategory === category && (
-                    <motion.span
-                      className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-400 to-violet-500"
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  )}
-                </motion.button>
-              ))}
-            </div>
           </motion.div>
 
           {/* Gallery Cards */}
@@ -219,7 +245,7 @@ const Gallery = () => {
               initial="hidden"
               animate="visible"
             >
-              {filteredImages.map(image => (
+              {images.map((image) => (
                 <motion.div key={image.id} variants={cardVariants}>
                   <CustomCard
                     title={image.alt}
@@ -231,7 +257,7 @@ const Gallery = () => {
             </motion.div>
           )}
 
-          {filteredImages.length === 0 && (
+          {images.length === 0 && (
             <motion.div
               className="text-center py-20 sm:py-24 md:py-28"
               initial={{ opacity: 0 }}
@@ -239,67 +265,89 @@ const Gallery = () => {
               transition={{ duration: 0.8 }}
             >
               <p className="text-gray-400 text-lg sm:text-xl md:text-2xl font-mono">
-                No images found in this category. Try another filter.
+                No images found.
               </p>
             </motion.div>
           )}
         </div>
       </section>
 
+      {/* Contact CTA Section */}
+      <section className="py-16 bg-gray-900 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h3 className="text-3xl font-mono text-cyan-300 mb-4">
+            Contact GVS Controls
+          </h3>
+          <p className="text-gray-400 text-lg mb-6">
+            Reach out for innovative and cost-effective control panel solutions.
+          </p>
+          <div className="text-gray-300 font-mono">
+            <p>Office: No.9/14, First Floor, EWS Plot, Gudalur, Maraimalai Nagar, Chengalpattu-(District), Pin: 603209</p>
+            <p>Mobile: 9884001597 & 733880027</p>
+            <p>Email: <a href="mailto:gvscontrols@gmail.com" className="text-cyan-400 hover:underline">gvscontrols@gmail.com</a></p>
+          </div>
+        </motion.div>
+      </section>
+
       {/* Lightbox */}
       <AnimatePresence>
-  {selectedImage && (
-    <motion.div
-      className="fixed inset-0 z-[2500] bg-gray-950/95 backdrop-blur-lg flex items-center justify-center p-4 sm:p-6"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
-      onClick={closeLightbox}
-    >
-      <motion.div
-        className="relative w-full max-w-5xl sm:max-w-6xl md:max-w-7xl max-h-[90vh]"
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.9, opacity: 0 }}
-        transition={{ duration: 0.3 }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <img
-          src={selectedImage.src}
-          alt={selectedImage.alt}
-          className="w-full max-h-[80vh] sm:max-h-[85vh] object-contain rounded-xl shadow-2xl border border-cyan-500/30"
-          loading="lazy"
-        />
-        <button
-          className="absolute top-4 right-4 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-3 rounded-full transition-colors"
-          onClick={closeLightbox}
-          aria-label="Close lightbox"
-        >
-          <X size={24} />
-        </button>
-        <button
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-3 rounded-full transition-colors"
-          onClick={goToPreviousImage}
-          aria-label="Previous image"
-        >
-          <ChevronLeft size={24} />
-        </button>
-        <button
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-3 rounded-full transition-colors"
-          onClick={goToNextImage}
-          aria-label="Next image"
-        >
-          <ChevronRight size={24} />
-        </button>
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900/90 to-transparent text-white p-4 sm:p-6 rounded-b-xl">
-          <h3 className="font-mono text-xl sm:text-2xl md:text-3xl text-cyan-300">{selectedImage.alt}</h3>
-          <p className="text-violet-400 text-sm sm:text-base md:text-lg font-mono">{selectedImage.category}</p>
-        </div>
-      </motion.div>
-    </motion.div>
-  )}
-</AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            className="fixed inset-0 z-[2500] bg-gray-950/95 backdrop-blur-lg flex items-center justify-center p-4 sm:p-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={closeLightbox}
+          >
+            <motion.div
+              className="relative w-full max-w-5xl sm:max-w-6xl md:max-w-7xl max-h-[90vh]"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={selectedImage.src}
+                alt={selectedImage.alt}
+                className="w-full max-h-[80vh] sm:max-h-[85vh] object-contain rounded-xl shadow-2xl border border-cyan-500/30"
+                loading="lazy"
+              />
+              <button
+                className="absolute top-4 right-4 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-3 rounded-full transition-colors"
+                onClick={closeLightbox}
+                aria-label="Close lightbox"
+              >
+                <X size={24} />
+              </button>
+              <button
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-3 rounded-full transition-colors"
+                onClick={goToPreviousImage}
+                aria-label="Previous image"
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-3 rounded-full transition-colors"
+                onClick={goToNextImage}
+                aria-label="Next image"
+              >
+                <ChevronRight size={24} />
+              </button>
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900/90 to-transparent text-white p-4 sm:p-6 rounded-b-xl">
+                <h3 className="font-mono text-xl sm:text-2xl md:text-3xl text-cyan-300">
+                  {selectedImage.alt}
+                </h3>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 };

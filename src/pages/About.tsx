@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Compare } from '../components/ui/compare';
@@ -6,10 +6,70 @@ import { GlowingEffect } from '../components/ui/glowing-effect';
 import { Timeline } from '../components/ui/timeline';
 
 // Use free business images from Pexels for Mission & Vision
-const missionImageUrl = "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg"; // Teamwork, goal
-const visionImageUrl = "https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg"; // Looking forward, future
+const missionImageUrl: string = "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg";
+const visionImageUrl: string = "https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg";
 
-const About = () => {
+// Array of power plant images in public/assets
+const powerPlantImages: string[] = [
+  '/assets/pp-1.jpg',
+  '/assets/pp-2.jpg',
+  '/assets/pp-3.jpg',
+  '/assets/pp-4.jpg',
+  '/assets/pp-5.jpg',
+  '/assets/pp-6.jpg',
+];
+
+// Array of renewable energy images in public/assets
+const renewableEnergyImages: string[] = [
+  '/assets/re-1.jpg',
+  '/assets/re-2.jpg',
+  '/assets/re-3.jpg',
+  '/assets/st-1.jpg',
+  '/assets/st-2.jpg',
+  '/assets/st-3.jpg',
+];
+
+// Array of control panel images in public/assets/gallery
+const controlPanelImages: string[] = [
+  '/assets/gallery/cop-1.jpg',
+  '/assets/gallery/cop-13.jpg',
+  '/assets/gallery/cop-14.jpg',
+  '/assets/gallery/cop-15.jpg',
+  '/assets/gallery/cop-16.jpg',
+  '/assets/gallery/cop-17.jpg',
+  
+];
+
+// Define the type for timeline data
+interface TimelineItem {
+  title: string;
+  content: JSX.Element;
+}
+
+const About: React.FC = () => {
+  // State to track the current image index for power plants and renewable energy
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+  // State to track the current image index for control panel images
+  const [currentControlPanelIndex, setCurrentControlPanelIndex] = useState<number>(0);
+
+  // Effect to rotate power plant and renewable energy images every 2 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % renewableEnergyImages.length);
+    }, 2000); // Change every 2 seconds
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, []);
+
+  // Effect to rotate control panel images every 2 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentControlPanelIndex((prevIndex) => (prevIndex + 1) % controlPanelImages.length);
+    }, 2000); // Change every 2 seconds
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, []);
+
   useEffect(() => {
     document.title = 'About GVS Controls - Our Journey and Expertise';
     const metaDescription = document.querySelector('meta[name="description"]');
@@ -36,14 +96,18 @@ const About = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const timelineData = [
+  const timelineData: TimelineItem[] = [
     {
       title: '2017',
       content: (
         <div>
           <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">Founded GVS Controls</h3>
           <p className="text-gray-600 mt-2">Established as a proprietary company with a vision for innovative, cost-effective engineering solutions.</p>
-          <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=2946&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Founded GVS Controls" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
+          <img
+            src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=2946&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Founded GVS Controls"
+            className="w-full h-40 object-cover rounded-xl shadow-md mt-4"
+          />
         </div>
       ),
     },
@@ -53,7 +117,11 @@ const About = () => {
         <div>
           <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">Early Projects</h3>
           <p className="text-gray-600 mt-2">Collaborated with Shriram EPC Ltd., Black Stone Group, and L&T on power plants and material handling systems.</p>
-          <img src="https://images.unsplash.com/photo-1635277055420-230e79907552?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Early Projects" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
+          <img
+            src={powerPlantImages[currentImageIndex]}
+            alt={`Power Plant Project ${currentImageIndex + 1}`}
+            className="w-full h-40 object-cover rounded-xl shadow-md mt-4"
+          />
         </div>
       ),
     },
@@ -63,7 +131,11 @@ const About = () => {
         <div>
           <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">Expansion</h3>
           <p className="text-gray-600 mt-2">Executed projects for SAIL, TISCO, and RINL in renewable energy and steel sectors.</p>
-          <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Expansion" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
+          <img
+            src={renewableEnergyImages[currentImageIndex]}
+            alt={`Renewable Energy Project ${currentImageIndex + 1}`}
+            className="w-full h-40 object-cover rounded-xl shadow-md mt-4"
+          />
         </div>
       ),
     },
@@ -73,7 +145,13 @@ const About = () => {
         <div>
           <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">Automation Leadership</h3>
           <p className="text-gray-600 mt-2">Introduced advanced PLC and VFD control systems for process plants.</p>
-          <img src="https://images.unsplash.com/photo-1714322148068-923f9f9bfc1a?q=80&w=3174&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Automation Leadership" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
+          <div className="w-full h-40 overflow-hidden rounded-xl shadow-md mt-4">
+            <img
+              src={controlPanelImages[currentControlPanelIndex]}
+              alt={`Control Panel ${currentControlPanelIndex + 1}`}
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
         </div>
       ),
     },
@@ -83,7 +161,11 @@ const About = () => {
         <div>
           <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">Global Reach</h3>
           <p className="text-gray-600 mt-2">Partnered with international clients like Titan Cement (Egypt) and Republic Cement (Philippines).</p>
-          <img src="https://images.unsplash.com/photo-1727610542348-9636c3b65d2a?q=80&w=3179&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Global Reach" className="w-full h-40 object-cover rounded-xl shadow-md mt-4" />
+          <img
+            src="https://images.unsplash.com/photo-1727610542348-9636c3b65d2a?q=80&w=3179&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Global Reach"
+            className="w-full h-40 object-cover rounded-xl shadow-md mt-4"
+          />
         </div>
       ),
     },
@@ -186,6 +268,20 @@ const About = () => {
     },
   };
 
+  const missionVisionVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.6, ease: 'easeOut' },
+    },
+    hover: {
+      scale: 1.03,
+      boxShadow: '0 20px 40px rgba(0, 0, 0, 0.15)',
+      transition: { duration: 0.3 },
+    },
+  };
+
   return (
     <div className="min-h-screen">
       {/* Spacer to push content below fixed header */}
@@ -204,7 +300,7 @@ const About = () => {
                 About GVS Controls
               </h1>
               <p className="text-lg text-white/90 leading-relaxed drop-shadow-sm">
-                Established in 2017, we bring over three decades of expertise to innovative electrical and automation solutions for industries like power plants, steel, and cement.
+                M/s GVS Controls - Started in the year 2017 as a Proprietary Company, The Company was established with Objective of highly Innovative and Cost Effective Engineering Solution and works with Single minded dedication, constantly redefining the term-“Customer Satisfaction”.
               </p>
             </div>
           </div>
@@ -214,33 +310,116 @@ const About = () => {
         <section className="py-16 md:py-20 bg-gradient-to-tr from-teal-100 via-indigo-200 to-purple-200 relative">
           <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(255,255,255,0.1)_25%,transparent_25%,transparent_75%,rgba(255,255,255,0.1)_75%)] bg-[size:20px_20px] opacity-50"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              {/* Modern Mission & Vision Card */}
-              <div className="aos-fade-right">
-                <div className="relative rounded-3xl bg-white/60 backdrop-blur-xl shadow-2xl border border-teal-200/40 p-8 md:p-12 overflow-hidden">
-                  <div className="absolute -top-8 -right-8 w-32 h-32 bg-gradient-to-br from-teal-300 via-indigo-200 to-fuchsia-200 opacity-30 rounded-full blur-2xl"></div>
-                  <div className="flex items-center gap-3 mb-4">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-teal-500"><circle cx="16" cy="16" r="16" fill="currentColor" fillOpacity="0.12"/><path d="M10 16.5L14 20.5L22 12.5" stroke="#14b8a6" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                    <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600 drop-shadow-sm tracking-tight">Our Mission & Vision</h2>
-                  </div>
-                  <p className="text-lg text-gray-700 mb-4 leading-relaxed font-medium">
-                    Founded in 2017, GVS Controls is dedicated to delivering <span className="bg-gradient-to-r from-teal-400 to-indigo-400 bg-clip-text text-transparent font-semibold">innovative</span> and <span className="bg-gradient-to-r from-fuchsia-400 to-teal-400 bg-clip-text text-transparent font-semibold">cost-effective</span> engineering solutions, specializing in power plants, automation, and renewable energy.
-                  </p>
-                  <p className="text-gray-600 mb-6 leading-relaxed">
-                    With promoters boasting over <span className="font-bold text-teal-600">30 years</span> of EPC experience with industry leaders like Shriram EPC Ltd., Black Stone Group, and L&T, we redefine customer satisfaction.
-                  </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
-                    {[{ icon: <CheckCircle2 className="text-teal-500 w-6 h-6" />, title: 'Quality Excellence', desc: 'Highest standards in all our solutions.' }, { icon: <CheckCircle2 className="text-indigo-500 w-6 h-6" />, title: 'Customer Focus', desc: 'Tailored services to meet your needs.' }, { icon: <CheckCircle2 className="text-fuchsia-500 w-6 h-6" />, title: 'Innovation', desc: 'Cutting-edge solutions for complex challenges.' }].map((item, i) => (
-                      <div key={i} className="flex flex-col items-center text-center bg-white/70 rounded-xl p-4 shadow-md border border-teal-100/40">
-                        <div className="mb-2">{item.icon}</div>
-                        <h3 className="font-semibold text-gray-800 text-base mb-1">{item.title}</h3>
-                        <p className="text-gray-500 text-xs">{item.desc}</p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+              {/* Enhanced Mission & Vision Cards */}
+              <div className="space-y-8 aos-fade-right">
+                {/* Mission Card */}
+                <motion.div
+                  initial="hidden"
+                  animate="visible"
+                  whileHover="hover"
+                  variants={missionVisionVariants}
+                  className="relative rounded-3xl bg-gradient-to-br from-white/90 to-teal-50/50 backdrop-blur-2xl shadow-2xl border border-teal-200/50 p-8 md:p-10 overflow-hidden"
+                >
+                  <GlowingEffect spread={40} glow={true} proximity={64} className="rounded-3xl" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(20,184,166,0.2)_0,_transparent_70%)] opacity-70"></div>
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="p-3 rounded-full bg-teal-500/20 text-teal-600 shadow-md">
+                        <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="16" cy="16" r="16" fill="currentColor" fillOpacity="0.2"/>
+                          <path d="M10 16.5L14 20.5L22 12.5" stroke="#14b8a6" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
                       </div>
-                    ))}
+                      <h2 className="text-3xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600 tracking-tight">
+                        Our Mission
+                      </h2>
+                    </div>
+                    <p className="text-lg text-gray-800 mb-4 leading-relaxed font-medium">
+                      M/s GVS Controls - Started in the year 2017 as a Proprietary Company, The Company was established with Objective of highly <span className="bg-gradient-to-r from-teal-400 to-indigo-400 bg-clip-text text-transparent font-semibold">Innovative</span> and <span className="bg-gradient-to-r from-fuchsia-400 to-teal-400 bg-clip-text text-transparent font-semibold">Cost Effective</span> Engineering Solution and works with Single minded dedication, An inherent problem-solving culture ensures optimal interaction between the Man-machine interface.
+                    </p>
+                    <p className="text-gray-700 leading-relaxed">
+                      The service spectrum of the company is vast, but focused on a single objective, constantly redefining the term-“<span className="font-bold text-teal-600">Customer Satisfaction</span>”. Promoters of this organization have more than <span className="font-bold text-teal-600">30 Years’ Experience</span> in EPC Projects By Working with Various Industries, Which Included M/s Shriram EPC Ltd., M/s Black Stone Group Technologies and L&T.
+                    </p>
+                    <div className="mt-6 flex flex-wrap gap-4">
+                      {[
+                        { icon: <CheckCircle2 className="text-teal-500 w-5 h-5" />, title: 'Innovation', desc: 'Pioneering cutting-edge solutions.' },
+                        { icon: <CheckCircle2 className="text-indigo-500 w-5 h-5" />, title: 'Customer Focus', desc: 'Prioritizing your needs.' },
+                        { icon: <CheckCircle2 className="text-fuchsia-500 w-5 h-5" />, title: 'Excellence', desc: 'Delivering top-tier quality.' },
+                      ].map((item, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: i * 0.2, duration: 0.4 }}
+                          className="flex items-center gap-2 bg-white/80 rounded-lg p-3 shadow-sm border border-teal-100/50"
+                        >
+                          <div>{item.icon}</div>
+                          <div>
+                            <h3 className="text-sm font-semibold text-gray-800">{item.title}</h3>
+                            <p className="text-xs text-gray-600">{item.desc}</p>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
                   </div>
-                  <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-teal-400 via-indigo-400 to-fuchsia-400 opacity-60 rounded-b-3xl"></div>
-                </div>
+                  <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-teal-500 via-indigo-500 to-fuchsia-500 opacity-80 rounded-b-3xl"></div>
+                </motion.div>
+
+                {/* Vision Card */}
+                <motion.div
+                  initial="hidden"
+                  animate="visible"
+                  whileHover="hover"
+                  variants={missionVisionVariants}
+                  className="relative rounded-3xl bg-gradient-to-br from-white/90 to-indigo-50/50 backdrop-blur-2xl shadow-2xl border border-indigo-200/50 p-8 md:p-10 overflow-hidden"
+                >
+                  <GlowingEffect spread={40} glow={true} proximity={64} className="rounded-3xl" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(79,70,229,0.2)_0,_transparent_70%)] opacity-70"></div>
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="p-3 rounded-full bg-indigo-500/20 text-indigo-600 shadow-md">
+                        <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle cx="16" cy="16" r="16" fill="currentColor" fillOpacity="0.2"/>
+                          <path d="M16 10c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79-4-4-4z" fill="#4f46e5"/>
+                        </svg>
+                      </div>
+                      <h2 className="text-3xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-teal-600 tracking-tight">
+                        Our Vision
+                      </h2>
+                    </div>
+                    <p className="text-lg text-gray-800 mb-4 leading-relaxed font-medium">
+                      To be a global leader in <span className="bg-gradient-to-r from-indigo-400 to-teal-400 bg-clip-text text-transparent font-semibold">innovative automation</span> and <span className="bg-gradient-to-r from-fuchsia-400 to-indigo-400 bg-clip-text text-transparent font-semibold">engineering solutions</span>, driving sustainable growth and redefining excellence in customer satisfaction.
+                    </p>
+                    <p className="text-gray-700 leading-relaxed">
+                      We aim to leverage our <span className="font-bold text-indigo-600">30+ years of expertise</span> to pioneer cutting-edge technologies, foster sustainable practices, and deliver unparalleled value to clients across power, steel, and renewable energy sectors worldwide.
+                    </p>
+                    <div className="mt-6 flex flex-wrap gap-4">
+                      {[
+                        { icon: <CheckCircle2 className="text-indigo-500 w-5 h-5" />, title: 'Global Leadership', desc: 'Leading in automation worldwide.' },
+                        { icon: <CheckCircle2 className="text-teal-500 w-5 h-5" />, title: 'Sustainability', desc: 'Promoting eco-friendly solutions.' },
+                        { icon: <CheckCircle2 className="text-fuchsia-500 w-5 h-5" />, title: 'Excellence', desc: 'Setting industry standards.' },
+                      ].map((item, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: i * 0.2, duration: 0.4 }}
+                          className="flex items-center gap-2 bg-white/80 rounded-lg p-3 shadow-sm border border-indigo-100/50"
+                        >
+                          <div>{item.icon}</div>
+                          <div>
+                            <h3 className="text-sm font-semibold text-gray-800">{item.title}</h3>
+                            <p className="text-xs text-gray-600">{item.desc}</p>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-teal-500 to-fuchsia-500 opacity-80 rounded-b-3xl"></div>
+                </motion.div>
               </div>
+
               {/* Modern Compare Image Card */}
               <div className="relative aos-fade-left flex justify-center">
                 <div className="relative w-full max-w-[500px]">

@@ -56,6 +56,9 @@ const Clients: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // State to track failed image loads
+  const [failedImages, setFailedImages] = useState<string[]>([]);
+
   const clients: Client[] = [
     { name: 'Aumund Engineering', location: 'Chennai', logo: 'https://www.aumund.com/wp-content/uploads/2020/10/aumund-logo.svg', description: 'Material handling systems for cement production.' },
     { name: 'Loesche Energy', location: 'Delhi & Chennai', logo: 'https://www.loesche.com/fileadmin/templates/img/logo-loesche.svg', description: 'Automation for energy production.' },
@@ -97,6 +100,11 @@ const Clients: React.FC = () => {
   const nextTestimonial = () => setActiveIndex((prev) => (prev + 1) % testimonials.length);
   const prevTestimonial = () => setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
 
+  // Handle image load errors
+  const handleImageError = (logoUrl: string) => {
+    setFailedImages((prev) => [...prev, logoUrl]);
+  };
+
   return (
     <main className="pt-16 sm:pt-20 md:pt-24 lg:pt-28 overflow-hidden">
       <style>
@@ -122,19 +130,9 @@ const Clients: React.FC = () => {
             50% { transform: translateY(-10px); }
           }
 
-          @keyframes glow {
-            0%, 100% { box-shadow: 0 0 5px rgba(45, 212, 191, 0.3); }
-            50% { box-shadow: 0 0 20px rgba(45, 212, 191, 0.5); }
-          }
-
           @keyframes slideIn {
             from { transform: translateY(50px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
-          }
-
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
           }
         `}
       </style>
@@ -175,27 +173,20 @@ const Clients: React.FC = () => {
                 className="relative group bg-gradient-to-br from-gray-800/90 to-gray-900/90 rounded-2xl p-6 border border-teal-500/20 hover:border-teal-500/50 transition-all duration-500 overflow-hidden animate-[slideIn_0.5s_ease-out] hover:animate-[float_2s_ease-in-out_infinite]"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-teal-500/10 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-[glow_2s_ease-in-out_infinite]"></div>
-                <div className="absolute top-2 right-2 w-2 h-2 bg-teal-400 rounded-full opacity-0 group-hover:opacity-70 transition-opacity duration-300 animate-[float_1.5s_ease-in-out_infinite]"></div>
-                <div className="absolute bottom-2 left-2 w-2 h-2 bg-purple-400 rounded-full opacity-0 group-hover:opacity-70 transition-opacity duration-300 animate-[float_2s_ease-in-out_infinite]"></div>
-
                 <div className="relative z-10">
-                  <div className="h-20 flex items-center justify-center mb-4 relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-teal-500/20 to-purple-500/20 rounded-full blur-md group-hover:blur-lg transition-all duration-300"></div>
-                    {client.logo ? (
+                  <div className="h-20 flex items-center justify-center mb-4">
+                    {client.logo && !failedImages.includes(client.logo) ? (
                       <img
                         src={client.logo}
                         alt={`${client.name} logo`}
-                        className="h-16 w-auto object-contain transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 bg-white/10 backdrop-blur-md p-2 rounded-full border border-teal-400/30 hover:border-teal-400/50 shadow-lg hover:shadow-xl"
-                        onError={e => (e.currentTarget.style.display = 'none')}
+                        className="h-16 w-auto object-contain transition-all duration-300 group-hover:scale-105"
+                        onError={() => handleImageError(client.logo)}
                       />
-                    ) : null}
-                    {(!client.logo || (typeof window !== 'undefined' && document && !document.querySelector(`img[src='${client.logo}']`))) && (
-                      <div className="h-16 w-16 flex items-center justify-center rounded-full bg-gradient-to-br from-teal-400/40 to-purple-400/40 text-white text-2xl font-bold shadow-lg">
-                        {client.name.split(' ').map(w => w[0]).join('').slice(0,2)}
+                    ) : (
+                      <div className="h-16 w-16 flex items-center justify-center rounded-full bg-gradient-to-br from-teal-400/40 to-purple-400/40 text-white text-2xl font-bold">
+                        {client.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
                       </div>
                     )}
-                    <div className="absolute w-24 h-24 border-2 border-teal-400/20 rounded-full animate-[spin_10s_linear_infinite] group-hover:border-teal-400/40"></div>
                   </div>
                   <h3 className="text-xl font-bold text-white mb-2 bg-clip-text text-transparent bg-gradient-to-r from-teal-300 to-purple-300 group-hover:from-teal-400 group-hover:to-purple-400 transition-all duration-300">
                     {client.name}
@@ -258,28 +249,29 @@ const Clients: React.FC = () => {
             {consultants.map((consultant, index) => (
               <div
                 key={index}
-                className="relative group bg-gradient-to-br from-teal-800/90 to-purple-800/90 rounded-2xl p-6 overflow-hidden border border-teal-400/40 hover:border-teal-400/70 transition-all duration-500 shadow-lg hover:shadow-xl hover:scale-105 hover:rotate-1 animate-on-scroll"
+                className="relative group bg-gradient-to-br from-teal-800/90 to-purple-800/90 rounded-2xl p-6 overflow-hidden border border-teal-400/40 hover:border-teal-400/70 transition-all duration-500 shadow-lg hover:shadow-xl hover:scale-105 animate-on-scroll"
                 data-animation="flip-in"
                 style={{ animationDelay: `${index * 200}ms` }}
               >
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%,_rgba(45,212,191,0.2)_0,_transparent_70%)] opacity-50 group-hover:opacity-70 transition-opacity duration-300"></div>
-                <div className="absolute top-2 right-2 w-3 h-3 bg-teal-400 rounded-full group-hover:bg-purple-400 transition-colors duration-300 animate-pulse"></div>
-
                 <div className="relative z-10">
-                  <div className="h-20 flex items-center justify-center mb-4 relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-teal-400/30 to-purple-400/30 rounded-lg blur-md group-hover:blur-lg transition-all duration-300"></div>
-                    <img
-                      src={consultant.logo}
-                      alt={`${consultant.name} logo`}
-                      className="h-14 w-auto object-contain transition-all duration-500 group-hover:scale-110 bg-white/80 backdrop-blur-sm p-3 rounded-lg border border-teal-400/50 hover:border-teal-400/70 shadow-md hover:shadow-lg"
-                    />
-                    <div className="absolute w-20 h-20 border-2 border-teal-400/30 rounded-lg animate-[spin_8s_linear_infinite] group-hover:border-teal-400/50"></div>
+                  <div className="h-20 flex items-center justify-center mb-4">
+                    {consultant.logo && !failedImages.includes(consultant.logo) ? (
+                      <img
+                        src={consultant.logo}
+                        alt={`${consultant.name} logo`}
+                        className="h-14 w-auto object-contain transition-all duration-300 group-hover:scale-105"
+                        onError={() => handleImageError(consultant.logo)}
+                      />
+                    ) : (
+                      <div className="h-14 w-14 flex items-center justify-center rounded-full bg-gradient-to-br from-teal-400/40 to-purple-400/40 text-white text-xl font-bold">
+                        {consultant.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
+                      </div>
+                    )}
                   </div>
                   <p className="text-center text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-purple-300 group-hover:from-teal-400 group-hover:to-purple-400 transition-all duration-300">
                     {consultant.name}
                   </p>
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-teal-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-teal-500 to-purple-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center"></div>
               </div>
             ))}
@@ -369,7 +361,7 @@ const Clients: React.FC = () => {
               <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base md:text-lg">We’d love to hear your experience.</p>
               <Link
                 to="/contact"
-                className="inline-block bg-gradient-to-r from-teal-600 to-purple-600 text-white px-5 py-2 sm:px-6 sm:py-3 rounded-full font-medium hover:from-teal-700 hover:to-purple-700 transition-all duration-300 shadow-md hover:shadow-lg text-sm sm:text-base md:text-lg"
+                className="inline-block bg-gradient-to-r from-teal-600 to-purple-600 text-white px-5 py-横2 sm:px-6 sm:py-3 rounded-full font-medium hover:from-teal-700 hover:to-purple-700 transition-all duration-300 shadow-md hover:shadow-lg text-sm sm:text-base md:text-lg"
               >
                 Share Your Story
               </Link>

@@ -66,11 +66,11 @@ const Highlights = () => {
     },
   };
 
-  // Expertise Data with icons and improved content
+  // Expertise Data
   const expertiseContent = [
     {
       title: 'Consultancy',
-      description: 'Expert guidance in project management, system design, and procurement for turnkey engineering solutions.',
+      description: 'Project management consultancy, system design, and procurement assistance for turnkey projects, including engineering documents, equipment selection, and consultant approvals.',
       image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
       gradient: 'from-blue-600 to-indigo-700',
       serviceId: 'consultancy-engineering',
@@ -78,7 +78,7 @@ const Highlights = () => {
     },
     {
       title: 'Automation',
-      description: 'Cutting-edge automation and process control with PLC and relay logic for maximum efficiency.',
+      description: 'Innovative automation and process control solutions using PLC and relay logic, with instrumentation products and site services for process and machine applications.',
       image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
       gradient: 'from-teal-600 to-cyan-700',
       serviceId: 'automation-solutions',
@@ -86,7 +86,7 @@ const Highlights = () => {
     },
     {
       title: 'Product Manufacturing',
-      description: 'Manufacturing of high-quality electrical control panels: MV, PCC, MCC, and VFD, meeting global standards.',
+      description: 'Manufacturing electrical control panels per CEIG standards, including MV, PCC, MCC, VFD, APFC, and custom panels, with bus ducts and junction boxes.',
       image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
       gradient: 'from-orange-600 to-red-700',
       serviceId: 'panel-manufacturing',
@@ -94,7 +94,7 @@ const Highlights = () => {
     },
     {
       title: 'Erection & Commissioning',
-      description: 'Seamless installation, troubleshooting, and commissioning for reliable electrical system operation.',
+      description: 'Erection, testing, troubleshooting, and commissioning of electrical systems, including PCC, MCC, VFD panels, and plant shutdown services.',
       image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
       gradient: 'from-gray-600 to-blue-700',
       serviceId: 'installation-commissioning',
@@ -102,7 +102,7 @@ const Highlights = () => {
     },
     {
       title: 'Renovation & Revamping',
-      description: 'Modernizing electrical systems for enhanced safety, efficiency, and compliance with the latest standards.',
+      description: 'Renovation and revamping of electrical systems with site surveys and client coordination to enhance safety and efficiency.',
       image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
       gradient: 'from-purple-600 to-pink-700',
       serviceId: 'renovation-revamping',

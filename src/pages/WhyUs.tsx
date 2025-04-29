@@ -40,8 +40,8 @@ const WhyUs = () => {
       ],
       tasks: [
         { title: '30+ Years in EPC Projects', completed: true },
-        { title: 'Industry Collaboration', completed: true },
-        { title: 'Solution Development', completed: true },
+        { title: 'Solution-Based Specialists', completed: true },
+        { title: 'Understanding Client Needs', completed: true },
       ],
     },
     {
@@ -54,8 +54,8 @@ const WhyUs = () => {
       ],
       tasks: [
         { title: 'Flexible Service Selection', completed: true },
+        { title: 'Staff Collaboration', completed: true },
         { title: 'Cost Optimization', completed: true },
-        { title: 'Budget Planning', completed: true },
       ],
     },
     {
@@ -67,9 +67,9 @@ const WhyUs = () => {
         { name: 'Automation Lead' },
       ],
       tasks: [
-        { title: 'Automation Systems', completed: true },
         { title: 'Quality Manufacturing', completed: true },
-        { title: 'Tech Integration', completed: true },
+        { title: 'Turnkey Solutions', completed: true },
+        { title: 'Electrical Installations', completed: true },
       ],
     },
     {
@@ -83,7 +83,7 @@ const WhyUs = () => {
       tasks: [
         { title: 'Custom Scheduling', completed: true },
         { title: 'Resource Efficiency', completed: true },
-        { title: 'Timeline Adjustment', completed: true },
+        { title: 'Timeline Optimization', completed: true },
       ],
     },
     {
@@ -95,23 +95,9 @@ const WhyUs = () => {
         { name: 'System Designer' },
       ],
       tasks: [
-        { title: 'System Design', completed: true },
-        { title: 'Infrastructure Solutions', completed: true },
-        { title: 'Operational Efficiency', completed: true },
-      ],
-    },
-    {
-      title: 'Comprehensive Services',
-      progress: 100,
-      dueDate: 'Achieved',
-      contributors: [
-        { name: 'Consultant', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d' },
-        { name: 'Technician' },
-      ],
-      tasks: [
-        { title: 'Consultancy & Design', completed: true },
-        { title: 'Manufacturing', completed: true },
-        { title: 'Installation', completed: true },
+        { title: 'System Operations', completed: true },
+        { title: 'Competitive Edge', completed: true },
+        { title: 'Superior Services', completed: true },
       ],
     },
   ];
