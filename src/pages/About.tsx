@@ -5,40 +5,38 @@ import { Compare } from '../components/ui/compare';
 import { GlowingEffect } from '../components/ui/glowing-effect';
 import { Timeline } from '../components/ui/timeline';
 
-// Use free business images from Pexels for Mission & Vision
-const missionImageUrl: string = "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg";
-const visionImageUrl: string = "https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg";
+// Import Mission & Vision images
+import mission from '../assets/mission.jpg';
+import vision from '../assets/vision.png';
 
-// Array of power plant images in public/assets
-const powerPlantImages: string[] = [
-  '/assets/pp-1.jpg',
-  '/assets/pp-2.jpg',
-  '/assets/pp-3.jpg',
-  '/assets/pp-4.jpg',
-  '/assets/pp-5.jpg',
-  '/assets/pp-6.jpg',
-];
+// Import power plant images
+import pp1 from '../assets/pp-1.jpg';
+import pp2 from '../assets/pp-2.jpg';
+import pp3 from '../assets/pp-3.jpg';
+import pp4 from '../assets/pp-4.jpg';
+import pp5 from '../assets/pp-5.jpg';
+import pp6 from '../assets/pp-6.jpg';
 
-// Array of renewable energy images in public/assets
-const renewableEnergyImages: string[] = [
-  '/assets/re-1.jpg',
-  '/assets/re-2.jpg',
-  '/assets/re-3.jpg',
-  '/assets/st-1.jpg',
-  '/assets/st-2.jpg',
-  '/assets/st-3.jpg',
-];
+// Import renewable energy images
+import re1 from '../assets/re-1.jpg';
+import re2 from '../assets/re-2.jpg';
+import re3 from '../assets/re-3.jpg';
+import st1 from '../assets/st-1.jpg';
+import st2 from '../assets/st-2.jpg';
+import st3 from '../assets/st-3.jpg';
 
-// Array of control panel images in public/assets/gallery
-const controlPanelImages: string[] = [
-  '/assets/gallery/cop-1.jpg',
-  '/assets/gallery/cop-13.jpg',
-  '/assets/gallery/cop-14.jpg',
-  '/assets/gallery/cop-15.jpg',
-  '/assets/gallery/cop-16.jpg',
-  '/assets/gallery/cop-17.jpg',
-  
-];
+// Import control panel images
+import cop1 from '../assets/gallery/cop-1.jpg';
+import cop13 from '../assets/gallery/cop-13.jpg';
+import cop14 from '../assets/gallery/cop-14.jpg';
+import cop15 from '../assets/gallery/cop-15.jpg';
+import cop16 from '../assets/gallery/cop-16.jpg';
+import cop17 from '../assets/gallery/cop-17.jpg';
+
+// Arrays of images
+const powerPlantImages: string[] = [pp1, pp2, pp3, pp4, pp5, pp6];
+const renewableEnergyImages: string[] = [re1, re2, re3, st1, st2, st3];
+const controlPanelImages: string[] = [cop1, cop13, cop14, cop15, cop16, cop17];
 
 // Define the type for timeline data
 interface TimelineItem {
@@ -46,28 +44,29 @@ interface TimelineItem {
   content: JSX.Element;
 }
 
+// Define the type for team values
+interface TeamValue {
+  title: string;
+  desc: string;
+  icon: JSX.Element;
+}
+
 const About: React.FC = () => {
-  // State to track the current image index for power plants and renewable energy
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
-  // State to track the current image index for control panel images
   const [currentControlPanelIndex, setCurrentControlPanelIndex] = useState<number>(0);
 
-  // Effect to rotate power plant and renewable energy images every 2 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % renewableEnergyImages.length);
-    }, 2000); // Change every 2 seconds
-
-    return () => clearInterval(interval); // Cleanup interval on component unmount
+    }, 2000);
+    return () => clearInterval(interval);
   }, []);
 
-  // Effect to rotate control panel images every 2 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentControlPanelIndex((prevIndex) => (prevIndex + 1) % controlPanelImages.length);
-    }, 2000); // Change every 2 seconds
-
-    return () => clearInterval(interval); // Cleanup interval on component unmount
+    }, 2000);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -171,7 +170,7 @@ const About: React.FC = () => {
     },
   ];
 
-  const teamValues = [
+  const teamValues: TeamValue[] = [
     {
       title: 'Integrity',
       desc: 'Upholding ethical standards in all dealings, ensuring trust and reliability with clients like SAIL, TISCO, and NTPC.',
@@ -284,13 +283,11 @@ const About: React.FC = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Spacer to push content below fixed header */}
       <div className="h-[84px] lg:h-[140px]"></div>
       <main className="overflow-hidden">
-        {/* Hero Section */}
         <section className="bg-gradient-to-br from-indigo-800 via-teal-600 to-fuchsia-700 text-white py-20 md:py-28 relative">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.2)_0,_transparent_60%)] opacity-80"></div>
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPjxwYXR0ZXJuIGlkPSJhIiB3aWR0aD0iMjAiIGhlaWdodD0iMjAiPjxjaXJjbGUgY3g9IjIuNSIgY3k9IjIuNSIgcj0iMS41IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMSkiLz48L3BhdHRlcm4+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNhKSIvPjwvc3ZnPg==')] opacity-30"></div>
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN coal2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPjxwYXR0ZXJuIGlkPSJhIiB3aWR0aD0iMjAiIGhlaWdodD0iMjAiPjxjaXJjbGUgY3g9IjIuNSIgY3k9IjIuNSIgcj0iMS41IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMSkiLz48L3BhdHRlcm4+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNhKSIvPjwvc3ZnPg==')] opacity-30"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="max-w-3xl mx-auto text-center">
               <span className="inline-block px-4 py-1 rounded-full bg-white/20 backdrop-blur-md text-teal-200 text-sm mb-6 border border-white/30 shadow-md">
@@ -306,14 +303,11 @@ const About: React.FC = () => {
           </div>
         </section>
 
-        {/* Main Content */}
         <section className="py-16 md:py-20 bg-gradient-to-tr from-teal-100 via-indigo-200 to-purple-200 relative">
           <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(255,255,255,0.1)_25%,transparent_25%,transparent_75%,rgba(255,255,255,0.1)_75%)] bg-[size:20px_20px] opacity-50"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-              {/* Enhanced Mission & Vision Cards */}
               <div className="space-y-8 aos-fade-right">
-                {/* Mission Card */}
                 <motion.div
                   initial="hidden"
                   animate="visible"
@@ -366,7 +360,6 @@ const About: React.FC = () => {
                   <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-teal-500 via-indigo-500 to-fuchsia-500 opacity-80 rounded-b-3xl"></div>
                 </motion.div>
 
-                {/* Vision Card */}
                 <motion.div
                   initial="hidden"
                   animate="visible"
@@ -420,13 +413,12 @@ const About: React.FC = () => {
                 </motion.div>
               </div>
 
-              {/* Modern Compare Image Card */}
               <div className="relative aos-fade-left flex justify-center">
                 <div className="relative w-full max-w-[500px]">
                   <div className="border rounded-3xl bg-white/70 border-neutral-200 shadow-2xl overflow-hidden ring-2 ring-teal-300/20 backdrop-blur-xl">
                     <Compare
-                      firstImage={missionImageUrl}
-                      secondImage={visionImageUrl}
+                      firstImage={mission}
+                      secondImage={vision}
                       firstImageClassName="object-cover w-full h-full"
                       secondImageClassname="object-cover w-full h-full"
                       className="w-full h-[250px] md:h-[400px] rounded-2xl"
@@ -444,7 +436,6 @@ const About: React.FC = () => {
           </div>
         </section>
 
-        {/* Timeline Section */}
         <section className="py-16 md:py-20 bg-gradient-to-br from-teal-200 via-blue-300 to-indigo-400 relative">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.3)_0,_transparent_70%)] opacity-60"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -461,7 +452,6 @@ const About: React.FC = () => {
           </div>
         </section>
 
-        {/* Enhanced Team Values Section */}
         <section className="py-16 md:py-20 bg-gradient-to-bl from-indigo-100 via-teal-100 to-fuchsia-200 relative">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+PHBhdGggZD0iTTYwIDMwIHEtMTUgMTUtMzAgMCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMSkiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==')] opacity-40"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
