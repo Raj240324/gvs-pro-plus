@@ -600,6 +600,11 @@ img {
     background-position: 0% 50%;
   }
 }
+.gvs-slogan-yellow {
+  -webkit-text-stroke: 0.5px #4a0e78;
+  text-stroke: 0.5px #4a0e78;
+}
+
 .gradient-bg {
   background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460, #e94560);
   background-size: 400% 400%;

@@ -1,29 +1,66 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { 
   Settings, 
-  Cpu, 
   Wrench, 
   HardDrive, 
   Clock,
-  FileText,
-  ArrowRight 
+  ArrowRight,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+// Define TypeScript interface for service objects
+interface Service {
+  id: string;
+  title: string;
+  description: string;
+  longDescription: string; // Fixed from long5867
+  icon: JSX.Element;
+  features: string[];
+  stats: Record<string, string>;
+  image: string;
+  ctaLink: string;
+}
+
 const Services = () => {
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const [headerHeight, setHeaderHeight] = useState(0);
+
+  // Function to calculate header height
+  const updateHeaderHeight = useCallback(() => {
+    const headerElement = document.querySelector('header');
+    if (headerElement) {
+      const height = headerElement.offsetHeight;
+      setHeaderHeight(height);
+    }
+  }, []);
+
   useEffect(() => {
+    // Initial header height calculation
+    updateHeaderHeight();
+
+    // Update header height on resize
+    const handleResize = () => updateHeaderHeight();
+    window.addEventListener('resize', handleResize);
+
+    // Update header height on scroll (to account for header height changes)
+    const handleScroll = () => updateHeaderHeight();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Set document title and meta description
     document.title = 'Services - GVS Controls';
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'GVS Controls provides cutting-edge consultancy, manufacturing, automation, installation, renovation, and support services for electrical and industrial systems.');
+      metaDescription.setAttribute('content', 'GVS Controls offers expert consultancy, automation, installation, and renovation services for power, steel, cement, and renewable energy industries.');
     }
 
     // Smooth scroll-triggered animations using Intersection Observer
     const animatedElements = document.querySelectorAll('.aos-fade-up, .aos-fade-in, .aos-fade-right, .aos-fade-left');
-    const observerOptions = {
-      threshold: 0.15
+    const observerOptions: IntersectionObserverInit = {
+      threshold: 0.1
     };
-    const observer = new window.IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('aos-animate');
@@ -31,132 +68,118 @@ const Services = () => {
       });
     }, observerOptions);
     animatedElements.forEach(el => observer.observe(el));
+
+    // Cleanup
     return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
       animatedElements.forEach(el => observer.unobserve(el));
     };
-  }, []);
+  }, [updateHeaderHeight]);
 
-  const services = [
+  const toggleDescription = (id: string) => {
+    setExpanded(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const services: Service[] = [
     {
       id: 'consultancy-engineering',
       title: 'Consultancy & Project Management',
-      description: 'Expert project management, system design, and engineering for turnkey projects, backed by 30+ years of promoter experience.',
-      longDescription: 'With over three decades of promoter experience, we deliver end-to-end consultancy services, from feasibility studies to detailed system design. Our team excels in optimizing electrical infrastructure, ensuring compliance with global standards, and integrating sustainable practices into every project.',
-      icon: <Settings size={28} className="text-teal-500" />,
+      description: 'Comprehensive consultancy for turnkey industrial projects.',
+      longDescription: 'Project management Consultancy services (PMC). System / Field Study and giving optimum Design for Turnkey Projects, Process Plants and Industries. Project Engineering - Basic and Detail Engineering Documents & Drawings for Turnkey Plants. Control Design through Relay logic and PLC Automation for Process Plant/ Machineries. Sizing Calculation and Selecting complete Electrical HT / LT Equipments for Projects. Serving as Owners Consultant and Obtaining approvals from Leading Engineering Consultant. Providing assistance in procurement Process, Material Selection/ Electrical Equipments and Inspection certifying dispatch worthiness.',
+      icon: <Settings size={28} className="text-blue-600" />,
       features: [
-        'Turnkey Project Management Consultancy',
-        'System/Field Studies and Optimized Design',
-        'Selection and Sizing of HT/LT Electrical Equipment',
-        'Procurement Assistance and Equipment Inspection'
+        'Project Management Consultancy (PMC)',
+        'System / Field Study and Optimum Design',
+        'Basic and Detail Engineering Documents & Drawings',
+        'Control Design through Relay Logic and PLC Automation',
+        'Sizing and Selection of HT/LT Equipments',
+        'Owners Consultant and Consultant Approvals',
+        'Procurement Assistance and Inspection'
       ],
-      stats: { projects: '150+', years: '30+' },
-      image: 'https://images.unsplash.com/photo-1586936893354-362ad6ae47ba?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Consultancy
+      stats: { projects: '150+', clients: '20+' },
+      image: '/images/consultancy-engineering.jpg',
       ctaLink: '#consultancy-engineering'
-    },
-    {
-      id: 'panel-manufacturing',
-      title: 'Manufacturing & Supply',
-      description: 'High-quality electrical control panels manufactured to IE standards for diverse applications.',
-      longDescription: 'Our state-of-the-art manufacturing facility produces a wide range of electrical control panels, including medium-voltage switchgear and custom PLC solutions. Each panel undergoes rigorous testing to ensure durability, safety, and seamless integration into your operations.',
-      icon: <Cpu size={28} className="text-teal-500" />,
-      features: [
-        'Medium Voltage Panels (Single/Double Bus System)',
-        'Power & Motor Control Centers (PCC/MCC)',
-        'EB & DG Synchronizing Panels, Auto Transfer Switch Panels',
-        'APFC, AMF, Relay Logic & PLC Control Panels'
-      ],
-      stats: { panelsBuilt: '500+', industriesServed: '10+' },
-      image: 'https://images.unsplash.com/photo-1714322148068-923f9f9bfc1a?q=80&w=3174&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Panel manufacturing
-      ctaLink: '#panel-manufacturing'
-    },
-    {
-      id: 'installation-commissioning',
-      title: 'Installation, Testing & Commissioning',
-      description: 'Flawless execution of electrical system installations with minimal disruption and maximum efficiency.',
-      longDescription: 'Our expert technicians handle everything from bus duct installations to full system commissioning. We prioritize safety, precision, and speed, ensuring your systems are operational with zero downtime and fully optimized for performance.',
-      icon: <Wrench size={28} className="text-teal-500" />,
-      features: [
-        'Erection, Testing, and Troubleshooting of Electrical Systems',
-        'PLC and VFD Control Panels Commissioning',
-        'Integration of Electrical Systems with Control Logic',
-        'Revamping of Old Electrical Systems'
-      ],
-      stats: { sitesCommissioned: '200+', downtimeReduced: '98%' },
-      image: 'https://images.unsplash.com/photo-1624397640148-949b1732bb0a?q=80&w=3174&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Installation/commissioning
-      ctaLink: '#installation-commissioning'
     },
     {
       id: 'automation-solutions',
       title: 'Automation & Instrumentation',
-      description: 'Next-generation automation systems designed to streamline processes and enhance productivity.',
-      longDescription: 'We provide turnkey automation solutions, integrating PLCs, SCADA systems, and advanced instrumentation. From process optimization to real-time monitoring, our systems are pioneered to reduce costs, improve safety, and drive operational excellence.',
-      icon: <HardDrive size={28} className="text-teal-500" />,
+      description: 'Total automation and process control solutions.',
+      longDescription: 'Providing Total Automation, Process Control Solutions and Variety of Complete Instrumentation Products and also offers highly Customer driven Services for a variety of Process and Machine Application and also Capabilities to offer highly Innovative, Cost effective, Automation systems, Instrumentation Products, Engineering as per Standards Practices and Pragmatic site services to suit the applications.',
+      icon: <HardDrive size={28} className="text-blue-600" />,
       features: [
-        'Process Automation Solutions for Industrial Applications',
-        'Supply of Field Instruments for Various Industries',
-        'Revamping and Integration of Control Panels',
-        'Real-Time Monitoring and Control Systems'
+        'Total Automation and Process Control Solutions',
+        'Customer-Driven Services for Process and Machine Applications',
+        'Innovative and Cost-Effective Automation Systems',
+        'Instrumentation Products and Engineering per Standards'
       ],
       stats: { systemsAutomated: '100+', efficiencyGain: '40%' },
-      image: 'https://images.unsplash.com/photo-1655393001768-d946c97d6fd1?q=80&w=2952&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Automation
+      image: '/images/automation-solutions.jpg',
       ctaLink: '#automation-solutions'
+    },
+    {
+      id: 'installation-commissioning',
+      title: 'Installation & Commissioning',
+      description: 'Erection, testing, and commissioning of electrical systems.',
+      longDescription: 'Erection Testing, Trouble Shooting & Commissioning of Bus Ducts, Electrical Panels, Motor Control Centers and Control Panels, EB & DG Synchronizing Panels, AMF Control Panels & APFC Panels, PLC, VFD Control Panels & Special Purpose and Other Custom Built Panels. Revamping of Electrical Power Panels, MCC and Process Control Panels and Integration of Electrical System with suitable Control’s (Relay & PLC) Instrumentation and Conversion of Relay Panel into PLC Panel. Supervisory assistance to Erection, Testing and Commissioning at site. Plant Shutdown and Turnarounds, Comprehensive Start-up & Commissioning Services. Supply of Field Instruments for Power Plants, Bulk Material Handling System, Chemical Plants, Cooling Towers, Automobile Industries, Process Plants, Cement plants and Renewable energy sectors.',
+      icon: <Wrench size={28} className="text-blue-600" />,
+      features: [
+        'Erection, Testing, and Commissioning of Electrical Systems',
+        'Revamping and Integration of Control Panels with Relay & PLC',
+        'Supervisory Assistance for Erection and Commissioning',
+        'Plant Shutdown, Turnarounds, and Start-Up Services',
+        'Supply of Field Instruments for Various Industries'
+      ],
+      stats: { sitesCommissioned: '200+', downtimeReduced: '98%' },
+      image: '/images/installation-commissioning.jpg',
+      ctaLink: '#installation-commissioning'
     },
     {
       id: 'renovation-revamping',
       title: 'Renovation & Revamping',
-      description: 'Modernize your legacy systems to meet today’s standards of safety, efficiency, and sustainability.',
-      longDescription: 'Our renovation services breathe new life into aging electrical infrastructure. We assess, retrofit, and upgrade systems to enhance reliability, comply with regulations, and reduce energy consumption, all while minimizing operational interruptions.',
-      icon: <Clock size={28} className="text-teal-500" />,
+      description: 'Renovation of electrical systems for safety and efficiency.',
+      longDescription: 'For Industries in operation for years, We are offering Renovation & Revamping of Electrical System in order to ensure safety to people working around as well as to enhance system efficiency. Our Well experienced Professionals carry out site survey to asses the optimum requirement for Renovation and Revamping of Electrical system in close co-ordination with Clients Engineering team and discuss about the modality of execution. Our trained Professionals are capable of Comprehending the needs of clients for execution of such Renovation and Revamping Work.',
+      icon: <Clock size={28} className="text-blue-600" />,
       features: [
-        'Site Surveys & Assessments for Renovation Solutions',
-        'Modernization of Electrical Systems',
-        'Energy Efficiency Upgrades',
-        'Compliance with Safety Standards'
+        'Renovation & Revamping for Safety and Efficiency',
+        'Site Surveys to Assess Requirements',
+        'Coordination with Client’s Engineering Team',
+        'Execution by Trained Professionals'
       ],
       stats: { systemsRevamped: '80+', energySaved: '25%' },
-      image: 'https://images.unsplash.com/photo-1667491295131-c6ccecd35f65?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Renovation/revamping
+      image: '/images/renovation-revamping.jpg',
       ctaLink: '#renovation-revamping'
-    },
-    {
-      id: 'support-supply',
-      title: 'Support & Supply',
-      description: 'Reliable ongoing support and premium field instruments to keep your operations running smoothly.',
-      longDescription: 'We offer round-the-clock technical assistance and a robust supply chain for field instruments, catering to industries like power generation, cement, and steel. Our proactive support ensures minimal downtime and maximum system uptime.',
-      icon: <FileText size={28} className="text-teal-500" />,
-      features: [
-        'High-Quality Field Instruments',
-        '24/7 Technical Support Hotline',
-        'Spare Parts Inventory Management',
-        'Expert On-Demand Assistance'
-      ],
-      stats: { clientsSupported: '50+', uptimeGuaranteed: '99.9%' },
-      image: 'https://images.unsplash.com/photo-1709715357479-591f9971fb05?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Support/supply
-      ctaLink: '#support-supply'
     }
   ];
 
   return (
-    <main className="pt-[84px] lg:pt-[140px] overflow-hidden bg-gray-50">
+    <main className="overflow-hidden bg-gray-50" style={{ paddingTop: `${headerHeight}px` }}>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-teal-600 via-indigo-700 to-purple-800 text-white py-16 sm:py-20 md:py-24 lg:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+PHBhdGggZD0iTTYwIDMwSDMwTTYwIDMwVjMwTTYwIDMwSDMwTTYwIDMwVjMwIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4xKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+')] opacity-20"></div>
+      <section className="relative bg-gradient-to-br from-blue-800 via-teal-700 to-gray-900 text-white py-20 md:py-28 lg:py-36 overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+PHBhdGggZD0iTTYwIDMwSDMwTTYwIDMwVjMwTTYwIDMwSDMwTTYwIDMwVjMwIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4xKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+')] opacity-10"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <span className="inline-block px-4 py-2 sm:px-5 sm:py-2 rounded-full bg-teal-400/20 backdrop-blur-md text-xs sm:text-sm font-semibold mb-4 sm:mb-6 animate-pulse">Our Expertise</span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-teal-200 to-indigo-300 animate-fade-in">
-              Comprehensive Engineering Solutions
+          <div className="max-w-3xl mx-auto text-center">
+            <span className="inline-block px-4 py-2 rounded-full bg-blue-600/20 backdrop-blur-md text-sm md:text-base font-semibold mb-6">Since 2017</span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-300">
+              Engineering Excellence for Industry Leaders
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl mx-auto">Delivering innovative electrical control and automation services since 2017, trusted by industry leaders worldwide.</p>
+            <p className="text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl mx-auto">
+              Trusted by SAIL, NTPC, and Dalmia Cement, GVS Controls delivers innovative automation and electrical solutions with over 30 years of expertise.
+            </p>
           </div>
         </div>
       </section>
 
       {/* Services Overview */}
-      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-white to-teal-50">
+      <section className="py-16 md:py-24 bg-gradient-to-b from-white to-gray-100">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10 sm:mb-12 md:mb-16 aos-fade-up">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-700">Our Services</h2>
-            <p className="text-gray-700 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed">Tailored, cutting-edge solutions for industries including power generation, steel manufacturing, cement production, and renewable energy.</p>
+          <div className="text-center mb-12 md:mb-16 aos-fade-up">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-teal-600">
+              Our Core Services
+            </h2>
+            <p className="text-gray-600 text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
+              Comprehensive solutions for power plants, steel, cement, chemical, and renewable energy industries, backed by decades of experience.
+            </p>
           </div>
           <style>{`
             @keyframes slideIn {
@@ -168,59 +191,65 @@ const Services = () => {
               100% { background-position: 200% 50%; }
             }
             .animate-slide-in {
-              animation: slideIn 0.3s ease-out forwards;
+              animation: slideIn 0.5s ease-out forwards;
             }
             .gradient-shift {
               background-size: 200% 100%;
-              animation: gradientShift 3s linear infinite;
+              animation: gradientShift 4s linear infinite;
             }
-            /* Smooth transition for aos-animate */
             .aos-fade-up, .aos-fade-in, .aos-fade-right, .aos-fade-left {
               opacity: 0;
-              transform: translateY(30px);
-              transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1);
+              transform: translateY(20px);
+              transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1);
             }
             .aos-fade-right {
-              transform: translateX(30px);
+              transform: translateX(20px);
             }
             .aos-fade-left {
-              transform: translateX(-30px);
+              transform: translateX(-20px);
             }
             .aos-animate {
               opacity: 1 !important;
               transform: none !important;
             }
+            .truncate-3 {
+              display: -webkit-box;
+              -webkit-line-clamp: 3;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+            }
           `}</style>
-          <ul className="w-full max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+          <ul className="w-full max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
             {services.map((card) => (
               <div
                 key={card.id}
-                className="p-4 flex flex-col items-center bg-gradient-to-br from-teal-50 to-indigo-50 dark:from-neutral-800 dark:to-neutral-700 rounded-xl shadow-lg hover:shadow-2xl hover:bg-gradient-to-br hover:from-teal-100 hover:to-indigo-100 dark:hover:from-neutral-700 dark:hover:to-neutral-600 border border-teal-200 dark:border-teal-700 transition-all duration-300 transform hover:scale-105 group"
+                className="p-6 flex flex-col items-center bg-white rounded-2xl shadow-md hover:shadow-xl hover:bg-blue-50 border border-gray-100 transition-all duration-300 transform hover:scale-105 group"
               >
-                <div className="flex-shrink-0 relative">
+                <div className="flex-shrink-0 relative mb-6">
                   <img
                     src={card.image}
                     alt={card.title}
-                    className="h-32 w-32 sm:h-40 sm:w-40 rounded-lg object-cover object-center border-2 border-teal-400 dark:border-teal-600 transition-transform duration-500 group-hover:scale-110 bg-white"
+                    className="h-24 w-24 sm:h-28 sm:w-28 rounded-lg object-cover object-center border-2 border-blue-300 transition-transform duration-500 group-hover:scale-110 bg-white"
                     style={{ aspectRatio: '1/1', objectFit: 'cover', objectPosition: 'center' }}
                     loading="lazy"
                   />
                 </div>
-                <div className="mt-4 text-center flex-1 flex flex-col justify-between w-full">
+                <div className="text-center flex-1 flex flex-col justify-between w-full">
                   <div>
-                    <h3 className="font-semibold text-base sm:text-lg text-gray-900 dark:text-neutral-100 line-clamp-2 transition-colors duration-300 group-hover:text-teal-600 dark:group-hover:text-teal-400">
+                    <h3 className="font-semibold text-lg sm:text-xl text-gray-900 line-clamp-2 transition-colors duration-300 group-hover:text-blue-600">
                       {card.title}
                     </h3>
-                    <p className="text-gray-700 dark:text-neutral-300 text-sm mt-2 line-clamp-3 lg:line-clamp-2">
+                    <p className="text-gray-600 text-sm md:text-base mt-3 truncate-3">
                       {card.description}
                     </p>
                   </div>
                   <a
                     href={card.ctaLink}
-                    className="mt-4 px-4 py-2 text-sm rounded-full font-bold bg-gradient-to-r from-teal-500 via-indigo-600 to-purple-600 text-white hover:bg-gradient-to-r hover:from-teal-600 hover:via-purple-600 hover:to-indigo-600 gradient-shift group relative overflow-hidden transition-all duration-300 shadow-md hover:shadow-lg animate-pulse animate-once animate-duration-1000"
+                    className="mt-6 px-5 py-2.5 text-sm md:text-base rounded-full font-semibold bg-blue-600 text-white hover:bg-blue-700 gradient-shift group relative overflow-hidden transition-all duration-300 shadow-sm hover:shadow-md"
+                    aria-label={`Learn more about ${card.title}`}
                   >
                     <span className="relative z-10 flex items-center justify-center">
-                      Explore
+                      Learn More
                       <ArrowRight
                         className="ml-2 w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:animate-slide-in"
                       />
@@ -238,17 +267,28 @@ const Services = () => {
         <section
           key={service.id}
           id={service.id}
-          className={`py-12 sm:py-16 md:py-20 ${index % 2 === 0 ? 'bg-gradient-to-br from-teal-50 via-indigo-50 to-gray-100' : 'bg-gradient-to-bl from-gray-50 via-teal-50 to-indigo-50'}`}
+          className={`py-16 md:py-24 ${index % 2 === 0 ? 'bg-gradient-to-br from-white to-gray-50' : 'bg-gradient-to-bl from-gray-50 to-white'}`}
         >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
               <div className={`${index % 2 === 0 ? 'aos-fade-right' : 'aos-fade-left'} order-2 lg:order-${index % 2 === 0 ? '1' : '2'}`}>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-teal-500/10 flex items-center justify-center mb-4 sm:mb-6 shadow-md transform hover:rotate-12 transition-transform">
+                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-blue-500/10 flex items-center justify-center mb-6 shadow-md transform hover:rotate-12 transition-transform">
                   {service.icon}
                 </div>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 tracking-tight">{service.title}</h2>
-                <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base md:text-lg leading-relaxed">{service.longDescription}</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">{service.title}</h2>
+                <p className="text-gray-600 mb-6 text-base md:text-lg leading-relaxed">
+                  {expanded[service.id] ? service.longDescription : `${service.longDescription.slice(0, 150)}...`}
+                  {service.longDescription.length > 150 && (
+                    <button
+                      onClick={() => toggleDescription(service.id)}
+                      className="ml-2 text-blue-600 hover:text-blue-800 font-semibold text-sm md:text-base flex items-center"
+                    >
+                      {expanded[service.id] ? 'Show Less' : 'Read More'}
+                      {expanded[service.id] ? <ChevronUp className="ml-1 w-4 h-4" /> : <ChevronDown className="ml-1 w-4 h-4" />}
+                    </button>
+                  )}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                   {service.features.map((feature, i) => (
                     <div key={i} className="flex items-start group">
                       <svg
@@ -261,31 +301,31 @@ const Services = () => {
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="text-teal-500 mr-2 sm:mr-3 flex-shrink-0 group-hover:scale-110 transition-transform w-5 h-5 sm:w-6 sm:h-6"
+                        className="text-blue-600 mr-3 flex-shrink-0 group-hover:scale-110 transition-transform w-5 h-5 md:w-6 md:h-6"
                       >
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                         <path d="m9 11 3 3L22 4"/>
                       </svg>
-                      <span className="text-gray-700 text-sm sm:text-base group-hover:text-teal-600 transition-colors">{feature}</span>
+                      <span className="text-gray-700 text-sm md:text-base group-hover:text-blue-600 transition-colors">{feature}</span>
                     </div>
                   ))}
                 </div>
-                <div className="flex flex-wrap gap-3 sm:gap-4 text-xs sm:text-sm font-semibold text-gray-800">
-                  <span className="bg-teal-100 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full">{service.stats[Object.keys(service.stats)[0] as keyof typeof service.stats]} {Object.keys(service.stats)[0].replace(/([A-Z])/g, ' $1').trim()}</span>
-                  <span className="bg-indigo-100 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full">{service.stats[Object.keys(service.stats)[1] as keyof typeof service.stats]} {Object.keys(service.stats)[1].replace(/([A-Z])/g, ' $1').trim()}</span>
+                <div className="flex flex-wrap gap-4 text-sm md:text-base font-semibold text-gray-800">
+                  <span className="bg-blue-100 px-4 py-2 rounded-full">{service.stats[Object.keys(service.stats)[0]]} {Object.keys(service.stats)[0].replace(/([A-Z])/g, ' $1').trim()}</span>
+                  <span className="bg-teal-100 px-4 py-2 rounded-full">{service.stats[Object.keys(service.stats)[1]]} {Object.keys(service.stats)[1].replace(/([A-Z])/g, ' $1').trim()}</span>
                 </div>
               </div>
               <div className={`${index % 2 === 0 ? 'aos-fade-left' : 'aos-fade-right'} order-1 lg:order-${index % 2 === 0 ? '2' : '1'}`}>
-                <div className="relative rounded-xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-500 group">
+                <div className="relative rounded-2xl overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-500 group">
                   <img 
                     src={service.image} 
                     alt={service.title} 
-                    className="w-full h-64 sm:h-80 md:h-96 object-cover object-center rounded-xl transition-opacity group-hover:opacity-80 bg-white"
+                    className="w-full h-56 sm:h-64 md:h-80 object-cover object-center rounded-2xl transition-opacity group-hover:opacity-90 bg-white"
                     style={{ aspectRatio: '4/3', objectFit: 'cover', objectPosition: 'center' }}
                     loading="lazy" 
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4 sm:p-6">
-                    <p className="text-white font-semibold text-sm sm:text-base md:text-lg">{service.description}</p>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+                    <p className="text-white font-semibold text-base md:text-lg">{service.description}</p>
                   </div>
                 </div>
               </div>
@@ -294,15 +334,22 @@ const Services = () => {
         </section>
       ))}
 
-      {/* CTA Section */}
-      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-indigo-900 via-teal-800 to-purple-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.2)_0,_transparent_80%)] opacity-50 animate-pulse"></div>
+      {/* CTA Section with Client Highlight */}
+      <section className="py-16 md:py-24 bg-gradient-to-br from-blue-900 via-teal-800 to-gray-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.15)_0,_transparent_80%)] opacity-40 animate-pulse"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-4xl mx-auto text-center aos-fade-up">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-teal-200 to-white">Ready to Transform Your Operations?</h2>
-            <p className="text-white/90 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto">Join industry leaders who trust GVS Controls for innovative, reliable, and sustainable engineering solutions.</p>
-            <Link to="/contact" className="inline-flex items-center px-6 py-3 sm:px-8 sm:py-4 bg-teal-500 text-white font-semibold rounded-full hover:bg-teal-600 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 text-sm sm:text-base">
-              Contact Our Experts <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
+          <div className="max-w-3xl mx-auto text-center aos-fade-up">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-teal-200 to-white">
+              Partner with Industry Experts
+            </h2>
+            <p className="text-white/90 text-base md:text-lg mb-8 max-w-2xl mx-auto">
+              From SAIL to NTPC, our solutions power leading industries. Let us transform your operations with innovative engineering.
+            </p>
+            <div className="mb-8">
+              <p className="text-teal-200 italic text-base md:text-lg">"GVS Controls delivered exceptional automation solutions for our cement plant, ensuring efficiency and reliability." - Dalmia Cement</p>
+            </div>
+            <Link to="/contact" className="inline-flex items-center px-8 py-4 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 text-base md:text-lg">
+              Get in Touch <ArrowRight className="ml-2 w-5 h-5" />
             </Link>
           </div>
         </div>

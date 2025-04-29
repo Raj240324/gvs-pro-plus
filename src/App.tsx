@@ -10,7 +10,7 @@ import CookieConsent from "react-cookie-consent";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Services from "./pages/Services";
-import Industries from "./pages/Industries";
+import ManufacturingSupply from "./pages/ManufacturingSupply";
 import Projects from "./pages/Projects";
 import Clients from "./pages/Clients";
 import WhyUs from "./pages/WhyUs";

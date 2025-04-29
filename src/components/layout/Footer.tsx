@@ -60,11 +60,17 @@ const Footer = () => {
             >
               <div className="flex items-center mb-4">
                 <img src="/assets/gvs_logo.png" alt="GVS Controls Logo" className="h-10 w-auto" />
-                <span className="gvs-title-red font-montserrat font-bold text-2xl ml-3">
-                  GVS Controls
+                <span
+                  className="font-montserrat font-bold text-xl ml-3"
+                  style={{ color: '#ff0000' }}
+                >
+                  GVS CONTROLS
                 </span>
               </div>
-              <p className="gvs-slogan-yellow text-sm leading-relaxed mb-2">
+              <p
+                className="text-xs leading-relaxed mb-2"
+                style={{ color: '#ffbf00' }}
+              >
                 Our Vision To Your Solution
               </p>
               <p className="text-[#e0f7fa] text-sm leading-relaxed">

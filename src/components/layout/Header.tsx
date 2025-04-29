@@ -87,92 +87,46 @@ const TopContactBar = () => (
     <div className="container mx-auto px-8 flex items-center justify-between h-14 text-sm font-inter text-[#2d2250] dark:text-white/90 relative">
       <div className="flex items-center gap-3 pr-6 border-r border-[#e0e0e0] dark:border-[#333] z-10">
         <span className="font-semibold text-xs text-[#4a0e78] dark:text:white/80 mr-2 tracking-wide">Follow</span>
-        <motion.a
-          href="https://facebook.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group focus:outline-none bg-transparent p-0 border-0 inline-flex items-center justify-center"
-          aria-label="Facebook"
-          style={{ background: "none", border: "none" }}
-        >
-          <motion.span
-            className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#1877F3]/90 to-[#3b5998]/80 shadow-md transition-all duration-300 overflow-hidden"
-            whileHover={{ scale: 1.18, rotate: -8, boxShadow: "0 4px 16px #1877f355" }}
-            whileTap={{ scale: 0.95 }}
-          >
+        <motion.a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="group focus:outline-none bg-transparent p-0 border-0 inline-flex items-center justify-center" aria-label="Facebook" style={{ background: "none", border: "none" }}>
+          <motion.span className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#1877F3]/90 to-[#3b5998]/80 shadow-md transition-all duration-300 overflow-hidden" whileHover={{ scale: 1.18, rotate: -8, boxShadow: "0 4px 16px #1877f355" }} whileTap={{ scale: 0.95 }}>
             <Facebook size={20} className="text-white group-hover:text-[#ffd700] transition" />
           </motion.span>
         </motion.a>
-        <motion.a
-          href="https://x.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group focus:outline-none bg-transparent p-0 border-0 inline-flex items-center justify-center"
-          aria-label="X (Twitter)"
-          style={{ background: "none", border: "none" }}
-        >
-          <motion.span
-            className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#000000]/90 to-[#23272f]/80 shadow-md transition-all duration-300 overflow-hidden"
-            whileHover={{ scale: 1.18, rotate: 8, boxShadow: "0 4px 16px #00000033" }}
-            whileTap={{ scale: 0.95 }}
-          >
+        <motion.a href="https://x.com" target="_blank" rel="noopener noreferrer" className="group focus:outline-none bg-transparent p-0 border-0 inline-flex items-center justify-center" aria-label="X (Twitter)" style={{ background: "none", border: "none" }}>
+          <motion.span className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#000000]/90 to-[#23272f]/80 shadow-md transition-all duration-300 overflow-hidden" whileHover={{ scale: 1.18, rotate: 8, boxShadow: "0 4px 16px #00000033" }} whileTap={{ scale: 0.95 }}>
             <SiX size={20} className="text-white group-hover:text-[#ffd700] transition" />
           </motion.span>
         </motion.a>
-        <motion.a
-          href="https://instagram.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group focus:outline-none bg-transparent p-0 border-0 inline-flex items-center justify-center"
-          aria-label="Instagram"
-          style={{ background: "none", border: "none" }}
-        >
-          <motion.span
-            className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#E4405F]/90 via-[#fd1d1d]/80 to-[#fcb045]/80 shadow-md transition-all duration-300 overflow-hidden"
-            whileHover={{ scale: 1.18, rotate: -8, boxShadow: "0 4px 16px #E4405F55" }}
-            whileTap={{ scale: 0.95 }}
-          >
+        <motion.a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="group focus:outline-none bg-transparent p-0 border-0 inline-flex items-center justify-center" aria-label="Instagram" style={{ background: "none", border: "none" }}>
+          <motion.span className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#E4405F]/90 via-[#fd1d1d]/80 to-[#fcb045]/80 shadow-md transition-all duration-300 overflow-hidden" whileHover={{ scale: 1.18, rotate: -8, boxShadow: "0 4px 16px #E4405F55" }} whileTap={{ scale: 0.95 }}>
             <Instagram size={20} className="text-white group-hover:text-[#ffd700] transition" />
           </motion.span>
         </motion.a>
       </div>
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center w-full pointer-events-none">
-        <span className="text-xs font-bold tracking-wide text-[#4a0e78] dark:text:white/90 px-6 py-1 rounded-full bg-white/70 dark:bg-black/40 shadow border border-white/30 dark:border-white/10 backdrop-blur-md drop-shadow-sm uppercase pointer-events-auto">
-          Leading Electrical Control Panel Manufacturer
+        <span className="flex flex-col items-center text-xs font-bold tracking-wide text-[#4a0e78] dark:text-white/90 px-6 py-2 rounded-full bg-white/70 dark:bg-black/40 shadow border border-white/30 dark:border-white/10 backdrop-blur-md drop-shadow-sm uppercase pointer-events-auto">
+          Consultant, Engineering, Manufacturing (Supply & Services)
+          <span>Electrical & Automation</span>
         </span>
       </div>
       <div className="flex items-center gap-2 pl-4 border-l border-[#e0e0e0] dark:border-[#333] z-10 min-w-0">
-        <motion.a
-          href="mailto:gvscontrols@gmail.com"
-          className="flex items-center gap-1 px-2 py-0.5 rounded bg-gradient-to-r from-[#fff7e6] to-[#ffe0e0] dark:from-[#2a2a40] dark:to-[#3a2a3a] shadow-sm font-semibold text-[#4a0e78] dark:text-[#ffd700] text-xs group relative overflow-hidden whitespace-nowrap min-w-0"
-          whileHover={{ scale: 1.04, boxShadow: "0 2px 8px #ff6f6133" }}
-          whileTap={{ scale: 0.97 }}
-          aria-label="Email us at gvscontrols@gmail.com"
-          style={{ maxWidth: 180 }}
-        >
-          <motion.span
-            className="flex items-center justify-center"
-            animate={{ y: [0, -2, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-          >
-            <Mail size={14} className="text-[#ff6f61] group-hover:scale-110 transition-transform duration-300" />
-          </motion.span>
-          <span className="ml-0.5 truncate group-hover:text-[#ff6f61] transition">gvscontrols@gmail.com</span>
-        </motion.a>
+        <div className="flex flex-col gap-1">
+          <motion.a href="mailto:projects@gvscontrols.com" className="flex items-center gap-1 px-2 py-0.5 rounded bg-gradient-to-r from-[#fff7e6] to-[#ffe0e0] dark:from-[#2a2a40] dark:to-[#3a2a3a] shadow-sm font-semibold text-[#4a0e78] dark:text-[#ffd700] text-xs group relative overflow-hidden whitespace-nowrap min-w-0" whileHover={{ scale: 1.04, boxShadow: "0 2px 8px #ff6f6133" }} whileTap={{ scale: 0.97 }} aria-label="Email us at projects@gvscontrols.com" style={{ maxWidth: 180 }}>
+            <motion.span className="flex items-center justify-center" animate={{ y: [0, -2, 0] }} transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}>
+              <Mail size={14} className="text-[#ff6f61] group-hover:scale-110 transition-transform duration-300" />
+            </motion.span>
+            <span className="ml-0.5 truncate group-hover:text-[#ff6f61] transition">projects@gvscontrols.com</span>
+          </motion.a>
+          <motion.a href="mailto:gvscontrols@gmail.com" className="flex items-center gap-1 px-2 py-0.5 rounded bg-gradient-to-r from-[#fff7e6] to-[#ffe0e0] dark:from-[#2a2a40] dark:to-[#3a2a3a] shadow-sm font-semibold text-[#4a0e78] dark:text-[#ffd700] text-xs group relative overflow-hidden whitespace-nowrap min-w-0" whileHover={{ scale: 1.04, boxShadow: "0 2px 8px #ff6f6133" }} whileTap={{ scale: 0.97 }} aria-label="Email us at gvscontrols@gmail.com" style={{ maxWidth: 180 }}>
+            <motion.span className="flex items-center justify-center" animate={{ y: [0, -2, 0] }} transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}>
+              <Mail size={14} className="text-[#ff6f61] group-hover:scale-110 transition-transform duration-300" />
+            </motion.span>
+            <span className="ml-0.5 truncate group-hover:text-[#ff6f61] transition">gvscontrols@gmail.com</span>
+          </motion.a>
+        </div>
         <span className="w-1 h-1 rounded-full bg-[#4a0e78]/30 dark:bg:white/30 mx-1" />
-        <motion.a
-          href="tel:+919087772798"
-          className="flex items-center gap-1 px-2 py-0.5 rounded bg-gradient-to-r from-[#e6fff7] to-[#e0f7ff] dark:from-[#2a403a] dark:to-[#2a3a3a] shadow-sm font-semibold text-[#4a0e78] dark:text-[#ffd700] text-xs group relative overflow-hidden whitespace-nowrap min-w-0"
-          whileHover={{ scale: 1.04, boxShadow: "0 2px 8px #4a0e7833" }}
-          whileTap={{ scale: 0.97 }}
-          aria-label="Call us at +91 90877 72798"
-          style={{ maxWidth: 140 }}
-        >
-          <motion.span
-            className="flex items-center justify-center"
-            animate={{ y: [0, -2, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut", delay: 0.5 }}
-          >
+        <motion.a href="tel:+919087772798" className="flex items-center gap-1 px-2 py-0.5 rounded bg-gradient-to-r from-[#e6fff7] to-[#e0f7ff] dark:from-[#2a403a] dark:to-[#2a3a3a] shadow-sm font-semibold text-[#4a0e78] dark:text-[#ffd700] text-xs group relative overflow-hidden whitespace-nowrap min-w-0" whileHover={{ scale: 1.04, boxShadow: "0 2px 8px #4a0e7833" }} whileTap={{ scale: 0.97 }} aria-label="Call us at +91 90877 72798" style={{ maxWidth: 140 }}>
+          <motion.span className="flex items-center justify-center" animate={{ y: [0, -2, 0] }} transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut", delay: 0.5 }}>
             <Phone size={14} className="text-[#4a0e78] group-hover:scale-110 transition-transform duration-300" />
           </motion.span>
           <span className="ml-0.5 truncate group-hover:text-[#4a0e78] transition">+91 90877 72798</span>
@@ -221,7 +175,7 @@ const Header = () => {
     { name: "Home", path: "/" },
     { name: "About Us", path: "/about" },
     { name: "Services", path: "/services" },
-    { name: "Industries", path: "/industries" },
+    { name: "Manufacturing & Supply", path: "/manufacturing-supply" },
     { name: "Projects", path: "/projects" },
     { name: "Clients", path: "/clients" },
     { name: "Why Us", path: "/why-us" },
@@ -302,15 +256,15 @@ const Header = () => {
                   className="h-12 w-auto max-w-[150px] transition-transform hover:scale-105"
                 />
                 <div className="hidden lg:flex flex-col">
-                  <span className="gvs-title-red">GVS Controls</span>
-                  <span className="gvs-slogan-yellow">Our Vision To Your Solution</span>
+                  <span className="text-[#ff0000] font-bold text-lg">GVS CONTROLS</span>
+                  <span className="text-[#ffbf00] font-medium">Our Vision To Your Solution</span>
                 </div>
               </NavLink>
             </div>
             <div className="flex-1 flex justify-center items-center lg:hidden">
               <div className="text-center">
-                <span className="block gvs-title-red">GVS Controls</span>
-                <span className="block gvs-slogan-yellow">Our Vision To Your Solution</span>
+                <span className="block text-[#ff0000] font-bold text-lg">GVS CONTROLS</span>
+                <span className="block text-[#ffbf00] font-medium">Our Vision To Your Solution</span>
               </div>
             </div>
             <AnimatedMenuButton
@@ -394,8 +348,8 @@ const Header = () => {
                     alt="GVS Controls Logo"
                     className="h-8 w-auto mb-1.5 rounded-lg shadow-md bg-white/80"
                   />
-                  <span className="gvs-title-red text-[16px] leading-tight">GVS Controls</span>
-                  <span className="gvs-slogan-yellow text-xs font-medium mb-1.5 leading-tight">
+                  <span className="text-[#ff0000] font-bold text-[16px] leading-tight">GVS CONTROLS</span>
+                  <span className="text-[#ffbf00] text-xs font-medium mb-1.5 leading-tight">
                     Our Vision To Your Solution
                   </span>
                 </div>
