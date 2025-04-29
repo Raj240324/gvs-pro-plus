@@ -1,12 +1,29 @@
 {
-    "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
+    "rewrites": [
+      { "source": "/assets/(.*)", "destination": "/assets/$1" },
+      { "source": "/images/(.*)", "destination": "/images/$1" },
+      { "source": "/catalogue/(.*)", "destination": "/catalogue/$1" },
+      { "source": "/favicon.ico", "destination": "/favicon.ico" },
+      { "source": "/vite.svg", "destination": "/vite.svg" },
+      { "source": "/robots.txt", "destination": "/robots.txt" },
+      { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+      { "source": "/manifest.json", "destination": "/manifest.json" },
+      { "source": "/service-worker.js", "destination": "/service-worker.js" },
+      { "source": "/(.*)", "destination": "/index.html" }
+    ],
     "headers": [
       {
         "source": "/images/(.*)",
         "headers": [
           { "key": "Cache-Control", "value": "public, max-age=31536000" }
         ]
+      },
+      {
+        "source": "/assets/(.*)",
+        "headers": [
+          { "key": "Cache-Control", "value": "public, max-age=31536000" }
+        ]
       }
     ]
-  }
+}
   
