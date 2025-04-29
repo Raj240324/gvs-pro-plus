@@ -8,9 +8,6 @@ import ContactModal from "../../components/ContactModal";
 import { useContactModal } from "../../hooks/use-contact-modal";
 import { SiX } from "react-icons/si";
 
-// Import logo
-import logo from '../../assets/gvs_logo.png';
-
 function debounce<T extends (...args: unknown[]) => void>(func: T, wait: number): (...args: Parameters<T>) => void {
   let timeout: ReturnType<typeof setTimeout>;
   return (...args: Parameters<T>) => {
@@ -254,7 +251,7 @@ const Header = () => {
                 onClick={handleNavClick}
               >
                 <img
-                  src={logo}
+                  src="/assets/gvs_logo.png"
                   alt="GVS Controls Logo"
                   className="h-12 w-auto max-w-[150px] transition-transform hover:scale-105"
                 />
@@ -347,7 +344,7 @@ const Header = () => {
                 </motion.button>
                 <div className="flex flex-col items-center pt-4 pb-1 px-4 shrink-0">
                   <img
-                    src={logo}
+                    src="/assets/gvs_logo.png"
                     alt="GVS Controls Logo"
                     className="h-8 w-auto mb-1.5 rounded-lg shadow-md bg-white/80"
                   />
@@ -460,4 +457,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Header; 
