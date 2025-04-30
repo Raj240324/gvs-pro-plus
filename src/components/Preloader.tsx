@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import logo from '/assets/gvs_logo.png'; // Import the logo
+import logo from '../assets/gvs_logo.png'; // Import the logo
 
 const spinTransition = {
   repeat: Infinity,
