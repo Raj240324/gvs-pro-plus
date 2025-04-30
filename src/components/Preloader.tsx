@@ -12,7 +12,7 @@ const Preloader = () => {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoaded(true), 1800);
+    const timer = setTimeout(() => setLoaded(true), 3000);  // Test with 3 seconds delay
     return () => clearTimeout(timer);
   }, []);
 
