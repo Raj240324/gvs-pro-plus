@@ -254,7 +254,6 @@ const Contact = () => {
         {/* Hero Section */}
         <section className="relative bg-gradient-to-br from-teal-600 via-indigo-600 to-purple-700 overflow-hidden">
           <Particles />
-          <div className="absolute inset-0 bg-[url('/assets/ch-1.jpg')] bg-cover bg-center opacity-15 mix-blend-overlay animate-pulse-slow"></div>
           <div className="relative z-10 py-16 sm:py-20 md:py-24 lg:py-32">
             <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="container mx-auto px-4 sm:px-6 lg:px-8">
               <div className="max-w-4xl mx-auto text-center">
