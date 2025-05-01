@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import logo from '../assets/gvs_logo.png'; // Import the logo
 
 const spinTransition = {
   repeat: Infinity,
@@ -12,7 +11,7 @@ const Preloader = () => {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoaded(true), 3000);  // Test with 3 seconds delay
+    const timer = setTimeout(() => setLoaded(true), 3000); // 3-second delay
     return () => clearTimeout(timer);
   }, []);
 
@@ -24,9 +23,10 @@ const Preloader = () => {
     >
       {/* Animated gradient background */}
       <div className="absolute inset-0 gradient-bg animate-gradientShift" />
-      {/* Spinner and logo only, no glassmorphic box */}
+
+      {/* Spinner and logo */}
       <div className="relative z-10 flex flex-col items-center justify-center">
-        {/* Modern animated spinner */}
+        {/* Spinner */}
         <div className="relative h-20 w-20 mb-6">
           {/* Outer circle */}
           <motion.span
@@ -49,16 +49,22 @@ const Preloader = () => {
           {/* Center dot */}
           <span className="absolute inset-8 rounded-full bg-[#0f172a] dark:bg-white" />
         </div>
-        {/* Logo with pulse/float animation */}
+
+        {/* Logo (from public folder) */}
         <img
-          src={logo} // Use the imported logo
+          src="/assets/gvs_logo.png"
           alt="GVS Controls Logo"
           className="w-28 h-28 z-10 mb-4 animate-float"
           style={{ filter: 'drop-shadow(0 2px 16px #22d3ee66)' }}
         />
-        {/* Modern loading text */}
-        <span className="mt-2 text-white/80 tracking-widest text-lg font-semibold animate-text-reveal">Loading...</span>
+
+        {/* Loading text */}
+        <span className="mt-2 text-white/80 tracking-widest text-lg font-semibold animate-text-reveal">
+          Loading...
+        </span>
       </div>
+
+      {/* Inline styles for animation */}
       <style>{`
         .gradient-bg {
           background: linear-gradient(135deg, #0f172a 0%, #312e81 50%, #0e7490 100%);
