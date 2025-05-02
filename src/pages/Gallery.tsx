@@ -1,6 +1,24 @@
 import { useEffect, useState, useMemo } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import cop1 from "../assets/cop-1.png";
+import cop2 from "../assets/cop-2.png";
+import cop3 from "../assets/cop-3.png";
+import cop4 from "../assets/cop-4.png";
+import cop5 from "../assets/cop-5.png";
+import cop6 from "../assets/cop-6.png";
+import cop7 from "../assets/cop-7.png";   
+import cop8 from "../assets/cop-8.png";
+import cop9 from "../assets/cop-9.png";
+import cop10 from "../assets/cop-10.png";
+import cop11 from "../assets/cop-11.png";
+import cop12 from "../assets/cop-12.png";
+import cop13 from "../assets/cop-13.png";
+import cop14 from "../assets/cop-14.png";
+import cop15 from "../assets/cop-15.png";
+import cop16 from "../assets/cop-16.png";
+import cop17 from "../assets/cop-17.png";
+import cop18 from "../assets/cop-18.png";
 
 // Define gallery image type
 interface GalleryImage {
@@ -45,92 +63,92 @@ const Gallery = () => {
     () => [
       {
         id: '1',
-        src: '/assets/pp1.jpg',
+        src: cop1,
         alt: 'PCC Panel Manufacturing for Industrial Power Distribution',
       },
       {
         id: '2',
-        src: '/assets/pp1.jpg',
+        src: cop2,
         alt: 'MCC Panel Manufacturing for Motor Control Systems',
       },
       {
         id: '3',
-        src: '/assets/pp1.jpg',
+        src: cop3,
         alt: 'PLC cum VFD Control Panel Manufacturing for Automation',
       },
       {
         id: '4',
-        src: '/assets/pp1.jpg',
+        src: cop4,
         alt: 'PCC Panel Assembly for Power Control Centers',
       },
       {
         id: '5',
-        src: '/assets/pp1.jpg',
+        src: cop5,
         alt: 'MCC Panel Fabrication for Industrial Applications',
       },
       {
         id: '6',
-        src: '/assets/pp1.jpg',
+        src: cop6,
         alt: 'VFD Control Panel Manufacturing for Process Control',
       },
       {
         id: '7',
-        src: '/assets/pp1.jpg',
+        src: cop7,
         alt: 'PCC Panel Manufacturing with Advanced Wiring',
       },
       {
         id: '8',
-        src: '/assets/pp1.jpg',
+        src: cop8,
         alt: 'MCC Panel Manufacturing for Heavy-Duty Motors',
       },
       {
         id: '9',
-        src: '/assets/pp1.jpg',
+        src: cop9,
         alt: 'PLC cum VFD Panel Manufacturing for Precision Automation',
       },
       {
         id: '10',
-        src: '/assets/pp1.jpg',
+        src: cop10,
         alt: 'PCC Panel Manufacturing for Energy Management',
       },
       {
         id: '11',
-        src: '/assets/pp1.jpg',
+        src: cop11,
         alt: 'MCC Panel Manufacturing for Industrial Automation',
       },
       {
         id: '12',
-        src: '/assets/pp1.jpg',
+        src: cop12,
         alt: 'VFD Control Panel Manufacturing for Power Plants',
       },
       {
         id: '13',
-        src: '/assets/pp1.jpg',
+        src: cop13,
         alt: 'PCC Panel Manufacturing for Process Industries',
       },
       {
         id: '14',
-        src: '/assets/pp1.jpg',
+        src: cop14,
         alt: 'MCC Panel Manufacturing for Bulk Material Handling',
       },
       {
         id: '15',
-        src: '/assets/pp1.jpg',
+        src: cop15,
         alt: 'PLC cum VFD Panel Manufacturing for Renewable Energy',
       },
        {
         id: '16',
-        src: '/assets/pp1.jpg',
+        src: cop16,
         alt: 'PLC cum VFD Panel Manufacturing for Renewable Energy',
       },
       {
         id: '17',
-        src: '/assets/pp1.jpg',
+        src: cop17,
         alt: 'PLC cum VFD Panel Manufacturing for Renewable Energy',
       },
       {
         id: '18',
-        src: '/assets/pp1.jpg',
+        src: cop18,
         alt: 'PLC cum VFD Panel Manufacturing for Renewable Energy',
       },
     ],
