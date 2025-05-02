@@ -11,32 +11,32 @@ const visionImageUrl: string = "https://images.pexels.com/photos/1761279/pexels-
 
 // Array of power plant images in public/assets
 const powerPlantImages: string[] = [
-'/assets/pp-1.png',
-'/assets/pp-2.png',
-'/assets/pp-3.png',
-'/assets/pp-4.png',
-'/assets/pp-5.png',
-'/assets/pp-6.png',
+'/assets/pp1.jpg',
+'/assets/pp1.jpg',
+'/assets/pp1.jpg',
+'/assets/pp1.jpg',
+'/assets/pp1.jpg',
+'/assets/pp1.jpg',
 ];
 
 // Array of renewable energy images in public/assets
 const renewableEnergyImages: string[] = [
-'/assets/re-1.png',
-'/assets/re-2.png',
-'/assets/re-3.png',
-'/assets/st-1.png',
-'/assets/st-2.png',
-'/assets/st-3.png',
+'/assets/pp1.jpg',
+'/assets/pp1.jpg',
+'/assets/pp1.jpg',
+'/assets/pp1.jpg',
+'/assets/pp1.jpg',
+'/assets/pp1.jpg',
 ];
 
 // Array of control panel images in public/assets/gallery
 const controlPanelImages: string[] = [
-'/assets/cop-1.png',
-'/assets/cop-13.png',
-'/assets/cop-14.png',
-'/assets/cop-15.png',
-'/assets/cop-16.png',
-'/assets/cop-17.png',
+'/assets/pp1.jpg',
+'/assets/pp1.jpg',
+'/assets/pp1.jpg',
+'/assets/pp1.jpg',
+'/assets/pp1.jpg',
+'/assets/pp1.jpg',
 
 ];
 
