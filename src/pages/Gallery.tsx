@@ -55,7 +55,7 @@ const Gallery = () => {
       },
       {
         id: '3',
-        src: '/assets/cop-2.png',
+        src: '/assets/cop-3.png',
         alt: 'PLC cum VFD Control Panel Manufacturing for Automation',
       },
       {
