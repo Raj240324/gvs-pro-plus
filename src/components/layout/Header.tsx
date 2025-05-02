@@ -251,7 +251,7 @@ const Header = () => {
                 onClick={handleNavClick}
               >
                 <img
-                  src="/assets/pp1.jpg"
+                  src="/logo.png"
                   alt="GVS Controls Logo"
                   className="h-12 w-auto max-w-[150px] transition-transform hover:scale-105"
                 />

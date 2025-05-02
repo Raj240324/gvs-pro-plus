@@ -4,6 +4,25 @@ import { motion } from 'framer-motion';
 import { Compare } from '../components/ui/compare';
 import { GlowingEffect } from '../components/ui/glowing-effect';
 import { Timeline } from '../components/ui/timeline';
+import pp1 from "../assets/pp-1.png";
+import pp2 from "../assets/pp-2.png";
+import pp3 from "../assets/pp-3.png";
+import pp4 from "../assets/pp-4.png";
+import pp5 from "../assets/pp-5.png";
+import pp6 from "../assets/pp-6.png";
+import re1 from "../assets/re1.png";
+import re2 from "../assets/re2.png";
+import re3 from "../assets/re3.png";
+import re4 from "../assets/re4.png";
+import re5 from "../assets/re5.png";
+import re6 from "../assets/re6.png";
+import cop1 from "../assets/cop1.png";
+import cop14 from "../assets/cop14.png";
+import cop15 from "../assets/cop15.png";
+import cop16 from "../assets/cop16.png";
+import cop17 from "../assets/cop17.png";
+import cop18 from "../assets/cop18.png";
+// Define the type for team member
 
 // Use free business images from Pexels for Mission & Vision
 const missionImageUrl: string = "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg";
@@ -11,32 +30,32 @@ const visionImageUrl: string = "https://images.pexels.com/photos/1761279/pexels-
 
 // Array of power plant images in public/assets
 const powerPlantImages: string[] = [
-'/assets/pp1.jpg',
-'/assets/pp1.jpg',
-'/assets/pp1.jpg',
-'/assets/pp1.jpg',
-'/assets/pp1.jpg',
-'/assets/pp1.jpg',
+pp1,
+pp2,
+pp3,
+pp4,
+pp5,
+pp6,
 ];
 
 // Array of renewable energy images in public/assets
 const renewableEnergyImages: string[] = [
-'/assets/pp1.jpg',
-'/assets/pp1.jpg',
-'/assets/pp1.jpg',
-'/assets/pp1.jpg',
-'/assets/pp1.jpg',
-'/assets/pp1.jpg',
+re1,
+re2,
+re3,
+re4,
+re5,
+re6,
 ];
 
 // Array of control panel images in public/assets/gallery
 const controlPanelImages: string[] = [
-'/assets/pp1.jpg',
-'/assets/pp1.jpg',
-'/assets/pp1.jpg',
-'/assets/pp1.jpg',
-'/assets/pp1.jpg',
-'/assets/pp1.jpg',
+cop1,
+cop14,
+cop15,
+cop16,
+cop17,
+cop18,
 
 ];
 
