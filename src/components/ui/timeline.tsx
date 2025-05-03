@@ -23,10 +23,14 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
   }, [ref]);
 
   useEffect(() => {
-    if (lineRef.current) {
-      setLineHeight(lineRef.current.offsetHeight);
-    }
-  }, [data.length]);
+    if (!lineRef.current) return;
+    const observer = new ResizeObserver(() => {
+      setLineHeight(lineRef.current?.offsetHeight || 0);
+    });
+    observer.observe(lineRef.current);
+    return () => observer.disconnect();
+  }, []);
+  
 
   const { scrollYProgress } = useScroll({
     target: containerRef,

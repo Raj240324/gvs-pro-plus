@@ -71,20 +71,8 @@ const Contact = () => {
   // Initialize EmailJS
   useEffect(() => {
     const userID = import.meta.env.VITE_EMAILJS_USER_ID;
-    const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const customerTemplateID = import.meta.env.VITE_EMAILJS_CUSTOMER_TEMPLATE_ID;
-    const ownerTemplateID = import.meta.env.VITE_EMAILJS_OWNER_TEMPLATE_ID;
-
-    // Log environment variables for debugging
-    console.log('EmailJS Environment Variables:', {
-      userID,
-      serviceID,
-      customerTemplateID,
-      ownerTemplateID,
-    });
-
     if (!userID) {
-      console.error('EmailJS userID is undefined. Please check your .env file for VITE_EMAILJS_USER_ID.');
+      console.error('EmailJS userID is missing in environment variables.');
       toast({
         title: "Configuration Error",
         description: "EmailJS userID is missing. Please contact support.",
@@ -95,9 +83,11 @@ const Contact = () => {
 
     try {
       emailjs.init(userID);
-      console.log('EmailJS initialized successfully with userID:', userID);
+      if (import.meta.env.DEV) {
+        console.log('EmailJS initialized successfully');
+      }
     } catch (error) {
-      console.error('Failed to initialize EmailJS:', error);
+      console.error('Failed to initialize EmailJS');
       toast({
         title: "Configuration Error",
         description: "Failed to initialize EmailJS. Please try again later.",
@@ -147,19 +137,13 @@ const Contact = () => {
     const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
     const customerTemplateID = import.meta.env.VITE_EMAILJS_CUSTOMER_TEMPLATE_ID;
     const ownerTemplateID = import.meta.env.VITE_EMAILJS_OWNER_TEMPLATE_ID;
-    const userID = import.meta.env.VITE_EMAILJS_USER_ID;
 
-    if (!serviceID || !customerTemplateID || !ownerTemplateID || !userID) {
+    if (!serviceID || !customerTemplateID || !ownerTemplateID) {
       setIsSubmitting(false);
-      console.error('EmailJS configuration is incomplete:', {
-        serviceID,
-        customerTemplateID,
-        ownerTemplateID,
-        userID,
-      });
+      console.error('EmailJS configuration is missing in environment variables.');
       toast({
         title: "Configuration Error",
-        description: "EmailJS configuration is missing. Please check your .env file.",
+        description: "EmailJS configuration is missing. Please contact support.",
         variant: "destructive",
       });
       return;
@@ -212,14 +196,7 @@ const Contact = () => {
           errorStatus = (error as { status?: string }).status ?? errorStatus;
         }
       }
-      console.error('Error details:', {
-        errorText,
-        errorStatus,
-        serviceID,
-        customerTemplateID,
-        ownerTemplateID,
-        templateParams,
-      });
+      console.error('Error details:', { errorText, errorStatus });
     }
   };
 

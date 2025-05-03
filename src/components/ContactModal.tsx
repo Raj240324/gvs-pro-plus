@@ -24,11 +24,11 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
 
-  // Initialize EmailJS
+  // Initialize EmailJS (run once)
   useEffect(() => {
     const userID = import.meta.env.VITE_EMAILJS_USER_ID;
     if (!userID) {
-      console.error('EmailJS userID is undefined. Please check your .env file for VITE_EMAILJS_USER_ID.');
+      console.error('EmailJS userID is missing in environment variables.');
       toast({
         title: "Configuration Error",
         description: "EmailJS userID is missing. Please contact support.",
@@ -38,16 +38,18 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
     }
     try {
       emailjs.init(userID);
-      console.log('EmailJS initialized successfully with userID:', userID);
+      if (import.meta.env.DEV) {
+        console.log('EmailJS initialized successfully');
+      }
     } catch (error) {
-      console.error('Failed to initialize EmailJS:', error);
+      console.error('Failed to initialize EmailJS');
       toast({
         title: "Configuration Error",
         description: "Failed to initialize EmailJS. Please try again later.",
         variant: "destructive",
       });
     }
-  }, [toast]);
+  }, []); // Empty dependency array
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -74,14 +76,10 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
 
     if (!serviceID || !customerTemplateID || !ownerTemplateID) {
       setIsSubmitting(false);
-      console.error('EmailJS configuration is incomplete:', {
-        serviceID,
-        customerTemplateID,
-        ownerTemplateID,
-      });
+      console.error('EmailJS configuration is missing in environment variables.');
       toast({
         title: "Configuration Error",
-        description: "EmailJS configuration is missing. Please check your .env file.",
+        description: "EmailJS configuration is missing. Please contact support.",
         variant: "destructive",
       });
       return;
@@ -125,7 +123,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
         setIsSubmitted(false);
         onOpenChange(false);
       }, 2000);
-    } catch (error: unknown) {
+    } catch (error) {
       setIsSubmitting(false);
       toast({
         title: "Error",
@@ -133,17 +131,6 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
         variant: "destructive",
       });
       console.error('EmailJS error:', error);
-      if (typeof error === 'object' && error !== null) {
-        const err = error as { text?: string; status?: string };
-        console.error('Error details:', {
-          errorText: err.text || 'No error text provided',
-          errorStatus: err.status || 'No status provided',
-          serviceID,
-          customerTemplateID,
-          ownerTemplateID,
-          templateParams,
-        });
-      }
     }
   };
 
@@ -154,8 +141,8 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
         <div className="fixed inset-0 z-[2000] bg-black/30 backdrop-blur-sm transition-all duration-300" aria-hidden="true"></div>
       )}
       <DialogContent
-        showCloseButton={false} // Disable default close button
-        className="w-full max-w-[95vw] sm:max-w-[500px] md:max-w-[700px] lg:max-w-[800px] p-2 sm:p-6 bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg border border-white/20 dark:border-white/10 shadow-lg rounded-xl z-[2500] mt-[60px] sm:mt-0 h-auto max-h-[calc(100vh-32px)] sm:max-h-[calc(100vh-70px)] overflow-y-auto"
+        showCloseButton={false}
+        className="relative w-full max-w-[95vw] sm:max-w-[500px] md:max-w-[700px] lg:max-w-[800px] p-2 sm:p-6 bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg border border-white/20 dark:border-white/10 shadow-lg rounded-xl z-[2500] mt-[60px] sm:mt-0 h-auto max-h-[calc(100vh-32px)] sm:max-h-[calc(100vh-70px)] overflow-y-auto"
       >
         <div className="relative flex flex-col h-full min-h-0">
           {/* Custom Close Button */}
@@ -206,16 +193,12 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="flex flex-col items-center justify-center py-6 sm:py-8 text時計center relative z-10 grow"
+              transition={{ type: "spring", stiffness: 200, damping: 10 }}
+              className="flex flex-col items-center justify-center py-6 sm:py-8 text-center relative z-10 grow"
             >
-              <motion.div
-                initial={{ scale: 0.8 }}
-                animate={{ scale: 1 }}
-                transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                className="w-14 h-14 sm:w-20 sm:h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gradient-to-r from-teal-500 to-purple-600"
-              >
+              <div className="w-14 h-14 sm:w-20 sm:h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gradient-to-r from-teal-500 to-purple-600">
                 <CheckCircle className="h-6 w-6 sm:h-10 sm:w-10 text-white" />
-              </motion.div>
+              </div>
               <h3 className="text-base sm:text-xl md:text-2xl font-bold text-gray-800 dark:text-white">Thank You!</h3>
               <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-1 sm:mt-2">
                 Your message has been sent successfully.

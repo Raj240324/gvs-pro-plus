@@ -6,13 +6,11 @@ import { CheckCircle2, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 interface Client {
   name: string;
   location: string;
-  logo: string;
   description: string;
 }
 
 interface Consultant {
   name: string;
-  logo: string;
 }
 
 interface Testimonial {
@@ -56,37 +54,22 @@ const Clients: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // State to track failed image loads
-  const [failedImages, setFailedImages] = useState<string[]>([]);
-
   const clients: Client[] = [
-    { name: 'Aumund Engineering', location: 'Chennai', logo: 'https://www.aumund.com/wp-content/uploads/2020/10/aumund-logo.svg', description: 'Material handling systems for cement production.' },
-    { name: 'Loesche Energy', location: 'Delhi & Chennai', logo: 'https://www.loesche.com/fileadmin/templates/img/logo-loesche.svg', description: 'Automation for energy production.' },
-    { name: 'Metco Roof', location: 'Chennai', logo: 'https://www.metco.co.in/images/logo.png', description: 'Control systems for roofing manufacturing.' },
-    { name: 'Meenakshi Medical College', location: 'Kanchipuram', logo: 'https://mmchri.ac.in/wp-content/uploads/2021/09/logo.png', description: '11 KV substation revamping.' },
-    { name: 'Ultratech Cement', location: 'Gujarat', logo: 'https://www.ultratechcement.com/content/dam/ultratechcementwebsite/logo.png', description: 'Feeders for cement operations.' },
-    { name: 'NTPC Limited', location: 'Darapalli', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/6b/NTPC_Logo.svg', description: 'Electrical systems for power generation.' },
-    { name: 'JSW Cement', location: 'Dolvi', logo: 'https://www.jsw.in/sites/default/files/assets/logo/jsw_cement_logo.png', description: 'Stacker and reclaimer consultancy.' },
-    { name: 'Meenakshi Energy', location: 'Nellore', logo: 'https://meenakshienergy.com/images/logo.png', description: 'Custom paddle feeder solutions.' },
+    { name: 'Aumund Engineering', location: 'Chennai', description: 'Material handling systems for cement production.' },
+    { name: 'Loesche Energy', location: 'Delhi & Chennai', description: 'Automation for energy production.' },
+    { name: 'Metco Roof', location: 'Chennai', description: 'Control systems for roofing manufacturing.' },
+    { name: 'Meenakshi Medical College', location: 'Kanchipuram', description: '11 KV substation revamping.' },
+    { name: 'Ultratech Cement', location: 'Gujarat', description: 'Feeders for cement operations.' },
+    { name: 'NTPC Limited', location: 'Darapalli', description: 'Electrical systems for power generation.' },
+    { name: 'JSW Cement', location: 'Dolvi', description: 'Stacker and reclaimer consultancy.' },
+    { name: 'Meenakshi Energy', location: 'Nellore', description: 'Custom paddle feeder solutions.' },
   ];
 
   const consultants: Consultant[] = [
-    {
-      name: 'Engineers India Ltd (EIL)',
-      logo: 'https://ui-avatars.com/api/?name=EIL&background=6d28d9&color=fff&bold=true&rounded=true&size=96&length=3'
-    },
-    {
-      name: 'MECON',
-      logo: 'https://ui-avatars.com/api/?name=MECON&background=0e7490&color=fff&bold=true&rounded=true&size=96&length=2'
-    },
-    {
-      name: 'Fichtner',
-      logo: 'https://ui-avatars.com/api/?name=Fichtner&background=059669&color=fff&bold=true&rounded=true&size=96&length=1'
-    },
-    {
-      name: 'Tata Consulting Engineers',
-      logo: 'https://ui-avatars.com/api/?name=TCE&background=be185d&color=fff&bold=true&rounded=true&size=96&length=3'
-    },
+    { name: 'Engineers India Ltd (EIL)' },
+    { name: 'MECON' },
+    { name: 'Fichtner' },
+    { name: 'Tata Consulting Engineers' },
   ];
 
   const testimonials: Testimonial[] = [
@@ -99,11 +82,6 @@ const Clients: React.FC = () => {
 
   const nextTestimonial = () => setActiveIndex((prev) => (prev + 1) % testimonials.length);
   const prevTestimonial = () => setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-
-  // Handle image load errors
-  const handleImageError = (logoUrl: string) => {
-    setFailedImages((prev) => [...prev, logoUrl]);
-  };
 
   return (
     <main className="pt-16 sm:pt-20 md:pt-24 lg:pt-28 overflow-hidden">
@@ -175,18 +153,9 @@ const Clients: React.FC = () => {
               >
                 <div className="relative z-10">
                   <div className="h-20 flex items-center justify-center mb-4">
-                    {client.logo && !failedImages.includes(client.logo) ? (
-                      <img
-                        src={client.logo}
-                        alt={`${client.name} logo`}
-                        className="h-16 w-auto object-contain transition-all duration-300 group-hover:scale-105"
-                        onError={() => handleImageError(client.logo)}
-                      />
-                    ) : (
-                      <div className="h-16 w-16 flex items-center justify-center rounded-full bg-gradient-to-br from-teal-400/40 to-purple-400/40 text-white text-2xl font-bold">
-                        {client.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
-                      </div>
-                    )}
+                    <div className="h-16 w-16 flex items-center justify-center rounded-full bg-gradient-to-br from-teal-400/40 to-purple-400/40 text-white text-2xl font-bold">
+                      {client.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
+                    </div>
                   </div>
                   <h3 className="text-xl font-bold text-white mb-2 bg-clip-text text-transparent bg-gradient-to-r from-teal-300 to-purple-300 group-hover:from-teal-400 group-hover:to-purple-400 transition-all duration-300">
                     {client.name}
@@ -255,18 +224,9 @@ const Clients: React.FC = () => {
               >
                 <div className="relative z-10">
                   <div className="h-20 flex items-center justify-center mb-4">
-                    {consultant.logo && !failedImages.includes(consultant.logo) ? (
-                      <img
-                        src={consultant.logo}
-                        alt={`${consultant.name} logo`}
-                        className="h-14 w-auto object-contain transition-all duration-300 group-hover:scale-105"
-                        onError={() => handleImageError(consultant.logo)}
-                      />
-                    ) : (
-                      <div className="h-14 w-14 flex items-center justify-center rounded-full bg-gradient-to-br from-teal-400/40 to-purple-400/40 text-white text-xl font-bold">
-                        {consultant.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
-                      </div>
-                    )}
+                    <div className="h-14 w-14 flex items-center justify-center rounded-full bg-gradient-to-br from-teal-400/40 to-purple-400/40 text-white text-xl font-bold">
+                      {consultant.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
+                    </div>
                   </div>
                   <p className="text-center text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-purple-300 group-hover:from-teal-400 group-hover:to-purple-400 transition-all duration-300">
                     {consultant.name}
@@ -361,7 +321,7 @@ const Clients: React.FC = () => {
               <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base md:text-lg">We’d love to hear your experience.</p>
               <Link
                 to="/contact"
-                className="inline-block bg-gradient-to-r from-teal-600 to-purple-600 text-white px-5 py-横2 sm:px-6 sm:py-3 rounded-full font-medium hover:from-teal-700 hover:to-purple-700 transition-all duration-300 shadow-md hover:shadow-lg text-sm sm:text-base md:text-lg"
+                className="inline-block bg-gradient-to-r from-teal-600 to-purple-600 text-white px-5 py-2 sm:px-6 sm:py-3 rounded-full font-medium hover:from-teal-700 hover:to-purple-700 transition-all duration-300 shadow-md hover:shadow-lg text-sm sm:text-base md:text-lg"
               >
                 Share Your Story
               </Link>
