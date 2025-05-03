@@ -4,29 +4,23 @@ import path from 'path';
 import { createHash } from 'crypto';
 import { readFileSync, existsSync, statSync } from 'fs';
 
-const CacheHeadersPlugin = () => {
+// Custom plugin to manage cache headers
+const CacheHeadersPlugin = ({ command }) => {
   return {
     name: 'cache-headers-plugin',
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        if (req.url?.endsWith('.png')) {
-          console.log(`Requested PNG: ${req.url}`);
-          // Let Vite handle imported assets (e.g., /assets/cop-1.123abc.png)
-          if (req.url.includes('/assets/')) {
-            return next(); // Skip custom handling for Vite-processed assets
-          }
-
+        // Target PNG files not processed by Vite's asset pipeline
+        if (req.url?.endsWith('.png') && !req.url.includes('/assets/')) {
           try {
             const urlPath = req.url.split('?')[0];
-            let filePath;
-            if (urlPath.startsWith('/src/assets/')) {
-              filePath = path.resolve(__dirname, urlPath.slice(1));
-            } else {
-              filePath = path.resolve(__dirname, 'public', urlPath.slice(1));
-            }
+            const filePath = path.resolve(
+              __dirname,
+              urlPath.startsWith('/src/assets/') ? urlPath.slice(1) : path.join('public', urlPath.slice(1))
+            );
 
             if (!existsSync(filePath)) {
-              console.error(`File not found: ${filePath} for URL: ${req.url}`);
+              console.error(`File not found: ${filePath}`);
               return next();
             }
 
@@ -35,24 +29,27 @@ const CacheHeadersPlugin = () => {
             const fileContent = readFileSync(filePath);
             const etag = createHash('md5').update(fileContent).digest('hex');
 
+            // Set cache headers based on environment
+            const cacheControlHeader = command === 'build' ? 'public, max-age=604800' : 'no-cache';
+            res.setHeader('Cache-Control', cacheControlHeader);
+            res.setHeader('ETag', `"${etag}"`);
+            res.setHeader('Last-Modified', lastModified);
+
+            // Handle conditional requests
             const cacheControl = req.headers['cache-control'];
             const forceFresh = cacheControl?.includes('no-cache');
             const ifNoneMatch = req.headers['if-none-match'];
             const ifModifiedSince = req.headers['if-modified-since'];
 
-            res.setHeader('Cache-Control', 'public, max-age=604800');
-            res.setHeader('ETag', `"${etag}"`);
-            res.setHeader('Last-Modified', lastModified);
-
-            if (!forceFresh) {
+            if (!forceFresh && command !== 'build') {
               const isNotModified =
                 (ifNoneMatch && ifNoneMatch === `"${etag}"`) ||
                 (ifModifiedSince && new Date(ifModifiedSince) >= new Date(lastModified));
 
               if (isNotModified) {
-                console.log(`Returning 304 for ${req.url} (ETag match: ${ifNoneMatch}, Last-Modified: ${ifModifiedSince})`);
+                console.log(`Returning 304 for ${req.url}`);
                 res.writeHead(304, {
-                  'Cache-Control': 'public, max-age=604800',
+                  'Cache-Control': cacheControlHeader,
                   'ETag': `"${etag}"`,
                   'Last-Modified': lastModified,
                 });
@@ -61,12 +58,12 @@ const CacheHeadersPlugin = () => {
               }
             }
 
-            console.log(`Applied caching headers for ${filePath}`);
+            console.log(`Serving ${filePath} with 200`);
             res.setHeader('Content-Type', 'image/png');
             res.writeHead(200);
             res.end(fileContent);
           } catch (err) {
-            console.error(`Error applying caching headers for ${req.url}: ${err.message}`);
+            console.error(`Error for ${req.url}: ${err.message}`);
             return next();
           }
         } else {
@@ -77,19 +74,10 @@ const CacheHeadersPlugin = () => {
   };
 };
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   base: './',
-  server: {
-    host: 'localhost',
-    port: 5173,
-  },
-  plugins: [react(), CacheHeadersPlugin()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
-  build: {
-    assetsDir: 'assets',
-  },
-});
+  server: { host: 'localhost', port: 5173 },
+  plugins: [react(), CacheHeadersPlugin({ command })],
+  resolve: { alias: { '@': path.resolve(__dirname, './src') } },
+  build: { assetsDir: 'assets' },
+}));
