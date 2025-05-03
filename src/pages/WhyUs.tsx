@@ -4,29 +4,29 @@ import { ProjectStatusCard } from '../components/ui/ProjectStatusCard';
 
 const WhyUs = () => {
   useEffect(() => {
-    document.title = 'Why Choose GVS Controls - Our Advantages';
+    document.title = 'Why Choose GVS Controls';
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute(
         'content',
-        'Discover why GVS Controls is your ideal partner - experienced team, cost-effective solutions, advanced technology, and more.'
+        'Discover why GVS Controls is your ideal partner for engineering solutions.'
       );
+
+      const handleScroll = () => {
+        const elements = document.querySelectorAll('.aos-fade-up, .aos-fade-in, .aos-fade-right, .aos-fade-left');
+        elements.forEach((element) => {
+          const rect = element.getBoundingClientRect();
+          const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+          if (rect.top <= windowHeight * 0.75) {
+            element.classList.add('aos-animate');
+          }
+        });
+      };
+
+      handleScroll();
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
     }
-
-    const handleScroll = () => {
-      const elements = document.querySelectorAll('.aos-fade-up, .aos-fade-in, .aos-fade-right, .aos-fade-left');
-      elements.forEach((element) => {
-        const rect = element.getBoundingClientRect();
-        const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-        if (rect.top <= windowHeight * 0.75) {
-          element.classList.add('aos-animate');
-        }
-      });
-    };
-
-    handleScroll();
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const advantages = [
@@ -34,24 +34,16 @@ const WhyUs = () => {
       title: 'Experienced Team',
       progress: 100,
       dueDate: 'Achieved',
-      contributors: [
-        { name: 'Senior Engineer', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e' },
-        { name: 'Project Lead' },
-      ],
       tasks: [
-        { title: '30+ Years in EPC Projects', completed: true },
         { title: 'Solution-Based Specialists', completed: true },
         { title: 'Understanding Client Needs', completed: true },
+        { title: 'Innovative Solutions', completed: true },
       ],
     },
     {
       title: 'Cost-Effective Solutions',
       progress: 100,
       dueDate: 'Achieved',
-      contributors: [
-        { name: 'Cost Analyst', image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330' },
-        { name: 'Service Manager' },
-      ],
       tasks: [
         { title: 'Flexible Service Selection', completed: true },
         { title: 'Staff Collaboration', completed: true },
@@ -62,10 +54,6 @@ const WhyUs = () => {
       title: 'Advanced Technology',
       progress: 100,
       dueDate: 'Achieved',
-      contributors: [
-        { name: 'Tech Specialist', image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7' },
-        { name: 'Automation Lead' },
-      ],
       tasks: [
         { title: 'Quality Manufacturing', completed: true },
         { title: 'Turnkey Solutions', completed: true },
@@ -76,10 +64,6 @@ const WhyUs = () => {
       title: 'Tailored Timelines',
       progress: 100,
       dueDate: 'Achieved',
-      contributors: [
-        { name: 'Project Manager', image: 'https://images.unsplash.com/photo-1487412723647-9d87d7f7f8b9' },
-        { name: 'Coordinator' },
-      ],
       tasks: [
         { title: 'Custom Scheduling', completed: true },
         { title: 'Resource Efficiency', completed: true },
@@ -90,10 +74,6 @@ const WhyUs = () => {
       title: 'Utility System Expertise',
       progress: 100,
       dueDate: 'Achieved',
-      contributors: [
-        { name: 'Utility Engineer', image: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e' },
-        { name: 'System Designer' },
-      ],
       tasks: [
         { title: 'System Operations', completed: true },
         { title: 'Competitive Edge', completed: true },
@@ -106,17 +86,14 @@ const WhyUs = () => {
     <main className="pt-16 sm:pt-20 md:pt-24 lg:pt-28">
       <style>
         {`
-          /* Ensure header and content align seamlessly */
           header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 50;
-            background: #fff; /* Adjust based on your header's background */
+            background: #fff;
           }
-
-          /* Smooth transition for content below header */
           main {
             margin-top: 0;
             transition: padding-top 0.3s ease;
@@ -129,11 +106,11 @@ const WhyUs = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <span className="inline-block px-4 py-1 sm:px-4 sm:py-2 rounded-full bg-white/10 backdrop-blur-sm text-xs sm:text-sm mb-4 sm:mb-6">
-              Our Advantages
+              Key Advantages
             </span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">Why Choose GVS Controls</h1>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">Why Us</h1>
             <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed">
-              Partner with us for innovative, reliable engineering solutions tailored to your needs.
+              Working with M/s GVS Controls will ensure several key advantages.
             </p>
           </div>
         </div>
@@ -146,7 +123,6 @@ const WhyUs = () => {
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gvs-dark-gray mb-3 sm:mb-4">
               Our Key Advantages
             </h2>
-            {/* Green gradient divider, responsive and centered */}
             <div className="mx-auto mb-4 flex justify-center">
               <div className="h-1 w-20 sm:w-32 rounded-full bg-gradient-to-r from-gvs-green to-gvs-blue" />
             </div>
@@ -155,7 +131,6 @@ const WhyUs = () => {
             </p>
           </div>
 
-          {/* Responsive and centered ProjectStatusCard grid */}
           <div className="flex flex-col items-center w-full">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 w-full max-w-6xl mx-auto">
               {advantages.map((advantage, index) => (

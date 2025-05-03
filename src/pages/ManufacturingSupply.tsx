@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CanvasRevealEffect } from '../components/ui/canvas-reveal-effect';
 import { Box } from 'lucide-react';
+import cop1 from "../assets/cop-1.png";
+import pp1 from "../assets/pp-1.png";
+
+// Note: Ensure AOS library is included and initialized in the project for animations to work (e.g., import AOS and call AOS.init() in the main app).
 
 interface Product {
   id: string;
@@ -89,15 +93,6 @@ const ManufacturingSupply = () => {
       color: [[75, 0, 130]], // Indigo
     },
   ];
-
-  interface Product {
-    id: string;
-    name: string;
-    description: string;
-    items: string[];
-    icon: JSX.Element;
-    color: [number, number, number][];
-  }
 
   const Card = ({ product }: { product: Product }) => {
     const [hovered, setHovered] = useState(false);
@@ -234,8 +229,8 @@ const ManufacturingSupply = () => {
               <div className={`${index % 2 === 0 ? 'aos-fade-left' : 'aos-fade-right'} order-1 lg:order-${index % 2 === 0 ? '2' : '1'}`}>
                 <div className="relative rounded-xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-500 group">
                   <img
-                    src={product.id === 'control-panels' ? 'https://images.unsplash.com/photo-1581093450021-4a73631e7a86?q=80&w=2940&auto=format&fit=crop' : 'https://images.unsplash.com/photo-1581092915354-2b7c4b3a9b1a?q=80&w=2940&auto=format&fit=crop'}
-                    alt={product.name}
+                    src={product.id === 'control-panels' ? cop1 : pp1}
+                    alt={`${product.name} example`}
                     className="w-full h-64 sm:h-80 md:h-96 object-cover transition-opacity group-hover:opacity-80"
                     loading="lazy"
                   />

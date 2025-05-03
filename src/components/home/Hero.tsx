@@ -149,9 +149,12 @@ const Hero = () => {
               <TypewriterEffectSmoothDemo />
             </div>
 
-            <p className="text-lg sm:text-xl lg:text-2xl font-medium mb-3 italic mt-4" style={{ color: "#00bfff" }}>
-              Consultant, Engineering, Manufacturing, Supply & Services
-            </p>
+            <p
+  className="text-lg sm:text-xl lg:text-2xl font-medium mb-3 italic mt-4"
+  style={{ color: "#ffffff", textShadow: "0 2px 4px rgba(0, 0, 0, 0.5)" }}
+>
+  Consultant, Engineering, Manufacturing (Supply & Services)
+</p>
 
             <p className="text-lg sm:text-xl lg:text-2xl font-bold italic mb-6" style={{ color: "#8b0000" }}>
               Electrical & Automation

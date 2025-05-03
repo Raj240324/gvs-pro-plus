@@ -3,6 +3,12 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight as ChevronRightIcon, CheckCircle, Factory, Clock } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
+import pp1 from "../assets/pp-1.png";
+import re1 from "../assets/re-1.png";
+import st1 from "../assets/st-1.png";
+import ch1 from "../assets/ch-1.png";
+import st3 from "../assets/st-3.png";
+import ch2 from "../assets/ch-2.png";
 
 interface Project {
   id: string;
@@ -42,51 +48,39 @@ const Projects: React.FC = () => {
   const greenFieldProjects: GreenFieldProject[] = [
     {
       id: 'gf1',
-      title: 'Power Plants (Thermal, Biomass, Solar)',
-      description: 'Comprehensive solutions for thermal, biomass, and solar power plants, including design, automation, and commissioning.',
-      image: '/images/greenfield/power-plant.jpg',
+      title: 'Power Plant (Thermal, Biomass and Solar)',
+      description: 'Power Plant (Thermal, Biomass and Solar)',
+      image: pp1,
     },
     {
       id: 'gf2',
-      title: 'Renewable Energy (Biomass Gasification)',
-      description: 'Innovative biomass gasification technology for sustainable energy production with high efficiency.',
-      image: '/images/greenfield/biomass-gasification.jpg',
+      title: 'Renewable Energy Sectors (Biomass Gasification Technology)',
+      description: 'Renewable Energy Sectors (Biomass Gasification Technology)',
+      image: re1,
     },
     {
       id: 'gf3',
-      title: 'Steel Plants (Coke Oven & SMS)',
-      description: 'Specialized automation and control systems for coke ovens and steel melting shops, enhancing productivity.',
-      image: '/images/greenfield/steel-plant.jpg',
+      title: 'Steel plants (Coke oven & SMS (Special Purpose Machineries))',
+      description: 'Steel plants (Coke oven & SMS (Special Purpose Machineries))',
+      image: st1,
     },
     {
       id: 'gf4',
-      title: 'Bulk Material Handling Systems',
-      description: 'Advanced material handling systems for steel and cement plants, optimizing throughput and reliability.',
-      image: '/images/greenfield/material-handling.jpg',
+      title: 'Cooling Towers (Concrete and FRP)',
+      description: 'Cooling Towers (Concrete and FRP)',
+      image: st3,
     },
     {
       id: 'gf5',
-      title: 'Cooling Towers (Concrete & FRP)',
-      description: 'Design and installation of concrete and FRP cooling towers for efficient thermal management.',
-      image: '/images/greenfield/cooling-tower.jpg',
+      title: 'Chemical Plants & Process Plants Water STP, ETP and WTP',
+      description: 'Chemical Plants & Process Plants Water STP, ETP and WTP',
+      image: ch1,
     },
     {
       id: 'gf6',
-      title: 'Chemical & Process Plants',
-      description: 'Tailored automation and instrumentation for chemical and process plants, ensuring safety and efficiency.',
-      image: '/images/greenfield/chemical-plant.jpg',
-    },
-    {
-      id: 'gf7',
-      title: 'Water Treatment (STP, ETP, WTP)',
-      description: 'Advanced solutions for sewage, effluent, and water treatment plants, meeting environmental standards.',
-      image: '/images/greenfield/water-treatment.jpg',
-    },
-    {
-      id: 'gf8',
       title: 'Automobile Industries',
-      description: 'Automation and electrical systems for automobile manufacturing, improving production efficiency.',
-      image: '/images/greenfield/automobile-industry.jpg',
+      description: 'Automobile Industries',
+      image: ch2,
     },
   ];
 
@@ -200,8 +194,8 @@ const Projects: React.FC = () => {
         {
           id: '1',
           client: 'M/s Aumund Engineering Private Limited - Chennai',
-          title: 'Samson/BRU Feeder for Multiple Clients',
-          description: 'Bidding support, design, detail engineering, client/consultant approval, supply, and commissioning of Samson/BRU Feeder systems for ACC Ametha, Ultratech Gujarat, JK Cement Hamirpur, JSW FZE Fujairah, 2 X 800 Darapalli & LARA NTPC Limited, 2 X 500 Durgapur & MEJIA Thermal Power Station, TITAN CEMENT Egypt, and Dalmia Cement India.',
+          title: 'SAMSON / BRU FEEDER',
+          description: 'SAMSON / BRU FEEDER - ACC - Ametha, ULTRATECH - Gujarat, JK Cement HamirPur, JSW FZE - Fujairah, 2 X 800 Darapalli & LARA - NTPC Limited, 2 X 500 Durgapur & MEJIA Thermal Power Station, TITAN CEMENT - EGYPT and DALMIA CEMENT - INDIA',
           highlights: [
             'Custom-engineered feeder systems for diverse clients',
             'Adherence to stringent consultant standards',
@@ -212,8 +206,8 @@ const Projects: React.FC = () => {
         {
           id: '2',
           client: 'M/s Aumund Engineering Private Limited - Chennai',
-          title: 'Paddle Feeder for Meenakshi Energy',
-          description: 'Supply and commissioning of Paddle Feeder systems for 2x350 Meenakshi Energy (P) Ltd., Nellore, Andhra Pradesh, in collaboration with McNally Bharat Engineering Company Limited.',
+          title: 'PADDEL FEEDER',
+          description: 'PADDEL FEEDER - 2 X 350 MEENAKSHI ENERGY (P) LTD., - NELLORE - ANDHRA, McNalley Bharat Eng Company Limited.',
           highlights: [
             'Robust paddle feeder design for high reliability',
             'Timely commissioning to meet project deadlines',
@@ -224,8 +218,8 @@ const Projects: React.FC = () => {
         {
           id: '3',
           client: 'M/s Aumund Engineering Private Limited - Chennai',
-          title: 'Centrex/Bin-X System for Cement Plants',
-          description: 'Supply and commissioning of Centrex/Bin-X systems for material handling at ACC Ametha, Republic Cement Philippines, and Dalmia Cement Belgaum.',
+          title: 'CENTREX / BIN- X System',
+          description: 'CENTREX / BIN- X System - ACC - AMETHA, Republic Cement - PHILIPPINES and Dalmia Cement - BELGUAM.',
           highlights: [
             'Efficient material handling systems',
             'Successful international project execution',
@@ -236,8 +230,8 @@ const Projects: React.FC = () => {
         {
           id: '4',
           client: 'M/s Aumund Engineering Private Limited - Chennai',
-          title: 'Stacker & Reclaimer Consultancy for JSW Cement',
-          description: 'Technical consultancy for electrical and instrumentation systems of stacker and reclaimer at JSW Cement Dolvi.',
+          title: 'STACKER & RECLAIMER',
+          description: 'STACKER & RECLAIMER - Technical Consultancy - Electrical & Instrumentation - JSW Cement - DOLVI',
           highlights: [
             'Advanced instrumentation solutions',
             'Optimized electrical system layouts',
@@ -253,8 +247,8 @@ const Projects: React.FC = () => {
         {
           id: '5',
           client: 'M/s Loesche Energy (P) Ltd. - Chennai',
-          title: 'Samson/BRU Feeder for RCCPL Mukutban',
-          description: 'Supply and commissioning of Samson/BRU Feeder systems for RCCPL Mukutban, Maharashtra.',
+          title: 'SAMSON / BRU FEEDER',
+          description: 'SAMSON / BRU FEEDER - RCCPL 8000 MUKUTBAN - MAHARASHTRA',
           highlights: [
             'High-capacity feeder system for large-scale production',
             'Seamless integration with cement plant operations',
@@ -265,8 +259,8 @@ const Projects: React.FC = () => {
         {
           id: '6',
           client: 'M/s Loesche Energy (P) Ltd. - Chennai',
-          title: 'Centrex/Bin-X System for Friendship Power',
-          description: 'Supply and commissioning of Centrex/Bin-X systems for material handling at Friendship Power Company, Dhaka, Bangladesh.',
+          title: 'CENTREX / BIN- X System',
+          description: 'CENTREX / BIN- X System - Friend Ship Power Company - DHAKA - BANGALADESH.',
           highlights: [
             'Successful cross-border project execution',
             'Efficient material handling system design',
@@ -282,8 +276,8 @@ const Projects: React.FC = () => {
         {
           id: '7',
           client: 'M/s Metco Roofing Private Limited - Chennai',
-          title: 'Electrical Systems Consultancy for Factory Setup',
-          description: 'Consultancy services for complete electrical systems and lighting for factory setup.',
+          title: 'Consultancy Services',
+          description: 'Consultancy Services - Complete Electrical Systems and lighting for Factory Set up.',
           highlights: [
             'Comprehensive electrical system design',
             'Optimized lighting solutions for factory efficiency',
@@ -299,8 +293,8 @@ const Projects: React.FC = () => {
         {
           id: '8',
           client: 'M/s ARS Hydrojet Services (P) Ltd. - Chennai',
-          title: 'High-Pressure Water Jetting System for Steel Plants',
-          description: 'Engineering and supply of high-pressure water jetting systems for SAIL plants in Bokaro, Rourkela, Durgapur Steel Plants, and Tata Jamshedpur.',
+          title: 'HIGH PRESUURE WATER JETING SYSTEM',
+          description: 'HIGH PRESUURE WATER JETING SYSTEM - All SAIL Plants - Bokaro, Rourkela, Durgapur Steel Plants and TATA JAMSHEDPUR.',
           highlights: [
             'Custom-designed high-pressure jetting systems',
             'Deployment across multiple steel plants',
@@ -316,8 +310,8 @@ const Projects: React.FC = () => {
         {
           id: '9',
           client: 'M/s Meenakshi Medical College and Hospital - Kanchipuram',
-          title: '11 KV Substation and Power Room Revamping',
-          description: 'Complete revamping and retrofitting, supply, installation, testing, and commissioning of 11 KV VCB, 1250 KVA distribution transformer, bus ducts, PCC panels, and power DBs.',
+          title: '11 KV Sub Station and Power Room',
+          description: '11 KV Sub Station and Power Room - Complete Revamping and Retro Fitting, Supply, Installation, Testing and Commissioning of 11 KV VCB, 1250 KVA Distribution Transformer, Bus Ducts, PCC Panels and Power DB’s.',
           highlights: [
             'Modernized substation infrastructure',
             'Enhanced safety and CEIG compliance',
@@ -330,7 +324,7 @@ const Projects: React.FC = () => {
   ];
 
   return (
-    <main style={{ paddingTop: `${headerHeight}px` }} className="min-h-screen w-full max-w-full bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <main style={{ paddingTop: headerHeight + 'px' }} className="min-h-screen w-full max-w-full bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
       {/* Hero Section */}
       <section className="relative py-12 sm:py-16 md:py-20 lg:py-24">
         <div className="absolute inset-0 bg-gradient-to-tr from-green-500/90 via-blue-600/80 to-purple-600/70 opacity-95"></div>
@@ -391,19 +385,13 @@ const Projects: React.FC = () => {
                     className="w-full h-64 md:h-96 object-cover"
                   />
                 </div>
-                <div className="md:w-1/2 p-6 sm:p-8 flex flex-col justify-center">
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 dark:text-white mb-3 sm:mb-4">
+                <div className="md:w-1/2 p-6 sm:p-10 flex flex-col justify-center">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800 dark:text-white mb-4 sm:mb-6">
                     {greenFieldProjects[currentSlide].title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base mb-4">
+                  <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg">
                     {greenFieldProjects[currentSlide].description}
                   </p>
-                  <a
-                    href="#"
-                    className="inline-flex items-center justify-center px-4 sm:px-6 py-2 bg-gradient-to-r from-green-500 to-blue-600 hover:from-blue-600 hover:to-green-500 text-white font-medium rounded-md transition-all duration-300 text-sm"
-                  >
-                    Learn More
-                  </a>
                 </div>
               </div>
             </motion.div>
