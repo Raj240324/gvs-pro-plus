@@ -75,7 +75,7 @@ const CacheHeadersPlugin = ({ command }) => {
 };
 
 export default defineConfig(({ command }) => ({
-  base: './',
+  base: '/',
   server: { host: 'localhost', port: 5173 },
   plugins: [react(), CacheHeadersPlugin({ command })],
   resolve: { alias: { '@': path.resolve(__dirname, './src') } },
