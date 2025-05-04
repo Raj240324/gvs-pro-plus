@@ -30,7 +30,6 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
     observer.observe(lineRef.current);
     return () => observer.disconnect();
   }, []);
-  
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -42,9 +41,21 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
 
   return (
     <div ref={containerRef} className="w-full bg-transparent font-sans">
-      <div className="relative max-w-4xl mx-auto pb-20">
-        {/* Enhanced timeline vertical line with sparkles and glow */}
-        <div ref={lineRef} className="absolute left-8 top-0 w-[4px] h-full z-0">
+      <div ref={ref} className="relative max-w-4xl mx-auto pb-20">
+        {/* CSS to handle responsive positioning of timeline dots */}
+        <style>{`
+          .timeline-dot {
+            left: calc(2rem - 1.5rem);
+            transform: translateX(-50%);
+          }
+          @media (min-width: 640px) {
+            .timeline-dot {
+              left: calc(2.5rem - 1.75rem);
+            }
+          }
+        `}</style>
+        {/* Vertical timeline line with sparkles and glow */}
+        <div ref={lineRef} className="absolute left-8 top-0 w-[4px] h-full z-0 sm:left-10">
           {/* Static background gradient and sparkles */}
           <div className="absolute inset-x-0 top-0 w-full h-full bg-gradient-to-t from-teal-400/30 via-indigo-400/20 to-fuchsia-400/10 rounded-full" />
           <div className="absolute inset-0 w-full h-full pointer-events-none">
@@ -65,11 +76,11 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
             transition={{ duration: 0.7, delay: index * 0.1, type: 'spring', bounce: 0.3 }}
             viewport={{ once: true, amount: 0.2 }}
           >
-            {/* Timeline dot with animated glow and icon */}
-            <div className="sticky flex flex-col md:flex-row  z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
-              <div className="h-12 w-12 rounded-full bg-white flex items-center justify-center shadow-lg border-4 border-teal-200/60 relative animate-float">
+            {/* Timeline dot with animated glow and icon, aligned with the vertical line */}
+            <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
+              <div className="timeline-dot h-12 w-12 rounded-full bg-white flex items-center justify-center shadow-lg border-4 border-teal-200/60 relative animate-float sm:h-14 sm:w-14">
                 <span className="absolute inset-0 rounded-full bg-gradient-to-br from-teal-400/30 via-indigo-400/20 to-fuchsia-400/20 blur-md animate-pulse" />
-                <FaRegStar className="text-teal-500 text-2xl z-10 animate-spin-slow" />
+                <FaRegStar className="text-teal-500 text-xl sm:text-2xl z-10 animate-spin-slow" />
               </div>
               {/* Year badge */}
               <span className="ml-0 md:ml-6 mt-3 md:mt-0 px-3 py-1 rounded-full bg-gradient-to-r from-teal-400 to-indigo-400 text-white text-xs md:text-base font-bold shadow-md border border-white/30 animate-float">
