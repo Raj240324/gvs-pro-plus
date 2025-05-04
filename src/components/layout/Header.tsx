@@ -344,7 +344,7 @@ const Header = () => {
                 </motion.button>
                 <div className="flex flex-col items-center pt-4 pb-1 px-4 shrink-0">
                   <img
-                    src="/assets/gvs_logo.png"
+                    src="/logo.png"
                     alt="GVS Controls Logo"
                     className="h-8 w-auto mb-1.5 rounded-lg shadow-md bg-white/80"
                   />

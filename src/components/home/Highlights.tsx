@@ -3,6 +3,9 @@ import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useNavigate } from 'react-router-dom';
 import { FaRegLightbulb, FaCogs, FaIndustry, FaTools, FaSyncAlt } from 'react-icons/fa';
+import cop9 from "../../assets/cop-9.png"
+import renovation from "../../assets/renovation.png";
+import erection from "../../assets/electrical-erection.png"
 
 const Highlights = () => {
   const controls = useAnimation();
@@ -87,7 +90,7 @@ const Highlights = () => {
     {
       title: 'Product Manufacturing',
       description: 'Manufacturing electrical control panels per CEIG standards, including MV, PCC, MCC, VFD, APFC, and custom panels, with bus ducts and junction boxes.',
-      image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
+      image: cop9,
       gradient: 'from-orange-600 to-red-700',
       serviceId: 'panel-manufacturing',
       icon: <FaIndustry className="text-3xl md:text-4xl text-orange-500 drop-shadow-lg" />,
@@ -95,7 +98,7 @@ const Highlights = () => {
     {
       title: 'Erection & Commissioning',
       description: 'Erection, testing, troubleshooting, and commissioning of electrical systems, including PCC, MCC, VFD panels, and plant shutdown services.',
-      image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
+      image: erection,
       gradient: 'from-gray-600 to-blue-700',
       serviceId: 'installation-commissioning',
       icon: <FaTools className="text-3xl md:text-4xl text-blue-700 drop-shadow-lg" />,
@@ -103,7 +106,7 @@ const Highlights = () => {
     {
       title: 'Renovation & Revamping',
       description: 'Renovation and revamping of electrical systems with site surveys and client coordination to enhance safety and efficiency.',
-      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
+      image: renovation,
       gradient: 'from-purple-600 to-pink-700',
       serviceId: 'renovation-revamping',
       icon: <FaSyncAlt className="text-3xl md:text-4xl text-pink-600 drop-shadow-lg" />,

@@ -295,7 +295,7 @@ const Contact = () => {
                 {
                   icon: <Phone size={24} className="sm:w-8 sm:h-8" />,
                   title: 'Call Us',
-                  content: ['Mobile: +91 9884001597', 'Mobile: +91 733880027'],
+                  content: ['Mobile: +91 9884001597', 'Mobile: +91 7338880027'],
                   link: 'tel:+919884001597',
                   linkText: 'Call Now',
                 },

@@ -28,7 +28,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
   useEffect(() => {
     const userID = import.meta.env.VITE_EMAILJS_USER_ID;
     if (!userID) {
-      console.error('EmailJS userID is missing in environment variables.');
+      console.error('EmailJS userID is undefined. Please check your .env file for VITE_EMAILJS_USER_ID.');
       toast({
         title: "Configuration Error",
         description: "EmailJS userID is missing. Please contact support.",
@@ -38,11 +38,9 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
     }
     try {
       emailjs.init(userID);
-      if (import.meta.env.DEV) {
-        console.log('EmailJS initialized successfully');
-      }
+      console.log('EmailJS initialized successfully with userID:', userID);
     } catch (error) {
-      console.error('Failed to initialize EmailJS');
+      console.error('Failed to initialize EmailJS:', error);
       toast({
         title: "Configuration Error",
         description: "Failed to initialize EmailJS. Please try again later.",
@@ -76,10 +74,14 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
 
     if (!serviceID || !customerTemplateID || !ownerTemplateID) {
       setIsSubmitting(false);
-      console.error('EmailJS configuration is missing in environment variables.');
+      console.error('EmailJS configuration is incomplete:', {
+        serviceID,
+        customerTemplateID,
+        ownerTemplateID,
+      });
       toast({
         title: "Configuration Error",
-        description: "EmailJS configuration is missing. Please contact support.",
+        description: "EmailJS configuration is missing. Please check your .env file.",
         variant: "destructive",
       });
       return;
@@ -123,7 +125,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
         setIsSubmitted(false);
         onOpenChange(false);
       }, 2000);
-    } catch (error) {
+    } catch (error: unknown) {
       setIsSubmitting(false);
       toast({
         title: "Error",
@@ -131,6 +133,17 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
         variant: "destructive",
       });
       console.error('EmailJS error:', error);
+      if (typeof error === 'object' && error !== null) {
+        const err = error as { text?: string; status?: string };
+        console.error('Error details:', {
+          errorText: err.text || 'No error text provided',
+          errorStatus: err.status || 'No status provided',
+          serviceID,
+          customerTemplateID,
+          ownerTemplateID,
+          templateParams,
+        });
+      }
     }
   };
 
