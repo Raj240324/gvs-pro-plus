@@ -1,11 +1,11 @@
 import { useState, useEffect, FormEvent } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../components/ui/dialog';
 import { Input } from '../components/ui/input';
+import { Textarea } from '../components/ui/textarea';
 import { useToast } from '../hooks/use-toast';
 import { Send, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
-import { Textarea } from './ui/textarea';
 
 interface ContactModalProps {
   open: boolean;
@@ -24,7 +24,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
 
-  // Initialize EmailJS (run once)
+  // Initialize EmailJS
   useEffect(() => {
     const userID = import.meta.env.VITE_EMAILJS_USER_ID;
     if (!userID) {
@@ -47,7 +47,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
         variant: "destructive",
       });
     }
-  }, []); // Empty dependency array
+  }, [toast]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -125,7 +125,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
         setIsSubmitted(false);
         onOpenChange(false);
       }, 2000);
-    } catch (error: unknown) {
+    } catch (error: any) {
       setIsSubmitting(false);
       toast({
         title: "Error",
@@ -133,31 +133,24 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
         variant: "destructive",
       });
       console.error('EmailJS error:', error);
-      if (typeof error === 'object' && error !== null) {
-        const err = error as { text?: string; status?: string };
-        console.error('Error details:', {
-          errorText: err.text || 'No error text provided',
-          errorStatus: err.status || 'No status provided',
-          serviceID,
-          customerTemplateID,
-          ownerTemplateID,
-          templateParams,
-        });
-      }
+      console.error('Error details:', {
+        errorText: error.text || 'No error text provided',
+        errorStatus: error.status || 'No status provided',
+        serviceID,
+        customerTemplateID,
+        ownerTemplateID,
+        templateParams,
+      });
     }
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      {/* Blurred overlay for background */}
-      {open && (
-        <div className="fixed inset-0 z-[2000] bg-black/30 backdrop-blur-sm transition-all duration-300" aria-hidden="true"></div>
-      )}
       <DialogContent
-        showCloseButton={false}
-        className="relative w-full max-w-[95vw] sm:max-w-[500px] md:max-w-[700px] lg:max-w-[800px] p-2 sm:p-6 bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg border border-white/20 dark:border-white/10 shadow-lg rounded-xl z-[2500] mt-[60px] sm:mt-0 h-auto max-h-[calc(100vh-32px)] sm:max-h-[calc(100vh-70px)] overflow-y-auto"
+        showCloseButton={false} // Disable default close button
+        className="w-[95vw] max-w-[400px] sm:max-w-[500px] md:max-w-[700px] lg:max-w-[800px] p-4 sm:p-6 bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg border border-white/20 dark:border-white/10 shadow-lg rounded-xl z-[2500] mt-[60px] sm:mt-0 h-auto max-h-[calc(100vh-70px)]"
       >
-        <div className="relative flex flex-col h-full min-h-0">
+        <div className="relative flex flex-col h-full">
           {/* Custom Close Button */}
           <button
             onClick={() => onOpenChange(false)}
@@ -206,12 +199,16 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ type: "spring", stiffness: 200, damping: 10 }}
-              className="flex flex-col items-center justify-center py-6 sm:py-8 text-center relative z-10 grow"
+              className="flex flex-col items-center justify-center py-6 sm:py-8 text時計center relative z-10 grow"
             >
-              <div className="w-14 h-14 sm:w-20 sm:h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gradient-to-r from-teal-500 to-purple-600">
+              <motion.div
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 200, damping: 10 }}
+                className="w-14 h-14 sm:w-20 sm:h-20 mx-auto mb-4 flex items-center justify-center rounded-full bg-gradient-to-r from-teal-500 to-purple-600"
+              >
                 <CheckCircle className="h-6 w-6 sm:h-10 sm:w-10 text-white" />
-              </div>
+              </motion.div>
               <h3 className="text-base sm:text-xl md:text-2xl font-bold text-gray-800 dark:text-white">Thank You!</h3>
               <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-1 sm:mt-2">
                 Your message has been sent successfully.

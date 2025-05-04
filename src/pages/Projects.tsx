@@ -603,7 +603,8 @@ const Projects: React.FC = () => {
                 <Button
                   variant="gradient"
                   size="lg"
-                  className="group bg-gradient-to-r from-green-500 to-blue-600 hover:from-blue-600 hover:to-green-500 text-white font-medium px-6 sm:px-8 py-3 sm:py-4 border-none outline-none ring-0 focus:ring-0 focus:outline-none hover:ring-0 active:ring-0"
+                  className="group bg-gradient-to-r from-green-500 to-blue-600 hover:from-blue-600 hover:to-green-500 text-white font-medium px-6 sm:px-8 py-3 sm:py-4 border-none hover:border-none active:border-none focus:border-none outline-none hover:outline-none active:outline-none focus:outline-none ring-0 hover:ring-0 active:ring-0 focus:ring-0 no-gradient-border z-[10000]"
+                  style={{ outline: 'none', border: 'none' }}
                   onClick={() => navigate('/contact')}
                 >
                   Get in Touch
