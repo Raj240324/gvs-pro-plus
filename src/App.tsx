@@ -1,10 +1,27 @@
 import { Toaster } from "../src/components/ui/toaster";
-import { Toaster as SonnerToaster } from "../src/components/ui/sonner";
+import { Toaster as SonnerToaster } from "../src/components/ui/sonner"; // Renamed to avoid confusion
 import { TooltipProvider } from "../src/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CookieConsent from "react-cookie-consent";
+
+// Pages (verify these files exist in src/pages)
+import Index from "./pages/Index";
+import About from "./pages/About";
+import Services from "./pages/Services";
+import ManufacturingSupply from "./pages/ManufacturingSupply";
+import Projects from "./pages/Projects";
+import Clients from "./pages/Clients";
+import WhyUs from "./pages/WhyUs";
+import Gallery from "./pages/Gallery";
+import Contact from "./pages/Contact";
+import NotFound from "./pages/NotFound";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import CookiePolicy from "./pages/CookiePolicy";
+
+// Components (verify these files exist in src/components)
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import BackToTop from "./components/BackToTop";
@@ -15,15 +32,19 @@ const queryClient = new QueryClient();
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
 
+  // Simulate application loading
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 1500);
+
     return () => clearTimeout(timer);
   }, []);
 
+  // Initialize AOS-like animations on page load
   useEffect(() => {
     if (!isLoading) {
+      // Debounce scroll handler to optimize performance
       const debounce = <T extends unknown[]>(func: (...args: T) => void, wait: number) => {
         let timeout: NodeJS.Timeout | null;
         return (...args: T) => {
@@ -43,8 +64,13 @@ const App = () => {
         });
       }, 50);
 
+      // Initial check
       setTimeout(handleScroll, 100);
+
+      // Add scroll event listener
       window.addEventListener('scroll', handleScroll, { passive: true });
+
+      // Cleanup
       return () => window.removeEventListener('scroll', handleScroll);
     }
   }, [isLoading]);
@@ -89,12 +115,19 @@ const App = () => {
               }}
               enableDeclineButton
               debug={true}
-              onAccept={() => console.log('Cookies accepted')}
-              onDecline={() => console.log('Non-essential cookies rejected')}
+              onAccept={() => {
+                console.log('Cookies accepted');
+              }}
+              onDecline={() => {
+                console.log('Non-essential cookies rejected');
+              }}
             >
               <span style={{ fontSize: '1rem' }}>
                 We use cookies to enhance your experience on www.gvscontrols.com, as described in our{' '}
-                <a href="/cookie-policy" style={{ color: '#ff6f61', textDecoration: 'underline' }}>
+                <a
+                  href="/cookie-policy"
+                  style={{ color: '#ff6f61', textDecoration: 'underline' }}
+                >
                   Cookie Policy
                 </a>
                 . By clicking "Accept All," you agree to the use of all cookies, including analytics and marketing cookies for personalized content. You can reject non-essential cookies or manage preferences via your browser settings.

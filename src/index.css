@@ -141,6 +141,14 @@
     @apply relative before:absolute before:inset-0 before:p-[2px] before:bg-gradient-to-r before:from-gvs-red before:to-gvs-yellow before:-z-10 before:rounded-xl before:opacity-0 hover:before:opacity-100 before:transition-opacity;
   }
   
+  .no-gradient-border {
+    @apply relative before:hidden;
+  }
+  
+  .no-pseudo-border {
+    @apply relative after:hidden;
+  }
+  
   .gradient-text-primary {
     @apply bg-gradient-to-r from-gvs-green to-gvs-blue bg-clip-text text-transparent;
   }
@@ -205,8 +213,6 @@
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-gray-500 dark:bg-gray-600;
 }
-
-
 
 /* Preloader animation */
 .preloader {
@@ -627,8 +633,6 @@ img {
   transition: transform 0.1s ease-out;
 }
 
-
-
 /* Pulse animation for buttons */
 @keyframes pulse {
   0% {
@@ -645,8 +649,6 @@ img {
 .animate-pulse-glow {
   animation: pulse 2s infinite;
 }
-
-
 
 @layer base {
   * {
