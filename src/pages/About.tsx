@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Compare } from '../components/ui/compare';
 import { GlowingEffect } from '../components/ui/glowing-effect';
 import { Timeline } from '../components/ui/timeline';
 import pp1 from "../assets/pp-1.png";
@@ -123,7 +122,7 @@ const About: React.FC = () => {
           <img
             src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=2946&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Founded GVS Controls"
-            className="w-full h-40 object-cover rounded-xl shadow-md mt-4"
+            className="w-full h-40 md:h-48 object-cover rounded-xl shadow-md mt-4"
           />
         </div>
       ),
@@ -137,7 +136,7 @@ const About: React.FC = () => {
           <img
             src={powerPlantImages[currentImageIndex]}
             alt={`Power Plant Project ${currentImageIndex + 1}`}
-            className="w-full h-40 object-cover rounded-xl shadow-md mt-4"
+            className="w-full h-40 md:h-48 object-cover rounded-xl shadow-md mt-4"
           />
         </div>
       ),
@@ -151,7 +150,7 @@ const About: React.FC = () => {
           <img
             src={renewableEnergyImages[currentImageIndex]}
             alt={`Renewable Energy Project ${currentImageIndex + 1}`}
-            className="w-full h-40 object-cover rounded-xl shadow-md mt-4"
+            className="w-full h-40 md:h-48 object-cover rounded-xl shadow-md mt-4"
           />
         </div>
       ),
@@ -162,7 +161,7 @@ const About: React.FC = () => {
         <div>
           <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">Automation Leadership</h3>
           <p className="text-gray-600 mt-2">Introduced advanced PLC and VFD control systems for process plants.</p>
-          <div className="w-full h-40 overflow-hidden rounded-xl shadow-md mt-4">
+          <div className="w-full h-40 md:h-48 overflow-hidden rounded-xl shadow-md mt-4">
             <img
               src={controlPanelImages[currentControlPanelIndex]}
               alt={`Control Panel ${currentControlPanelIndex + 1}`}
@@ -181,7 +180,7 @@ const About: React.FC = () => {
           <img
             src="https://images.unsplash.com/photo-1727610542348-9636c3b65d2a?q=80&w=3179&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Global Reach"
-            className="w-full h-40 object-cover rounded-xl shadow-md mt-4"
+            className="w-full h-40 md:h-48 object-cover rounded-xl shadow-md mt-4"
           />
         </div>
       ),
@@ -299,6 +298,24 @@ const About: React.FC = () => {
     },
   };
 
+  const imageVariants = {
+    hidden: { opacity: 0, x: 50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.6, ease: 'easeOut' },
+    },
+  };
+
+  const timelineItemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: { delay: i * 0.2, duration: 0.5, ease: 'easeOut' },
+    }),
+  };
+
   return (
     <div className="min-h-screen">
       {/* Spacer to push content below fixed header */}
@@ -323,14 +340,22 @@ const About: React.FC = () => {
           </div>
         </section>
 
-        {/* Main Content */}
+        {/* Mission & Vision Section */}
         <section className="py-16 md:py-20 bg-gradient-to-tr from-teal-100 via-indigo-200 to-purple-200 relative">
           <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(255,255,255,0.1)_25%,transparent_25%,transparent_75%,rgba(255,255,255,0.1)_75%)] bg-[size:20px_20px] opacity-50"></div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-              {/* Enhanced Mission & Vision Cards */}
-              <div className="space-y-8 aos-fade-right">
-                {/* Mission Card */}
+            <div className="text-center mb-12 aos-fade-up">
+              <span className="inline-block px-3 py-1 bg-teal-100/80 text-teal-800 rounded-full text-sm font-medium mb-3 border border-teal-200 shadow-sm">
+                Our Purpose
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 drop-shadow-md">Mission & Vision</h2>
+              <p className="text-gray-700 max-w-2xl mx-auto">
+                Discover the driving force behind GVS Controls’ commitment to innovation and excellence.
+              </p>
+            </div>
+            <div className="space-y-12 lg:space-y-0">
+              {/* Mission */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center aos-fade-right">
                 <motion.div
                   initial="hidden"
                   animate="visible"
@@ -382,14 +407,44 @@ const About: React.FC = () => {
                   </div>
                   <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-teal-400 to-indigo-400 opacity-70"></div>
                 </motion.div>
+                <motion.div
+                  initial="hidden"
+                  animate="visible"
+                  variants={imageVariants}
+                  className="relative rounded-2xl overflow-hidden shadow-xl border border-teal-200/30"
+                >
+                  <img
+                    src={missionImageUrl}
+                    alt="Our Mission"
+                    className="w-full h-[250px] md:h-[400px] object-cover"
+                  />
+                  <div className="absolute bottom-4 left-4 bg-gradient-to-r from-teal-500 to-indigo-600 text-white p-4 rounded-lg shadow-lg">
+                    <p className="text-xl font-bold">30+ Years</p>
+                    <p className="text-sm">Industry Experience</p>
+                  </div>
+                </motion.div>
+              </div>
 
-                {/* Vision Card */}
+              {/* Vision */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center aos-fade-left">
+                <motion.div
+                  initial="hidden"
+                  animate="visible"
+                  variants={imageVariants}
+                  className="relative rounded-2xl overflow-hidden shadow-xl border border-indigo-200/30 order-2 lg:order-1"
+                >
+                  <img
+                    src={visionImageUrl}
+                    alt="Our Vision"
+                    className="w-full h-[250px] md:h-[400px] object-cover"
+                  />
+                </motion.div>
                 <motion.div
                   initial="hidden"
                   animate="visible"
                   whileHover="hover"
                   variants={missionVisionVariants}
-                  className="relative rounded-2xl bg-gradient-to-br from-white/95 to-indigo-100/70 backdrop-blur-xl shadow-lg border border-indigo-200/30 p-6 md:p-8 overflow-hidden"
+                  className="relative rounded-2xl bg-gradient-to-br from-white/95 to-indigo-100/70 backdrop-blur-xl shadow-lg border border-indigo-200/30 p-6 md:p-8 overflow-hidden order-1 lg:order-2"
                 >
                   <GlowingEffect spread={30} glow={true} proximity={50} className="rounded-2xl" />
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(79,70,229,0.15)_0,_transparent_70%)] opacity-60"></div>
@@ -436,27 +491,6 @@ const About: React.FC = () => {
                   <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-indigo-400 to-teal-400 opacity-70"></div>
                 </motion.div>
               </div>
-
-              {/* Modern Compare Image Card */}
-              <div className="relative aos-fade-left flex justify-center">
-                <div className="relative w-full max-w-[500px]">
-                  <div className="border rounded-3xl bg-white/70 border-neutral-200 shadow-2xl overflow-hidden ring-2 ring-teal-300/20 backdrop-blur-xl">
-                    <Compare
-                      firstImage={missionImageUrl}
-                      secondImage={visionImageUrl}
-                      firstImageClassName="object-cover w-full h-full"
-                      secondImageClassname="object-cover w-full h-full"
-                      className="w-full h-[250px] md:h-[400px] rounded-2xl"
-                      slideMode="hover"
-                      initialSliderPercentage={50}
-                    />
-                  </div>
-                  <div className="absolute bottom-0 left-4 translate-y-1/2 bg-gradient-to-r from-teal-500 to-indigo-600 text-white p-4 rounded-lg shadow-lg z-50">
-                    <p className="text-xl font-bold">30+ Years</p>
-                    <p className="text-sm">Industry Experience</p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </section>
@@ -464,17 +498,58 @@ const About: React.FC = () => {
         {/* Timeline Section */}
         <section className="py-16 md:py-20 bg-gradient-to-br from-teal-200 via-blue-300 to-indigo-400 relative">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.3)_0,_transparent_70%)] opacity-60"></div>
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.1)_50%,transparent_50%)] bg-[size:40px_40px] opacity-30"></div>
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-4xl">
             <div className="text-center mb-12 aos-fade-up">
               <span className="inline-block px-3 py-1 bg-teal-100/80 text-teal-800 rounded-full text-sm font-medium mb-3 border border-teal-200 shadow-sm">
                 Our Journey
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 drop-shadow-md">Our Milestones</h2>
-              <p className="text-gray-700 max-w-2xl mx-auto">
+              <p className="text-gray-700 max-w-xl mx-auto text-base md:text-lg">
                 Explore key milestones in GVS Controls’ growth since 2017.
               </p>
             </div>
-            <Timeline data={timelineData} />
+            <div className="relative">
+              <style>{`
+                /* Override Timeline component styles to remove rotating circles */
+                .timeline-circle {
+                  display: none !important;
+                }
+                .timeline-item {
+                  position: relative;
+                  margin-bottom: 2rem;
+                  padding-left: 2rem;
+                }
+                .timeline-item::before {
+                  content: '';
+                  position: absolute;
+                  left: 0;
+                  top: 0;
+                  width: 2px;
+                  height: 100%;
+                  background: linear-gradient(to bottom, #14b8a6, #4f46e5);
+                }
+                .timeline-item:first-child::prior {
+                  display: none;
+                }
+                @media (min-width: 768px) {
+                  .timeline-item {
+                    padding-left: 3rem;
+                  }
+                }
+              `}</style>
+              <Timeline data={timelineData} />
+              {timelineData.map((item, i) => (
+                <motion.div
+                  key={i}
+                  custom={i}
+                  initial="hidden"
+                  animate="visible"
+                  variants={timelineItemVariants}
+                  className="hidden"
+                />
+              ))}
+            </div>
           </div>
         </section>
 
