@@ -150,23 +150,24 @@ const Hero = () => {
             </div>
 
             <p
-  className="text-lg sm:text-xl lg:text-2xl font-medium mb-3 italic mt-4"
-  style={{ color: "#ffffff", textShadow: "0 2px 4px rgba(0, 0, 0, 0.5)" }}
->
-  Consultant, Engineering, Manufacturing (Supply & Services)
-</p>
+              className="text-lg sm:text-xl lg:text-2xl font-medium mb-3 italic mt-4"
+              style={{ color: "#ffffff", textShadow: "0 2px 4px rgba(0, 0, 0, 0.5)" }}
+            >
+              Consultant, Engineering, Manufacturing (Supply & Services)
+            </p>
 
             <p className="text-lg sm:text-xl lg:text-2xl font-bold italic mb-6" style={{ color: "#8b0000" }}>
               Electrical & Automation
             </p>
 
             <motion.button
-              onClick={() => setIsButtonsOpen(true)}
+              onClick={() => (window.location.href = "/services")}
               className="mt-4 px-6 py-3 rounded-lg bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white font-semibold shadow-md hover:from-[#4a0e78] hover:to-[#ff6f61] transition-all duration-300 text-base sm:text-lg"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              aria-label="Explore Services"
             >
-              Send Inquiry
+              Explore Services
             </motion.button>
           </div>
         </div>

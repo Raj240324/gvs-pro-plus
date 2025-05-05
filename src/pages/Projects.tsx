@@ -1,22 +1,31 @@
 import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight as ChevronRightIcon, CheckCircle, Factory, Clock } from 'lucide-react';
+import { ChevronLeft, ChevronRight as ChevronRightIcon } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
-import pp1 from "../assets/pp-1.png";
-import re1 from "../assets/re-1.png";
-import st1 from "../assets/st-1.png";
-import ch1 from "../assets/ch-1.png";
-import st3 from "../assets/st-3.png";
-import ch2 from "../assets/ch-2.png";
+import powerPlant1 from "../assets/pp-1.png";
+import powerPlant2 from "../assets/pp-2.png";
+import powerPlant3 from "../assets/pp-3.png";
+import powerPlant4 from "../assets/pp-4.png";
+import powerPlant5 from "../assets/pp-5.png";
+import powerPlant6 from "../assets/pp-6.png";
+import renewableEnergy1 from "../assets/re-1.png";
+import renewableEnergy2 from "../assets/re-2.png";
+import renewableEnergy3 from "../assets/re-3.png";
+import renewableEnergy4 from "../assets/re-4.png";
+import renewableEnergy5 from "../assets/re-5.png";
+import steelPlant1 from "../assets/st-1.png";
+import steelPlant2 from "../assets/st-2.png";
+import coolingTowers1 from "../assets/st-3.png";
+import chemicalPlants1 from "../assets/ch-2.png";
+import waterTreatment1 from "../assets/ch-1.png";
+import fallbackImage from "../assets/ch-3.png";
 
 interface Project {
   id: string;
   client: string;
   title: string;
   description: string;
-  highlights?: string[];
-  impact?: string;
 }
 
 interface ClientProjects {
@@ -28,59 +37,57 @@ interface GreenFieldProject {
   id: string;
   title: string;
   description: string;
-  image: string;
+  images: string[];
 }
 
 const Projects: React.FC = () => {
   const [isInView, setIsInView] = useState<boolean>(false);
-  const [isCaseStudiesInView, setIsCaseStudiesInView] = useState<boolean>(false);
-  const [isPartnerInView, setIsPartnerInView] = useState<boolean>(false);
   const [isGreenFieldInView, setIsGreenFieldInView] = useState<boolean>(false);
+  const [isPartnerInView, setIsPartnerInView] = useState<boolean>(false);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number[]>(new Array(8).fill(0));
   const sectionRef = useRef<HTMLDivElement>(null);
-  const caseStudiesRef = useRef<HTMLDivElement>(null);
-  const partnerRef = useRef<HTMLDivElement>(null);
   const greenFieldRef = useRef<HTMLDivElement>(null);
+  const partnerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
-  // Green Field Projects data from PDF
   const greenFieldProjects: GreenFieldProject[] = [
     {
       id: 'gf1',
       title: 'Power Plant (Thermal, Biomass and Solar)',
-      description: 'Power Plant (Thermal, Biomass and Solar)',
-      image: pp1,
+      description: 'Comprehensive solutions for thermal, biomass, and solar power plants, delivering innovative and sustainable energy systems.',
+      images: [powerPlant1, powerPlant2, powerPlant3, powerPlant4, powerPlant5, powerPlant6],
     },
     {
       id: 'gf2',
       title: 'Renewable Energy Sectors (Biomass Gasification Technology)',
-      description: 'Renewable Energy Sectors (Biomass Gasification Technology)',
-      image: re1,
+      description: 'Advanced biomass gasification technology for sustainable energy production in renewable energy sectors.',
+      images: [renewableEnergy1, renewableEnergy2, renewableEnergy3, renewableEnergy4, renewableEnergy5],
     },
     {
       id: 'gf3',
-      title: 'Steel plants (Coke oven & SMS (Special Purpose Machineries))',
-      description: 'Steel plants (Coke oven & SMS (Special Purpose Machineries))',
-      image: st1,
+      title: 'Steel Plants (Coke Oven & SMS)',
+      description: 'Specialized machinery and automation for coke oven and steel melting shop operations in steel plants.',
+      images: [steelPlant1, steelPlant2],
     },
     {
       id: 'gf4',
       title: 'Cooling Towers (Concrete and FRP)',
-      description: 'Cooling Towers (Concrete and FRP)',
-      image: st3,
+      description: 'High-performance concrete and FRP cooling towers for industrial applications.',
+      images: [coolingTowers1],
     },
     {
       id: 'gf5',
-      title: 'Chemical Plants & Process Plants Water STP, ETP and WTP',
-      description: 'Chemical Plants & Process Plants Water STP, ETP and WTP',
-      image: ch1,
+      title: 'Chemical Plants & Process Plants',
+      description: 'Tailored automation and control systems for chemical and process plant operations.',
+      images: [chemicalPlants1],
     },
     {
       id: 'gf6',
-      title: 'Automobile Industries',
-      description: 'Automobile Industries',
-      image: ch2,
+      title: 'Water STP, ETP, and WTP',
+      description: 'Advanced solutions for sewage, effluent, and water treatment plants.',
+      images: [waterTreatment1],
     },
   ];
 
@@ -101,21 +108,11 @@ const Projects: React.FC = () => {
     document.title = 'Projects - GVS Controls';
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Discover GVS Controls’ top projects in power, steel, water, chemical, and automation.');
+      metaDescription.setAttribute('content', 'Discover GVS Controls’ projects in power, steel, cement, chemical, and automation sectors.');
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => setIsInView(entry.isIntersecting),
-      { threshold: 0.05 }
-    );
-
-    const caseStudiesObserver = new IntersectionObserver(
-      ([entry]) => setIsCaseStudiesInView(entry.isIntersecting),
-      { threshold: 0.05 }
-    );
-
-    const partnerObserver = new IntersectionObserver(
-      ([entry]) => setIsPartnerInView(entry.isIntersecting),
       { threshold: 0.05 }
     );
 
@@ -124,18 +121,32 @@ const Projects: React.FC = () => {
       { threshold: 0.05 }
     );
 
+    const partnerObserver = new IntersectionObserver(
+      ([entry]) => setIsPartnerInView(entry.isIntersecting),
+      { threshold: 0.05 }
+    );
+
     if (sectionRef.current) observer.observe(sectionRef.current);
-    if (caseStudiesRef.current) caseStudiesObserver.observe(caseStudiesRef.current);
-    if (partnerRef.current) partnerObserver.observe(partnerRef.current);
     if (greenFieldRef.current) greenFieldObserver.observe(greenFieldRef.current);
+    if (partnerRef.current) partnerObserver.observe(partnerRef.current);
 
     return () => {
       if (sectionRef.current) observer.unobserve(sectionRef.current);
-      if (caseStudiesRef.current) caseStudiesObserver.unobserve(caseStudiesRef.current);
-      if (partnerRef.current) partnerObserver.unobserve(partnerRef.current);
       if (greenFieldRef.current) greenFieldObserver.unobserve(greenFieldRef.current);
+      if (partnerRef.current) partnerObserver.unobserve(partnerRef.current);
     };
   }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => {
+        const newIndexes = [...prev];
+        newIndexes[currentSlide] = (newIndexes[currentSlide] + 1) % greenFieldProjects[currentSlide].images.length;
+        return newIndexes;
+      });
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [currentSlide]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -179,12 +190,44 @@ const Projects: React.FC = () => {
     exit: { opacity: 0, x: -100, transition: { duration: 0.5 } },
   };
 
+  const imageSlideVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
+    exit: { opacity: 0, scale: 1.05, transition: { duration: 0.5 } },
+  };
+
   const handleNextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % greenFieldProjects.length);
+    setCurrentImageIndex((prev) => {
+      const newIndexes = [...prev];
+      newIndexes[currentSlide] = 0;
+      return newIndexes;
+    });
   };
 
   const handlePrevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + greenFieldProjects.length) % greenFieldProjects.length);
+    setCurrentImageIndex((prev) => {
+      const newIndexes = [...prev];
+      newIndexes[currentSlide] = 0;
+      return newIndexes;
+    });
+  };
+
+  const handleNextImage = () => {
+    setCurrentImageIndex((prev) => {
+      const newIndexes = [...prev];
+      newIndexes[currentSlide] = (newIndexes[currentSlide] + 1) % greenFieldProjects[currentSlide].images.length;
+      return newIndexes;
+    });
+  };
+
+  const handlePrevImage = () => {
+    setCurrentImageIndex((prev) => {
+      const newIndexes = [...prev];
+      newIndexes[currentSlide] = (newIndexes[currentSlide] - 1 + greenFieldProjects[currentSlide].images.length) % greenFieldProjects[currentSlide].images.length;
+      return newIndexes;
+    });
   };
 
   const clientProjects: ClientProjects[] = [
@@ -196,48 +239,24 @@ const Projects: React.FC = () => {
           client: 'M/s Aumund Engineering Private Limited - Chennai',
           title: 'SAMSON / BRU FEEDER',
           description: 'SAMSON / BRU FEEDER - ACC - Ametha, ULTRATECH - Gujarat, JK Cement HamirPur, JSW FZE - Fujairah, 2 X 800 Darapalli & LARA - NTPC Limited, 2 X 500 Durgapur & MEJIA Thermal Power Station, TITAN CEMENT - EGYPT and DALMIA CEMENT - INDIA',
-          highlights: [
-            'Custom-engineered feeder systems for diverse clients',
-            'Adherence to stringent consultant standards',
-            'Multi-location deployment across India and abroad',
-          ],
-          impact: 'Enhanced material flow efficiency and operational reliability.',
         },
         {
           id: '2',
           client: 'M/s Aumund Engineering Private Limited - Chennai',
-          title: 'PADDEL FEEDER',
-          description: 'PADDEL FEEDER - 2 X 350 MEENAKSHI ENERGY (P) LTD., - NELLORE - ANDHRA, McNalley Bharat Eng Company Limited.',
-          highlights: [
-            'Robust paddle feeder design for high reliability',
-            'Timely commissioning to meet project deadlines',
-            'Enhanced fuel handling capacity',
-          ],
-          impact: 'Improved fuel supply reliability and plant performance.',
+          title: 'PADDLE FEEDER',
+          description: 'PADDLE FEEDER - 2 X 350 MEENAKSHI ENERGY (P) LTD., - NELLORE - ANDHRA, McNalley Bharat Eng Company Limited.',
         },
         {
           id: '3',
           client: 'M/s Aumund Engineering Private Limited - Chennai',
           title: 'CENTREX / BIN- X System',
           description: 'CENTREX / BIN- X System - ACC - AMETHA, Republic Cement - PHILIPPINES and Dalmia Cement - BELGUAM.',
-          highlights: [
-            'Efficient material handling systems',
-            'Successful international project execution',
-            'Reliable integration with existing plant infrastructure',
-          ],
-          impact: 'Increased material handling throughput and system efficiency.',
         },
         {
           id: '4',
           client: 'M/s Aumund Engineering Private Limited - Chennai',
           title: 'STACKER & RECLAIMER',
           description: 'STACKER & RECLAIMER - Technical Consultancy - Electrical & Instrumentation - JSW Cement - DOLVI',
-          highlights: [
-            'Advanced instrumentation solutions',
-            'Optimized electrical system layouts',
-            'Reduced operational downtime',
-          ],
-          impact: 'Enhanced material handling efficiency and system reliability.',
         },
       ],
     },
@@ -249,24 +268,12 @@ const Projects: React.FC = () => {
           client: 'M/s Loesche Energy (P) Ltd. - Chennai',
           title: 'SAMSON / BRU FEEDER',
           description: 'SAMSON / BRU FEEDER - RCCPL 8000 MUKUTBAN - MAHARASHTRA',
-          highlights: [
-            'High-capacity feeder system for large-scale production',
-            'Seamless integration with cement plant operations',
-            'Reliable performance under demanding conditions',
-          ],
-          impact: 'Improved material handling for large-scale cement production.',
         },
         {
           id: '6',
           client: 'M/s Loesche Energy (P) Ltd. - Chennai',
           title: 'CENTREX / BIN- X System',
-          description: 'CENTREX / BIN- X System - Friend Ship Power Company - DHAKA - BANGALADESH.',
-          highlights: [
-            'Successful cross-border project execution',
-            'Efficient material handling system design',
-            'Reliable operation for power generation',
-          ],
-          impact: 'Enhanced material handling for power plant operations.',
+          description: 'CENTREX / BIN- X System - Friend Ship Power Company - DHAKA - BANGLADESH.',
         },
       ],
     },
@@ -278,12 +285,6 @@ const Projects: React.FC = () => {
           client: 'M/s Metco Roofing Private Limited - Chennai',
           title: 'Consultancy Services',
           description: 'Consultancy Services - Complete Electrical Systems and lighting for Factory Set up.',
-          highlights: [
-            'Comprehensive electrical system design',
-            'Optimized lighting solutions for factory efficiency',
-            'Timely delivery to meet setup deadlines',
-          ],
-          impact: 'Enabled efficient factory operations with reliable electrical systems.',
         },
       ],
     },
@@ -293,14 +294,8 @@ const Projects: React.FC = () => {
         {
           id: '8',
           client: 'M/s ARS Hydrojet Services (P) Ltd. - Chennai',
-          title: 'HIGH PRESUURE WATER JETING SYSTEM',
-          description: 'HIGH PRESUURE WATER JETING SYSTEM - All SAIL Plants - Bokaro, Rourkela, Durgapur Steel Plants and TATA JAMSHEDPUR.',
-          highlights: [
-            'Custom-designed high-pressure jetting systems',
-            'Deployment across multiple steel plants',
-            'Reduced maintenance costs and downtime',
-          ],
-          impact: 'Improved cleaning efficiency and enhanced plant safety.',
+          title: 'HIGH PRESSURE WATER JETTING SYSTEM',
+          description: 'HIGH PRESSURE WATER JETTING SYSTEM - All SAIL Plants - Bokaro, Rourkela, Durgapur Steel Plants and TATA JAMSHEDPUR.',
         },
       ],
     },
@@ -312,12 +307,6 @@ const Projects: React.FC = () => {
           client: 'M/s Meenakshi Medical College and Hospital - Kanchipuram',
           title: '11 KV Sub Station and Power Room',
           description: '11 KV Sub Station and Power Room - Complete Revamping and Retro Fitting, Supply, Installation, Testing and Commissioning of 11 KV VCB, 1250 KVA Distribution Transformer, Bus Ducts, PCC Panels and Power DB’s.',
-          highlights: [
-            'Modernized substation infrastructure',
-            'Enhanced safety and CEIG compliance',
-            'Minimized power outages for critical operations',
-          ],
-          impact: 'Ensured reliable power supply for critical medical operations.',
         },
       ],
     },
@@ -341,14 +330,14 @@ const Projects: React.FC = () => {
               GVS Controls Projects
             </h1>
             <p className="text-sm sm:text-base md:text-lg text-white/90 max-w-3xl mx-auto">
-              Engineering excellence across power, steel, water, chemical, and automation sectors.
+              Engineering excellence across power, steel, cement, chemical, and automation sectors.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Green Field Projects Section */}
-      <section ref={greenFieldRef} className="py-12 sm:py-16 md:py-20 bg-white/50 dark:bg-gray-900/50">
+      <section ref={greenFieldRef} className="py-12 sm:py-16 md:py-20 bg-white dark:bg-gray-900">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -367,56 +356,137 @@ const Projects: React.FC = () => {
             </p>
           </motion.div>
 
-          {/* Carousel for Green Field Projects */}
-          <div className="relative max-w-5xl mx-auto">
+          {/* Carousel Container */}
+          <div className="relative max-w-6xl mx-auto">
             <motion.div
               key={currentSlide}
               variants={slideVariants}
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
+              className="relative bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 rounded-3xl shadow-2xl overflow-hidden"
             >
-              <div className="flex flex-col md:flex-row">
-                <div className="md:w-1/2">
-                  <img
-                    src={greenFieldProjects[currentSlide].image}
-                    alt={greenFieldProjects[currentSlide].title}
-                    className="w-full h-64 md:h-96 object-cover"
-                  />
+              <div className="flex flex-col lg:flex-row items-center">
+                {/* Image Section */}
+                <div className="lg:w-1/2 relative h-64 sm:h-80 lg:h-96 w-full">
+                  <motion.div
+                    key={currentImageIndex[currentSlide]}
+                    variants={imageSlideVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    className="absolute inset-0"
+                  >
+                    <img
+                      src={greenFieldProjects[currentSlide].images[currentImageIndex[currentSlide]] || fallbackImage}
+                      alt={`${greenFieldProjects[currentSlide].title} - Image ${currentImageIndex[currentSlide] + 1}`}
+                      className="w-full h-full object-cover rounded-t-3xl lg:rounded-l-3xl lg:rounded-r-none"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                  </motion.div>
+                  {/* Image Navigation */}
+                  {greenFieldProjects[currentSlide].images.length > 1 && (
+                    <div className="absolute inset-x-0 bottom-4 flex justify-between px-4 z-10">
+                      <button
+                        onClick={handlePrevImage}
+                        className="bg-white/90 dark:bg-gray-800/90 p-2 rounded-full shadow-lg hover:bg-white dark:hover:bg-gray-700 transition-all"
+                        aria-label="Previous Image"
+                      >
+                        <ChevronLeft className="w-5 h-5 text-gray-800 dark:text-gray-200" />
+                      </button>
+                      <button
+                        onClick={handleNextImage}
+                        className="bg-white/90 dark:bg-gray-800/90 p-2 rounded-full shadow-lg hover:bg-white dark:hover:bg-gray-700 transition-all"
+                        aria-label="Next Image"
+                      >
+                        <ChevronRightIcon className="w-5 h-5 text-gray-800 dark:text-gray-200" />
+                      </button>
+                    </div>
+                  )}
+                  {/* Image Indicators */}
+                  {greenFieldProjects[currentSlide].images.length > 1 && (
+                    <div className="absolute bottom-2 left-0 right-0 flex justify-center space-x-2 z-10">
+                      {greenFieldProjects[currentSlide].images.map((_, idx) => (
+                        <span
+                          key={idx}
+                          className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                            currentImageIndex[currentSlide] === idx ? 'bg-green-500 scale-125' : 'bg-white/70'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </div>
-                <div className="md:w-1/2 p-6 sm:p-10 flex flex-col justify-center">
-                  <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800 dark:text-white mb-4 sm:mb-6">
+                {/* Content Section */}
+                <div className="lg:w-1/2 p-6 sm:p-8 lg:p-10 flex flex-col justify-center">
+                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 dark:text-white mb-4">
                     {greenFieldProjects[currentSlide].title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg">
+                  <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base lg:text-lg leading-relaxed">
                     {greenFieldProjects[currentSlide].description}
                   </p>
                 </div>
               </div>
             </motion.div>
 
-            {/* Navigation Buttons */}
-            <button
-              onClick={handlePrevSlide}
-              className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80 dark:bg-gray-800/80 p-2 rounded-full shadow-md hover:bg-white dark:hover:bg-gray-700 transition-all"
-            >
-              <ChevronLeft className="w-6 h-6 text-gray-600 dark:text-gray-300" />
-            </button>
-            <button
-              onClick={handleNextSlide}
-              className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80 dark:bg-gray-800/80 p-2 rounded-full shadow-md hover:bg-white dark:hover:bg-gray-700 transition-all"
-            >
-              <ChevronRightIcon className="w-6 h-6 text-gray-600 dark:text-gray-300" />
-            </button>
+            {/* Project Navigation */}
+            <div className="absolute inset-x-0 -top-12 flex justify-between px-4 lg:px-0 z-20">
+              <button
+                onClick={handlePrevSlide}
+                className="bg-green-500 p-3 rounded-full shadow-lg hover:bg-green-600 transition-all"
+                aria-label="Previous Project"
+              >
+                <ChevronLeft className="w-6 h-6 text-white" />
+              </button>
+              <button
+                onClick={handleNextSlide}
+                className="bg-green-500 p-3 rounded-full shadow-lg hover:bg-green-600 transition-all"
+                aria-label="Next Project"
+              >
+                <ChevronRightIcon className="w-6 h-6 text-white" />
+              </button>
+            </div>
 
-            {/* Carousel Indicators */}
-            <div className="flex justify-center mt-4 space-x-2">
+            {/* Thumbnail Gallery */}
+            <div className="mt-8 flex justify-center">
+              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4 max-w-4xl">
+                {greenFieldProjects.map((project, index) => (
+                  <motion.button
+                    key={project.id}
+                    onClick={() => setCurrentSlide(index)}
+                    whileHover={{ scale: 1.1, zIndex: 10 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`relative h-20 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+                      currentSlide === index ? 'border-green-500' : 'border-gray-200 dark:border-gray-700'
+                    }`}
+                  >
+                    <img
+                      src={project.images[0] || fallbackImage}
+                      alt={`Thumbnail for ${project.title}`}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-black/60 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <span className="text-white text-xs font-medium text-center px-2">
+                        {project.title.split('(')[0].trim()}
+                      </span>
+                    </div>
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+
+            {/* Project Indicators */}
+            <div className="flex justify-center mt-6 space-x-2">
               {greenFieldProjects.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentSlide(index)}
-                  className={`w-3 h-3 rounded-full ${currentSlide === index ? 'bg-green-500' : 'bg-gray-300 dark:bg-gray-600'}`}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    currentSlide === index ? 'bg-green-500 scale-125' : 'bg-gray-300 dark:bg-gray-600'
+                  }`}
+                  aria-label={`Project ${index + 1}`}
                 />
               ))}
             </div>
@@ -445,7 +515,7 @@ const Projects: React.FC = () => {
             <div key={clientGroup.client} className="mb-12">
               <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-green-500 to-blue-600 bg-clip-text text-transparent mb-6 relative group">
                 {clientGroup.client}
-                <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-green-500 to-blue-600 rounded-full group-hover:w-20 transition-all duration-300" />
+                <span className="absolute bottom-0 leftcivilized-0 h-0.5 w-0 bg-gradient-to-r from-green-500 to-blue-600 rounded-full group-hover:w-20 transition-all duration-300" />
               </h3>
               <motion.div
                 variants={containerVariants}
@@ -471,22 +541,6 @@ const Projects: React.FC = () => {
                         <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base mb-4">
                           {project.description}
                         </p>
-                        {project.highlights && (
-                          <div className="mb-4">
-                            <h4 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white mb-2">Highlights:</h4>
-                            <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 text-sm sm:text-base pl-4">
-                              {project.highlights.map((highlight, index) => (
-                                <li key={index}>{highlight}</li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                        {project.impact && (
-                          <div>
-                            <h4 className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white mb-2">Impact:</h4>
-                            <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">{project.impact}</p>
-                          </div>
-                        )}
                       </motion.div>
                     </div>
                   </motion.div>
@@ -494,92 +548,6 @@ const Projects: React.FC = () => {
               </motion.div>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* Case Studies Section */}
-      <section ref={caseStudiesRef} className="py-12 sm:py-16 md:py-20 bg-white/50 dark:bg-gray-900/50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isCaseStudiesInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.4 }}
-            className="text-center mb-8 sm:mb-12"
-          >
-            <span className="inline-block px-3 py-1 sm:px-4 sm:py-2 mb-4 sm:mb-6 text-xs sm:text-sm font-semibold text-blue-600 bg-blue-100/50 dark:bg-blue-900/20 rounded-full">
-              Case Studies
-            </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-green-500 to-blue-600 bg-clip-text text-transparent">
-              Client Success Stories
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 mt-3 sm:mt-4 max-w-3xl mx-auto text-sm sm:text-base">
-              Detailed insights into how our solutions have driven efficiency and reliability for industry leaders.
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate={isCaseStudiesInView ? 'visible' : 'hidden'}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto"
-          >
-            {[
-              {
-                title: 'Optimizing Bulk Material Handling for JSW Cement',
-                description: 'Our electrical and instrumentation consultancy for stacker and reclaimer systems at JSW Cement Dolvi improved material handling efficiency and reduced operational downtime.',
-                results: [
-                  '25% increase in material handling throughput',
-                  'Reduced maintenance downtime by 30%',
-                  'Enhanced safety with automated controls',
-                  'Cost savings through optimized system design',
-                ],
-                icon: <Factory className="w-10 h-10 sm:w-12 sm:h-12" />,
-              },
-              {
-                title: 'Revamping 11 KV Substation for Meenakshi Hospital',
-                description: 'Complete overhaul of the hospital’s power infrastructure with modern control panels and transformers, ensuring uninterrupted power supply for critical operations.',
-                results: [
-                  '100% uptime for critical medical equipment',
-                  '20% reduction in energy costs',
-                  'Improved safety compliance with CEIG standards',
-                  'Extended lifespan of electrical systems',
-                ],
-                icon: <Clock className="w-10 h-10 sm:w-12 sm:h-12" />,
-              },
-            ].map((study, index) => (
-              <motion.div
-                key={index}
-                variants={cardVariants}
-                initial="hidden"
-                animate="visible"
-                whileHover="hover"
-                className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md p-5 sm:p-8 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700"
-              >
-                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-blue-100/50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 mb-4 sm:mb-6">
-                  {study.icon}
-                </div>
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white mb-3 sm:mb-4">{study.title}</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4 sm:mb-6 text-sm">{study.description}</p>
-                <div className="mb-4 sm:mb-6">
-                  <h4 className="font-semibold text-gray-800 dark:text-white mb-2 sm:mb-3 text-sm">Key Results:</h4>
-                  <ul className="space-y-2">
-                    {study.results.map((result, i) => (
-                      <li key={i} className="flex items-start gap-2 text-gray-600 dark:text-gray-300 text-sm">
-                        <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                        <span>{result}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <a
-                  href="#"
-                  className="inline-flex items-center justify-center px-4 sm:px-6 py-2 bg-gradient-to-r from-green-500 to-blue-600 hover:from-blue-600 hover:to-green-500 text-white font-medium rounded-md transition-all duration-300 text-sm"
-                >
-                  Read Full Case Study
-                </a>
-              </motion.div>
-            ))}
-          </motion.div>
         </div>
       </section>
 
@@ -603,7 +571,7 @@ const Projects: React.FC = () => {
                 <Button
                   variant="gradient"
                   size="lg"
-                  className="group bg-gradient-to-r from-green-500 to-blue-600 hover:from-blue-600 hover:to-green-500 text-white font-medium px-6 sm:px-8 py-3 sm:py-4 border-none hover:border-none active:border-none focus:border-none outline-none hover:outline-none active:outline-none focus:outline-none ring-0 hover:ring-0 active:ring-0 focus:ring-0 no-gradient-border z-[10000]"
+                  className="group bg-gradient-to-r from-green-500 to-blue-600 hover:from-blue-600 hover:to-green-500 text-white font-medium px-6 sm:px-8 py-3 sm:py-4 rounded-full border-none hover:border-none active:border-none focus:border-none outline-none hover:outline-none active:outline-none focus:outline-none ring-0 hover:ring-0 active:ring-0 focus:ring-0 no-gradient-border z-[10000]"
                   style={{ outline: 'none', border: 'none' }}
                   onClick={() => navigate('/contact')}
                 >

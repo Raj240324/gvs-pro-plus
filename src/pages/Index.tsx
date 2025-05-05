@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { useContactModal } from '../hooks/use-contact-modal';
 import Hero from '../components/home/Hero';
-import AnimatedGVSTestimonials from '../components/home/Testimonials';
+// Removed: import AnimatedGVSTestimonials from '../components/home/Testimonials';
 import FAQ from '../components/home/FAQ';
 import Button from '../components/ui/Button';
 import Highlights from '../components/home/Highlights';
@@ -215,7 +215,7 @@ const Index = () => {
 
       <Highlights />
       <FeaturedClients />
-      <AnimatedGVSTestimonials />
+      {/* Removed: <AnimatedGVSTestimonials /> */}
       <FAQ />
 
       <section className="section-padding bg-gray-100 dark:bg-black/20 relative overflow-hidden">

@@ -4,7 +4,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { CanvasRevealEffect } from '../components/ui/canvas-reveal-effect';
 import { Box } from 'lucide-react';
 import cop1 from "../assets/cop-1.png";
+import cop2 from "../assets/cop-2.png";
+import cop3 from "../assets/cop-3.png";
 import pp1 from "../assets/pp-1.png";
+import pp2 from "../assets/pp-2.png";
+import pp3 from "../assets/pp-3.png";
 
 // Note: Ensure AOS library is included and initialized in the project for animations to work (e.g., import AOS and call AOS.init() in the main app).
 
@@ -15,7 +19,74 @@ interface Product {
   items: string[];
   icon: JSX.Element;
   color: [number, number, number][];
+  images: string[];
 }
+
+const ProductSection = ({ product, index }: { product: Product; index: number }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % product.images.length);
+    }, 2000); // Change image every 2 seconds
+    return () => clearInterval(interval);
+  }, [product.images.length]);
+
+  return (
+    <section
+      key={product.id}
+      id={product.id}
+      className={`py-12 sm:py-16 md:py-20 ${index % 2 === 0 ? 'bg-gradient-to-br from-teal-50 via-indigo-50 to-gray-100' : 'bg-gradient-to-bl from-gray-50 via-teal-50 to-indigo-50'}`}
+    >
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center">
+          <div className={`${index % 2 === 0 ? 'aos-fade-right' : 'aos-fade-left'} order-2 lg:order-${index % 2 === 0 ? '1' : '2'}`}>
+            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mb-4 sm:mb-6 rounded-full bg-teal-500/10 flex items-center justify-center shadow-md transform hover:rotate-12 transition-transform">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center">{product.icon}</div>
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 tracking-tight">{product.name}</h2>
+            <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base md:text-lg leading-relaxed">{product.description}</p>
+            <div className="mb-6 sm:mb-8">
+              <h3 className="font-semibold text-gray-800 mb-3 sm:mb-4 text-base sm:text-lg md:text-xl">Products & Applications:</h3>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                {product.items.map((item, i) => (
+                  <li key={i} className="flex items-start group">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-teal-500 mr-2 sm:mr-3 flex-shrink-0 group-hover:scale-110 transition-transform w-5 h-5 sm:w-6 sm:h-6"
+                    >
+                      <path d="m5 12 5 5L20 7"/>
+                    </svg>
+                    <span className="text-gray-700 text-sm sm:text-base group-hover:text-teal-600 transition-colors">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div className={`${index % 2 === 0 ? 'aos-fade-left' : 'aos-fade-right'} order-1 lg:order-${index % 2 === 0 ? '2' : '1'}`}>
+            <div className="relative rounded-xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-500 group">
+              <img
+                src={product.images[currentImageIndex]}
+                alt={`${product.name} example ${currentImageIndex + 1}`}
+                className="w-full h-64 sm:h-80 md:h-96 object-cover transition-opacity group-hover:opacity-80"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4 sm:p-6"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 const ManufacturingSupply = () => {
   useEffect(() => {
@@ -70,6 +141,7 @@ const ManufacturingSupply = () => {
       ],
       icon: <Box size={50} strokeWidth={2} className="text-teal-600" />,
       color: [[0, 128, 128]], // Teal
+      images: [cop1, cop2, cop3], // Replace with actual image paths
     },
     {
       id: 'field-instruments',
@@ -84,13 +156,14 @@ const ManufacturingSupply = () => {
         'Process Plants',
         'Cement Plants',
         'Renewable Energy Sectors',
-        'Safety Switches - Pull Chord and Belt Sway (Schmersal make)',
+        'Safety Switches - Pull Cord and Belt Sway (Schmersal make)',
         'Motion Sensors (Milltronics)',
         'ZSS (Pepperl + Fuchs)',
         'Instruments for Wind Mills and Switches of any Special Requirements',
       ],
       icon: <Box size={50} strokeWidth={2} className="text-indigo-600" />,
       color: [[75, 0, 130]], // Indigo
+      images: [pp1, pp2, pp3], // Replace with actual image paths
     },
   ];
 
@@ -188,58 +261,7 @@ const ManufacturingSupply = () => {
 
       {/* Product Details */}
       {products.map((product, index) => (
-        <section
-          key={product.id}
-          id={product.id}
-          className={`py-12 sm:py-16 md:py-20 ${index % 2 === 0 ? 'bg-gradient-to-br from-teal-50 via-indigo-50 to-gray-100' : 'bg-gradient-to-bl from-gray-50 via-teal-50 to-indigo-50'}`}
-        >
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center">
-              <div className={`${index % 2 === 0 ? 'aos-fade-right' : 'aos-fade-left'} order-2 lg:order-${index % 2 === 0 ? '1' : '2'}`}>
-                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mb-4 sm:mb-6 rounded-full bg-teal-500/10 flex items-center justify-center shadow-md transform hover:rotate-12 transition-transform">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center">{product.icon}</div>
-                </div>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 tracking-tight">{product.name}</h2>
-                <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base md:text-lg leading-relaxed">{product.description}</p>
-                <div className="mb-6 sm:mb-8">
-                  <h3 className="font-semibold text-gray-800 mb-3 sm:mb-4 text-base sm:text-lg md:text-xl">Products & Applications:</h3>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                    {product.items.map((item, i) => (
-                      <li key={i} className="flex items-start group">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="text-teal-500 mr-2 sm:mr-3 flex-shrink-0 group-hover:scale-110 transition-transform w-5 h-5 sm:w-6 sm:h-6"
-                        >
-                          <path d="m5 12 5 5L20 7"/>
-                        </svg>
-                        <span className="text-gray-700 text-sm sm:text-base group-hover:text-teal-600 transition-colors">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-              <div className={`${index % 2 === 0 ? 'aos-fade-left' : 'aos-fade-right'} order-1 lg:order-${index % 2 === 0 ? '2' : '1'}`}>
-                <div className="relative rounded-xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-500 group">
-                  <img
-                    src={product.id === 'control-panels' ? cop1 : pp1}
-                    alt={`${product.name} example`}
-                    className="w-full h-64 sm:h-80 md:h-96 object-cover transition-opacity group-hover:opacity-80"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4 sm:p-6"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <ProductSection key={product.id} product={product} index={index} />
       ))}
 
       {/* Call to Action */}
