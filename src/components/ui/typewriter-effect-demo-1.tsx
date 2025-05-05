@@ -26,11 +26,11 @@ export default function TypewriterEffectSmoothDemo() {
   ];
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center max-w-full">
       <TypewriterEffectSmooth
         words={words}
-        className="text-2xl lg:text-3xl font-semibold mb-4 italic"
-        cursorClassName="bg-[#ffbf00]"
+        className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold italic mb-2 sm:mb-4 leading-tight"
+        cursorClassName="bg-[#ffbf00] w-1.5 sm:w-2 h-full"
       />
     </div>
   );
