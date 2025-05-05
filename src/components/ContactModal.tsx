@@ -24,8 +24,8 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
 
-  // Initialize EmailJS
   useEffect(() => {
+    console.log('EmailJS:', emailjs); // Debug: Check if emailjs is defined
     const userID = import.meta.env.VITE_EMAILJS_USER_ID;
     if (!userID) {
       console.error('EmailJS userID is undefined. Please check your .env file for VITE_EMAILJS_USER_ID.');
@@ -33,11 +33,12 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
         title: "Configuration Error",
         description: "EmailJS userID is missing. Please contact support.",
         variant: "destructive",
+        className: "bg-red-500 text-white rounded-lg shadow-lg max-w-[90vw] mx-auto bottom-4",
       });
       return;
     }
     try {
-      emailjs.init(userID);
+      emailjs.init({ publicKey: userID });
       console.log('EmailJS initialized successfully with userID:', userID);
     } catch (error) {
       console.error('Failed to initialize EmailJS:', error);
@@ -45,6 +46,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
         title: "Configuration Error",
         description: "Failed to initialize EmailJS. Please try again later.",
         variant: "destructive",
+        className: "bg-red-500 text-white rounded-lg shadow-lg max-w-[90vw] mx-auto bottom-4",
       });
     }
   }, [toast]);
@@ -62,6 +64,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
         title: "Error",
         description: "Please fill all required fields.",
         variant: "destructive",
+        className: "bg-red-500 text-white rounded-lg shadow-lg max-w-[90vw] mx-auto bottom-4",
       });
       return;
     }
@@ -83,6 +86,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
         title: "Configuration Error",
         description: "EmailJS configuration is missing. Please check your .env file.",
         variant: "destructive",
+        className: "bg-red-500 text-white rounded-lg shadow-lg max-w-[90vw] mx-auto bottom-4",
       });
       return;
     }
@@ -119,6 +123,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
       toast({
         title: "Success!",
         description: "Your message has been sent. You'll receive a confirmation email shortly.",
+        className: "bg-gradient-to-r from-teal-500 to-purple-600 text-white rounded-lg shadow-lg max-w-[90vw] mx-auto bottom-4 animate-slide-up",
       });
 
       setTimeout(() => {
@@ -131,6 +136,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
         title: "Error",
         description: "Failed to send message. Please try again later.",
         variant: "destructive",
+        className: "bg-red-500 text-white rounded-lg shadow-lg max-w-[90vw] mx-auto bottom-4",
       });
       console.error('EmailJS error:', error);
       console.error('Error details:', {
@@ -147,7 +153,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        showCloseButton={false} // Disable default close button
+        showCloseButton={false}
         className="w-[95vw] max-w-[400px] sm:max-w-[500px] md:max-w-[700px] lg:max-w-[800px] p-4 sm:p-6 bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg border border-white/20 dark:border-white/10 shadow-lg rounded-xl z-[2500] mt-[60px] sm:mt-0 h-auto max-h-[calc(100vh-70px)]"
       >
         <div className="relative flex flex-col h-full">
@@ -188,10 +194,10 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
 
           <DialogHeader className="relative z-10 shrink-0 mt-2 sm:mt-0">
             <DialogTitle className="text-lg sm:text-2xl md:text-3xl font-bold text-center bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
-              Get In Touch
+              Connect With Us
             </DialogTitle>
             <DialogDescription className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 text-center">
-              Fill out the form below and we'll get back to you soon.
+              Share your thoughts, and we’ll respond promptly.
             </DialogDescription>
           </DialogHeader>
 
@@ -199,7 +205,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="flex flex-col items-center justify-center py-6 sm:py-8 text時計center relative z-10 grow"
+              className="flex flex-col items-center justify-center py-6 sm:py-8 text-center relative z-10 grow"
             >
               <motion.div
                 initial={{ scale: 0.8 }}
