@@ -390,14 +390,14 @@ const Projects: React.FC = () => {
                     <div className="absolute inset-x-0 bottom-4 flex justify-between px-4 z-10">
                       <button
                         onClick={handlePrevImage}
-                        className="bg-white/90 dark:bg-gray-800/90 p-2 rounded-full shadow-lg hover:bg-white dark:hover:bg-gray-700 transition-all"
+                        className="bg-white/90 dark:bg-gray-800/90 p-3 rounded-full shadow-lg hover:bg-white dark:hover:bg-gray-700 transition-all"
                         aria-label="Previous Image"
                       >
                         <ChevronLeft className="w-5 h-5 text-gray-800 dark:text-gray-200" />
                       </button>
                       <button
                         onClick={handleNextImage}
-                        className="bg-white/90 dark:bg-gray-800/90 p-2 rounded-full shadow-lg hover:bg-white dark:hover:bg-gray-700 transition-all"
+                        className="bg-white/90 dark:bg-gray-800/90 p-3 rounded-full shadow-lg hover:bg-white dark:hover:bg-gray-700 transition-all"
                         aria-label="Next Image"
                       >
                         <ChevronRightIcon className="w-5 h-5 text-gray-800 dark:text-gray-200" />
@@ -431,7 +431,7 @@ const Projects: React.FC = () => {
             </motion.div>
 
             {/* Project Navigation */}
-            <div className="absolute inset-x-0 -top-12 flex justify-between px-4 lg:px-0 z-20">
+            <div className="absolute inset-x-0 -top-8 sm:-top-12 flex justify-between px-4 lg:px-0 z-20">
               <button
                 onClick={handlePrevSlide}
                 className="bg-green-500 p-3 rounded-full shadow-lg hover:bg-green-600 transition-all"
@@ -515,7 +515,7 @@ const Projects: React.FC = () => {
             <div key={clientGroup.client} className="mb-12">
               <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-green-500 to-blue-600 bg-clip-text text-transparent mb-6 relative group">
                 {clientGroup.client}
-                <span className="absolute bottom-0 leftcivilized-0 h-0.5 w-0 bg-gradient-to-r from-green-500 to-blue-600 rounded-full group-hover:w-20 transition-all duration-300" />
+                <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-green-500 to-blue-600 rounded-full group-hover:w-20 transition-all duration-300" />
               </h3>
               <motion.div
                 variants={containerVariants}
