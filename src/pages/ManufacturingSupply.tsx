@@ -5,7 +5,7 @@ import { CanvasRevealEffect } from '../components/ui/canvas-reveal-effect';
 import { Box } from 'lucide-react';
 import cop1 from "../assets/cop-1.png";
 import cop2 from "../assets/cop-2.png";
-import cop3 from "../assets/cop-3.png";
+import cop3 from "../assets/cop-19.png";
 import pp1 from "../assets/pp-1.png";
 import pp2 from "../assets/pp-2.png";
 import pp3 from "../assets/pp-3.png";

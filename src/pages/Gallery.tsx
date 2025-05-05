@@ -19,6 +19,7 @@ import cop15 from "../assets/cop-15.png";
 import cop16 from "../assets/cop-16.png";
 import cop17 from "../assets/cop-17.png";
 import cop18 from "../assets/cop-18.png";
+import cop19 from "../assets/cop-19.png";
 
 // Define gallery image type
 interface GalleryImage {
@@ -136,20 +137,25 @@ const Gallery = () => {
         src: cop15,
         alt: 'PLC cum VFD Panel Manufacturing for Renewable Energy',
       },
-       {
+      {
         id: '16',
         src: cop16,
-        alt: 'PLC cum VFD Panel Manufacturing for Renewable Energy',
+        alt: 'APFC Panel Manufacturing for Power Factor Correction',
       },
       {
         id: '17',
         src: cop17,
-        alt: 'PLC cum VFD Panel Manufacturing for Renewable Energy',
+        alt: 'AMF Control Panel Manufacturing for Automatic Mains Failure',
       },
       {
         id: '18',
         src: cop18,
-        alt: 'PLC cum VFD Panel Manufacturing for Renewable Energy',
+        alt: 'Relay Logic Control Panel Manufacturing for Process Plants',
+      },
+      {
+        id: '19',
+        src: cop19,
+        alt: 'EB & DG Synchronizing Control Panel for Power Distribution',
       },
     ],
     []
