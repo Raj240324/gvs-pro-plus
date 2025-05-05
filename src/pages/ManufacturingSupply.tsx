@@ -10,7 +10,55 @@ import pp1 from "../assets/pp-1.png";
 import pp2 from "../assets/pp-2.png";
 import pp3 from "../assets/pp-3.png";
 
-// Note: Ensure AOS library is included and initialized in the project for animations to work (e.g., import AOS and call AOS.init() in the main app).
+// Custom CSS for the unique scrollbar
+const scrollbarStyles = `
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    margin: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #14b8a6, #4f46e5);
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #22d3ee, #7c3aed);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+  }
+
+  /* Pulse animation for scrollbar thumb */
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    animation: pulse 0.6s ease infinite;
+  }
+
+  /* Firefox Scrollbar */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: #14b8a6 rgba(0, 0, 0, 0.05);
+  }
+
+  /* Ensure smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+`;
 
 interface Product {
   id: string;
@@ -28,19 +76,29 @@ const ProductSection = ({ product, index }: { product: Product; index: number })
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % product.images.length);
-    }, 2000); // Change image every 2 seconds
+    }, 2000);
     return () => clearInterval(interval);
   }, [product.images.length]);
 
   return (
-    <section
+    <motion.section
       key={product.id}
       id={product.id}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
       className={`py-12 sm:py-16 md:py-20 ${index % 2 === 0 ? 'bg-gradient-to-br from-teal-50 via-indigo-50 to-gray-100' : 'bg-gradient-to-bl from-gray-50 via-teal-50 to-indigo-50'}`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center">
-          <div className={`${index % 2 === 0 ? 'aos-fade-right' : 'aos-fade-left'} order-2 lg:order-${index % 2 === 0 ? '1' : '2'}`}>
+          <motion.div
+            initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className={`order-2 lg:order-${index % 2 === 0 ? '1' : '2'}`}
+          >
             <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mb-4 sm:mb-6 rounded-full bg-teal-500/10 flex items-center justify-center shadow-md transform hover:rotate-12 transition-transform">
               <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center">{product.icon}</div>
             </div>
@@ -70,8 +128,14 @@ const ProductSection = ({ product, index }: { product: Product; index: number })
                 ))}
               </ul>
             </div>
-          </div>
-          <div className={`${index % 2 === 0 ? 'aos-fade-left' : 'aos-fade-right'} order-1 lg:order-${index % 2 === 0 ? '2' : '1'}`}>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className={`order-1 lg:order-${index % 2 === 0 ? '2' : '1'}`}
+          >
             <div className="relative rounded-xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-500 group">
               <img
                 src={product.images[currentImageIndex]}
@@ -81,10 +145,10 @@ const ProductSection = ({ product, index }: { product: Product; index: number })
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4 sm:p-6"></div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
@@ -99,20 +163,14 @@ const ManufacturingSupply = () => {
       );
     }
 
-    const handleScroll = () => {
-      const elements = document.querySelectorAll('.aos-fade-up, .aos-fade-in, .aos-fade-right, .aos-fade-left');
-      elements.forEach((element) => {
-        const rect = element.getBoundingClientRect();
-        const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-        if (rect.top <= windowHeight * 0.75) {
-          element.classList.add('aos-animate');
-        }
-      });
-    };
+    // Inject scrollbar styles
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = scrollbarStyles;
+    document.head.appendChild(styleSheet);
 
-    handleScroll();
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      document.head.removeChild(styleSheet);
+    };
   }, []);
 
   const products: Product[] = [
@@ -140,8 +198,8 @@ const ManufacturingSupply = () => {
         'Special Purpose and Other Custom Built Panels',
       ],
       icon: <Box size={50} strokeWidth={2} className="text-teal-600" />,
-      color: [[0, 128, 128]], // Teal
-      images: [cop1, cop2, cop3], // Replace with actual image paths
+      color: [[0, 128, 128]],
+      images: [cop1, cop2, cop3],
     },
     {
       id: 'field-instruments',
@@ -162,15 +220,19 @@ const ManufacturingSupply = () => {
         'Instruments for Wind Mills and Switches of any Special Requirements',
       ],
       icon: <Box size={50} strokeWidth={2} className="text-indigo-600" />,
-      color: [[75, 0, 130]], // Indigo
-      images: [pp1, pp2, pp3], // Replace with actual image paths
+      color: [[75, 0, 130]],
+      images: [pp1, pp2, pp3],
     },
   ];
 
   const Card = ({ product }: { product: Product }) => {
     const [hovered, setHovered] = useState(false);
     return (
-      <div
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         className="border border-gray-200 group/canvas-card flex items-center justify-center w-full max-w-sm mx-auto p-4 sm:p-6 md:p-8 relative h-80 sm:h-[24rem] bg-gradient-to-br from-gray-50 via-teal-50 to-indigo-50 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden"
@@ -218,7 +280,7 @@ const ManufacturingSupply = () => {
             </span>
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   };
 
@@ -229,35 +291,52 @@ const ManufacturingSupply = () => {
   );
 
   return (
-    <main className="pt-[84px] lg:pt-[140px] overflow-hidden bg-gray-50">
+    <main className="pt-[84px] lg:pt-[140px] overflow-auto bg-gray-50">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-indigo-700 via-purple-700 to-teal-600 text-white py-16 sm:py-20 md:py-24 lg:py-32 overflow-hidden">
+      <motion.section
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="relative bg-gradient-to-br from-indigo-700 via-purple-700 to-teal-600 text-white py-16 sm:py-20 md:py-24 lg:py-32 overflow-hidden"
+      >
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+PHBhdGggZD0iTTYwIDMwSDMwTTYwIDMwVjMwTTYwIDMwSDMwTTYwIDMwVjMwIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4xKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+')] opacity-20"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <span className="inline-block px-4 py-2 sm:px-5 sm:py-2 rounded-full bg-teal-400/20 backdrop-blur-md text-xs sm:text-sm font-semibold mb-4 sm:mb-6 animate-pulse">Our Expertise</span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-teal-200 to-indigo-300 animate-fade-in">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-teal-200 to-indigo-300">
               Manufacturing & Supply
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl mx-auto">We manufacture Electrical Control Panels as per IE Standard Electrical Inspectorate Rules and Regulation (CEIG) and supply field instruments for various industries.</p>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Products Overview */}
-      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-white to-teal-50">
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-white to-teal-50"
+      >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10 sm:mb-12 md:mb-16 aos-fade-up">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-10 sm:mb-12 md:mb-16"
+          >
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-700">Our Manufacturing & Supply Capabilities</h2>
             <p className="text-gray-700 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed">Wide range of electrical control panels and field instruments tailored to industry needs.</p>
-          </div>
+          </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
             {products.map((product) => (
               <Card key={product.id} product={product} />
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Product Details */}
       {products.map((product, index) => (
@@ -265,10 +344,16 @@ const ManufacturingSupply = () => {
       ))}
 
       {/* Call to Action */}
-      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-indigo-900 via-teal-800 to-purple-900 text-white relative overflow-hidden">
+      <motion.section
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-indigo-900 via-teal-800 to-purple-900 text-white relative overflow-hidden"
+      >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.2)_0,_transparent_80%)] opacity-50 animate-pulse"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-4xl mx-auto text-center aos-fade-up">
+          <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-teal-200 to-white">Need Reliable Manufacturing & Supply?</h2>
             <p className="text-white/90 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto">Contact GVS Controls for high-quality electrical control panels and field instruments tailored to your needs.</p>
             <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
@@ -287,7 +372,7 @@ const ManufacturingSupply = () => {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
     </main>
   );
 };

@@ -5,7 +5,7 @@ import { FaWhatsapp, FaFilePdf, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import TypewriterEffectSmoothDemo from "../../components/ui/typewriter-effect-demo-1";
 import { TextRoll } from "../../components/ui/text-roll";
 import ContactModal from "../ContactModal";
-import { useNavigate } from "react-router-dom"; // Add this import for client-side navigation
+import { useNavigate } from "react-router-dom";
 
 // 1. Define allowed icon keys
 type IconKey = "Mail" | "BookOpen" | "Phone" | "WhatsApp";
@@ -37,7 +37,7 @@ const iconMap: Record<IconKey, ({ size }: { size?: number }) => JSX.Element> = {
 const Hero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isButtonsOpen, setIsButtonsOpen] = useState(false);
-  const navigate = useNavigate(); // Initialize navigate for client-side navigation
+  const navigate = useNavigate();
 
   const buttonVariants = {
     hidden: { scale: 0, opacity: 0, x: 0, y: 0 },
@@ -46,7 +46,11 @@ const Hero = () => {
       opacity: 1,
       x: 0,
       y: -(60 + 70 * i),
-      transition: { delay: i * 0.05, duration: 0.3, type: "spring", stiffness: 140, damping: 12 },
+      transition: {
+        scale: { duration: 0 }, // Instant scale
+        opacity: { duration: 0 }, // Instant opacity
+        y: { type: "spring", stiffness: 140, damping: 12, duration: 0.3 }, // Smooth vertical movement
+      },
     }),
     exit: { scale: 0, opacity: 0, x: 0, y: 0, transition: { duration: 0.15 } },
   };
@@ -163,7 +167,7 @@ const Hero = () => {
             </p>
 
             <motion.button
-              onClick={() => navigate("/services")} // Changed to navigate for client-side navigation
+              onClick={() => navigate("/services")}
               className="mt-4 px-6 py-3 rounded-lg bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white font-semibold shadow-md hover:from-[#4a0e78] hover:to-[#ff6f61] transition-all duration-300 text-base sm:text-lg"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

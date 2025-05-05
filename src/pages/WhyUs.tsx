@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ProjectStatusCard } from '../components/ui/ProjectStatusCard';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const WhyUs = () => {
   useEffect(() => {
@@ -11,22 +13,79 @@ const WhyUs = () => {
         'content',
         'Discover why GVS Controls is your ideal partner for engineering solutions.'
       );
-
-      const handleScroll = () => {
-        const elements = document.querySelectorAll('.aos-fade-up, .aos-fade-in, .aos-fade-right, .aos-fade-left');
-        elements.forEach((element) => {
-          const rect = element.getBoundingClientRect();
-          const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-          if (rect.top <= windowHeight * 0.75) {
-            element.classList.add('aos-animate');
-          }
-        });
-      };
-
-      handleScroll();
-      window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll);
     }
+
+    // Register GSAP ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero Section Animations
+    gsap.fromTo(
+      '.hero-content',
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.hero-section',
+          start: 'top 80%',
+        },
+      }
+    );
+
+    // Parallax Background for Hero
+    gsap.to('.hero-section', {
+      backgroundPosition: '50% 100%',
+      scrollTrigger: {
+        trigger: '.hero-section',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
+      },
+    });
+
+    // Advantages Grid Animations
+    gsap.utils.toArray('.advantage-card').forEach((card, index) => {
+      gsap.fromTo(
+        card as Element,
+        { opacity: 0, y: 100, scale: 0.95 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: card as Element,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
+          delay: index * 0.2, // Staggered animation
+        }
+      );
+    });
+
+    // CTA Section Animation
+    gsap.fromTo(
+      '.cta-content',
+      { opacity: 0, scale: 0.9 },
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.cta-section',
+          start: 'top 80%',
+        },
+      }
+    );
+
+    // Clean up ScrollTriggers on component unmount
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
   }, []);
 
   const advantages = [
@@ -98,13 +157,17 @@ const WhyUs = () => {
             margin-top: 0;
             transition: padding-top 0.3s ease;
           }
+          .hero-section {
+            background-size: cover;
+            background-position: 50% 0%;
+          }
         `}
       </style>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-gvs-green to-gvs-blue text-white py-16 sm:py-20 md:py-24 lg:py-28">
+      <section className="hero-section bg-gradient-to-r from-gvs-green to-gvs-blue text-white py-16 sm:py-20 md:py-24 lg:py-28">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
+          <div className="hero-content max-w-3xl mx-auto text-center">
             <span className="inline-block px-4 py-1 sm:px-4 sm:py-2 rounded-full bg-white/10 backdrop-blur-sm text-xs sm:text-sm mb-4 sm:mb-6">
               Key Advantages
             </span>
@@ -119,7 +182,7 @@ const WhyUs = () => {
       {/* Advantages Grid */}
       <section className="py-12 sm:py-16 md:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-10 md:mb-12 aos-fade-up">
+          <div className="text-center mb-8 sm:mb-10 md:mb-12">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gvs-dark-gray mb-3 sm:mb-4">
               Our Key Advantages
             </h2>
@@ -134,13 +197,14 @@ const WhyUs = () => {
           <div className="flex flex-col items-center w-full">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 w-full max-w-6xl mx-auto">
               {advantages.map((advantage, index) => (
-                <ProjectStatusCard
-                  key={index}
-                  title={advantage.title}
-                  progress={advantage.progress}
-                  dueDate={advantage.dueDate}
-                  tasks={advantage.tasks}
-                />
+                <div className="advantage-card" key={index}>
+                  <ProjectStatusCard
+                    title={advantage.title}
+                    progress={advantage.progress}
+                    dueDate={advantage.dueDate}
+                    tasks={advantage.tasks}
+                  />
+                </div>
               ))}
             </div>
           </div>
@@ -148,9 +212,9 @@ const WhyUs = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-gvs-green via-gvs-teal to-gvs-blue text-white overflow-hidden relative">
+      <section className="cta-section py-12 sm:py-16 md:py-20 bg-gradient-to-br from-gvs-green via-gvs-teal to-gvs-blue text-white overflow-hidden relative">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-3xl mx-auto text-center aos-fade-up">
+          <div className="cta-content max-w-3xl mx-auto text-center">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-100 drop-shadow-lg">
               Ready to Experience Our Expertise?
             </h2>
