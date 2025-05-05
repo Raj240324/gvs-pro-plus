@@ -20,7 +20,7 @@ import cop14 from "../assets/cop-14.png";
 import cop15 from "../assets/cop-15.png";
 import cop16 from "../assets/cop-16.png";
 import cop17 from "../assets/cop-17.png";
-import cop18 from "../assets/cop-18.png";
+import cop18 from "../assets/cop-19.png";
 
 // Use free business images from Pexels for Mission & Vision
 const missionImageUrl: string = "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg";

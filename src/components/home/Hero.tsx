@@ -5,6 +5,7 @@ import { FaWhatsapp, FaFilePdf, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import TypewriterEffectSmoothDemo from "../../components/ui/typewriter-effect-demo-1";
 import { TextRoll } from "../../components/ui/text-roll";
 import ContactModal from "../ContactModal";
+import { useNavigate } from "react-router-dom"; // Add this import for client-side navigation
 
 // 1. Define allowed icon keys
 type IconKey = "Mail" | "BookOpen" | "Phone" | "WhatsApp";
@@ -36,6 +37,7 @@ const iconMap: Record<IconKey, ({ size }: { size?: number }) => JSX.Element> = {
 const Hero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isButtonsOpen, setIsButtonsOpen] = useState(false);
+  const navigate = useNavigate(); // Initialize navigate for client-side navigation
 
   const buttonVariants = {
     hidden: { scale: 0, opacity: 0, x: 0, y: 0 },
@@ -161,7 +163,7 @@ const Hero = () => {
             </p>
 
             <motion.button
-              onClick={() => (window.location.href = "/services")}
+              onClick={() => navigate("/services")} // Changed to navigate for client-side navigation
               className="mt-4 px-6 py-3 rounded-lg bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white font-semibold shadow-md hover:from-[#4a0e78] hover:to-[#ff6f61] transition-all duration-300 text-base sm:text-lg"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
