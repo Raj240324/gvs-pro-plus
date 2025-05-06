@@ -189,10 +189,10 @@ const Footer = () => {
                 >
                   <Phone size={18} className="text-[#ff6f61] mr-2 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
                   <a
-                    href="tel:+919087772798"
+                    href="tel:+919884001597"
                     className="text-[#e0f7fa] hover:text-[#ff6f61] relative"
                   >
-                    +91 90877 72798
+                    +91 98840 01597
                     <motion.span
                       className="absolute bottom-0 left-0 w-0 h-px bg-[#ff6f61]"
                       initial={{ width: 0 }}

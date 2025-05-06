@@ -194,7 +194,7 @@ const TopContactBar = () => (
           >
             <Phone size={14} className="text-[#4a0e78] group-hover:scale-110 transition-transform duration-300" />
           </motion.span>
-          <span className="ml-0.5 truncate group-hover:text-[#4a0e78] transition">+91 9087772798</span>
+          <span className="ml-0.5 truncate group-hover:text-[#4a0e78] transition">+91 9884001597</span>
         </motion.a>
       </div>
     </div>
@@ -449,7 +449,7 @@ const Header = () => {
                       className="flex items-center gap-1.5 hover:text-[#ff6f61] transition-colors py-1.5"
                     >
                       <Phone size={14} />
-                      +91 9087772798
+                      +91 9884001597
                     </a>
                     <a
                       href="mailto:projects@gvscontrols.com"

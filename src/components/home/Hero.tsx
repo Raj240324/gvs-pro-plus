@@ -78,7 +78,7 @@ const Hero = () => {
       id: "call",
       icon: "Phone",
       text: "Call",
-      action: () => (window.location.href = "tel:+919087772798"),
+      action: () => (window.location.href = "tel:+919884001597"),
     },
     {
       id: "whatsapp",
@@ -86,7 +86,7 @@ const Hero = () => {
       text: "WhatsApp",
       action: () =>
         window.open(
-          "https://wa.me/919087772798?text=Hello%20GVS%20Controls,%20I%20have%20an%20inquiry.",
+          "https://wa.me/917338880027?text=Hello%20GVS%20Controls,%20I%20have%20an%20inquiry.",
           "_blank"
         ),
     },

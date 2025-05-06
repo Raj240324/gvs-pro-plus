@@ -44,7 +44,7 @@ const FAQ = () => {
     },
     {
       question: "How can I contact GVS CONTROLS?",
-      answer: "📍 Office: No.9/14, First Floor, EWS Plot, Gudalur, Maraimalai Nagar, Chengalpattu – 603209\n📍 Reg. Office: No.46/1, 5th Cross Street, Bagavathy Nagar, Govindarajapuram, Guduvanchery – 603202, Kanchipuram\n📞 Mobile: +91 9087772798\n✉️ Email: gvscontrols@gmail.com"
+      answer: "📍 Office: No.9/14, First Floor, EWS Plot, Gudalur, Maraimalai Nagar, Chengalpattu – 603209\n📍 Reg. Office: No.46/1, 5th Cross Street, Bagavathy Nagar, Govindarajapuram, Guduvanchery – 603202, Kanchipuram\n📞 Mobile: +91 9884001597\n✉️ Email: gvscontrols@gmail.com"
     }
   ];
 
