@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Home, Info, Briefcase, Folder, Contact, Shield, FileText, Cookie } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 
@@ -12,14 +12,14 @@ const Footer = () => {
   }, [location.pathname]);
 
   const navLinks = [
-    { to: '/', label: 'Home' },
-    { to: '/about', label: 'Our Story' },
-    { to: '/services', label: 'Solutions' },
-    { to: '/projects', label: 'Portfolio' },
-    { to: '/contact', label: 'Get in Touch' },
-    { to: '/privacy-policy', label: 'Privacy Policy' },
-    { to: '/terms-of-service', label: 'Terms of Service' },
-    { to: '/cookie-policy', label: 'Cookie Policy' },
+    { to: '/', label: 'Home', Icon: Home },
+    { to: '/about', label: 'Our Story', Icon: Info },
+    { to: '/services', label: 'Solutions', Icon: Briefcase },
+    { to: '/projects', label: 'Portfolio', Icon: Folder },
+    { to: '/contact', label: 'Get in Touch', Icon: Contact },
+    { to: '/privacy-policy', label: 'Privacy Policy', Icon: Shield },
+    { to: '/terms-of-service', label: 'Terms of Service', Icon: FileText },
+    { to: '/cookie-policy', label: 'Cookie Policy', Icon: Cookie },
   ];
 
   const serviceLinks = [
@@ -94,7 +94,7 @@ const Footer = () => {
               </div>
             </motion.div>
 
-            {/* Quick Links */}
+            {/* Quick Links - Split into Two Columns */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -103,13 +103,20 @@ const Footer = () => {
               <h3 className="font-montserrat font-semibold text-xl mb-4 text-[#ffd700]">
                 Explore More
               </h3>
-              <nav className="grid gap-2">
-                {navLinks.map(({ to, label }) => (
+              <div className="grid grid-cols-2 gap-x-6 gap-y-2">
+                {navLinks.map(({ to, label, Icon }) => (
                   <NavLink
                     key={label}
                     to={to}
-                    className="text-[#e0f7fa] hover:text-[#ff6f61] text-base relative group"
+                    className="text-[#e0f7fa] hover:text-[#ff6f61] text-base relative group flex items-center"
                   >
+                    <motion.div
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ duration: 0.3 }}
+                      className="mr-2"
+                    >
+                      <Icon size={16} className="text-[#ff6f61]" />
+                    </motion.div>
                     <motion.span
                       whileHover={{ x: 5 }}
                       transition={{ duration: 0.3 }}
@@ -124,7 +131,7 @@ const Footer = () => {
                     />
                   </NavLink>
                 ))}
-              </nav>
+              </div>
             </motion.div>
 
             {/* Services */}
