@@ -210,8 +210,8 @@ const Gallery = () => {
       );
     }
 
-    setTimeout(() => setLoading(false), 1000);
     setImages(galleryImages);
+    setLoading(false);
 
     const handleEscKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setSelectedImage(null);
@@ -320,7 +320,7 @@ const Gallery = () => {
             >
               Our Expertise
             </motion.span>
-            <h1 className="text-[clamp(2.5rem,5vw,4.5rem)] font-extrabold font-mono bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-violet-500 leading-tight">
+            <h1 className="text-[clamp(1.75rem,4.5vw,3rem)] font-extrabold font-mono bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-violet-500 leading-tight max-w-[90vw] mx-auto break-words">
               <SplitText>PCC, MCC & PLC cum VFD Control Panels Gallery</SplitText>
             </h1>
             <motion.p
@@ -338,7 +338,7 @@ const Gallery = () => {
         className="py-20 sm:py-24 md:py-28 bg-gray-950"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.1 }}
         variants={sectionVariants}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -381,7 +381,7 @@ const Gallery = () => {
             <motion.div
               className="text-center py-20 sm:py-24 md:py-28"
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
               transition={{ duration: 0.8 }}
             >
               <motion.p
