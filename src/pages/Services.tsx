@@ -144,7 +144,7 @@ const Services = () => {
   return (
     <main className="bg-gray-50" style={{ paddingTop: `${headerHeight}px` }}>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-teal-600 via-blue-600 to-purple-600 text-white py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-teal-500 via-cyan-500 to-blue-500 text-white py-20 overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">Our Services</h1>
@@ -154,7 +154,7 @@ const Services = () => {
       </section>
 
       {/* Services Overview */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-gradient-to-b from-white to-blue-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 aos-fade-up">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Service Offerings</h2>
@@ -250,7 +250,13 @@ const Services = () => {
         <section
           key={service.id}
           id={service.id}
-          className={`py-20 ${index % 2 === 0 ? 'bg-gradient-to-br from-gray-50 to-blue-50' : 'bg-gradient-to-br from-white to-teal-50'}`}
+          className={`py-20 ${
+            index === 0 ? 'bg-gradient-to-br from-gray-50 to-teal-50' :
+            index === 1 ? 'bg-gradient-to-br from-blue-50 to-indigo-50' :
+            index === 2 ? 'bg-gradient-to-br from-gray-50 to-cyan-50' :
+            index === 3 ? 'bg-gradient-to-br from-teal-50 to-blue-50' :
+            'bg-gradient-to-br from-indigo-50 to-gray-50'
+          }`}
         >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="aos-fade-up">
@@ -290,7 +296,7 @@ const Services = () => {
       ))}
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-teal-600 via-blue-600 to-purple-600 text-white relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-br from-cyan-600 via-teal-600 to-blue-600 text-white relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Transform Your Operations?</h2>
