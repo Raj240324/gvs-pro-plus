@@ -80,7 +80,7 @@ const CookiePolicy = () => {
               No.9/14, First Floor, EWS Plot, Gudalur, Maraimalai Nagar,<br />
               Chengalpattu District, Tamil Nadu, Pin: 603209<br />
               Email: <a href="mailto:gvscontrols@gmail.com">gvscontrols@gmail.com</a><br />
-              Phone: <a href="tel:+919087772798">+91 90877 72798</a>
+              Phone: <a href="tel:+919884001597">+91 98840 01597</a>
             </address>
           </div>
         </div>

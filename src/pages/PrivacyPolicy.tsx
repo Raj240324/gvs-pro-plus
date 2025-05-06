@@ -115,7 +115,7 @@ const PrivacyPolicy = () => {
             No.9/14, First Floor, EWS Plot, Gudalur, Maraimalai Nagar,<br />
             Chengalpattu District, Tamil Nadu, Pin: 603209<br />
             Email: <a href="mailto:gvscontrols@gmail.com" className="text-[#2a9d8f] hover:text-[#ff6f61]">gvscontrols@gmail.com</a><br />
-            Phone: +91 90877 72798
+            Phone: +91 98840 01597
           </p>
         </div>
       </div>
