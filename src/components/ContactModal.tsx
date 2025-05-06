@@ -25,7 +25,6 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
   const { toast } = useToast();
 
   useEffect(() => {
-    console.log('EmailJS:', emailjs); // Debug: Check if emailjs is defined
     const userID = import.meta.env.VITE_EMAILJS_USER_ID;
     if (!userID) {
       console.error('EmailJS userID is undefined. Please check your .env file for VITE_EMAILJS_USER_ID.');
@@ -39,7 +38,9 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
     }
     try {
       emailjs.init({ publicKey: userID });
-      console.log('EmailJS initialized successfully with userID:', userID);
+      if (import.meta.env.DEV) {
+        console.log('EmailJS initialized successfully');
+      }
     } catch (error) {
       console.error('Failed to initialize EmailJS:', error);
       toast({
@@ -206,6 +207,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="flex flex-col items-center justify-center py-6 sm:py-8 text-center relative z-10 grow"
+              style={{ position: 'relative' }}
             >
               <motion.div
                 initial={{ scale: 0.8 }}
