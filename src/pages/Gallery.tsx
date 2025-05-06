@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import cop1 from "../assets/cop-1.png";
@@ -36,8 +36,8 @@ const SplitText = ({ children }: { children: string }) => {
         <motion.span
           key={index}
           variants={{
-            hidden: { opacity: 0, y: 20, rotate: 10 },
-            visible: { opacity: 1, y: 0, rotate: 0 },
+            hidden: { opacity: 0, y: 20 },
+            visible: { opacity: 1, y: 0 },
           }}
           transition={{ duration: 0.3, delay: index * 0.05 }}
           style={{ display: 'inline-block' }}
@@ -53,24 +53,25 @@ const CustomCard = ({ title, src, onClick }: { title: string; src: string; onCli
   return (
     <motion.div
       className="relative overflow-hidden rounded-xl bg-gray-900/50 backdrop-blur-md border border-cyan-500/30 shadow-lg transition-all duration-500 hover:shadow-cyan-500/20"
-      whileHover={{ scale: 1.05, rotateX: 5, rotateY: 5 }}
+      whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
-      initial={{ opacity: 0, rotateY: 90, scale: 0.8 }}
-      whileInView={{ opacity: 1, rotateY: 0, scale: 1 }}
+      initial={{ opacity: 0, scale: 0.8 }}
+      whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <img
         src={src}
         alt={title}
-        className="object-cover w-full h-64 sm:h-80 transition-transform duration-700 hover:scale-110"
+        className="object-cover w-full h-64 sm:h-72 md:h-80 transition-transform duration-700 hover:scale-110"
         loading="lazy"
+        onError={(e) => { e.currentTarget.src = '/fallback-image.png'; }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-        <h3 className="text-[clamp(1rem,2.5vw,1.125rem)] font-mono text-cyan-300">{title}</h3>
+        <h3 className="text-[clamp(0.875rem,2vw,1rem)] font-mono text-cyan-300 whitespace-normal">{title}</h3>
       </div>
-      <div className="absolute top-2 right-2 bg-cyan-500/20 text-cyan-300 text-[clamp(0.75rem,2vw,0.875rem)] font-mono px-2 py-1 rounded-full">
+      <div className="absolute top-2 right-2 bg-cyan-500/20 text-cyan-300 text-[clamp(0.75rem,1.5vw,0.875rem)] font-mono px-2 py-1 rounded-full">
         View
       </div>
     </motion.div>
@@ -83,109 +84,48 @@ const Gallery = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
-  const [direction, setDirection] = useState<number>(0); // Track navigation direction
+  const [direction, setDirection] = useState<number>(0);
 
   // Define gallery images
-  const galleryImages: GalleryImage[] = useMemo(
-    () => [
-      {
-        id: '1',
-        src: cop1,
-        alt: 'PCC Panel Manufacturing for Industrial Power Distribution',
-      },
-      {
-        id: '2',
-        src: cop2,
-        alt: 'MCC Panel Manufacturing for Motor Control Systems',
-      },
-      {
-        id: '3',
-        src: cop3,
-        alt: 'PLC cum VFD Control Panel Manufacturing for Automation',
-      },
-      {
-        id: '4',
-        src: cop4,
-        alt: 'PCC Panel Assembly for Power Control Centers',
-      },
-      {
-        id: '5',
-        src: cop5,
-        alt: 'MCC Panel Fabrication for Industrial Applications',
-      },
-      {
-        id: '6',
-        src: cop6,
-        alt: 'VFD Control Panel Manufacturing for Process Control',
-      },
-      {
-        id: '7',
-        src: cop7,
-        alt: 'PCC Panel Manufacturing with Advanced Wiring',
-      },
-      {
-        id: '8',
-        src: cop8,
-        alt: 'MCC Panel Manufacturing for Heavy-Duty Motors',
-      },
-      {
-        id: '9',
-        src: cop9,
-        alt: 'PLC cum VFD Panel Manufacturing for Precision Automation',
-      },
-      {
-        id: '10',
-        src: cop10,
-        alt: 'PCC Panel Manufacturing for Energy Management',
-      },
-      {
-        id: '11',
-        src: cop11,
-        alt: 'MCC Panel Manufacturing for Industrial Automation',
-      },
-      {
-        id: '12',
-        src: cop12,
-        alt: 'VFD Control Panel Manufacturing for Power Plants',
-      },
-      {
-        id: '13',
-        src: cop13,
-        alt: 'PCC Panel Manufacturing for Process Industries',
-      },
-      {
-        id: '14',
-        src: cop14,
-        alt: 'MCC Panel Manufacturing for Bulk Material Handling',
-      },
-      {
-        id: '15',
-        src: cop15,
-        alt: 'PLC cum VFD Panel Manufacturing for Renewable Energy',
-      },
-      {
-        id: '16',
-        src: cop16,
-        alt: 'APFC Panel Manufacturing for Power Factor Correction',
-      },
-      {
-        id: '17',
-        src: cop17,
-        alt: 'AMF Control Panel Manufacturing for Automatic Mains Failure',
-      },
-      {
-        id: '18',
-        src: cop18,
-        alt: 'Relay Logic Control Panel Manufacturing for Process Plants',
-      },
-      {
-        id: '19',
-        src: cop19,
-        alt: 'EB & DG Synchronizing Control Panel for Power Distribution',
-      },
-    ],
-    []
-  );
+  const galleryImages: GalleryImage[] = [
+    { id: '1', src: cop1, alt: 'PCC Panel Manufacturing for Industrial Power Distribution' },
+    { id: '2', src: cop2, alt: 'MCC Panel Manufacturing for Motor Control Systems' },
+    { id: '3', src: cop3, alt: 'PLC cum VFD Control Panel Manufacturing for Automation' },
+    { id: '4', src: cop4, alt: 'PCC Panel Assembly for Power Control Centers' },
+    { id: '5', src: cop5, alt: 'MCC Panel Fabrication for Industrial Applications' },
+    { id: '6', src: cop6, alt: 'VFD Control Panel Manufacturing for Process Control' },
+    { id: '7', src: cop7, alt: 'PCC Panel Manufacturing with Advanced Wiring' },
+    { id: '8', src: cop8, alt: 'MCC Panel Manufacturing for Heavy-Duty Motors' },
+    { id: '9', src: cop9, alt: 'PLC cum VFD Panel Manufacturing for Precision Automation' },
+    { id: '10', src: cop10, alt: 'PCC Panel Manufacturing for Energy Management' },
+    { id: '11', src: cop11, alt: 'MCC Panel Manufacturing for Industrial Automation' },
+    { id: '12', src: cop12, alt: 'VFD Control Panel Manufacturing for Power Plants' },
+    { id: '13', src: cop13, alt: 'PCC Panel Manufacturing for Process Industries' },
+    { id: '14', src: cop14, alt: 'MCC Panel Manufacturing for Bulk Material Handling' },
+    { id: '15', src: cop15, alt: 'PLC cum VFD Panel Manufacturing for Renewable Energy' },
+    { id: '16', src: cop16, alt: 'APFC Panel Manufacturing for Power Factor Correction' },
+    { id: '17', src: cop17, alt: 'AMF Control Panel Manufacturing for Automatic Mains Failure' },
+    { id: '18', src: cop18, alt: 'Relay Logic Control Panel Manufacturing for Process Plants' },
+    { id: '19', src: cop19, alt: 'EB & DG Synchronizing Control Panel for Power Distribution' },
+  ];
+
+  // Preload images to reduce lag
+  useEffect(() => {
+    const preloadImages = () => {
+      galleryImages.forEach((image) => {
+        const img = new Image();
+        img.src = image.src;
+      });
+    };
+    preloadImages();
+
+    const timer = setTimeout(() => {
+      setImages(galleryImages);
+      setLoading(false);
+    }, 1000); // Delay to allow text animation to complete
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const updateHeaderHeight = () => {
@@ -206,12 +146,9 @@ const Gallery = () => {
     if (metaDescription) {
       metaDescription.setAttribute(
         'content',
-        'Explore GVS Controls’ gallery showcasing innovative PCC, MCC, and PLC cum VFD control panels, manufactured for industrial automation, power management, and customer satisfaction.'
+        'Explore GVS Controls’ gallery showcasing innovative PCC, MCC, and PLC cum VFD control panels, manufactured for industrial automation and power management.'
       );
     }
-
-    setImages(galleryImages);
-    setLoading(false);
 
     const handleEscKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setSelectedImage(null);
@@ -221,13 +158,13 @@ const Gallery = () => {
     return () => {
       window.removeEventListener('keydown', handleEscKey);
     };
-  }, [galleryImages]);
+  }, []);
 
   const openLightbox = (image: GalleryImage) => {
     const newIndex = images.findIndex((img) => img.id === image.id);
     setSelectedImage(image);
     setCurrentImageIndex(newIndex);
-    setDirection(0); // No direction for initial open
+    setDirection(0);
     document.body.style.overflow = 'hidden';
   };
 
@@ -240,14 +177,14 @@ const Gallery = () => {
     const newIndex = currentImageIndex > 0 ? currentImageIndex - 1 : images.length - 1;
     setSelectedImage(images[newIndex]);
     setCurrentImageIndex(newIndex);
-    setDirection(-1); // Slide from left
+    setDirection(-1);
   };
 
   const goToNextImage = () => {
     const newIndex = currentImageIndex < images.length - 1 ? currentImageIndex + 1 : 0;
     setSelectedImage(images[newIndex]);
     setCurrentImageIndex(newIndex);
-    setDirection(1); // Slide from right
+    setDirection(1);
   };
 
   const sectionVariants = {
@@ -256,44 +193,24 @@ const Gallery = () => {
   };
 
   const textVariants = {
-    hidden: { opacity: 0, x: -30, filter: 'blur(5px)' },
-    visible: { opacity: 1, x: 0, filter: 'blur(0px)', transition: { duration: 0.5 } },
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
   };
 
-  // Lightbox animation variants with directional slide
   const lightboxVariants = {
     initial: (direction: number) => ({
       x: direction > 0 ? '100%' : direction < 0 ? '-100%' : 0,
       opacity: 0,
-      scale: direction === 0 ? 0.5 : 1,
-      rotate: direction === 0 ? -10 : 0,
-      filter: 'blur(10px)',
     }),
     animate: {
       x: 0,
       opacity: 1,
-      scale: 1,
-      rotate: 0,
-      filter: 'blur(0px)',
-      transition: {
-        x: { type: 'spring', stiffness: 100, damping: 20 },
-        opacity: { duration: 0.4 },
-        scale: { duration: 0.6 },
-        rotate: { duration: 0.6 },
-        filter: { duration: 0.4 },
-      },
+      transition: { type: 'spring', stiffness: 100, damping: 20 },
     },
     exit: (direction: number) => ({
       x: direction > 0 ? '-100%' : direction < 0 ? '100%' : 0,
       opacity: 0,
-      scale: direction === 0 ? 0.5 : 1,
-      filter: 'blur(10px)',
-      transition: {
-        x: { type: 'spring', stiffness: 100, damping: 20 },
-        opacity: { duration: 0.3 },
-        scale: { duration: 0.4 },
-        filter: { duration: 0.3 },
-      },
+      transition: { duration: 0.3 },
     }),
   };
 
@@ -301,7 +218,7 @@ const Gallery = () => {
     <main style={{ paddingTop: `${headerHeight}px` }} className="bg-gray-950 text-white">
       {/* Hero Section */}
       <motion.section
-        className="relative bg-[radial-gradient(circle_at_center,_#1e3a8a_0,_#0f172a_70%)] py-20 sm:py-24 md:py-28 overflow-hidden"
+        className="relative bg-[radial-gradient(circle_at_center,_#1e3a8a_0,_#0f172a_70%)] py-16 sm:py-20 md:py-24 overflow-hidden"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -315,16 +232,16 @@ const Gallery = () => {
             transition={{ duration: 0.8 }}
           >
             <motion.span
-              className="inline-block px-4 py-2 rounded-full bg-cyan-500/20 text-cyan-300 text-[clamp(0.875rem,2vw,1rem)] font-mono mb-6 border border-cyan-500/30"
+              className="inline-block px-4 py-2 rounded-full bg-cyan-500/20 text-cyan-300 text-[clamp(0.75rem,1.5vw,0.875rem)] font-mono mb-6 border border-cyan-500/30"
               variants={textVariants}
             >
               Our Expertise
             </motion.span>
-            <h1 className="text-[clamp(1.75rem,4.5vw,3rem)] font-extrabold font-mono bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-violet-500 leading-tight max-w-[90vw] mx-auto break-words">
+            <h1 className="text-[clamp(1.5rem,3vw,2.25rem)] font-extrabold font-mono bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-violet-500 leading-tight max-w-[85vw] mx-auto whitespace-normal">
               <SplitText>PCC, MCC & PLC cum VFD Control Panels Gallery</SplitText>
             </h1>
             <motion.p
-              className="text-[clamp(1.125rem,2.5vw,1.5rem)] text-gray-300 mt-4 max-w-3xl mx-auto"
+              className="text-[clamp(0.875rem,2vw,1rem)] text-gray-300 mt-4 max-w-2xl mx-auto whitespace-normal"
               variants={textVariants}
             >
               Discover GVS Controls’ innovative and cost-effective engineering solutions for power and automation systems, redefining customer satisfaction.
@@ -335,7 +252,7 @@ const Gallery = () => {
 
       {/* Gallery Section */}
       <motion.section
-        className="py-20 sm:py-24 md:py-28 bg-gray-950"
+        className="py-16 sm:py-20 md:py-24 bg-gray-950"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
@@ -343,29 +260,29 @@ const Gallery = () => {
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            className="text-center mb-16 sm:mb-20 md:mb-24"
+            className="text-center mb-12 sm:mb-16 md:mb-20"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-bold font-mono text-white mb-4">
+            <h2 className="text-[clamp(1.75rem,3.5vw,2.5rem)] font-bold font-mono text-white mb-4 whitespace-normal">
               <SplitText>Manufacturing Showcase</SplitText>
             </h2>
             <motion.p
-              className="text-gray-400 max-w-2xl mx-auto text-[clamp(1.125rem,2.5vw,1.5rem)]"
+              className="text-gray-400 max-w-2xl mx-auto text-[clamp(0.875rem,2vw,1.125rem)] whitespace-normal"
               variants={textVariants}
             >
-              A collection of our PCC, MCC, and PLC cum VFD control panels, manufactured for industrial excellence and reliability.
+              A collection of our PCC, MCC, and PLC cum VFD control panels, manufactured for industrial excellence.
             </motion.p>
           </motion.div>
 
           {/* Gallery Cards */}
           {loading ? (
-            <div className="flex justify-center items-center py-20 sm:py-24 md:py-28">
-              <div className="w-12 h-12 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin" />
+            <div className="flex justify-center items-center py-16 sm:py-20 md:py-24">
+              <div className="w-10 h-10 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin" />
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {images.map((image) => (
                 <CustomCard
                   key={image.id}
@@ -377,15 +294,15 @@ const Gallery = () => {
             </div>
           )}
 
-          {images.length === 0 && (
+          {images.length === 0 && !loading && (
             <motion.div
-              className="text-center py-20 sm:py-24 md:py-28"
+              className="text-center py-16 sm:py-20 md:py-24"
               initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.8 }}
             >
               <motion.p
-                className="text-gray-400 text-[clamp(1.125rem,2.5vw,1.5rem)] font-mono"
+                className="text-gray-400 text-[clamp(0.875rem,2vw,1.125rem)] font-mono"
                 variants={textVariants}
               >
                 No images found.
@@ -397,7 +314,7 @@ const Gallery = () => {
 
       {/* Contact CTA Section */}
       <motion.section
-        className="py-16 bg-gray-900 text-center"
+        className="py-12 sm:py-16 bg-gray-900 text-center"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -408,17 +325,17 @@ const Gallery = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <h3 className="text-[clamp(1.75rem,3vw,2.25rem)] font-mono text-cyan-300 mb-4">
+          <h3 className="text-[clamp(1.5rem,2.5vw,1.875rem)] font-mono text-cyan-300 mb-4 whitespace-normal">
             <SplitText>Contact GVS Controls</SplitText>
           </h3>
           <motion.p
-            className="text-gray-400 text-[clamp(1rem,2.5vw,1.25rem)] mb-6"
+            className="text-gray-400 text-[clamp(0.875rem,2vw,1rem)] mb-6 max-w-xl mx-auto whitespace-normal"
             variants={textVariants}
           >
             Reach out for innovative and cost-effective control panel solutions.
           </motion.p>
           <motion.div
-            className="text-gray-300 font-mono text-[clamp(0.875rem,2vw,1rem)]"
+            className="text-gray-300 font-mono text-[clamp(0.75rem,1.5vw,0.875rem)] max-w-xl mx-auto whitespace-normal"
             variants={textVariants}
           >
             <p>Office: No.9/14, First Floor, EWS Plot, Gudalur, Maraimalai Nagar, Chengalpattu-(District), Pin: 603209</p>
@@ -441,7 +358,7 @@ const Gallery = () => {
             key={selectedImage.id}
           >
             <motion.div
-              className="relative w-full max-w-5xl sm:max-w-6xl md:max-w-7xl max-h-[90vh]"
+              className="relative w-full max-w-[95vw] sm:max-w-4xl md:max-w-5xl max-h-[90vh]"
               custom={direction}
               variants={lightboxVariants}
               initial="initial"
@@ -454,30 +371,31 @@ const Gallery = () => {
                 alt={selectedImage.alt}
                 className="w-full max-h-[80vh] sm:max-h-[85vh] object-contain rounded-xl shadow-2xl border border-cyan-500/30"
                 loading="lazy"
+                onError={(e) => { e.currentTarget.src = '/fallback-image.png'; }}
               />
               <button
-                className="absolute top-4 right-4 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-3 rounded-full transition-colors"
+                className="absolute top-4 right-4 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-2 rounded-full transition-colors"
                 onClick={closeLightbox}
                 aria-label="Close lightbox"
               >
-                <X size={24} />
+                <X size={20} />
               </button>
               <button
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-3 rounded-full transition-colors"
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-2 rounded-full transition-colors"
                 onClick={goToPreviousImage}
                 aria-label="Previous image"
               >
-                <ChevronLeft size={24} />
+                <ChevronLeft size={20} />
               </button>
               <button
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-3 rounded-full transition-colors"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-2 rounded-full transition-colors"
                 onClick={goToNextImage}
                 aria-label="Next image"
               >
-                <ChevronRight size={24} />
+                <ChevronRight size={20} />
               </button>
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900/90 to-transparent text-white p-4 sm:p-6 rounded-b-xl">
-                <h3 className="font-mono text-[clamp(1.25rem,3vw,1.875rem)] text-cyan-300">
+                <h3 className="font-mono text-[clamp(0.875rem,2vw,1.125rem)] text-cyan-300 whitespace-normal">
                   {selectedImage.alt}
                 </h3>
               </div>
