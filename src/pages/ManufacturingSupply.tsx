@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -9,56 +10,6 @@ import cop3 from "../assets/cop-19.png";
 import pp1 from "../assets/pp-1.png";
 import pp2 from "../assets/pp-2.png";
 import pp3 from "../assets/pp-3.png";
-
-// Custom CSS for the unique scrollbar
-const scrollbarStyles = `
-  /* Custom Scrollbar */
-  ::-webkit-scrollbar {
-    width: 12px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.05);
-    border-radius: 10px;
-    margin: 5px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: linear-gradient(45deg, #14b8a6, #4f46e5);
-    border-radius: 10px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(45deg, #22d3ee, #7c3aed);
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
-    transform: scale(1.1);
-  }
-
-  /* Pulse animation for scrollbar thumb */
-  @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-  }
-
-  ::-webkit-scrollbar-thumb:active {
-    animation: pulse 0.6s ease infinite;
-  }
-
-  /* Firefox Scrollbar */
-  html {
-    scrollbar-width: thin;
-    scrollbar-color: #14b8a6 rgba(0, 0, 0, 0.05);
-  }
-
-  /* Ensure smooth scrolling */
-  html {
-    scroll-behavior: smooth;
-  }
-`;
 
 interface Product {
   id: string;
@@ -87,8 +38,9 @@ const ProductSection = ({ product, index }: { product: Product; index: number })
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       className={`py-12 sm:py-16 md:py-20 ${index % 2 === 0 ? 'bg-gradient-to-br from-teal-50 via-indigo-50 to-gray-100' : 'bg-gradient-to-bl from-gray-50 via-teal-50 to-indigo-50'}`}
+      style={{ willChange: 'transform, opacity' }}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center">
@@ -96,8 +48,9 @@ const ProductSection = ({ product, index }: { product: Product; index: number })
             initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
             className={`order-2 lg:order-${index % 2 === 0 ? '1' : '2'}`}
+            style={{ willChange: 'transform, opacity' }}
           >
             <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mb-4 sm:mb-6 rounded-full bg-teal-500/10 flex items-center justify-center shadow-md transform hover:rotate-12 transition-transform">
               <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center">{product.icon}</div>
@@ -133,8 +86,9 @@ const ProductSection = ({ product, index }: { product: Product; index: number })
             initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
             className={`order-1 lg:order-${index % 2 === 0 ? '2' : '1'}`}
+            style={{ willChange: 'transform, opacity' }}
           >
             <div className="relative rounded-xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-500 group">
               <img
@@ -162,15 +116,6 @@ const ManufacturingSupply = () => {
         'GVS Controls manufactures electrical control panels and supplies field instruments for various industries, adhering to IE Standard Electrical Inspectorate Rules and Regulation (CEIG).'
       );
     }
-
-    // Inject scrollbar styles
-    const styleSheet = document.createElement('style');
-    styleSheet.textContent = scrollbarStyles;
-    document.head.appendChild(styleSheet);
-
-    return () => {
-      document.head.removeChild(styleSheet);
-    };
   }, []);
 
   const products: Product[] = [
@@ -220,7 +165,7 @@ const ManufacturingSupply = () => {
         'Instruments for Wind Mills and Switches of any Special Requirements',
       ],
       icon: <Box size={50} strokeWidth={2} className="text-indigo-600" />,
-      color: [[75, 0, 130]],
+      color: [[150, 0, 255]], // Brighter purple for glittering effect
       images: [pp1, pp2, pp3],
     },
   ];
@@ -232,10 +177,11 @@ const ManufacturingSupply = () => {
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.4 }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         className="border border-gray-200 group/canvas-card flex items-center justify-center w-full max-w-sm mx-auto p-4 sm:p-6 md:p-8 relative h-80 sm:h-[24rem] bg-gradient-to-br from-gray-50 via-teal-50 to-indigo-50 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden"
+        style={{ willChange: 'transform, opacity' }}
       >
         <Icon className="absolute h-5 w-5 sm:h-6 sm:w-6 -top-2 sm:-top-3 -left-2 sm:-left-3 text-teal-300 rotate-45" />
         <Icon className="absolute h-5 w-5 sm:h-6 sm:w-6 -bottom-2 sm:-bottom-3 -left-2 sm:-left-3 text-teal-300 rotate-135" />
@@ -250,12 +196,14 @@ const ManufacturingSupply = () => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               className="h-full w-full absolute inset-0"
+              style={{ willChange: 'transform, opacity' }}
             >
               <CanvasRevealEffect
-                animationSpeed={3}
-                containerClassName="bg-gradient-to-br from-gray-900 to-indigo-800"
+                animationSpeed={2}
+                containerClassName="bg-gradient-to-br from-gray-800 to-teal-900"
                 colors={product.color}
-                dotSize={2}
+                dotSize={1.5}
+                showGradient={false}
               />
             </motion.div>
           )}
@@ -291,13 +239,14 @@ const ManufacturingSupply = () => {
   );
 
   return (
-    <main className="pt-[84px] lg:pt-[140px] overflow-auto bg-gray-50">
+    <main className="pt-[84px] lg:pt-[140px] bg-gray-50">
       {/* Hero Section */}
       <motion.section
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.5 }}
         className="relative bg-gradient-to-br from-indigo-700 via-purple-700 to-teal-600 text-white py-16 sm:py-20 md:py-24 lg:py-32 overflow-hidden"
+        style={{ willChange: 'transform, opacity' }}
       >
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+PHBhdGggZD0iTTYwIDMwSDMwTTYwIDMwVjMwTTYwIDMwSDMwTTYwIDMwVjMwIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4xKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+')] opacity-20"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -316,16 +265,18 @@ const ManufacturingSupply = () => {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.5 }}
         className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-white to-teal-50"
+        style={{ willChange: 'transform, opacity' }}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.4 }}
             className="text-center mb-10 sm:mb-12 md:mb-16"
+            style={{ willChange: 'transform, opacity' }}
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-700">Our Manufacturing & Supply Capabilities</h2>
             <p className="text-gray-700 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed">Wide range of electrical control panels and field instruments tailored to industry needs.</p>
@@ -348,8 +299,9 @@ const ManufacturingSupply = () => {
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.5 }}
         className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-indigo-900 via-teal-800 to-purple-900 text-white relative overflow-hidden"
+        style={{ willChange: 'transform, opacity' }}
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.2)_0,_transparent_80%)] opacity-50 animate-pulse"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
