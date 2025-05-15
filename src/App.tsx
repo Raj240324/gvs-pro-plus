@@ -1,27 +1,10 @@
 import { Toaster } from "../src/components/ui/toaster";
-import { Toaster as SonnerToaster } from "../src/components/ui/sonner"; // Renamed to avoid confusion
+import { Toaster as SonnerToaster } from "../src/components/ui/sonner";
 import { TooltipProvider } from "../src/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CookieConsent from "react-cookie-consent";
-
-// Pages (verify these files exist in src/pages)
-import Index from "./pages/Index";
-import About from "./pages/About";
-import Services from "./pages/Services";
-import ManufacturingSupply from "./pages/ManufacturingSupply";
-import Projects from "./pages/Projects";
-import Clients from "./pages/Clients";
-import WhyUs from "./pages/WhyUs";
-import Gallery from "./pages/Gallery";
-import Contact from "./pages/Contact";
-import NotFound from "./pages/NotFound";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import TermsOfService from "./pages/TermsOfService";
-import CookiePolicy from "./pages/CookiePolicy";
-
-// Components (verify these files exist in src/components)
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import BackToTop from "./components/BackToTop";
@@ -31,20 +14,20 @@ const queryClient = new QueryClient();
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [showConsent, setShowConsent] = useState(false); // Control banner visibility
 
-  // Simulate application loading
+  // Handle preloader and banner delay
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1500);
-
+      setShowConsent(true); // Show banner after 1-second delay
+    }, 1000);
     return () => clearTimeout(timer);
   }, []);
 
-  // Initialize AOS-like animations on page load
+  // AOS-like animations
   useEffect(() => {
     if (!isLoading) {
-      // Debounce scroll handler to optimize performance
       const debounce = <T extends unknown[]>(func: (...args: T) => void, wait: number) => {
         let timeout: NodeJS.Timeout | null;
         return (...args: T) => {
@@ -64,13 +47,8 @@ const App = () => {
         });
       }, 50);
 
-      // Initial check
       setTimeout(handleScroll, 100);
-
-      // Add scroll event listener
       window.addEventListener('scroll', handleScroll, { passive: true });
-
-      // Cleanup
       return () => window.removeEventListener('scroll', handleScroll);
     }
   }, [isLoading]);
@@ -84,55 +62,65 @@ const App = () => {
           <Preloader />
         ) : (
           <>
-            <CookieConsent
-              location="bottom"
-              buttonText="Accept All"
-              declineButtonText="Reject Non-Essential"
-              cookieName="gvsControlsCookieConsent"
-              style={{
-                background: '#1e2a44',
-                color: '#e0f7fa',
-                fontFamily: 'Montserrat, sans-serif',
-                padding: '1rem',
-                borderTop: '2px solid #2a9d8f',
-                zIndex: 1000,
-              }}
-              buttonStyle={{
-                background: '#2a9d8f',
-                color: '#e0f7fa',
-                fontWeight: '600',
-                padding: '0.5rem 1rem',
-                borderRadius: '0.25rem',
-                transition: 'background 0.3s',
-              }}
-              declineButtonStyle={{
-                background: '#ff6f61',
-                color: '#e0f7fa',
-                fontWeight: '600',
-                padding: '0.5rem 1rem',
-                borderRadius: '0.25rem',
-                transition: 'background 0.3s',
-              }}
-              enableDeclineButton
-              debug={true}
-              onAccept={() => {
-                console.log('Cookies accepted');
-              }}
-              onDecline={() => {
-                console.log('Non-essential cookies rejected');
-              }}
-            >
-              <span style={{ fontSize: '1rem' }}>
-                We use cookies to enhance your experience on www.gvscontrols.com, as described in our{' '}
-                <a
-                  href="/cookie-policy"
-                  style={{ color: '#ff6f61', textDecoration: 'underline' }}
-                >
-                  Cookie Policy
-                </a>
-                . By clicking "Accept All," you agree to the use of all cookies, including analytics and marketing cookies for personalized content. You can reject non-essential cookies or manage preferences via your browser settings.
-              </span>
-            </CookieConsent>
+            {showConsent && (
+              <CookieConsent
+                location="bottom"
+                buttonText="Accept"
+                declineButtonText="Reject"
+                cookieName="gvsControlsCookieConsent"
+                style={{
+                  background: '#1e2a44',
+                  color: '#e0f7fa',
+                  fontFamily: 'Montserrat, sans-serif',
+                  padding: '0.75rem 1rem',
+                  borderTop: '2px solid #2a9d8f',
+                  zIndex: 1000,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  flexWrap: 'wrap',
+                  maxWidth: '100%',
+                }}
+                contentStyle={{
+                  flex: '1 0 auto',
+                  margin: '0',
+                  maxWidth: '100%',
+                }}
+                buttonStyle={{
+                  background: '#2a9d8f',
+                  color: '#e0f7fa',
+                  fontWeight: '600',
+                  padding: '0.4rem 0.8rem',
+                  borderRadius: '0.25rem',
+                  fontSize: '0.875rem',
+                  margin: '0.25rem',
+                }}
+                declineButtonStyle={{
+                  background: '#ff6f61',
+                  color: '#e0f7fa',
+                  fontWeight: '600',
+                  padding: '0.4rem 0.8rem',
+                  borderRadius: '0.25rem',
+                  fontSize: '0.875rem',
+                  margin: '0.25rem',
+                }}
+                enableDeclineButton
+                debug={true} // Set to false in production
+                onAccept={() => console.log('Cookies accepted')}
+                onDecline={() => console.log('Non-essential cookies rejected')}
+              >
+                <span style={{ fontSize: '0.875rem' }}>
+                  We use cookies to improve your experience. See our{' '}
+                  <a
+                    href="/cookie-policy"
+                    style={{ color: '#ff6f61', textDecoration: 'underline' }}
+                  >
+                    Cookie Policy
+                  </a>
+                  .
+                </span>
+              </CookieConsent>
+            )}
             <Header />
             <main id="main-content" tabIndex={-1} className="focus:outline-none">
               <Outlet />
