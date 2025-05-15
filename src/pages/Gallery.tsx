@@ -1,25 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import cop1 from "../assets/cop-1.png";
-import cop2 from "../assets/cop-2.png";
-import cop3 from "../assets/cop-3.png";
-import cop4 from "../assets/cop-4.png";
-import cop5 from "../assets/cop-5.png";
-import cop6 from "../assets/cop-6.png";
-import cop7 from "../assets/cop-7.png";   
-import cop8 from "../assets/cop-8.png";
-import cop9 from "../assets/cop-9.png";
-import cop10 from "../assets/cop-10.png";
-import cop11 from "../assets/cop-11.png";
-import cop12 from "../assets/cop-12.png";
-import cop13 from "../assets/cop-13.png";
-import cop14 from "../assets/cop-14.png";
-import cop15 from "../assets/cop-15.png";
-import cop16 from "../assets/cop-16.png";
-import cop17 from "../assets/cop-17.png";
-import cop18 from "../assets/cop-18.png";
-import cop19 from "../assets/cop-19.png";
+import cop1 from '../assets/cop-1.png';
+import cop2 from '../assets/cop-2.png';
+import cop3 from '../assets/cop-3.png';
+import cop4 from '../assets/cop-4.png';
+import cop5 from '../assets/cop-5.png';
+import cop6 from '../assets/cop-6.png';
+import cop7 from '../assets/cop-7.png';
+import cop8 from '../assets/cop-8.png';
+import cop9 from '../assets/cop-9.png';
+import cop10 from '../assets/cop-10.png';
+import cop11 from '../assets/cop-11.png';
+import cop12 from '../assets/cop-12.png';
+import cop13 from '../assets/cop-13.png';
+import cop14 from '../assets/cop-14.png';
+import cop15 from '../assets/cop-15.png';
+import cop16 from '../assets/cop-16.png';
+import cop17 from '../assets/cop-17.png';
+import cop18 from '../assets/cop-18.png';
+import cop19 from '../assets/cop-19.png';
+import React from 'react';
 
 // Define gallery image type
 interface GalleryImage {
@@ -28,61 +29,42 @@ interface GalleryImage {
   alt: string;
 }
 
-// Split text into characters for wave animation
-const SplitText = ({ children }: { children: string }) => {
-  return (
-    <>
-      {children.split('').map((char, index) => (
-        <motion.span
-          key={index}
-          variants={{
-            hidden: { opacity: 0, y: 20 },
-            visible: { opacity: 1, y: 0 },
-          }}
-          transition={{ duration: 0.3, delay: index * 0.05 }}
-          style={{ display: 'inline-block' }}
-        >
-          {char === ' ' ? '\u00A0' : char}
-        </motion.span>
-      ))}
-    </>
-  );
-};
-
-const CustomCard = ({ title, src, onClick }: { title: string; src: string; onClick: () => void }) => {
+// Custom Card Component (Memoized)
+const CustomCard = React.memo(({ title, src, onClick }: { title: string; src: string; onClick: () => void }) => {
   return (
     <motion.div
-      className="relative overflow-hidden rounded-xl bg-gray-900/50 backdrop-blur-md border border-cyan-500/30 shadow-lg transition-all duration-500 hover:shadow-cyan-500/20"
+      className="relative overflow-hidden rounded-xl bg-gray-900/50 backdrop-blur-md border border-cyan-500/30 shadow-lg transition-all duration-300 hover:shadow-cyan-500/20"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
-      initial={{ opacity: 0, scale: 0.8 }}
+      initial={{ opacity: 0, scale: 0.9 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
+      transition={{ duration: 0.4 }}
     >
       <img
         src={src}
         alt={title}
-        className="object-cover w-full h-64 sm:h-72 md:h-80 transition-transform duration-700 hover:scale-110"
+        className="object-cover w-full h-64 sm:h-72 md:h-80 transition-transform duration-500 hover:scale-105"
         loading="lazy"
-        onError={(e) => { e.currentTarget.src = '/fallback-image.png'; }}
+        onError={(e) => {
+          e.currentTarget.src = '/fallback-image.png';
+        }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-        <h3 className="text-[clamp(0.875rem,2vw,1rem)] font-mono text-cyan-300 whitespace-normal">{title}</h3>
+        <h3 className="text-sm font-mono text-cyan-300 break-words">{title}</h3>
       </div>
-      <div className="absolute top-2 right-2 bg-cyan-500/20 text-cyan-300 text-[clamp(0.75rem,1.5vw,0.875rem)] font-mono px-2 py-1 rounded-full">
+      <div className="absolute top-2 right-2 bg-cyan-500/20 text-cyan-300 text-xs font-mono px-2 py-1 rounded-full">
         View
       </div>
     </motion.div>
   );
-};
+});
 
 const Gallery = () => {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(true);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
   const [direction, setDirection] = useState<number>(0);
 
@@ -109,24 +91,26 @@ const Gallery = () => {
     { id: '19', src: cop19, alt: 'EB & DG Synchronizing Control Panel for Power Distribution' },
   ];
 
-  // Preload images to reduce lag
+  // Preload images and set images immediately
   useEffect(() => {
     const preloadImages = () => {
-      galleryImages.forEach((image) => {
-        const img = new Image();
-        img.src = image.src;
+      const promises = galleryImages.map((image) => {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.src = image.src;
+          img.onload = resolve;
+          img.onerror = resolve; // Resolve even if image fails to load
+        });
       });
+      return Promise.all(promises);
     };
-    preloadImages();
 
-    const timer = setTimeout(() => {
+    preloadImages().then(() => {
       setImages(galleryImages);
-      setLoading(false);
-    }, 1000); // Delay to allow text animation to complete
-
-    return () => clearTimeout(timer);
+    });
   }, []);
 
+  // Handle header height for padding
   useEffect(() => {
     const updateHeaderHeight = () => {
       const headerElement = document.querySelector('header');
@@ -136,10 +120,12 @@ const Gallery = () => {
     };
 
     updateHeaderHeight();
-    window.addEventListener('resize', updateHeaderHeight);
-    return () => window.removeEventListener('resize', updateHeaderHeight);
+    const debouncedUpdate = debounce(updateHeaderHeight, 100);
+    window.addEventListener('resize', debouncedUpdate);
+    return () => window.removeEventListener('resize', debouncedUpdate);
   }, []);
 
+  // Set document metadata and ESC key handler
   useEffect(() => {
     document.title = 'PCC, MCC & PLC cum VFD Control Panels Gallery - GVS Controls';
     const metaDescription = document.querySelector('meta[name="description"]');
@@ -154,71 +140,79 @@ const Gallery = () => {
       if (e.key === 'Escape') setSelectedImage(null);
     };
     window.addEventListener('keydown', handleEscKey);
-
-    return () => {
-      window.removeEventListener('keydown', handleEscKey);
-    };
+    return () => window.removeEventListener('keydown', handleEscKey);
   }, []);
 
-  const openLightbox = (image: GalleryImage) => {
+  // Memoized event handlers
+  const openLightbox = useCallback((image: GalleryImage) => {
     const newIndex = images.findIndex((img) => img.id === image.id);
     setSelectedImage(image);
     setCurrentImageIndex(newIndex);
     setDirection(0);
     document.body.style.overflow = 'hidden';
-  };
+  }, [images]);
 
-  const closeLightbox = () => {
+  const closeLightbox = useCallback(() => {
     setSelectedImage(null);
     document.body.style.overflow = 'auto';
-  };
+  }, []);
 
-  const goToPreviousImage = () => {
+  const goToPreviousImage = useCallback(() => {
     const newIndex = currentImageIndex > 0 ? currentImageIndex - 1 : images.length - 1;
     setSelectedImage(images[newIndex]);
     setCurrentImageIndex(newIndex);
     setDirection(-1);
-  };
+  }, [currentImageIndex, images]);
 
-  const goToNextImage = () => {
+  const goToNextImage = useCallback(() => {
     const newIndex = currentImageIndex < images.length - 1 ? currentImageIndex + 1 : 0;
     setSelectedImage(images[newIndex]);
     setCurrentImageIndex(newIndex);
     setDirection(1);
-  };
+  }, [currentImageIndex, images]);
 
+  // Animation variants
   const sectionVariants = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
+    visible: { opacity: 1, transition: { duration: 0.5 } },
   };
 
   const textVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
   };
 
   const lightboxVariants = {
     initial: (direction: number) => ({
-      x: direction > 0 ? '100%' : direction < 0 ? '-100%' : 0,
+      x: direction > 0 ? '50%' : direction < 0 ? '-50%' : 0,
       opacity: 0,
     }),
     animate: {
       x: 0,
       opacity: 1,
-      transition: { type: 'spring', stiffness: 100, damping: 20 },
+      transition: { duration: 0.3 },
     },
     exit: (direction: number) => ({
-      x: direction > 0 ? '-100%' : direction < 0 ? '100%' : 0,
+      x: direction > 0 ? '-50%' : direction < 0 ? '50%' : 0,
       opacity: 0,
       transition: { duration: 0.3 },
     }),
   };
 
+  // Debounce utility
+  function debounce(fn: Function, ms: number) {
+    let timeoutId: NodeJS.Timeout;
+    return (...args: any[]) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => fn(...args), ms);
+    };
+  }
+
   return (
-    <main style={{ paddingTop: `${headerHeight}px` }} className="bg-gray-950 text-white">
+    <main style={{ paddingTop: `${headerHeight}px` }} className="bg-gray-950 text-white min-h-screen">
       {/* Hero Section */}
       <motion.section
-        className="relative bg-[radial-gradient(circle_at_center,_#1e3a8a_0,_#0f172a_70%)] py-16 sm:py-20 md:py-24 overflow-hidden"
+        className="relative bg-[radial-gradient(circle_at_center,_#1e3a8a_0,_#0f172a_70%)] py-12 sm:py-16 md:py-20 overflow-hidden"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -226,22 +220,21 @@ const Gallery = () => {
       >
         <div className="absolute inset-0 bg-gray-900 opacity-10"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-          >
+          <motion.div variants={textVariants}>
             <motion.span
-              className="inline-block px-4 py-2 rounded-full bg-cyan-500/20 text-cyan-300 text-[clamp(0.75rem,1.5vw,0.875rem)] font-mono mb-6 border border-cyan-500/30"
+              className="inline-block px-4 py-2 rounded-full bg-cyan-500/20 text-cyan-300 text-xs sm:text-sm font-mono mb-6 border border-cyan-500/30"
               variants={textVariants}
             >
               Our Expertise
             </motion.span>
-            <h1 className="text-[clamp(1.5rem,3vw,2.25rem)] font-extrabold font-mono bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-violet-500 leading-tight max-w-[85vw] mx-auto whitespace-normal">
-              <SplitText>PCC, MCC & PLC cum VFD Control Panels Gallery</SplitText>
-            </h1>
+            <motion.h1
+              className="text-xl sm:text-2xl md:text-3xl font-extrabold font-mono bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-violet-500 leading-tight max-w-[90vw] mx-auto break-words"
+              variants={textVariants}
+            >
+              PCC, MCC & PLC cum VFD Control Panels Gallery
+            </motion.h1>
             <motion.p
-              className="text-[clamp(0.875rem,2vw,1rem)] text-gray-300 mt-4 max-w-2xl mx-auto whitespace-normal"
+              className="text-sm sm:text-base text-gray-300 mt-4 max-w-2xl mx-auto break-words"
               variants={textVariants}
             >
               Discover GVS Controls’ innovative and cost-effective engineering solutions for power and automation systems, redefining customer satisfaction.
@@ -252,24 +245,22 @@ const Gallery = () => {
 
       {/* Gallery Section */}
       <motion.section
-        className="py-16 sm:py-20 md:py-24 bg-gray-950"
+        className="py-12 sm:py-16 md:py-20 bg-gray-950"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
         variants={sectionVariants}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-12 sm:mb-16 md:mb-20"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-[clamp(1.75rem,3.5vw,2.5rem)] font-bold font-mono text-white mb-4 whitespace-normal">
-              <SplitText>Manufacturing Showcase</SplitText>
-            </h2>
+          <motion.div className="text-center mb-8 sm:mb-12 md:mb-16" variants={textVariants}>
+            <motion.h2
+              className="text-xl sm:text-2xl md:text-3xl font-bold font-mono text-white mb-4 break-words"
+              variants={textVariants}
+            >
+              Manufacturing Showcase
+            </motion.h2>
             <motion.p
-              className="text-gray-400 max-w-2xl mx-auto text-[clamp(0.875rem,2vw,1.125rem)] whitespace-normal"
+              className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base break-words"
               variants={textVariants}
             >
               A collection of our PCC, MCC, and PLC cum VFD control panels, manufactured for industrial excellence.
@@ -277,9 +268,9 @@ const Gallery = () => {
           </motion.div>
 
           {/* Gallery Cards */}
-          {loading ? (
-            <div className="flex justify-center items-center py-16 sm:py-20 md:py-24">
-              <div className="w-10 h-10 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin" />
+          {images.length === 0 ? (
+            <div className="flex justify-center items-center py-16">
+              <div className="w-8 h-8 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin" />
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
@@ -293,22 +284,6 @@ const Gallery = () => {
               ))}
             </div>
           )}
-
-          {images.length === 0 && !loading && (
-            <motion.div
-              className="text-center py-16 sm:py-20 md:py-24"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
-            >
-              <motion.p
-                className="text-gray-400 text-[clamp(0.875rem,2vw,1.125rem)] font-mono"
-                variants={textVariants}
-              >
-                No images found.
-              </motion.p>
-            </motion.div>
-          )}
         </div>
       </motion.section>
 
@@ -320,27 +295,31 @@ const Gallery = () => {
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
       >
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h3 className="text-[clamp(1.5rem,2.5vw,1.875rem)] font-mono text-cyan-300 mb-4 whitespace-normal">
-            <SplitText>Contact GVS Controls</SplitText>
-          </h3>
+        <motion.div variants={textVariants}>
+          <motion.h3
+            className="text-lg sm:text-xl md:text-2xl font-mono text-cyan-300 mb-4 break-words"
+            variants={textVariants}
+          >
+            Contact GVS Controls
+          </motion.h3>
           <motion.p
-            className="text-gray-400 text-[clamp(0.875rem,2vw,1rem)] mb-6 max-w-xl mx-auto whitespace-normal"
+            className="text-gray-400 text-sm sm:text-base mb-6 max-w-xl mx-auto break-words"
             variants={textVariants}
           >
             Reach out for innovative and cost-effective control panel solutions.
           </motion.p>
           <motion.div
-            className="text-gray-300 font-mono text-[clamp(0.75rem,1.5vw,0.875rem)] max-w-xl mx-auto whitespace-normal"
+            className="text-gray-300 font-mono text-xs sm:text-sm max-w-xl mx-auto break-words"
             variants={textVariants}
           >
             <p>Office: No.9/14, First Floor, EWS Plot, Gudalur, Maraimalai Nagar, Chengalpattu-(District), Pin: 603209</p>
             <p>Mobile: 9884001597 & 7338880027</p>
-            <p>Email: <a href="mailto:gvscontrols@gmail.com" className="text-cyan-400 hover:underline">gvscontrols@gmail.com</a></p>
+            <p>
+              Email:{' '}
+              <a href="mailto:gvscontrols@gmail.com" className="text-cyan-400 hover:underline">
+                gvscontrols@gmail.com
+              </a>
+            </p>
           </motion.div>
         </motion.div>
       </motion.section>
@@ -349,7 +328,7 @@ const Gallery = () => {
       <AnimatePresence mode="wait" custom={direction}>
         {selectedImage && (
           <motion.div
-            className="fixed inset-0 z-[2500] bg-gray-950/95 backdrop-blur-lg flex items-center justify-center p-4 sm:p-6"
+            className="fixed inset-0 z-[2500] bg-gray-950/95 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -358,7 +337,7 @@ const Gallery = () => {
             key={selectedImage.id}
           >
             <motion.div
-              className="relative w-full max-w-[95vw] sm:max-w-4xl md:max-w-5xl max-h-[90vh]"
+              className="relative w-full max-w-[95vw] sm:max-w-4xl max-h-[90vh]"
               custom={direction}
               variants={lightboxVariants}
               initial="initial"
@@ -371,7 +350,9 @@ const Gallery = () => {
                 alt={selectedImage.alt}
                 className="w-full max-h-[80vh] sm:max-h-[85vh] object-contain rounded-xl shadow-2xl border border-cyan-500/30"
                 loading="lazy"
-                onError={(e) => { e.currentTarget.src = '/fallback-image.png'; }}
+                onError={(e) => {
+                  e.currentTarget.src = '/fallback-image.png';
+                }}
               />
               <button
                 className="absolute top-4 right-4 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-2 rounded-full transition-colors"
@@ -394,10 +375,8 @@ const Gallery = () => {
               >
                 <ChevronRight size={20} />
               </button>
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900/90 to-transparent text-white p-4 sm:p-6 rounded-b-xl">
-                <h3 className="font-mono text-[clamp(0.875rem,2vw,1.125rem)] text-cyan-300 whitespace-normal">
-                  {selectedImage.alt}
-                </h3>
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900/90 to-transparent text-white p-4 rounded-b-xl">
+                <h3 className="font-mono text-sm sm:text-base text-cyan-300 break-words">{selectedImage.alt}</h3>
               </div>
             </motion.div>
           </motion.div>
