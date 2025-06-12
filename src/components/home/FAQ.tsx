@@ -12,19 +12,19 @@ const FAQ = () => {
   const faqs: { question: string; answer: string }[] = [
     {
       question: "What services does GVS CONTROLS provide?",
-      answer: "GVS CONTROLS specializes in electrical & automation solutions, including consultancy, engineering, and manufacturing. Our services cover project management, control panel manufacturing, process automation, and turnkey solutions for various industries."
+      answer: "GVS CONTROLS specializes in Electrical & Instrumentation, including consultancy, engineering, and manufacturing. Our services cover project management, Process automation, and turnkey solutions for various industries."
     },
     {
       question: "What industries does GVS CONTROLS serve?",
-      answer: "We cater to multiple sectors, including power plants (thermal, biomass, solar), renewable energy, steel & cement plants, automobile industries, chemical plants, process plants, cooling towers, and water treatment plants (STP, ETP, WTP)."
+      answer: "We cater to multiple sectors, including power plants Thermal, Biomass and Renewable energy (Solar), Steel Plants, Cement plants, Material Handling, Automobile industries, Chemical plants, Process plants, Cooling towers, and water treatment plants (STP, ETP, WTP)."
     },
     {
       question: "What types of automation solutions do you offer?",
-      answer: "We provide relay logic and PLC automation for process plants and machineries, revamping and integrating electrical systems, and supplying motor control center (MCC) panels, VFD panels, relay logic panels, and field instruments."
+      answer: "We provide Relay logic Panels and PLC automation for process plants and machineries, Revamping and integrating electrical systems, Converting Relay Logic System in to PLC Based System, supplying of Motor control center (MCC) Panels, PLC/VFD panels, Process Control Panels, and field instruments."
     },
     {
       question: "Do you offer customized control panel solutions?",
-      answer: "Yes, we design and manufacture custom-built control panels as per IE Standards & CEIG regulations, including power control centers, motor control centers, synchronizing panels, PLC panels, and special-purpose panels."
+      answer: "Yes, we design and manufacture custom-built control panels as per IE Standards & CEIG regulations, including power control centers, motor control centers, synchronizing panels, PLC/VFD Panels, and special-purpose panels."
     },
     {
       question: "What are the benefits of working with GVS CONTROLS?",
@@ -36,7 +36,7 @@ const FAQ = () => {
     },
     {
       question: "What major projects have you executed?",
-      answer: "We have successfully executed projects for SAIL, TISCO, Rastriya Ispat Nigam Ltd (Vizag), CPCL, MRL, Cochin Refinery, Sterlite Group, GMR, Aditya Birla Group, and Indian Navy (Sea Bird Project)."
+      answer: "We have successfully executed projects for SAIL, TISCO, Rastriya Ispat Nigam Ltd (Vizag), CPCL, MRL, Cochin Refinery, Sterlite Group, GMR, Aditya Birla Group, BHEL, NMDC, NTPC and Indian Navy (Sea Bird Project)."
     },
     {
       question: "Does GVS CONTROLS provide maintenance and troubleshooting support?",
@@ -44,7 +44,7 @@ const FAQ = () => {
     },
     {
       question: "How can I contact GVS CONTROLS?",
-      answer: "📍 Office: No.9/14, First Floor, EWS Plot, Gudalur, Maraimalai Nagar, Chengalpattu – 603209\n📍 Reg. Office: No.46/1, 5th Cross Street, Bagavathy Nagar, Govindarajapuram, Guduvanchery – 603202, Kanchipuram\n📞 Mobile: +91 9884001597\n✉️ Email: gvscontrols@gmail.com"
+      answer: "Office & Works: Plot No.1476, Sengundram Main Road, Gokulapuram Chengalpattu Dist, Pin-603204\n(Land Mark – Mas Robotics)\nReg. Office: No.46/1, 5th Cross Street, Bagavathy Nagar, Govindarajapuram, Guduvanchery – 603202, Kanchipuram Dist\nMobile: +91 7338880027 & 9884001597\nEmail: projects@gvscontrols.com, services@gvscontrols.com, gvscontrols@gmail.com"
     }
   ];
 
@@ -123,7 +123,7 @@ const FAQ = () => {
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 sm:mb-6">
             Got Questions?{" "}
             <span className="bg-gradient-to-r from-cyan-400 via-pink-500 to-purple-400 text-transparent bg-clip-text">
-              We’ve Got Answers
+              We've Got Answers
             </span>
           </h2>
           <motion.p 

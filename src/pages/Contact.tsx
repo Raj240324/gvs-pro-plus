@@ -238,7 +238,7 @@ const Contact = () => {
                   variants={fadeInUp}
                   className="inline-block px-4 py-1 sm:px-6 sm:py-2 mb-6 sm:mb-8 text-xs sm:text-base font-semibold text-white bg-white/10 backdrop-blur-lg rounded-full border border-white/20 shadow-lg hover:bg-white/20 transition-all duration-300"
                 >
-                  Let’s Connect
+                  Let's Connect
                 </motion.span>
                 <motion.h1
                   variants={fadeInUp}
@@ -280,23 +280,30 @@ const Contact = () => {
               {[
                 {
                   icon: <MapPin size={24} className="sm:w-8 sm:h-8" />,
-                  title: 'Our Office',
-                  content: 'No.9/14, First Floor, EWS Plot, Gudalur, Maraimalai Nagar, Chengalpattu-(District), Pin:603209',
-                  link: 'https://maps.google.com/?q=Maraimalai+Nagar,+Chengalpattu',
+                  title: 'Office & Works',
+                  content: 'Plot No.1476, Sengundram Main Road, Gokulapuram Chengalpattu Dist, Pin-603204 (Land Mark – Mas Robotics)',
+                  link: 'https://maps.google.com/?q=Gokulapuram+Chengalpattu',
+                  linkText: 'View on Map',
+                },
+                {
+                  icon: <MapPin size={24} className="sm:w-8 sm:h-8" />,
+                  title: 'Reg. Office',
+                  content: 'No.46/1, 5th Cross Street, Bagavathy Nagar, Govindarajapuram, Guduvanchery – 603202, Kanchipuram Dist',
+                  link: 'https://maps.google.com/?q=Govindarajapuram+Guduvanchery',
                   linkText: 'View on Map',
                 },
                 {
                   icon: <Mail size={24} className="sm:w-8 sm:h-8" />,
                   title: 'Email Us',
-                  content: ['General: gvscontrols@gmail.com', 'Projects: projects@gvscontrols.com'],
+                  content: ['Projects: projects@gvscontrols.com', 'Services: services@gvscontrols.com', 'General: gvscontrols@gmail.com'],
                   link: 'mailto:projects@gvscontrols.com',
                   linkText: 'Send an Email',
                 },
                 {
                   icon: <Phone size={24} className="sm:w-8 sm:h-8" />,
                   title: 'Call Us',
-                  content: ['Mobile: +91 9884001597', 'Mobile: +91 7338880027'],
-                  link: 'tel:+919884001597',
+                  content: ['Mobile: +91 7338880027', 'Mobile: +91 9884001597'],
+                  link: 'tel:+917338880027',
                   linkText: 'Call Now',
                 },
               ].map((item, index) => (
@@ -348,7 +355,7 @@ const Contact = () => {
                   Send Us a Message
                 </h2>
                 <p className="text-gray-600 dark:text-gray-300 mb-6 sm:mb-8 text-sm sm:text-base md:text-lg">
-                  We’re excited to hear from you—let’s get started!
+                  We're excited to hear from you—let's get started!
                 </p>
                 <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
