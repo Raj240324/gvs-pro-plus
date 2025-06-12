@@ -33,7 +33,7 @@ interface GalleryImage {
 const CustomCard = React.memo(({ title, src, onClick }: { title: string; src: string; onClick: () => void }) => {
   return (
     <motion.div
-      className="relative overflow-hidden rounded-xl bg-gray-900/50 backdrop-blur-md border border-cyan-500/30 shadow-lg transition-all duration-300 hover:shadow-cyan-500/20"
+      className="relative overflow-hidden rounded-xl bg-gray-900/50 backdrop-blur-md border border-cyan-500/30 shadow-lg transition-all duration-300 hover:shadow-cyan-500/20 cursor-pointer"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
@@ -88,7 +88,7 @@ const Gallery = () => {
     { id: '16', src: cop16, alt: 'APFC Panel Manufacturing for Power Factor Correction' },
     { id: '17', src: cop17, alt: 'AMF Control Panel Manufacturing for Automatic Mains Failure' },
     { id: '18', src: cop18, alt: 'Relay Logic Control Panel Manufacturing for Process Plants' },
-    { id: '19', src: cop19, alt: 'EB & DG Synchronizing Control Panel for Power Distribution' },
+    { id: '19', src: cop19, alt: 'EB & DG Synchronizing Control Panel for Power Distribution' }
   ];
 
   // Preload images and set images immediately
@@ -132,7 +132,7 @@ const Gallery = () => {
     if (metaDescription) {
       metaDescription.setAttribute(
         'content',
-        'Explore GVS Controls’ gallery showcasing innovative PCC, MCC, and PLC cum VFD control panels, manufactured for industrial automation and power management.'
+        'Explore GVS Controls\' gallery showcasing innovative PCC, MCC, and PLC cum VFD control panels, manufactured for industrial automation and power management.'
       );
     }
 
@@ -174,29 +174,29 @@ const Gallery = () => {
   // Animation variants
   const sectionVariants = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { duration: 0.5 } },
+    visible: { opacity: 1, transition: { duration: 0.5 } }
   };
 
   const textVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } }
   };
 
   const lightboxVariants = {
     initial: (direction: number) => ({
       x: direction > 0 ? '50%' : direction < 0 ? '-50%' : 0,
-      opacity: 0,
+      opacity: 0
     }),
     animate: {
       x: 0,
       opacity: 1,
-      transition: { duration: 0.3 },
+      transition: { duration: 0.3 }
     },
     exit: (direction: number) => ({
       x: direction > 0 ? '-50%' : direction < 0 ? '50%' : 0,
       opacity: 0,
-      transition: { duration: 0.3 },
-    }),
+      transition: { duration: 0.3 }
+    })
   };
 
   // Debounce utility
@@ -237,7 +237,7 @@ const Gallery = () => {
               className="text-sm sm:text-base text-gray-300 mt-4 max-w-2xl mx-auto break-words"
               variants={textVariants}
             >
-              Discover GVS Controls’ innovative and cost-effective engineering solutions for power and automation systems, redefining customer satisfaction.
+              Discover GVS Controls' innovative and cost-effective engineering solutions for power and automation systems, redefining customer satisfaction.
             </motion.p>
           </motion.div>
         </div>
@@ -285,43 +285,6 @@ const Gallery = () => {
             </div>
           )}
         </div>
-      </motion.section>
-
-      {/* Contact CTA Section */}
-      <motion.section
-        className="py-12 sm:py-16 bg-gray-900 text-center"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={sectionVariants}
-      >
-        <motion.div variants={textVariants}>
-          <motion.h3
-            className="text-lg sm:text-xl md:text-2xl font-mono text-cyan-300 mb-4 break-words"
-            variants={textVariants}
-          >
-            Contact GVS Controls
-          </motion.h3>
-          <motion.p
-            className="text-gray-400 text-sm sm:text-base mb-6 max-w-xl mx-auto break-words"
-            variants={textVariants}
-          >
-            Reach out for innovative and cost-effective control panel solutions.
-          </motion.p>
-          <motion.div
-            className="text-gray-300 font-mono text-xs sm:text-sm max-w-xl mx-auto break-words"
-            variants={textVariants}
-          >
-            <p>Office: No.9/14, First Floor, EWS Plot, Gudalur, Maraimalai Nagar, Chengalpattu-(District), Pin: 603209</p>
-            <p>Mobile: 9884001597 & 7338880027</p>
-            <p>
-              Email:{' '}
-              <a href="mailto:gvscontrols@gmail.com" className="text-cyan-400 hover:underline">
-                gvscontrols@gmail.com
-              </a>
-            </p>
-          </motion.div>
-        </motion.div>
       </motion.section>
 
       {/* Lightbox */}
@@ -382,6 +345,52 @@ const Gallery = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Contact CTA Section */}
+      <motion.section
+        className="py-12 sm:py-16 bg-gray-900 text-center"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={sectionVariants}
+      >
+        <motion.div variants={textVariants}>
+          <motion.h3
+            className="text-lg sm:text-xl md:text-2xl font-mono text-cyan-300 mb-4 break-words"
+            variants={textVariants}
+          >
+            Contact GVS Controls
+          </motion.h3>
+          <motion.p
+            className="text-gray-400 text-sm sm:text-base mb-6 max-w-xl mx-auto break-words"
+            variants={textVariants}
+          >
+            Reach out for innovative and cost-effective control panel solutions.
+          </motion.p>
+          <motion.div
+            className="text-gray-300 font-mono text-xs sm:text-sm max-w-xl mx-auto break-words"
+            variants={textVariants}
+          >
+            <p>Office & Works: Plot No.1476, Sengundram Main Road, Gokulapuram Chengalpattu Dist, Pin-603204 (Land Mark – Mas Robotics)</p>
+            <p>Reg. Office: No.46/1, 5th Cross Street, Bagavathy Nagar, Govindarajapuram, Guduvanchery – 603202, Kanchipuram Dist</p>
+            <p>Mobile: +91 7338880027 & 9884001597</p>
+            <p>
+              Email:{' '}
+              <a href="mailto:projects@gvscontrols.com" className="text-cyan-400 hover:underline">
+                projects@gvscontrols.com
+              </a>
+              {', '}
+              <a href="mailto:services@gvscontrols.com" className="text-cyan-400 hover:underline">
+                services@gvscontrols.com
+              </a>
+              {', '}
+              <a href="mailto:gvscontrols@gmail.com" className="text-cyan-400 hover:underline">
+                gvscontrols@gmail.com
+              </a>
+            </p>
+          </motion.div>
+        </motion.div>
+      </motion.section>
     </main>
   );
 };

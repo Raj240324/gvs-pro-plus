@@ -1,0 +1,28 @@
+{
+  "name": "GVS CONTROLS - Electrical, Automation & Consultancy",
+  "short_name": "GVS Controls",
+  "description": "Expert electrical engineering, PLC automation, and control panel manufacturing for industrial solutions",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e2a44",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "orientation": "portrait",
+  "categories": ["business", "industrial", "technology"],
+  "lang": "en",
+  "dir": "ltr",
+  "prefer_related_applications": false
+} 

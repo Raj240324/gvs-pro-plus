@@ -1,6 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { startTransition } from 'react';
 import Index from './pages/Index';
 import About from './pages/About';
 import Services from './pages/Services';
@@ -20,7 +21,7 @@ const router = createBrowserRouter(
   [
     {
       path: '/',
-      element: <App />, // App will render the layout and <Outlet />
+      element: <App />,
       children: [
         { path: '', element: <Index /> },
         { path: 'about', element: <About /> },
@@ -40,12 +41,18 @@ const router = createBrowserRouter(
   ],
   {
     future: {
-      v7_normalizeFormMethod: true, // Use v7 form method normalization
-      v7_relativeSplatPath: true, // Opt-in to v7 splat route resolution
+      v7_normalizeFormMethod: true,
+      v7_relativeSplatPath: true,
+      v7_startTransition: true,
     },
   }
 );
 
 createRoot(document.getElementById('root')!).render(
-  <RouterProvider router={router} />
+  <RouterProvider 
+    router={router}
+    future={{
+      v7_startTransition: true
+    }}
+  />
 );

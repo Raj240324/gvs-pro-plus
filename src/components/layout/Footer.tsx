@@ -49,7 +49,7 @@ const Footer = () => {
       {/* Main Footer Content */}
       <div className="relative z-10 pt-16 pb-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Company Info */}
             <motion.div
               className="bg-[#2a9d8f]/10 backdrop-blur-md p-6 rounded-xl border border-[#2a9d8f]/30"
@@ -68,12 +68,12 @@ const Footer = () => {
                 </span>
               </div>
               <p
-                className="text-xs leading-relaxed mb-2"
+                className="text-sm leading-relaxed mb-2"
                 style={{ color: '#ffbf00' }}
               >
                 Our Vision To Your Solution
               </p>
-              <p className="text-[#e0f7fa] text-sm leading-relaxed">
+              <p className="text-[#e0f7fa] text-md leading-relaxed">
                 Since 2017, GVS Controls has delivered innovative, cost-effective engineering solutions, empowering clients with cutting-edge technology. Your vision, our mission.
               </p>
               <div className="flex space-x-3 mt-4">
@@ -94,16 +94,18 @@ const Footer = () => {
               </div>
             </motion.div>
 
-            {/* Quick Links - Split into Two Columns */}
+            {/* Quick Links */}
             <motion.div
+              className="bg-[#2a9d8f]/10 backdrop-blur-md p-6 rounded-xl border border-[#2a9d8f]/30"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
+              whileHover={{ scale: 1.02 }}
             >
               <h3 className="font-montserrat font-semibold text-xl mb-4 text-[#ffd700]">
                 Explore More
               </h3>
-              <div className="grid grid-cols-2 gap-x-6 gap-y-2">
+              <nav className="grid gap-3">
                 {navLinks.map(({ to, label, Icon }) => (
                   <NavLink
                     key={label}
@@ -131,25 +133,34 @@ const Footer = () => {
                     />
                   </NavLink>
                 ))}
-              </div>
+              </nav>
             </motion.div>
 
             {/* Services */}
             <motion.div
+              className="bg-[#2a9d8f]/10 backdrop-blur-md p-6 rounded-xl border border-[#2a9d8f]/30"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
+              whileHover={{ scale: 1.02 }}
             >
               <h3 className="font-montserrat font-semibold text-xl mb-4 text-[#ffd700]">
                 What We Offer
               </h3>
-              <nav className="grid gap-2">
+              <nav className="grid gap-3">
                 {serviceLinks.map(({ to, label }) => (
                   <NavLink
                     key={label}
                     to={to}
-                    className="text-[#e0f7fa] hover:text-[#ff6f61] text-base relative group"
+                    className="text-[#e0f7fa] hover:text-[#ff6f61] text-base relative group flex items-center"
                   >
+                    <motion.div
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ duration: 0.3 }}
+                      className="mr-2"
+                    >
+                      <Briefcase size={16} className="text-[#ff6f61]" />
+                    </motion.div>
                     <motion.span
                       whileHover={{ x: 5 }}
                       transition={{ duration: 0.3 }}
@@ -185,8 +196,18 @@ const Footer = () => {
                   transition={{ duration: 0.3 }}
                 >
                   <MapPin size={18} className="text-[#ff6f61] mr-2 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                  <p className="text-[#e0f7fa]">
-                    No.9/14, First Floor, EWS Plot, Gudalur, Maraimalai Nagar, Chengalpattu District, Tamil Nadu, Pin: 603209
+                  <p className="text-[#e0f7fa] text-sm">
+                    Office & Works: Plot No.1476, Sengundram Main Road, Gokulapuram Chengalpattu Dist, Pin-603204 (Land Mark – Mas Robotics)
+                  </p>
+                </motion.div>
+                <motion.div
+                  className="flex items-start group"
+                  whileHover={{ x: 3 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <MapPin size={18} className="text-[#ff6f61] mr-2 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
+                  <p className="text-[#e0f7fa] text-sm">
+                    Reg. Office: No.46/1, 5th Cross Street, Bagavathy Nagar, Govindarajapuram, Guduvanchery – 603202, Kanchipuram Dist
                   </p>
                 </motion.div>
                 <motion.div
@@ -195,18 +216,32 @@ const Footer = () => {
                   transition={{ duration: 0.3 }}
                 >
                   <Phone size={18} className="text-[#ff6f61] mr-2 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                  <a
-                    href="tel:+919884001597"
-                    className="text-[#e0f7fa] hover:text-[#ff6f61] relative"
-                  >
-                    +91 98840 01597
-                    <motion.span
-                      className="absolute bottom-0 left-0 w-0 h-px bg-[#ff6f61]"
-                      initial={{ width: 0 }}
-                      whileHover={{ width: '100%' }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </a>
+                  <div className="flex flex-col">
+                    <a
+                      href="tel:+917338880027"
+                      className="text-[#e0f7fa] hover:text-[#ff6f61] relative text-sm"
+                    >
+                      +91 73388 80027
+                      <motion.span
+                        className="absolute bottom-0 left-0 w-0 h-px bg-[#ff6f61]"
+                        initial={{ width: 0 }}
+                        whileHover={{ width: '100%' }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </a>
+                    <a
+                      href="tel:+919884001597"
+                      className="text-[#e0f7fa] hover:text-[#ff6f61] relative text-sm"
+                    >
+                      +91 98840 01597
+                      <motion.span
+                        className="absolute bottom-0 left-0 w-0 h-px bg-[#ff6f61]"
+                        initial={{ width: 0 }}
+                        whileHover={{ width: '100%' }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </a>
+                  </div>
                 </motion.div>
                 <motion.div
                   className="flex items-center group"
@@ -214,40 +249,48 @@ const Footer = () => {
                   transition={{ duration: 0.3 }}
                 >
                   <Mail size={18} className="text-[#ff6f61] mr-2 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                  <a
-                    href="mailto:gvscontrols@gmail.com"
-                    className="text-[#e0f7fa] hover:text-[#ff6f61] relative"
-                  >
-                    gvscontrols@gmail.com
-                    <motion.span
-                      className="absolute bottom-0 left-0 w-0 h-px bg-[#ff6f61]"
-                      initial={{ width: 0 }}
-                      whileHover={{ width: '100%' }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </a>
+                  <div className="flex flex-col">
+                    <a
+                      href="mailto:projects@gvscontrols.com"
+                      className="text-[#e0f7fa] hover:text-[#ff6f61] relative text-sm"
+                    >
+                      projects@gvscontrols.com
+                      <motion.span
+                        className="absolute bottom-0 left-0 w-0 h-px bg-[#ff6f61]"
+                        initial={{ width: 0 }}
+                        whileHover={{ width: '100%' }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </a>
+                    <a
+                      href="mailto:services@gvscontrols.com"
+                      className="text-[#e0f7fa] hover:text-[#ff6f61] relative text-sm"
+                    >
+                      services@gvscontrols.com
+                      <motion.span
+                        className="absolute bottom-0 left-0 w-0 h-px bg-[#ff6f61]"
+                        initial={{ width: 0 }}
+                        whileHover={{ width: '100%' }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </a>
+                    <a
+                      href="mailto:gvscontrols@gmail.com"
+                      className="text-[#e0f7fa] hover:text-[#ff6f61] relative text-sm"
+                    >
+                      gvscontrols@gmail.com
+                      <motion.span
+                        className="absolute bottom-0 left-0 w-0 h-px bg-[#ff6f61]"
+                        initial={{ width: 0 }}
+                        whileHover={{ width: '100%' }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </a>
+                  </div>
                 </motion.div>
               </div>
             </motion.div>
           </div>
-
-          {/* Bottom Footer */}
-          <motion.div
-            className="mt-10 pt-6 border-t border-[#2a9d8f]/30 text-center text-[#e0f7fa] text-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <p className="relative inline-block group">
-              © {new Date().getFullYear()} GVS Controls. All rights reserved. | Engineered for the future.
-              <motion.span
-                className="absolute -bottom-1 left-0 w-0 h-px bg-[#ff6f61]"
-                initial={{ width: 0 }}
-                whileHover={{ width: '100%' }}
-                transition={{ duration: 0.3 }}
-              />
-            </p>
-          </motion.div>
         </div>
       </div>
     </footer>

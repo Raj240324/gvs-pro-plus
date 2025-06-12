@@ -51,7 +51,8 @@ const TermsOfService = () => {
             <p className="mb-4">
               <strong>"User"</strong> refers to any individual or entity accessing or using the Website.<br />
               <strong>"Content"</strong> means all information, text, images, graphics, logos, documents, and other materials available on the Website.<br />
-              <strong>"Services"</strong> refers to consultancy, engineering, manufacturing, automation, and related services offered by GVS Controls.
+              <strong>"Services"</strong> refers to consultancy, engineering, manufacturing, automation, and related services offered by GVS Controls.<br />
+              <strong>"Intellectual Property"</strong> means all patents, trademarks, service marks, trade names, copyrights, trade secrets, and other intellectual property rights owned or licensed by GVS Controls.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>2. Use of the Website</h2>
@@ -69,6 +70,8 @@ const TermsOfService = () => {
                 <li>Do not transmit or upload any viruses, malware, or other harmful code.</li>
                 <li>Do not use the Website to infringe upon the rights of others, including intellectual property, privacy, or contractual rights.</li>
                 <li>Do not post, transmit, or otherwise make available any content that is unlawful, harmful, defamatory, obscene, or otherwise objectionable.</li>
+                <li>Do not use the Website for any commercial purpose without our express written consent.</li>
+                <li>Do not collect or harvest any information or data from the Website or our systems.</li>
               </ul>
             </motion.div>
             <hr className="my-6 border-[#2a9d8f]/20" />
@@ -76,40 +79,67 @@ const TermsOfService = () => {
             <p className="mb-4">
               All Content on the Website, including but not limited to text, images, technical diagrams, logos, and software, is the exclusive property of GVS Controls or its licensors and is protected by applicable copyright, trademark, and other intellectual property laws. You may not reproduce, distribute, modify, display, perform, or otherwise use any Content without the prior written consent of GVS Controls, except as expressly permitted by these Terms or applicable law.
             </p>
+            <p className="mb-4">
+              Any unauthorized use of the Content may violate copyright laws, trademark laws, the laws of privacy and publicity, and communications regulations and statutes. GVS Controls reserves all rights not expressly granted in and to the Website and the Content.
+            </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>4. Services and Contracts</h2>
             <p className="mb-4">
               The information provided on the Website regarding our Services is for general informational purposes only and does not constitute a binding offer. Any engagement for Services shall be subject to a separate written agreement between you and GVS Controls, which will set forth the specific terms and conditions applicable to such engagement.
+            </p>
+            <p className="mb-4">
+              We reserve the right to modify, suspend, or discontinue any aspect of our Services at any time, including the availability of any feature, database, or content. We may also impose limits on certain features and services or restrict your access to parts or all of the Services without notice or liability.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>5. Privacy and Data Protection</h2>
             <p className="mb-4">
               Your privacy is important to us. Any personal information you provide through the Website will be handled in accordance with our <a href="/privacy-policy" className="underline hover:no-underline">Privacy Policy</a>. By using the Website, you consent to the collection, use, and disclosure of your information as described in the Privacy Policy.
             </p>
+            <p className="mb-4">
+              We implement appropriate technical and organizational measures to protect your personal data against unauthorized or unlawful processing, accidental loss, destruction, or damage. However, no method of transmission over the Internet or electronic storage is 100% secure.
+            </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>6. Limitation of Liability</h2>
             <p className="mb-4">
-              The Website and all Content are provided on an "as is" and "as available" basis without warranties of any kind, either express or implied. To the fullest extent permitted by law, GVS Controls disclaims all warranties, including but not limited to merchantability, fitness for a particular purpose, and non-infringement. In no event shall GVS Controls, its affiliates, or its licensors be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of, or inability to use, the Website or any Content, even if advised of the possibility of such damages.
+              The Website and all Content are provided on an "as is" and "as available" basis without warranties of any kind, either express or implied. To the fullest extent permitted by law, GVS Controls disclaims all warranties, including but not limited to merchantability, fitness for a particular purpose, and non-infringement.
+            </p>
+            <p className="mb-4">
+              In no event shall GVS Controls, its affiliates, or its licensors be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of, or inability to use, the Website or any Content, even if advised of the possibility of such damages.
+            </p>
+            <p className="mb-4">
+              Some jurisdictions do not allow the exclusion or limitation of liability for consequential or incidental damages, so the above limitation may not apply to you.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>7. Third-Party Links</h2>
             <p className="mb-4">
               The Website may contain links to third-party websites or resources. These links are provided for your convenience only. GVS Controls does not endorse and is not responsible for the content, products, or services on or available from those websites or resources. Access to any third-party websites is at your own risk.
             </p>
+            <p className="mb-4">
+              You acknowledge and agree that GVS Controls shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance on any such content, goods, or services available on or through any such websites or resources.
+            </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>8. Termination</h2>
             <p className="mb-4">
               We reserve the right, in our sole discretion, to suspend or terminate your access to the Website at any time and for any reason, including but not limited to violation of these Terms. Upon termination, all rights granted to you under these Terms will immediately cease.
+            </p>
+            <p className="mb-4">
+              The provisions of these Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity, and limitations of liability.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>9. Governing Law and Dispute Resolution</h2>
             <p className="mb-4">
               These Terms shall be governed by and construed in accordance with the laws of the State of Tamil Nadu, India, without regard to its conflict of law principles. Any disputes arising out of or relating to these Terms or your use of the Website shall be subject to the exclusive jurisdiction of the courts located in Chengalpattu, Tamil Nadu, India.
             </p>
+            <p className="mb-4">
+              You agree that any cause of action arising out of or related to the Website must commence within one (1) year after the cause of action accrues. Otherwise, such cause of action is permanently barred.
+            </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>10. Changes to These Terms</h2>
             <p className="mb-4">
               We may revise and update these Terms from time to time at our sole discretion. All changes are effective immediately when posted. Your continued use of the Website following the posting of revised Terms means that you accept and agree to the changes.
+            </p>
+            <p className="mb-4">
+              We encourage you to check this page periodically for any changes. The date of the last modification will be indicated at the top of the page.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>11. Contact Information</h2>
@@ -118,10 +148,11 @@ const TermsOfService = () => {
             </p>
             <address className="not-italic mb-4">
               <strong>GVS Controls</strong><br />
-              No.9/14, First Floor, EWS Plot, Gudalur, Maraimalai Nagar,<br />
-              Chengalpattu District, Tamil Nadu, Pin: 603209<br />
-              Email: <a href="mailto:gvscontrols@gmail.com" className="underline hover:no-underline">gvscontrols@gmail.com</a><br />
-              Phone: <a href="tel:+919884001597" className="underline hover:no-underline">+91 98840 01597</a>
+              Office & Works: Plot No.1476, Sengundram Main Road, Gokulapuram Chengalpattu Dist, Pin-603204<br />
+              (Land Mark – Mas Robotics)<br />
+              Reg. Office: No.46/1, 5th Cross Street, Bagavathy Nagar, Govindarajapuram, Guduvanchery – 603202, Kanchipuram Dist<br />
+              Mobile: <a href="tel:+917338880027" className="underline hover:no-underline">+91 73388 80027</a> & <a href="tel:+919884001597" className="underline hover:no-underline">+91 98840 01597</a><br />
+              Email: <a href="mailto:projects@gvscontrols.com" className="underline hover:no-underline">projects@gvscontrols.com</a>, <a href="mailto:services@gvscontrols.com" className="underline hover:no-underline">services@gvscontrols.com</a>, <a href="mailto:gvscontrols@gmail.com" className="underline hover:no-underline">gvscontrols@gmail.com</a>
             </address>
           </div>
         </motion.div>

@@ -660,3 +660,8 @@ img {
     @apply bg-background text-foreground;
   }
 }
+/* Add this to your global CSS if your Dialog overlay uses the class .dialog-overlay */
+.dialog-overlay {
+  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.2); /* Optional: darken background */
+}

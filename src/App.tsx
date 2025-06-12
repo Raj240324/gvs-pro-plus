@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CookieConsent from "react-cookie-consent";
+import { HelmetProvider } from 'react-helmet-async';
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import BackToTop from "./components/BackToTop";
@@ -54,6 +55,7 @@ const App = () => {
   }, [isLoading]);
 
   return (
+    <HelmetProvider>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
@@ -131,6 +133,7 @@ const App = () => {
         )}
       </TooltipProvider>
     </QueryClientProvider>
+    </HelmetProvider>
   );
 };
 
