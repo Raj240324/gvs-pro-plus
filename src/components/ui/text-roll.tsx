@@ -54,11 +54,16 @@ export function TextRoll({
   const letters = children.split("");
 
   return (
-    <span className={className} style={style}>
+    <span className={className} style={{ ...style, willChange: "transform" }}>
       {letters.map((letter, i) => (
         <span
           key={i}
           className="relative inline-block [perspective:10000px] [transform-style:preserve-3d] [width:auto]"
+          style={{ 
+            willChange: "transform",
+            transform: "translateZ(0)",
+            backfaceVisibility: "hidden"
+          }}
           aria-hidden="true"
         >
           <motion.span
@@ -69,6 +74,14 @@ export function TextRoll({
               ...transition,
               duration,
               delay: getEnterDelay(i),
+              type: "spring",
+              stiffness: 300,
+              damping: 20
+            }}
+            style={{ 
+              willChange: "transform",
+              transform: "translateZ(0)",
+              backfaceVisibility: "hidden"
             }}
           >
             {letter === " " ? "\u00A0" : letter}
@@ -82,6 +95,14 @@ export function TextRoll({
               ...transition,
               duration,
               delay: getExitDelay(i),
+              type: "spring",
+              stiffness: 300,
+              damping: 20
+            }}
+            style={{ 
+              willChange: "transform",
+              transform: "translateZ(0)",
+              backfaceVisibility: "hidden"
             }}
             onAnimationComplete={
               letters.length === i + 1 ? onAnimationComplete : undefined

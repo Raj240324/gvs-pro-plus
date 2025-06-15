@@ -99,7 +99,17 @@ const Hero = () => {
         <motion.div
           className="absolute w-full h-full bg-gradient-to-r from-teal-500/10 to-blue-500/10"
           animate={{ x: [0, 100, 0], y: [0, 50, 0] }}
-          transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+          transition={{ 
+            repeat: Infinity, 
+            duration: 20, 
+            ease: "linear",
+            type: "tween"
+          }}
+          style={{ 
+            willChange: "transform",
+            transform: "translateZ(0)",
+            backfaceVisibility: "hidden"
+          }}
         />
       </div>
 
@@ -159,11 +169,35 @@ const Hero = () => {
               className="text-lg sm:text-xl lg:text-2xl font-medium mb-3 italic mt-4"
               style={{ color: "#ffffff", textShadow: "0 2px 4px rgba(0, 0, 0, 0.5)" }}
             >
-              Consultant, Engineering, Manufacturing (Supply & Services)
+              <span style={{ 
+                color: "#FFE135", 
+                textShadow: "0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 225, 53, 0.5)",
+                fontWeight: "600"
+              }}>Consultant</span>, <span style={{ 
+                color: "#FF4D4D", 
+                textShadow: "0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 77, 77, 0.5)",
+                fontWeight: "600"
+              }}>Engineering</span>, <span style={{ 
+                color: "#39FF14", 
+                textShadow: "0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(57, 255, 20, 0.5)",
+                fontWeight: "600"
+              }}>Manufacturing</span> <span style={{ 
+                color: "#ffffff", 
+                textShadow: "0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 255, 255, 0.5)",
+                fontWeight: "600"
+              }}>(Supply & Services)</span>
             </p>
 
-            <p className="text-lg sm:text-xl lg:text-2xl font-bold italic mb-6" style={{ color: "#8b0000" }}>
-              Electrical & Automation
+            <p className="text-lg sm:text-xl lg:text-2xl font-bold italic mb-6">
+              <span style={{ 
+                color: "#FF8C00", 
+                textShadow: "0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 140, 0, 0.5)",
+                fontWeight: "700"
+              }}>Electrical</span> & <span style={{ 
+                color: "#00FFFF", 
+                textShadow: "0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 255, 255, 0.5)",
+                fontWeight: "700"
+              }}>Automation</span>
             </p>
 
             <motion.button
@@ -171,6 +205,11 @@ const Hero = () => {
               className="mt-4 px-6 py-3 rounded-lg bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white font-semibold shadow-md hover:from-[#4a0e78] hover:to-[#ff6f61] transition-all duration-300 text-base sm:text-lg"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              style={{ 
+                willChange: "transform",
+                transform: "translateZ(0)",
+                backfaceVisibility: "hidden"
+              }}
               aria-label="Explore Services"
             >
               Explore Services
@@ -185,6 +224,11 @@ const Hero = () => {
         onClick={() => setIsButtonsOpen(!isButtonsOpen)}
         whileHover={{ scale: 1.1, boxShadow: "0 0 15px rgba(255, 111, 97, 0.5)" }}
         whileTap={{ scale: 0.9 }}
+        style={{ 
+          willChange: "transform",
+          transform: "translateZ(0)",
+          backfaceVisibility: "hidden"
+        }}
         aria-label={isButtonsOpen ? "Close menu" : "Open menu"}
       >
         <motion.div

@@ -198,7 +198,7 @@ const Index = () => {
                 </div>
                 <div className="flip-card-back bg-gradient-to-br from-teal-500/90 to-teal-700/90 dark:from-teal-700/90 dark:to-teal-900/90 text-white rounded-2xl shadow-2xl border border-purple-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30 rotate-y-180">
                   <p className="text-sm leading-relaxed text-center font-medium">
-                    We’ve partnered with clients like SAIL, TISCO, RINL, CPCL, and Aditya Birla Group, collaborating with consultants like EIL and MECON.
+                    We've partnered with clients like SAIL, TISCO, RINL, CPCL, and Aditya Birla Group, collaborating with consultants like EIL and MECON.
                   </p>
                 </div>
               </div>
