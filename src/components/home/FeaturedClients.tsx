@@ -47,17 +47,22 @@ const FeaturedClients = () => {
 
   const getAnimationDuration = () => {
     if (!windowWidth) return 25;
-    if (windowWidth < 640) return 12;
-    if (windowWidth < 1024) return 18;
-    return 25;
+    if (windowWidth < 640) return 20;
+    if (windowWidth < 1024) return 25;
+    return 30;
   };
 
   const getCardWidth = () => {
     if (!windowWidth) return '80vw';
-    if (windowWidth < 640) return '80vw';
-    if (windowWidth < 1024) return '60vw';
+    if (windowWidth < 640) return '70vw';
+    if (windowWidth < 1024) return '50vw';
     return '28rem';
   };
+
+  // Create two sets of clients for seamless infinite scroll
+  const firstSet = [...clients];
+  const secondSet = [...clients];
+  const allClients = [...firstSet, ...secondSet];
 
   return (
     <section ref={sectionRef} className="relative py-12 sm:py-16 lg:py-24 bg-black text-white overflow-hidden font-futura">
@@ -68,7 +73,7 @@ const FeaturedClients = () => {
       >
         <div className="absolute inset-0 animate-pulse bg-[url('data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFFFFF' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30v4h4v2h-4v4h-2v-4h-4v-2h4v-4h2zM6 34v4h4v2h-4v4h-2v-4h-4v-2h4v-4h2zM6 4v4h-4v2h4v4h2v-4h4v-2h-4v-4h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]" />
         <div className="absolute inset-0 pointer-events-none">
-          {[...Array(windowWidth < 640 ? 10 : 20)].map((_, i) => (
+          {[...Array(windowWidth < 640 ? 5 : windowWidth < 1024 ? 10 : 20)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute w-1 h-1 bg-blue-400 rounded-full"
@@ -95,13 +100,13 @@ const FeaturedClients = () => {
         {/* Header Section */}
         <motion.div
           style={{ opacity: contentOpacity }}
-          className="text-center mb-12 sm:mb-16 lg:mb-20"
+          className="text-center mb-8 sm:mb-12 lg:mb-16"
         >
           <motion.span 
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="inline-block px-4 sm:px-6 py-2 bg-blue-500/20 rounded-full text-xs sm:text-sm font-medium text-blue-300 border border-blue-500/40 shadow-[0_0_20px_rgba(59,130,246,0.4)]"
+            className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-blue-500/20 rounded-full text-xs sm:text-sm font-medium text-blue-300 border border-blue-500/40 shadow-[0_0_20px_rgba(59,130,246,0.4)]"
           >
             Strategic Partners
           </motion.span>
@@ -109,7 +114,7 @@ const FeaturedClients = () => {
             initial={{ y: 30, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.9, delay: 0.2 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 tracking-tight"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 tracking-tight"
           >
             Pioneering Progress
           </motion.h2>
@@ -117,28 +122,37 @@ const FeaturedClients = () => {
             initial={{ y: 40, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.9, delay: 0.4 }}
-            className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mt-4 sm:mt-6 font-light"
+            className="text-sm sm:text-base md:text-lg text-gray-300 max-w-3xl mx-auto mt-3 sm:mt-4 font-light"
           >
             Collaborating with visionaries to shape the future.
           </motion.p>
         </motion.div>
 
         {/* Infinite Scroll with Enhanced Glassmorphic Cards */}
-        <div className="relative overflow-hidden py-8 sm:py-12">
+        <div className="relative overflow-hidden py-6 sm:py-8">
           <motion.div
-            animate={{ x: ["100%", "-100%"] }}
-            transition={{ duration: getAnimationDuration(), ease: "linear", repeat: Infinity }}
-            className="flex space-x-4 sm:space-x-6 whitespace-nowrap"
+            className="flex space-x-3 sm:space-x-4 lg:space-x-6"
+            animate={{
+              x: [0, -1000],
+            }}
+            transition={{
+              x: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: getAnimationDuration(),
+                ease: "linear",
+              },
+            }}
           >
-            {duplicatedClients.map((client, index) => (
+            {allClients.map((client, index) => (
               <motion.div
                 key={`${client.name}-${index}`}
                 initial={{ opacity: 0, y: 50, rotateX: 30 }}
                 whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
                 whileHover={{ 
-                  y: -20, 
-                  rotateY: 10, 
-                  scale: 1.05,
+                  y: windowWidth < 640 ? -10 : -20,
+                  rotateY: windowWidth < 640 ? 5 : 10,
+                  scale: windowWidth < 640 ? 1.02 : 1.05,
                   boxShadow: "0 15px 30px rgba(59,130,246,0.3)"
                 }}
                 transition={{ 
@@ -147,14 +161,14 @@ const FeaturedClients = () => {
                   hover: { duration: 0.3 }
                 }}
                 style={{ width: getCardWidth() }}
-                className="flex-shrink-0 bg-gradient-to-br from-gray-900/20 to-blue-900/10 rounded-2xl border border-blue-500/30 backdrop-blur-xl shadow-xl group perspective-1000 overflow-hidden"
+                className="flex-shrink-0 bg-gradient-to-br from-gray-900/20 to-blue-900/10 rounded-xl sm:rounded-2xl border border-blue-500/30 backdrop-blur-xl shadow-xl group perspective-1000 overflow-hidden"
               >
-                <div className="relative p-6 sm:p-8 flex items-center transform-style-3d">
+                <div className="relative p-4 sm:p-6 lg:p-8 flex items-center transform-style-3d">
                   <motion.div 
-                    className="relative w-16 h-16 sm:w-20 sm:h-20 mr-4 sm:mr-6"
+                    className="relative w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mr-3 sm:mr-4 lg:mr-6"
                     whileHover={{ 
                       rotate: 360, 
-                      scale: 1.2,
+                      scale: windowWidth < 640 ? 1.1 : 1.2,
                       boxShadow: "0 0 25px rgba(59,130,246,0.5)"
                     }}
                     transition={{ duration: 0.6 }}
@@ -169,15 +183,15 @@ const FeaturedClients = () => {
                   </motion.div>
                   <div className="flex-1">
                     <motion.p 
-                      className="text-lg sm:text-xl font-semibold text-white group-hover:text-blue-300 transition-colors duration-500"
-                      whileHover={{ x: 8 }}
+                      className="text-base sm:text-lg lg:text-xl font-semibold text-white group-hover:text-blue-300 transition-colors duration-500"
+                      whileHover={{ x: windowWidth < 640 ? 4 : 8 }}
                       transition={{ duration: 0.4 }}
                     >
                       {client.name}
                     </motion.p>
                     <motion.p 
                       className="text-xs sm:text-sm text-gray-400 group-hover:text-blue-200 transition-colors duration-500"
-                      whileHover={{ x: 8 }}
+                      whileHover={{ x: windowWidth < 640 ? 4 : 8 }}
                       transition={{ duration: 0.4 }}
                     >
                       {client.projects}
@@ -191,7 +205,7 @@ const FeaturedClients = () => {
                 />
                 <div className="absolute inset-0 pointer-events-none">
                   <motion.div 
-                    className="absolute w-2 h-2 bg-blue-500 rounded-full top-2 right-2"
+                    className="absolute w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full top-2 right-2"
                     animate={{
                       scale: [1, 1.5, 1],
                       opacity: [0.5, 1, 0.5],
@@ -202,7 +216,7 @@ const FeaturedClients = () => {
                     }}
                   />
                   <motion.div 
-                    className="absolute w-2 h-2 bg-purple-500 rounded-full bottom-2 left-2"
+                    className="absolute w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full bottom-2 left-2"
                     animate={{
                       scale: [1, 1.5, 1],
                       opacity: [0.5, 1, 0.5],
@@ -214,7 +228,7 @@ const FeaturedClients = () => {
                     }}
                   />
                   <motion.div
-                    className="absolute w-40 h-40 bg-blue-400/30 rounded-full -top-20 -left-20"
+                    className="absolute w-32 h-32 sm:w-40 sm:h-40 bg-blue-400/30 rounded-full -top-16 -left-16 sm:-top-20 sm:-left-20"
                     animate={{
                       x: [-100, 400],
                       y: [-100, 400],
@@ -230,8 +244,8 @@ const FeaturedClients = () => {
               </motion.div>
             ))}
           </motion.div>
-          <div className="absolute inset-y-0 left-0 w-12 sm:w-24 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-12 sm:w-24 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 left-0 w-8 sm:w-12 lg:w-24 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-8 sm:w-12 lg:w-24 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
         </div>
 
         {/* Stats Section */}
