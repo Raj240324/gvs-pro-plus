@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
 const FeaturedClients = () => {
   const sectionRef = useRef(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
@@ -19,22 +20,23 @@ const FeaturedClients = () => {
   });
 
   const clients = [
-    { name: 'SAIL', logo: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80', projects: 'Bulk Material Handling' },
-    { name: 'TISCO', logo: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80', projects: 'Steel Plants' },
-    { name: 'RINL Vizag', logo: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80', projects: 'Power Plants' },
-    { name: 'NTPC', logo: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80', projects: 'Thermal Power Stations' },
-    { name: 'JSW', logo: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80', projects: 'Cement & Steel Plants' },
-    { name: 'Ultratech', logo: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80', projects: 'Cement Projects' },
-    { name: 'Aditya Birla Group', logo: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80', projects: 'Process Plants' },
-    { name: 'GMR', logo: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80', projects: 'Renewable Energy' },
-    { name: 'Sterlite Group', logo: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80', projects: 'Chemical Plants' },
-    { name: 'Aumund Engineering', logo: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80', projects: 'Samson Feeder Systems' },
-    { name: 'Loesche Energy', logo: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80', projects: 'Centrix Systems' },
+    { name: 'SAIL', projects: 'Bulk Material Handling', color: 'from-blue-500 to-cyan-500' },
+    { name: 'TISCO', projects: 'Steel Plants', color: 'from-red-500 to-orange-500' },
+    { name: 'RINL Vizag', projects: 'Power Plants', color: 'from-green-500 to-emerald-500' },
+    { name: 'NTPC', projects: 'Thermal Power Stations', color: 'from-purple-500 to-pink-500' },
+    { name: 'JSW', projects: 'Cement & Steel Plants', color: 'from-yellow-500 to-orange-500' },
+    { name: 'Ultratech', projects: 'Cement Projects', color: 'from-indigo-500 to-blue-500' },
+    { name: 'Aditya Birla Group', projects: 'Process Plants', color: 'from-teal-500 to-green-500' },
+    { name: 'GMR', projects: 'Renewable Energy', color: 'from-pink-500 to-rose-500' },
+    { name: 'Sterlite Group', projects: 'Chemical Plants', color: 'from-violet-500 to-purple-500' },
+    { name: 'Aumund Engineering', projects: 'Samson Feeder Systems', color: 'from-cyan-500 to-blue-500' },
+    { name: 'Loesche Energy', projects: 'Centrix Systems', color: 'from-amber-500 to-yellow-500' },
   ];
 
   const duplicatedClients = [...clients, ...clients];
 
   const [windowWidth, setWindowWidth] = useState(0);
+  const [scrollWidth, setScrollWidth] = useState(2000);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -45,18 +47,17 @@ const FeaturedClients = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      setScrollWidth(scrollContainerRef.current.scrollWidth / 2); // half, since we duplicate for seamless
+    }
+  }, [windowWidth]);
+
   const getAnimationDuration = () => {
     if (!windowWidth) return 25;
     if (windowWidth < 640) return 20;
     if (windowWidth < 1024) return 25;
     return 30;
-  };
-
-  const getCardWidth = () => {
-    if (!windowWidth) return '80vw';
-    if (windowWidth < 640) return '70vw';
-    if (windowWidth < 1024) return '50vw';
-    return '28rem';
   };
 
   // Create two sets of clients for seamless infinite scroll
@@ -131,9 +132,10 @@ const FeaturedClients = () => {
         {/* Infinite Scroll with Enhanced Glassmorphic Cards */}
         <div className="relative overflow-hidden py-6 sm:py-8">
           <motion.div
-            className="flex space-x-3 sm:space-x-4 lg:space-x-6"
+            ref={scrollContainerRef}
+            className="flex min-w-max space-x-4 sm:space-x-6 lg:space-x-8"
             animate={{
-              x: [0, -1000],
+              x: [0, -scrollWidth],
             }}
             transition={{
               x: {
@@ -160,43 +162,37 @@ const FeaturedClients = () => {
                   ease: "easeOut",
                   hover: { duration: 0.3 }
                 }}
-                style={{ width: getCardWidth() }}
-                className="flex-shrink-0 bg-gradient-to-br from-gray-900/20 to-blue-900/10 rounded-xl sm:rounded-2xl border border-blue-500/30 backdrop-blur-xl shadow-xl group perspective-1000 overflow-hidden"
+                className="flex-shrink-0 w-48 sm:w-56 lg:w-64 bg-gradient-to-br from-gray-900/20 to-blue-900/10 rounded-xl sm:rounded-2xl border border-blue-500/30 backdrop-blur-xl shadow-xl group perspective-1000 overflow-visible mt-14"
               >
-                <div className="relative p-4 sm:p-6 lg:p-8 flex items-center transform-style-3d">
+                <div className="relative flex flex-col items-center w-full pt-12 sm:pt-20 pb-4">
                   <motion.div 
-                    className="relative w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mr-3 sm:mr-4 lg:mr-6"
-                    whileHover={{ 
-                      rotate: 360, 
-                      scale: windowWidth < 640 ? 1.1 : 1.2,
-                      boxShadow: "0 0 25px rgba(59,130,246,0.5)"
-                    }}
-                    transition={{ duration: 0.6 }}
+                    className={`absolute left-1/2 -top-7 sm:-top-10 lg:-top-12 -translate-x-1/2 flex items-center justify-center w-14 h-14 sm:w-20 sm:h-20 lg:w-24 lg:h-24 aspect-square rounded-full bg-gradient-to-br ${client.color} shadow-lg border-4 border-white/10 z-10`}
                   >
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/50 to-purple-500/50 blur-xl group-hover:blur-2xl transition-all duration-500" />
-                    <img
-                      src={client.logo}
-                      alt={`${client.name} logo`}
-                      className="relative w-full h-full object-contain rounded-full border border-blue-400/60 shadow-[0_0_15px_rgba(59,130,246,0.6)]"
-                      loading="lazy"
-                    />
+                    <span
+                      className={`flex items-center justify-center w-full h-full text-center font-mono leading-none
+                        ${client.name.split(' ').map(word => word[0]).join('').length > 2
+                          ? 'text-xl sm:text-2xl lg:text-3xl tracking-tight'
+                          : 'text-2xl sm:text-3xl lg:text-4xl'
+                        } font-extrabold text-white drop-shadow-md`}
+                      style={{paddingTop: '2px'}}
+                    >
+                      {client.name.split(' ').map(word => word[0]).join('')}
+                    </span>
                   </motion.div>
-                  <div className="flex-1">
-                    <motion.p 
-                      className="text-base sm:text-lg lg:text-xl font-semibold text-white group-hover:text-blue-300 transition-colors duration-500"
-                      whileHover={{ x: windowWidth < 640 ? 4 : 8 }}
-                      transition={{ duration: 0.4 }}
-                    >
-                      {client.name}
-                    </motion.p>
-                    <motion.p 
-                      className="text-xs sm:text-sm text-gray-400 group-hover:text-blue-200 transition-colors duration-500"
-                      whileHover={{ x: windowWidth < 640 ? 4 : 8 }}
-                      transition={{ duration: 0.4 }}
-                    >
-                      {client.projects}
-                    </motion.p>
-                  </div>
+                  <motion.p 
+                    className="mt-2 text-base sm:text-lg lg:text-xl font-semibold text-white group-hover:text-blue-300 transition-colors duration-500 text-center"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    {client.name}
+                  </motion.p>
+                  <motion.p 
+                    className="mt-2 text-xs sm:text-sm text-gray-400 group-hover:text-blue-200 transition-colors duration-500 text-center"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    {client.projects}
+                  </motion.p>
                 </div>
                 <motion.div 
                   className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.4)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
