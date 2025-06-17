@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, FacebookIcon, LinkedinIcon, TwitterIcon } from "lucide-react";
 import { FaWhatsapp, FaFilePdf, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import TypewriterEffectSmoothDemo from "../../components/ui/typewriter-effect-demo-1";
 import { TextRoll } from "../../components/ui/text-roll";
 import ContactModal from "../ContactModal";
 import { useNavigate } from "react-router-dom";
+import { FloatingButton, FloatingButtonItem } from "@/components/ui/floating-button";
+import { cn } from "@/lib/utils";
 
 // 1. Define allowed icon keys
 type IconKey = "Mail" | "BookOpen" | "Phone" | "WhatsApp";
@@ -218,60 +220,61 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Toggle Button for Action Icons */}
-      <motion.button
-        className="fixed bottom-6 right-6 w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white shadow-lg z-50 border border-[rgba(255,255,255,0.5)] hover:bg-gradient-to-r hover:from-[#4a0e78] hover:to-[#ff6f61] transition-all duration-300"
-        onClick={() => setIsButtonsOpen(!isButtonsOpen)}
-        whileHover={{ scale: 1.1, boxShadow: "0 0 15px rgba(255, 111, 97, 0.5)" }}
-        whileTap={{ scale: 0.9 }}
-        style={{ 
-          willChange: "transform",
-          transform: "translateZ(0)",
-          backfaceVisibility: "hidden"
-        }}
-        aria-label={isButtonsOpen ? "Close menu" : "Open menu"}
-      >
-        <motion.div
-          animate={{ rotate: isButtonsOpen ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
-          className="flex items-center justify-center"
-        >
-          <ArrowRight size={24} color="#ffffff" />
-        </motion.div>
-      </motion.button>
-
-      {/* Animated Buttons */}
-      <AnimatePresence>
-        {isButtonsOpen && (
-          <div className="fixed bottom-24 right-20 z-50">
-            {buttons.map((button, idx) => {
-              const Icon = iconMap[button.icon];
-              return (
-                <motion.button
-                  key={button.id}
-                  custom={idx}
-                  variants={buttonVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  onClick={button.action}
-                  aria-label={button.text}
-                  className="group relative flex items-center justify-center w-14 h-14 rounded-full glassmorphism transition-transform duration-300 hover:scale-110 focus:outline-none"
-                  whileHover={{ scale: 1.18 }}
-                  whileTap={{ scale: 0.92 }}
-                  style={{ position: "absolute" }}
-                >
-                  <Icon size={24} />
-                  <span className="sr-only">{button.text}</span>
-                  <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1 rounded-md bg-black/80 text-white text-xs opacity-0 pointer-events-none group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                    {button.text}
-                  </span>
-                </motion.button>
-              );
-            })}
-          </div>
-        )}
-      </AnimatePresence>
+      {/* Floating Action Buttons */}
+      <FloatingButton
+        isOpen={isButtonsOpen}
+        onOpenChange={setIsButtonsOpen}
+        triggerContent={
+          <motion.button
+            className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white shadow-lg ring-1 ring-white/30 hover:ring-white/50 hover:bg-gradient-to-r hover:from-[#4a0e78] hover:to-[#ff6f61] transition-all duration-300"
+            whileHover={{ scale: 1.1, boxShadow: "0 0 15px rgba(255, 111, 97, 0.5)" }}
+            whileTap={{ scale: 0.9 }}
+            style={{ 
+              willChange: "transform",
+              transform: "translateZ(0)",
+              backfaceVisibility: "hidden"
+            }}
+            aria-label={isButtonsOpen ? "Close menu" : "Open menu"}
+          >
+            <motion.div
+              animate={{ rotate: isButtonsOpen ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
+              className="flex items-center justify-center"
+            >
+              <ArrowRight size={24} color="#ffffff" />
+            </motion.div>
+          </motion.button>
+        }>
+        {buttons.map((button, idx) => {
+          const Icon = iconMap[button.icon];
+          const tooltipColors = {
+            Mail: "bg-gradient-to-br from-orange-400 to-yellow-400",
+            BookOpen: "bg-gradient-to-br from-red-500 to-pink-500",
+            Phone: "bg-gradient-to-br from-blue-500 to-cyan-500",
+            WhatsApp: "bg-gradient-to-br from-green-500 to-emerald-500"
+          };
+          return (
+            <FloatingButtonItem key={button.id}>
+              <motion.button
+                onClick={button.action}
+                aria-label={button.text}
+                className="group relative flex items-center justify-center w-14 h-14 rounded-full glassmorphism transition-transform duration-300 hover:scale-110 focus:outline-none"
+                whileHover={{ scale: 1.18 }}
+                whileTap={{ scale: 0.92 }}
+              >
+                <Icon size={24} />
+                <span className="sr-only">{button.text}</span>
+                <span className={cn(
+                  "absolute right-full mr-4 top-1/2 -translate-y-1/2 px-3 py-1 rounded-md text-white text-xs opacity-0 pointer-events-none group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-200 whitespace-nowrap shadow-lg",
+                  tooltipColors[button.icon]
+                )}>
+                  {button.text}
+                </span>
+              </motion.button>
+            </FloatingButtonItem>
+          );
+        })}
+      </FloatingButton>
 
       <ContactModal open={isModalOpen} onOpenChange={setIsModalOpen} />
     </section>

@@ -208,6 +208,7 @@ const Header = () => {
   const location = useLocation();
   const contactModal = useContactModal();
   const prevScrollY = useRef(0);
+  const [hovered, setHovered] = useState<number | null>(null);
 
   // Apply blur to body when contact modal is open
   useEffect(() => {
@@ -328,24 +329,48 @@ const Header = () => {
             <div className="hidden lg:flex items-center justify-end w-full lg:w-auto mt-2 lg:mt-0">
               <nav className="flex items-center">
                 <div className="flex items-center gap-1 bg-white/20 border border-white/30 rounded-full py-1 px-2">
-                  {navLinks.map((link) => (
-                    <NavLink
-                      key={link.name}
-                      to={link.path}
-                      end
-                      onClick={handleNavClick}
-                      className={({ isActive }) =>
-                        cn(
-                          "text-sm font-semibold px-3 py-1.5 rounded-full transition-colors whitespace-nowrap",
-                          isActive
-                            ? "bg-gradient-to-r from-[#ff6f61]/20 to-[#ffd700]/20 text-[#ff6f61]"
-                            : "text-[#4a0e78] hover:text-[#ff6f61] hover:bg-white/10"
-                        )
-                      }
-                    >
-                      {link.name}
-                    </NavLink>
-                  ))}
+                  <motion.div
+                    onMouseLeave={() => setHovered(null)}
+                    className="flex items-center justify-center"
+                  >
+                    {navLinks.map((link, idx) => (
+                      <NavLink
+                        key={link.name}
+                        to={link.path}
+                        end
+                        onClick={handleNavClick}
+                        onMouseEnter={() => setHovered(idx)}
+                        className={({ isActive }) =>
+                          cn(
+                            "relative px-3 py-1.5 text-sm font-semibold rounded-full transition-colors whitespace-nowrap",
+                            isActive
+                              ? "text-[#ff6f61]"
+                              : "text-[#4a0e78] hover:text-[#ff6f61]"
+                          )
+                        }
+                      >
+                        {hovered === idx && (
+                          <motion.div
+                            layoutId="hovered"
+                            className="absolute inset-0 h-full w-full rounded-full bg-gradient-to-r from-[#ff6b6b]/40 via-[#ffd93d]/40 to-[#ff8e53]/40"
+                            transition={{
+                              type: "spring",
+                              stiffness: 200,
+                              damping: 25,
+                              mass: 0.5
+                            }}
+                          >
+                            <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-gradient-to-r from-[#ff6b6b] to-[#ff8e53] rounded-t-full">
+                              <div className="absolute w-12 h-6 bg-gradient-to-r from-[#ff6b6b]/20 to-[#ff8e53]/20 rounded-full blur-md -top-2 -left-2" />
+                              <div className="absolute w-8 h-6 bg-gradient-to-r from-[#ff6b6b]/20 to-[#ff8e53]/20 rounded-full blur-md -top-1" />
+                              <div className="absolute w-4 h-4 bg-gradient-to-r from-[#ff6b6b]/20 to-[#ff8e53]/20 rounded-full blur-sm top-0 left-2" />
+                            </div>
+                          </motion.div>
+                        )}
+                        <span className="relative z-20">{link.name}</span>
+                      </NavLink>
+                    ))}
+                  </motion.div>
                 </div>
               </nav>
               <Button
