@@ -14,7 +14,6 @@ import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
-import CookiePolicy from './pages/CookiePolicy';
 import App from './App';
 
 const router = createBrowserRouter(
@@ -34,7 +33,6 @@ const router = createBrowserRouter(
         { path: 'contact', element: <Contact /> },
         { path: 'privacy-policy', element: <PrivacyPolicy /> },
         { path: 'terms-of-service', element: <TermsOfService /> },
-        { path: 'cookie-policy', element: <CookiePolicy /> },
         { path: '*', element: <NotFound /> },
       ],
     },
