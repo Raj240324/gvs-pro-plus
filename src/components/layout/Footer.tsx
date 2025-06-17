@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Home, Info, Briefcase, Folder, Contact, Shield, FileText, Cookie } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Home, Info, Briefcase, Folder, Contact, Shield, FileText } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 
@@ -15,11 +15,10 @@ const Footer = () => {
     { to: '/', label: 'Home', Icon: Home },
     { to: '/about', label: 'Our Story', Icon: Info },
     { to: '/services', label: 'Solutions', Icon: Briefcase },
-    { to: '/projects', label: 'Portfolio', Icon: Folder },
+    { to: '/projects', label: 'Projects', Icon: Folder },
     { to: '/contact', label: 'Get in Touch', Icon: Contact },
     { to: '/privacy-policy', label: 'Privacy Policy', Icon: Shield },
     { to: '/terms-of-service', label: 'Terms of Service', Icon: FileText },
-    { to: '/cookie-policy', label: 'Cookie Policy', Icon: Cookie },
   ];
 
   const serviceLinks = [

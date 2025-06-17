@@ -74,7 +74,7 @@ const PrivacyPolicy = () => {
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-[#2a9d8f]">Cookies and Similar Technologies</h3>
-                <p>We use cookies and similar tracking technologies to track activity on our website and store certain information. For detailed information about the cookies we use and your choices regarding cookies, please see our <a href="/cookie-policy" className="underline hover:no-underline">Cookie Policy</a>.</p>
+                <p>We use cookies and similar tracking technologies to track activity on our website and store certain information.</p>
               </div>
             </div>
             <hr className="my-6 border-[#2a9d8f]/20" />

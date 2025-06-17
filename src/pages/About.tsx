@@ -67,6 +67,8 @@ const About: React.FC = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   // State to track the current image index for control panel images
   const [currentControlPanelIndex, setCurrentControlPanelIndex] = useState<number>(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [visibleCards, setVisibleCards] = useState<number[]>([]);
 
   // Effect to rotate power plant and renewable energy images every 2 seconds
   useEffect(() => {
@@ -110,6 +112,38 @@ const About: React.FC = () => {
     handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const index = parseInt(entry.target.getAttribute('data-index') || '0');
+          if (entry.isIntersecting) {
+            setVisibleCards((prev) => [...prev, index]);
+          } else {
+            setVisibleCards((prev) => prev.filter((i) => i !== index));
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    const cards = document.querySelectorAll('.team-value-card');
+    cards.forEach((card) => observer.observe(card));
+
+    return () => {
+      cards.forEach((card) => observer.unobserve(card));
+    };
   }, []);
 
   const timelineData: TimelineItem[] = [
@@ -270,10 +304,13 @@ const About: React.FC = () => {
     }),
     hover: {
       scale: 1.05,
-      rotateX: 5,
-      rotateY: 5,
       transition: { duration: 0.3 },
     },
+  };
+
+  const flipVariants = {
+    hidden: { rotateY: 0 },
+    visible: { rotateY: 180 },
   };
 
   const iconVariants = {
@@ -350,7 +387,7 @@ const About: React.FC = () => {
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 drop-shadow-md">Mission & Vision</h2>
               <p className="text-gray-700 max-w-2xl mx-auto">
-                Discover the driving force behind GVS Controls’ commitment to innovation and excellence.
+                Discover the driving force behind GVS Controls' commitment to innovation and excellence.
               </p>
             </div>
             <div className="space-y-12 lg:space-y-0">
@@ -506,7 +543,7 @@ const About: React.FC = () => {
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 drop-shadow-md">Our Milestones</h2>
               <p className="text-gray-700 max-w-xl mx-auto text-base md:text-lg">
-                Explore key milestones in GVS Controls’ growth since 2017.
+                Explore key milestones in GVS Controls' growth since 2017.
               </p>
             </div>
             <div className="relative">
@@ -568,30 +605,71 @@ const About: React.FC = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {teamValues.map((value, i) => (
-                <motion.div
+                <div
                   key={i}
-                  custom={i}
-                  initial="hidden"
-                  animate="visible"
-                  whileHover="hover"
-                  variants={cardVariants}
-                  className="relative bg-gradient-to-br from-white/80 to-teal-50/50 backdrop-blur-md p-6 rounded-xl shadow-xl border border-teal-200/50 overflow-hidden transform-gpu"
+                  className="relative team-value-card"
+                  data-index={i}
+                  style={{ 
+                    perspective: '1000px',
+                    transformStyle: 'preserve-3d',
+                  }}
                 >
-                  <GlowingEffect spread={40} glow={true} proximity={64} className="rounded-xl" />
-                  <div className="relative z-10">
-                    <motion.div
-                      variants={iconVariants}
-                      className="w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center text-teal-600 mb-4 shadow-sm"
+                  <motion.div
+                    custom={i}
+                    initial="hidden"
+                    animate="visible"
+                    whileHover={!isMobile ? "hover" : undefined}
+                    variants={cardVariants}
+                    className="relative bg-gradient-to-br from-white/80 to-teal-50/50 backdrop-blur-md p-6 rounded-xl shadow-xl border border-teal-200/50 overflow-hidden transform-gpu"
+                    style={{
+                      transformStyle: 'preserve-3d',
+                      transform: isMobile && visibleCards.includes(i) ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                      transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                      position: 'relative',
+                    }}
+                  >
+                    <GlowingEffect spread={40} glow={true} proximity={64} className="rounded-xl" />
+                    <div 
+                      className="relative z-10"
+                      style={{ 
+                        backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden',
+                        transform: 'rotateY(0deg)',
+                      }}
                     >
-                      {value.icon}
-                    </motion.div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-2 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">
-                      {value.title}
-                    </h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">{value.desc}</p>
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-tr from-teal-500/10 to-indigo-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-xl" />
-                </motion.div>
+                      <motion.div
+                        variants={iconVariants}
+                        className="w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center text-teal-600 mb-4 shadow-sm"
+                      >
+                        {value.icon}
+                      </motion.div>
+                      <h3 className="text-xl font-bold text-gray-800 mb-2 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">
+                        {value.title}
+                      </h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">{value.desc}</p>
+                    </div>
+                    <div 
+                      className="absolute inset-0 bg-gradient-to-tr from-teal-500/10 to-indigo-500/10 rounded-xl flex items-center justify-center p-6 text-center"
+                      style={{ 
+                        backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden',
+                        transform: 'rotateY(180deg)',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                      }}
+                    >
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-800 mb-4 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">
+                          {value.title}
+                        </h3>
+                        <p className="text-gray-700 text-sm leading-relaxed">{value.desc}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
               ))}
             </div>
           </div>
