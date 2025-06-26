@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import React from 'react';
 import { 
   Settings, 
   Wrench, 
@@ -7,6 +8,8 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { TiltedCard } from '../components/ui/tilted-card';
+import { motion } from 'framer-motion';
 
 // Define TypeScript interface for service objects
 interface Service {
@@ -103,10 +106,10 @@ const Services = () => {
         'Erection Testing, Trouble Shooting & Commissioning of Bus Ducts, Power Control Centers, Motor Control Centers and Control Panels',
         'EB & DG Synchronizing Panels, AMF Control Panels & APFC Panels',
         'PLC,VFD Control Panels & Special Purpose and Other Custom Built Panels',
-        'Revamping of Electrical Power Panels, MCC and Process Control Panels and Integration of Electrical System with suitable Control’s (Relay& PLC) Instrumentation and Conversion of Relay Panel into PLC Panel',
+        'Revamping of Electrical Power Panels, MCC and Process Control Panels and Integration of Electrical System with suitable Controls (Relay & PLC) Instrumentation and Conversion of Relay Panel into PLC Panel',
         'Supervisory assistance to Erection, Testing and Commissioning at site',
         'Plant Shutdown and Turnarounds, Comprehensive Start-up & Commissioning Services',
-        'Supply of Field Instruments for Power Plants, Bulk Material Handling System, Chemical Plants, Cooling Towers,Automobile Industries, Process Plants, Cement plants and Renewable energy sectors'
+        'Supply of Field Instruments for Power Plants, Bulk Material Handling System, Chemical Plants, Cooling Towers, Automobile Industries, Process Plants, Cement plants and Renewable energy sectors'
       ],
       ctaLink: '#additional-services'
     },
@@ -116,7 +119,7 @@ const Services = () => {
       description: 'Renovation and revamping of electrical systems.',
       icon: <Clock size={28} className="text-teal-500" />,
       features: [
-        'Renovation& Revamping of Electrical System in order to ensure safety to people working around as well as to enhance system efficiency',
+        'Renovation & Revamping of Electrical System in order to ensure safety to people working around as well as to enhance system efficiency',
         'Well experienced Professionals carry out site survey to asses the optimum requirement for Renovation and Revamping of Electrical system',
         'Close co-ordination with Clients Engineering team and discuss about the modality of execution',
         'Trained Professionals are capable of Comprehending the needs of clients for execution of such Renovation and Revamping Work'
@@ -130,7 +133,7 @@ const Services = () => {
       icon: <Settings size={28} className="text-teal-500" />,
       features: [
         'Control Design through Relay logic and PLC Automation for Process Plant/ Machineries',
-        'Revamping and Integration of Electrical System with suitable Control’s (Relay& PLC) Instrumentation and Conversion of Relay Panel into PLC Panel',
+        'Revamping and Integration of Electrical System with suitable Controls (Relay & PLC) Instrumentation and Conversion of Relay Panel into PLC Panel',
         'Technical Services for Installation and commissioning activities at site',
         'Supply of Motor Control center VFD Panels and Local Control Panels',
         'Supply of Relay Logic and PLC Based Control Panels',
@@ -154,91 +157,76 @@ const Services = () => {
       </section>
 
       {/* Services Overview */}
-      <section className="py-20 bg-gradient-to-b from-white to-blue-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 relative overflow-hidden bg-gradient-to-br from-[#0f172a] via-[#1e3a8a] to-[#1e40af]">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-500/20 via-cyan-500/10 to-transparent" />
+        
+        <motion.div
+          className="absolute inset-0"
+          style={{
+            background: `
+              linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.06) 50%, transparent 100%),
+              linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.03) 50%, transparent 100%)
+            `,
+            backgroundSize: '200% 200%'
+          }}
+          animate={{
+            backgroundPosition: ['0% 0%', '100% 100%']
+          }}
+          transition={{
+            duration: 15,
+            ease: 'linear',
+            repeat: Infinity,
+            repeatType: 'reverse'
+          }}
+        />
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16 aos-fade-up">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Service Offerings</h2>
-            <p className="text-gray-600 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Service Offerings</h2>
+            <p className="text-gray-200 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
               Discover our comprehensive suite of solutions designed to optimize your industrial operations.
             </p>
           </div>
-          <style>{`
-            @keyframes fadeUp {
-              0% { transform: translateY(50px); opacity: 0; }
-              100% { transform: translateY(0); opacity: 1; }
-            }
-            @keyframes scaleIn {
-              0% { transform: scale(0.9); opacity: 0; }
-              100% { transform: scale(1); opacity: 1; }
-            }
-            @keyframes slideIn {
-              0% { transform: translateX(-50px); opacity: 0; }
-              100% { transform: translateX(0); opacity: 1; }
-            }
-            .aos-fade-up {
-              opacity: 0;
-              transform: translateY(50px);
-              transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-            }
-            .aos-scale-in {
-              opacity: 0;
-              transform: scale(0.9);
-              transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-            }
-            .aos-slide-in {
-              opacity: 0;
-              transform: translateX(-50px);
-              transition: opacity 1s ease-out, transform 1s ease-out;
-            }
-            .aos-animate.aos-fade-up {
-              animation: fadeUp 0.8s ease-out forwards;
-            }
-            .aos-animate.aos-scale-in {
-              animation: scaleIn 0.8s ease-out forwards;
-            }
-            .aos-animate.aos-slide-in {
-              animation: slideIn 1s ease-out forwards;
-            }
-            .truncate-3 {
-              display: -webkit-box;
-              -webkit-line-clamp: 3;
-              -webkit-box-orient: vertical;
-              overflow: hidden;
-            }
-            .card-hover {
-              transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-            }
-            .card-hover:hover {
-              transform: translateY(-8px);
-              box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-              background: linear-gradient(145deg, #f0f9ff, #e0f2fe);
-            }
-            .feature-item {
-              transition: transform 0.4s ease, opacity 0.4s ease;
-            }
-            .aos-animate .feature-item {
-              animation: slideIn 0.6s ease-out forwards;
-              animation-delay: calc(0.1s * var(--index));
-            }
-          `}</style>
+
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((card, index) => (
               <li
                 key={card.id}
-                className={`p-8 bg-white rounded-2xl shadow-lg border border-gray-100 card-hover aos-slide-in`}
+                className="aos-slide-in"
                 style={{ '--index': index } as React.CSSProperties}
               >
-                <div className="flex items-center mb-6">
-                  {card.icon}
-                  <h3 className="ml-4 text-2xl font-bold text-gray-900">{card.title}</h3>
-                </div>
-                <p className="text-gray-600 text-base mb-6 truncate-3 leading-relaxed">{card.description}</p>
-                <a
-                  href={card.ctaLink}
-                  className="inline-flex items-center text-teal-500 hover:text-teal-700 font-semibold text-base transition-colors duration-200"
+                <TiltedCard
+                  containerHeight="100%"
+                  containerWidth="100%"
+                  scaleOnHover={1.05}
+                  rotateAmplitude={10}
+                  showMobileWarning={false}
+                  showTooltip={false}
+                  className="h-full"
                 >
-                  Learn More <ArrowRight className="ml-2 w-5 h-5" />
-                </a>
+                  <div className="h-full p-8 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-xl rounded-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.12)]">
+                    <div className="flex items-center mb-6">
+                      <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg">
+                        {React.cloneElement(card.icon as React.ReactElement, {
+                          className: "text-white",
+                          size: 24
+                        })}
+                      </div>
+                      <h3 className="ml-4 text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
+                        {card.title}
+                      </h3>
+                    </div>
+                    <p className="text-gray-300 text-base mb-6 truncate-3 leading-relaxed">
+                      {card.description}
+                    </p>
+                    <a
+                      href={card.ctaLink}
+                      className="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-semibold text-base transition-colors duration-200"
+                    >
+                      Learn More <ArrowRight className="ml-2 w-5 h-5" />
+                    </a>
+                  </div>
+                </TiltedCard>
               </li>
             ))}
           </ul>
