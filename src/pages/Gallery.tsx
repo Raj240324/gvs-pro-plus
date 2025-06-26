@@ -51,12 +51,6 @@ const CustomCard = React.memo(({ title, src, onClick }: { title: string; src: st
           e.currentTarget.src = '/fallback-image.png';
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-        <h3 className="text-sm font-mono text-cyan-300 break-words">{title}</h3>
-      </div>
-      <div className="absolute top-2 right-2 bg-cyan-500/20 text-cyan-300 text-xs font-mono px-2 py-1 rounded-full">
-        View
-      </div>
     </motion.div>
   );
 });
@@ -318,29 +312,26 @@ const Gallery = () => {
                 }}
               />
               <button
-                className="absolute top-4 right-4 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-2 rounded-full transition-colors"
+                className="absolute top-4 right-4 bg-white/90 hover:bg-cyan-200 text-cyan-900 p-2 rounded-full shadow-lg ring-2 ring-cyan-400 transition-colors z-10"
                 onClick={closeLightbox}
                 aria-label="Close lightbox"
               >
-                <X size={20} />
+                <X size={32} />
               </button>
               <button
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-2 rounded-full transition-colors"
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-cyan-200 text-cyan-900 p-2 rounded-full shadow-lg ring-2 ring-cyan-400 transition-colors z-10"
                 onClick={goToPreviousImage}
                 aria-label="Previous image"
               >
-                <ChevronLeft size={20} />
+                <ChevronLeft size={32} />
               </button>
               <button
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 p-2 rounded-full transition-colors"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-cyan-200 text-cyan-900 p-2 rounded-full shadow-lg ring-2 ring-cyan-400 transition-colors z-10"
                 onClick={goToNextImage}
                 aria-label="Next image"
               >
-                <ChevronRight size={20} />
+                <ChevronRight size={32} />
               </button>
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900/90 to-transparent text-white p-4 rounded-b-xl">
-                <h3 className="font-mono text-sm sm:text-base text-cyan-300 break-words">{selectedImage.alt}</h3>
-              </div>
             </motion.div>
           </motion.div>
         )}

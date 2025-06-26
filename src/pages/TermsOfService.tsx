@@ -154,6 +154,26 @@ const TermsOfService = () => {
               Mobile: <a href="tel:+917338880027" className="underline hover:no-underline">+91 73388 80027</a> & <a href="tel:+919884001597" className="underline hover:no-underline">+91 98840 01597</a><br />
               Email: <a href="mailto:projects@gvscontrols.com" className="underline hover:no-underline">projects@gvscontrols.com</a>, <a href="mailto:services@gvscontrols.com" className="underline hover:no-underline">services@gvscontrols.com</a>, <a href="mailto:gvscontrols@gmail.com" className="underline hover:no-underline">gvscontrols@gmail.com</a>
             </address>
+            <hr className="my-6 border-[#2a9d8f]/20" />
+            <h2>12. Indemnification</h2>
+            <p className="mb-4">
+              You agree to indemnify, defend, and hold harmless GVS Controls, its affiliates, officers, directors, employees, and agents from and against any and all claims, damages, obligations, losses, liabilities, costs, or expenses (including but not limited to attorney's fees) arising from your use of the Website, your violation of these Terms, or your violation of any rights of another.
+            </p>
+            <hr className="my-6 border-[#2a9d8f]/20" />
+            <h2>13. Force Majeure</h2>
+            <p className="mb-4">
+              GVS Controls shall not be liable for any failure or delay in performance of its obligations under these Terms due to causes beyond its reasonable control, including but not limited to acts of God, war, strikes, labor disputes, embargoes, government orders, or any other force majeure event.
+            </p>
+            <hr className="my-6 border-[#2a9d8f]/20" />
+            <h2>14. Severability</h2>
+            <p className="mb-4">
+              If any provision of these Terms is found to be invalid or unenforceable by a court of competent jurisdiction, such provision shall be severed and the remaining provisions shall remain in full force and effect.
+            </p>
+            <hr className="my-6 border-[#2a9d8f]/20" />
+            <h2>15. Entire Agreement</h2>
+            <p className="mb-4">
+              These Terms constitute the entire agreement between you and GVS Controls regarding your use of the Website and supersede all prior agreements and understandings, whether written or oral, relating to such subject matter.
+            </p>
           </div>
         </motion.div>
       </div>

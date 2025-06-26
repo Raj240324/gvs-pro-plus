@@ -208,25 +208,25 @@ const PrivacyPolicy = () => {
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>8. Data Retention</h2>
             <p className="mb-4">
-              We retain your personal information for as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required or permitted by law. The criteria used to determine our retention periods include:
+              We retain your personal information only as long as necessary to fulfill the purposes for which it was collected, to comply with legal obligations, resolve disputes, and enforce our agreements. When your information is no longer required, we will securely delete or anonymize it in accordance with applicable laws.
             </p>
-            <ul className="list-disc pl-5 mb-4">
-              <li>The length of time we have an ongoing relationship with you</li>
-              <li>Whether there is a legal obligation to which we are subject</li>
-              <li>Whether retention is advisable in light of our legal position</li>
-            </ul>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>9. Children's Privacy</h2>
             <p className="mb-4">
-              Our website and services are not directed to children under the age of 16. We do not knowingly collect personal information from children. If you are a parent or guardian and believe your child has provided us with personal information, please contact us.
+              Our website and services are not intended for children under the age of 18. We do not knowingly collect personal information from children. If we become aware that we have inadvertently received personal data from a child under 18, we will delete such information from our records.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
-            <h2>10. Changes to This Policy</h2>
+            <h2>10. Data Breach Notification</h2>
             <p className="mb-4">
-              We may update this Privacy Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. The updated version will be indicated by an updated "Last Updated" date. We encourage you to review this Privacy Policy periodically.
+              In the unlikely event of a data breach that affects your personal information, we will notify you and relevant authorities as required by applicable law, and take all reasonable steps to mitigate any potential impact.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
-            <h2>11. Contact Us</h2>
+            <h2>11. Updates to This Privacy Policy</h2>
+            <p className="mb-4">
+              We may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements. We will post the updated policy on this page and update the "Last Updated" date at the top. We encourage you to review this policy periodically for any changes.
+            </p>
+            <hr className="my-6 border-[#2a9d8f]/20" />
+            <h2>12. Contact Us</h2>
             <p className="mb-4">
               If you have any questions about this Privacy Policy or our data practices, please contact us at:
             </p>
