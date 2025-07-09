@@ -6,8 +6,8 @@ import TypewriterEffectSmoothDemo from "../../components/ui/typewriter-effect-de
 import { TextRoll } from "../../components/ui/text-roll";
 import ContactModal from "../ContactModal";
 import { useNavigate } from "react-router-dom";
-import { FloatingButton, FloatingButtonItem } from "@/components/ui/floating-button";
-import { cn } from "@/lib/utils";
+import { FloatingButton, FloatingButtonItem } from "../../components/ui/floating-button";
+import { cn } from "../../lib/utils";
 
 // 1. Define allowed icon keys
 type IconKey = "Mail" | "BookOpen" | "Phone" | "WhatsApp";
