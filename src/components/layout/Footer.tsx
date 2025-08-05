@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Home, Info, Briefcase, Folder, Contact, Shield, FileText } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Home, Info, Briefcase, Folder, Contact, Shield, FileText, Wrench, Users, Star, Image } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 
@@ -13,10 +13,14 @@ const Footer = () => {
 
   const navLinks = [
     { to: '/', label: 'Home', Icon: Home },
-    { to: '/about', label: 'Our Story', Icon: Info },
-    { to: '/services', label: 'Solutions', Icon: Briefcase },
+    { to: '/about', label: 'About Us', Icon: Info },
+    { to: '/services', label: 'Services', Icon: Briefcase },
+    { to: '/manufacturing-supply', label: 'Manufacturing & Supply', Icon: Wrench },
     { to: '/projects', label: 'Projects', Icon: Folder },
-    { to: '/contact', label: 'Get in Touch', Icon: Contact },
+    { to: '/clients', label: 'Clients', Icon: Users },
+    { to: '/why-us', label: 'Why Us', Icon: Star },
+    { to: '/gallery', label: 'Gallery', Icon: Image },
+    { to: '/contact', label: 'Contact', Icon: Contact },
     { to: '/privacy-policy', label: 'Privacy Policy', Icon: Shield },
     { to: '/terms-of-service', label: 'Terms of Service', Icon: FileText },
   ];
@@ -87,10 +91,10 @@ const Footer = () => {
                   GVS CONTROLS
                 </span>
               </div>
-              <p className="font-montserrat text-sm leading-relaxed mb-2 text-[#ffbf00]">
+              <p className="font-montserrat text-sm leading-relaxed mb-2 text-[#ffbf00] italic font-bold">
                 Our Vision To Your Solution
               </p>
-              <p className="text-[#4a0e78]/90 text-md leading-relaxed">
+              <p className="text-[#4a0e78]/90 text-sm sm:text-md leading-relaxed break-words">
                 Since 2017, GVS Controls has delivered innovative, cost-effective engineering solutions, empowering clients with cutting-edge technology. Your vision, our mission.
               </p>
               <div className="flex space-x-3 mt-4">
@@ -125,23 +129,24 @@ const Footer = () => {
               <h3 className="font-montserrat font-semibold text-xl mb-4 text-[#4a0e78]">
                 Explore More
               </h3>
-              <nav className="grid gap-3">
+              <nav className="grid grid-cols-2 gap-x-4 gap-y-3">
                 {navLinks.map(({ to, label, Icon }) => (
                   <NavLink
                     key={label}
                     to={to}
-                    className="text-[#4a0e78]/90 hover:text-[#ff6f61] text-base relative group flex items-center"
+                    className="text-[#4a0e78]/90 hover:text-[#ff6f61] text-sm relative group flex items-center"
                   >
                     <motion.div
                       whileHover={{ scale: 1.1, rotate: 5 }}
                       transition={{ duration: 0.3 }}
                       className="mr-2"
                     >
-                      <Icon size={16} className="text-[#ff6f61]" />
+                      <Icon size={14} className="text-[#ff6f61]" />
                     </motion.div>
                     <motion.span
                       whileHover={{ x: 5 }}
                       transition={{ duration: 0.3 }}
+                      className="text-sm"
                     >
                       {label}
                     </motion.span>
@@ -299,7 +304,7 @@ const Footer = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            <div className="text-center text-sm text-[#4a0e78]/80">
+            <div className="text-center text-xs sm:text-sm text-[#4a0e78]/80 break-words px-4">
               <p>© {new Date().getFullYear()} GVS Controls. All rights reserved.</p>
               <p className="mt-2">
                 GVS Controls is a registered business in India, committed to delivering quality engineering solutions with integrity and professionalism.

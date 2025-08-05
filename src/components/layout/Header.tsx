@@ -315,14 +315,14 @@ const Header = () => {
                 />
                 <div className="hidden lg:flex flex-col">
                   <span className="text-[#ff0000] font-bold text-lg">GVS CONTROLS</span>
-                  <span className="text-[#ffbf00] font-medium">Our Vision To Your Solution</span>
+                  <span className="text-[#ffbf00] font-medium italic">Our Vision To Your Solution</span>
                 </div>
               </NavLink>
             </div>
             <div className="flex-1 flex justify-center items-center lg:hidden">
               <div className="text-center">
-                <span className="block text-[#ff0000] font-bold text-lg">GVS CONTROLS</span>
-                <span className="block text-[#ffbf00] font-medium">Our Vision To Your Solution</span>
+                <span className="block text-[#ff0000] font-bold text-xl">GVS CONTROLS</span>
+                <span className="block text-[#ffbf00] font-medium italic">Our Vision To Your Solution</span>
               </div>
             </div>
             <AnimatedMenuButton open={mobileMenuOpen} onClick={() => setMobileMenuOpen(!mobileMenuOpen)} />

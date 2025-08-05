@@ -152,7 +152,7 @@ const Hero = () => {
             <h1 className="mb-4">
               <span style={{ color: "#ff0000" }}>
                 <TextRoll
-                  className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight"
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight break-words"
                   transition={{ type: "spring", damping: 30, stiffness: 400 }}
                   duration={0.3}
                   getEnterDelay={(i) => i * 0.05}
@@ -163,12 +163,12 @@ const Hero = () => {
               </span>
             </h1>
 
-            <div className="text-lg sm:text-xl lg:text-2xl">
+            <div className="text-base sm:text-lg md:text-xl lg:text-2xl">
               <TypewriterEffectSmoothDemo />
             </div>
 
             <p
-              className="text-lg sm:text-xl lg:text-2xl font-medium mb-3 italic mt-4"
+              className="text-base sm:text-lg md:text-xl lg:text-2xl font-medium mb-3 italic mt-4 break-words px-2"
               style={{ color: "#ffffff", textShadow: "0 2px 4px rgba(0, 0, 0, 0.5)" }}
             >
               <span style={{ 
@@ -254,7 +254,7 @@ const Hero = () => {
             WhatsApp: "bg-gradient-to-br from-green-500 to-emerald-500"
           };
           return (
-            <FloatingButtonItem key={button.id}>
+            <FloatingButtonItem key={`${button.id}-${idx}`}>
               <motion.button
                 onClick={button.action}
                 aria-label={button.text}

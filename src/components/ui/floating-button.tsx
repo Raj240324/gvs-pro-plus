@@ -3,6 +3,7 @@
 import { ReactNode, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useOnClickOutside } from 'usehooks-ts';
+import React from 'react';
 
 type FloatingButtonProps = {
   className?: string;
@@ -43,10 +44,16 @@ const btn = {
   hidden: { rotate: 0 }
 };
 
-function FloatingButton({ className, children, triggerContent, isOpen: controlledIsOpen, onOpenChange }: FloatingButtonProps) {
+function FloatingButton({
+  className,
+  children,
+  triggerContent,
+  isOpen: controlledIsOpen,
+  onOpenChange
+}: FloatingButtonProps) {
   const ref = useRef(null);
   const [uncontrolledIsOpen, setUncontrolledIsOpen] = useState(false);
-  
+
   const isOpen = controlledIsOpen ?? uncontrolledIsOpen;
   const setIsOpen = onOpenChange ?? setUncontrolledIsOpen;
 
@@ -56,28 +63,39 @@ function FloatingButton({ className, children, triggerContent, isOpen: controlle
     <div className="fixed bottom-6 right-6 z-50">
       <div className="relative">
         <AnimatePresence>
-          <motion.ul
-            className="absolute bottom-14 right-0 flex flex-col items-end gap-2"
-            initial="hidden"
-            animate={isOpen ? 'visible' : 'hidden'}
-            variants={list}>
-            {children}
-          </motion.ul>
-          <motion.div
-            variants={btn}
-            animate={isOpen ? 'visible' : 'hidden'}
-            ref={ref}
-            onClick={() => setIsOpen(!isOpen)}>
-            {triggerContent}
-          </motion.div>
+          {isOpen && (
+            <motion.ul
+              className="absolute bottom-14 right-0 flex flex-col items-end gap-2"
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={list}
+            >
+              {React.Children.map(children, (child, index) => (
+                <motion.li variants={item} key={`floating-button-item-${index}`}>
+                  {child}
+                </motion.li>
+              ))}
+            </motion.ul>
+          )}
         </AnimatePresence>
+
+        <motion.div
+          variants={btn}
+          animate={isOpen ? 'visible' : 'hidden'}
+          ref={ref}
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {triggerContent}
+        </motion.div>
       </div>
     </div>
   );
 }
 
+// FloatingButtonItem no longer needs to be a motion.li because it's moved to parent
 function FloatingButtonItem({ children }: FloatingButtonItemProps) {
-  return <motion.li variants={item}>{children}</motion.li>;
+  return <>{children}</>;
 }
 
-export { FloatingButton, FloatingButtonItem }; 
+export { FloatingButton, FloatingButtonItem };

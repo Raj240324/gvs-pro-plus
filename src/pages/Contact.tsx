@@ -499,14 +499,14 @@ const Contact = () => {
                   transition={{ duration: 0.3 }}
                 >
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31098.623780720175!2d80.00370507068343!3d12.685610674509662!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52f712b82805b7%3A0xfcf142a03e07e756!2sMaraimalai%20Nagar%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1650956281050!5m2!1sen!2sin"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.1234567890123!2d79.9770!3d12.6847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52f712b82805b7%3A0xfcf142a03e07e756!2sGVS+Controls%2C+Plot+No.1476%2C+Sengundram+Main+Road%2C+Gokulapuram%2C+Chengalpattu%2C+Tamil+Nadu+603204!5e0!3m2!1sen!2sin!4v1650956281050!5m2!1sen!2sin"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="GVS Controls Location"
+                    title="GVS Controls Location - Plot No.1476, Sengundram Main Road, Gokulapuram, Chengalpattu"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
                 </motion.div>
@@ -515,16 +515,31 @@ const Contact = () => {
                   whileHover={{ y: -5, boxShadow: "0 15px 30px rgba(0, 0, 0, 0.1)" }}
                   transition={{ duration: 0.3 }}
                 >
-                  <h3 className="font-bold text-lg sm:text-xl mb-3 sm:mb-4 bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
-                    Business Hours
-                  </h3>
-                  <div className="grid grid-cols-2 gap-2 sm:gap-4 text-gray-600 dark:text-gray-300 text-xs sm:text-sm">
-                    <div className="font-medium">Monday - Friday</div>
-                    <div>9:00 AM - 6:00 PM</div>
-                    <div className="font-medium">Saturday</div>
-                    <div>9:00 AM - 1:00 PM</div>
-                    <div className="font-medium">Sunday</div>
-                    <div>Closed</div>
+                  <div className="flex items-start space-x-3 mb-4">
+                    <MapPin className="w-5 h-5 text-teal-600 mt-1 flex-shrink-0" />
+                    <div>
+                      <h3 className="font-bold text-lg sm:text-xl mb-2 bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
+                        Office & Works
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                        Plot No.1476, Sengundram Main Road, Gokulapuram<br />
+                        Chengalpattu Dist, Tamil Nadu - 603204<br />
+                        <span className="font-medium text-teal-600">Land Mark: Mas Robotics</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <MapPin className="w-5 h-5 text-purple-600 mt-1 flex-shrink-0" />
+                    <div>
+                      <h3 className="font-bold text-lg sm:text-xl mb-2 bg-gradient-to-r from-purple-600 to-teal-600 bg-clip-text text-transparent">
+                        Reg. Office
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                        No.46/1, 5th Cross Street, Bagavathy Nagar<br />
+                        Govindarajapuram, Guduvanchery - 603202<br />
+                        Kanchipuram Dist, Tamil Nadu
+                      </p>
+                    </div>
                   </div>
                 </motion.div>
               </motion.div>

@@ -1,7 +1,7 @@
 import FeaturedClients from '../components/home/FeaturedClients';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useContactModal } from '../hooks/use-contact-modal';
 import Hero from '../components/home/Hero';
 // Removed: import AnimatedGVSTestimonials from '../components/home/Testimonials';
@@ -12,6 +12,8 @@ import Highlights from '../components/home/Highlights';
 const Index = () => {
   const contactModal = useContactModal();
   const statsRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     document.title = 'GVS Controls - Innovative Electrical Engineering Solutions';
@@ -22,6 +24,15 @@ const Index = () => {
         'GVS Controls offers innovative electrical and automation solutions for industries like power, steel, and renewable energy.'
       );
     }
+
+    // Check if device is mobile
+    const checkMobile = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
 
     const handleScroll = () => {
       const windowHeight = window.innerHeight || document.documentElement.clientHeight;
@@ -74,8 +85,42 @@ const Index = () => {
 
     setTimeout(handleScroll, 100);
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+
+    // Intersection Observer for flip cards on mobile
+    if (isMobile) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const cardIndex = parseInt(entry.target.getAttribute('data-card-index') || '0');
+              // Add delay before flipping the card
+              setTimeout(() => {
+                setFlippedCards(prev => new Set([...prev, cardIndex]));
+              }, cardIndex * 500 + 1000); // 1 second base delay + 500ms per card
+            }
+          });
+        },
+        { threshold: 0.5, rootMargin: '0px 0px -50px 0px' }
+      );
+
+      const flipCards = document.querySelectorAll('.flip-card');
+      flipCards.forEach((card, index) => {
+        card.setAttribute('data-card-index', index.toString());
+        observer.observe(card);
+      });
+
+      return () => {
+        observer.disconnect();
+        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('resize', checkMobile);
+      };
+    }
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, [isMobile]);
 
   return (
     <main>
@@ -100,9 +145,22 @@ const Index = () => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
             {/* Our Foundation */}
-            <div className="flip-card group perspective-1000">
-              <div className="flip-card-inner group-hover:rotate-y-180 transition-transform duration-700 ease-in-out relative w-full h-full" style={{ perspective: '1000px' }}>
-                <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-blue-400/30 group-hover:shadow-blue-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20">
+            <div className="flip-card group" style={{ perspective: '1000px' }}>
+              <div 
+                className="flip-card-inner transition-transform duration-700 ease-in-out relative w-full h-full"
+                style={{ 
+                  transformStyle: 'preserve-3d',
+                  transform: isMobile && flippedCards.has(0) ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                  transformOrigin: 'center center'
+                }}
+                onMouseEnter={() => !isMobile && setFlippedCards(prev => new Set([...prev, 0]))}
+                onMouseLeave={() => !isMobile && setFlippedCards(prev => {
+                  const newSet = new Set(prev);
+                  newSet.delete(0);
+                  return newSet;
+                })}
+              >
+                <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-blue-400/30 group-hover:shadow-blue-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
                   <div className="w-14 h-14 flex items-center justify-center mb-4 rounded-full bg-gradient-to-br from-blue-300 to-blue-100 dark:from-blue-300 dark:to-blue-600 shadow-lg border-2 border-blue-300/50">
                     <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
@@ -112,7 +170,7 @@ const Index = () => {
                   <span className="inline-block bg-blue-100/60 dark:bg-blue-900/40 text-blue-700 dark:text-blue-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">Est. 2017</span>
                   <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Rooted in innovation and a problem-solving culture.</p>
                 </div>
-                <div className="flip-card-back bg-gradient-to-br from-blue-500/90 to-blue-700/90 dark:from-blue-700/90 dark:to-blue-900/90 text-white rounded-2xl shadow-2xl border border-blue-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30 rotate-y-180">
+                <div className="flip-card-back bg-gradient-to-br from-blue-500/90 to-blue-700/90 dark:from-blue-700/90 dark:to-blue-900/90 text-white rounded-2xl shadow-2xl border border-blue-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
                   <p className="text-sm leading-relaxed text-center font-medium">
                     Founded in 2017, M/s GVS Controls provides innovative, cost-effective engineering solutions, emphasizing a problem-solving culture to optimize man-machine interfaces and redefine customer satisfaction.
                   </p>
@@ -121,9 +179,22 @@ const Index = () => {
             </div>
 
             {/* Our Experience */}
-            <div className="flip-card group perspective-1000">
-              <div className="flip-card-inner group-hover:rotate-y-180 transition-transform duration-700 ease-in-out relative w-full h-full" style={{ perspective: '1000px' }}>
-                <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-green-400/30 group-hover:shadow-green-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20">
+            <div className="flip-card group" style={{ perspective: '1000px' }}>
+              <div 
+                className="flip-card-inner transition-transform duration-700 ease-in-out relative w-full h-full"
+                style={{ 
+                  transformStyle: 'preserve-3d',
+                  transform: isMobile && flippedCards.has(1) ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                  transformOrigin: 'center center'
+                }}
+                onMouseEnter={() => !isMobile && setFlippedCards(prev => new Set([...prev, 1]))}
+                onMouseLeave={() => !isMobile && setFlippedCards(prev => {
+                  const newSet = new Set(prev);
+                  newSet.delete(1);
+                  return newSet;
+                })}
+              >
+                <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-green-400/30 group-hover:shadow-green-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
                   <div className="w-14 h-14 flex items-center justify-center mb-4 rounded-full bg-gradient-to-br from-green-300 to-green-100 dark:from-green-300 dark:to-green-600 shadow-lg border-2 border-green-300/50">
                     <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -133,7 +204,7 @@ const Index = () => {
                   <span className="inline-block bg-green-100/60 dark:bg-green-900/40 text-green-700 dark:text-green-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">30+ Years</span>
                   <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Decades of EPC project expertise.</p>
                 </div>
-                <div className="flip-card-back bg-gradient-to-br from-green-500/90 to-green-700/90 dark:from-green-700/90 dark:to-green-900/90 text-white rounded-2xl shadow-2xl border border-green-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30 rotate-y-180">
+                <div className="flip-card-back bg-gradient-to-br from-green-500/90 to-green-700/90 dark:from-green-700/90 dark:to-green-900/90 text-white rounded-2xl shadow-2xl border border-green-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
                   <p className="text-sm leading-relaxed text-center font-medium">
                     With over 30 years of EPC project experience, our promoters have worked with industry leaders like Shriram EPC Ltd. and L&T, serving sectors like power plants, material handling, and renewable energy.
                   </p>
@@ -142,9 +213,22 @@ const Index = () => {
             </div>
 
             {/* Our Expertise */}
-            <div className="flip-card group perspective-1000">
-              <div className="flip-card-inner group-hover:rotate-y-180 transition-transform duration-700 ease-in-out relative w-full h-full" style={{ perspective: '1000px' }}>
-                <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-red-400/30 group-hover:shadow-red-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20">
+            <div className="flip-card group" style={{ perspective: '1000px' }}>
+              <div 
+                className="flip-card-inner transition-transform duration-700 ease-in-out relative w-full h-full"
+                style={{ 
+                  transformStyle: 'preserve-3d',
+                  transform: isMobile && flippedCards.has(2) ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                  transformOrigin: 'center center'
+                }}
+                onMouseEnter={() => !isMobile && setFlippedCards(prev => new Set([...prev, 2]))}
+                onMouseLeave={() => !isMobile && setFlippedCards(prev => {
+                  const newSet = new Set(prev);
+                  newSet.delete(2);
+                  return newSet;
+                })}
+              >
+                <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-red-400/30 group-hover:shadow-red-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
                   <div className="w-14 h-14 flex items-center justify-center mb-4 rounded-full bg-gradient-to-br from-red-300 to-red-100 dark:from-red-300 dark:to-red-600 shadow-lg border-2 border-red-300/50">
                     <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -154,7 +238,7 @@ const Index = () => {
                   <span className="inline-block bg-red-100/60 dark:bg-red-900/40 text-red-700 dark:text-red-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">Automation</span>
                   <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Total automation & process control</p>
                 </div>
-                <div className="flip-card-back bg-gradient-to-br from-red-500/90 to-red-700/90 dark:from-red-700/90 dark:to-red-900/90 text-white rounded-2xl shadow-2xl border border-red-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30 rotate-y-180">
+                <div className="flip-card-back bg-gradient-to-br from-red-500/90 to-red-700/90 dark:from-red-700/90 dark:to-red-900/90 text-white rounded-2xl shadow-2xl border border-red-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
                   <p className="text-sm leading-relaxed text-center font-medium">
                     We provide total automation, process control solutions, and innovative instrumentation products, delivering customer-driven services and cost-effective systems tailored to diverse process and machine applications.
                   </p>
@@ -163,9 +247,22 @@ const Index = () => {
             </div>
 
             {/* Our Services */}
-            <div className="flip-card group perspective-1000">
-              <div className="flip-card-inner group-hover:rotate-y-180 transition-transform duration-700 ease-in-out relative w-full h-full" style={{ perspective: '1000px' }}>
-                <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-yellow-400/30 group-hover:shadow-yellow-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20">
+            <div className="flip-card group" style={{ perspective: '1000px' }}>
+              <div 
+                className="flip-card-inner transition-transform duration-700 ease-in-out relative w-full h-full"
+                style={{ 
+                  transformStyle: 'preserve-3d',
+                  transform: isMobile && flippedCards.has(3) ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                  transformOrigin: 'center center'
+                }}
+                onMouseEnter={() => !isMobile && setFlippedCards(prev => new Set([...prev, 3]))}
+                onMouseLeave={() => !isMobile && setFlippedCards(prev => {
+                  const newSet = new Set(prev);
+                  newSet.delete(3);
+                  return newSet;
+                })}
+              >
+                <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-yellow-400/30 group-hover:shadow-yellow-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
                   <div className="w-14 h-14 flex items-center justify-center mb-4 rounded-full bg-gradient-to-br from-yellow-300 to-yellow-100 dark:from-yellow-300 dark:to-yellow-600 shadow-lg border-2 border-yellow-300/50">
                     <svg className="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path>
@@ -175,7 +272,7 @@ const Index = () => {
                   <span className="inline-block bg-yellow-100/60 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">Solutions</span>
                   <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Consultancy, manufacturing, revamping.</p>
                 </div>
-                <div className="flip-card-back bg-gradient-to-br from-yellow-500/90 to-yellow-700/90 dark:from-yellow-700/90 dark:to-yellow-900/90 text-white rounded-2xl shadow-2xl border border-yellow-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30 rotate-y-180">
+                <div className="flip-card-back bg-gradient-to-br from-yellow-500/90 to-yellow-700/90 dark:from-yellow-700/90 dark:to-yellow-900/90 text-white rounded-2xl shadow-2xl border border-yellow-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
                   <p className="text-sm leading-relaxed text-center font-medium">
                     We offer consultancy, manufacturing (control panels, bus ducts), and services like erection, testing, and revamping of electrical systems for safety and efficiency.
                   </p>
@@ -184,9 +281,22 @@ const Index = () => {
             </div>
 
             {/* Our Clients */}
-            <div className="flip-card group perspective-1000">
-              <div className="flip-card-inner group-hover:rotate-y-180 transition-transform duration-700 ease-in-out relative w-full h-full" style={{ perspective: '1000px' }}>
-                <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-purple-400/30 group-hover:shadow-purple-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20">
+            <div className="flip-card group" style={{ perspective: '1000px' }}>
+              <div 
+                className="flip-card-inner transition-transform duration-700 ease-in-out relative w-full h-full"
+                style={{ 
+                  transformStyle: 'preserve-3d',
+                  transform: isMobile && flippedCards.has(4) ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                  transformOrigin: 'center center'
+                }}
+                onMouseEnter={() => !isMobile && setFlippedCards(prev => new Set([...prev, 4]))}
+                onMouseLeave={() => !isMobile && setFlippedCards(prev => {
+                  const newSet = new Set(prev);
+                  newSet.delete(4);
+                  return newSet;
+                })}
+              >
+                <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-purple-400/30 group-hover:shadow-purple-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
                   <div className="w-14 h-14 flex items-center justify-center mb-4 rounded-full bg-gradient-to-br from-purple-300 to-purple-100 dark:from-purple-300 dark:to-purple-600 shadow-lg border-2 border-purple-300/50">
                     <svg className="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
@@ -196,7 +306,7 @@ const Index = () => {
                   <span className="inline-block bg-purple-100/60 dark:bg-purple-900/40 text-purple-700 dark:text-purple-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">Partners</span>
                   <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Trusted by industry leaders.</p>
                 </div>
-                <div className="flip-card-back bg-gradient-to-br from-teal-500/90 to-teal-700/90 dark:from-teal-700/90 dark:to-teal-900/90 text-white rounded-2xl shadow-2xl border border-purple-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30 rotate-y-180">
+                <div className="flip-card-back bg-gradient-to-br from-teal-500/90 to-teal-700/90 dark:from-teal-700/90 dark:to-teal-900/90 text-white rounded-2xl shadow-2xl border border-purple-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
                   <p className="text-sm leading-relaxed text-center font-medium">
                     We've partnered with clients like SAIL, TISCO, RINL, CPCL, and Aditya Birla Group, collaborating with consultants like EIL and MECON.
                   </p>

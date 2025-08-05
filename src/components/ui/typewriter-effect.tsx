@@ -70,7 +70,7 @@ export const TypewriterEffect = ({
   return (
     <div
       className={cn(
-        "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center",
+        "text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold text-center break-words",
         className
       )}
     >
@@ -164,7 +164,7 @@ export const TypewriterEffectSmooth = ({
       <motion.div className="overflow-hidden max-w-full">
         <div
           className={cn(
-            "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold",
+            "text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold break-words",
             className
           )}
         >

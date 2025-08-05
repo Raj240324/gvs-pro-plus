@@ -111,15 +111,17 @@ export const ImagesSlider = ({
       )}
       {areImagesLoaded && (
         <AnimatePresence>
-          <motion.img
-            key={currentIndex}
-            src={loadedImages[currentIndex]}
-            initial="initial"
-            animate="visible"
-            exit={direction === "up" ? "upExit" : "downExit"}
-            variants={slideVariants}
-            className="image h-full w-full absolute inset-0 object-cover object-center"
-          />
+          {loadedImages[currentIndex] && (
+            <motion.img
+              key={loadedImages[currentIndex] + '-' + currentIndex}
+              src={loadedImages[currentIndex]}
+              initial="initial"
+              animate="visible"
+              exit={direction === "up" ? "upExit" : "downExit"}
+              variants={slideVariants}
+              className="image h-full w-full absolute inset-0 object-cover object-center"
+            />
+          )}
         </AnimatePresence>
       )}
     </div>

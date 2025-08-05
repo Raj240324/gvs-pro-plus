@@ -208,7 +208,7 @@ const Clients: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {clients.map((client, index) => (
               <div
-                key={index}
+                key={`${client.name || ''}-${index}`}
                 className="group glassmorphism rounded-2xl p-6 hover:neon-border transition-all duration-500 animate-[slideIn_0.5s_ease-out] hover:scale-105"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
