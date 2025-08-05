@@ -119,24 +119,6 @@ const Gallery = () => {
     return () => window.removeEventListener('resize', debouncedUpdate);
   }, []);
 
-  // Set document metadata and ESC key handler
-  useEffect(() => {
-    document.title = 'PCC, MCC & PLC cum VFD Control Panels Gallery - GVS Controls';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute(
-        'content',
-        'Explore GVS Controls\' gallery showcasing innovative PCC, MCC, and PLC cum VFD control panels, manufactured for industrial automation and power management.'
-      );
-    }
-
-    const handleEscKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setSelectedImage(null);
-    };
-    window.addEventListener('keydown', handleEscKey);
-    return () => window.removeEventListener('keydown', handleEscKey);
-  }, []);
-
   // Memoized event handlers
   const openLightbox = useCallback((image: GalleryImage) => {
     const newIndex = images.findIndex((img) => img.id === image.id);
@@ -164,6 +146,34 @@ const Gallery = () => {
     setCurrentImageIndex(newIndex);
     setDirection(1);
   }, [currentImageIndex, images]);
+
+  // Set document metadata and ESC/arrow key handler
+  useEffect(() => {
+    document.title = 'PCC, MCC & PLC cum VFD Control Panels Gallery - GVS Controls';
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute(
+        'content',
+        'Explore GVS Controls\' gallery showcasing innovative PCC, MCC, and PLC cum VFD control panels, manufactured for industrial automation and power management.'
+      );
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedImage) {
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          goToPreviousImage();
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          goToNextImage();
+        } else if (e.key === 'Escape') {
+          setSelectedImage(null);
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedImage, goToPreviousImage, goToNextImage]);
 
   // Animation variants
   const sectionVariants = {
@@ -305,33 +315,50 @@ const Gallery = () => {
               <img
                 src={selectedImage.src}
                 alt={selectedImage.alt}
-                className="w-full max-h-[80vh] sm:max-h-[85vh] object-contain rounded-xl shadow-2xl border border-cyan-500/30"
+                className="w-full h-96 sm:h-auto max-h-[80vh] sm:max-h-[85vh] object-contain rounded-xl shadow-2xl border border-cyan-500/30"
                 loading="lazy"
                 onError={(e) => {
                   e.currentTarget.src = '/fallback-image.png';
                 }}
               />
               <button
-                className="absolute top-4 right-4 bg-white/90 hover:bg-cyan-200 text-cyan-900 p-2 rounded-full shadow-lg ring-2 ring-cyan-400 transition-colors z-10"
+                className="absolute -top-4 -right-4 bg-white/90 hover:bg-cyan-200 text-cyan-900 p-2 rounded-full shadow-lg ring-2 ring-cyan-400 transition-colors z-10 group"
                 onClick={closeLightbox}
                 aria-label="Close lightbox"
               >
-                <X size={32} />
+                <X size={32} className="transition-transform duration-300 group-hover:rotate-180" />
               </button>
               <button
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-cyan-200 text-cyan-900 p-2 rounded-full shadow-lg ring-2 ring-cyan-400 transition-colors z-10"
+                className="hidden sm:block absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-cyan-200 text-cyan-900 p-2 rounded-full shadow-lg ring-2 ring-cyan-400 transition-colors z-10"
                 onClick={goToPreviousImage}
                 aria-label="Previous image"
               >
                 <ChevronLeft size={32} />
               </button>
               <button
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-cyan-200 text-cyan-900 p-2 rounded-full shadow-lg ring-2 ring-cyan-400 transition-colors z-10"
+                className="hidden sm:block absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-cyan-200 text-cyan-900 p-2 rounded-full shadow-lg ring-2 ring-cyan-400 transition-colors z-10"
                 onClick={goToNextImage}
                 aria-label="Next image"
               >
                 <ChevronRight size={32} />
               </button>
+              {/* Mobile arrow controls below image */}
+              <div className="flex sm:hidden justify-center gap-8 mt-4">
+                <button
+                  className="bg-white/90 hover:bg-cyan-200 text-cyan-900 p-2 rounded-full shadow-lg ring-2 ring-cyan-400 transition-colors z-10"
+                  onClick={goToPreviousImage}
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft size={32} />
+                </button>
+                <button
+                  className="bg-white/90 hover:bg-cyan-200 text-cyan-900 p-2 rounded-full shadow-lg ring-2 ring-cyan-400 transition-colors z-10"
+                  onClick={goToNextImage}
+                  aria-label="Next image"
+                >
+                  <ChevronRight size={32} />
+                </button>
+              </div>
             </motion.div>
           </motion.div>
         )}
@@ -345,7 +372,7 @@ const Gallery = () => {
         viewport={{ once: true, amount: 0.2 }}
         variants={sectionVariants}
       >
-        <motion.div variants={textVariants}>
+        <motion.div variants={textVariants} className="px-4 mx-auto">
           <motion.h3
             className="text-lg sm:text-xl md:text-2xl font-mono text-cyan-300 mb-4 break-words"
             variants={textVariants}

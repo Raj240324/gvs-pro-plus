@@ -98,19 +98,26 @@ const About: React.FC = () => {
       );
     }
 
+    let ticking = false;
     const handleScroll = () => {
-      const elements = document.querySelectorAll('.aos-fade-up, .aos-fade-in, .aos-fade-right, .aos-fade-left');
-      elements.forEach((element) => {
-        const rect = element.getBoundingClientRect();
-        const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-        if (rect.top <= windowHeight * 0.75) {
-          element.classList.add('aos-animate');
-        }
-      });
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const elements = document.querySelectorAll('.aos-fade-up, .aos-fade-in, .aos-fade-right, .aos-fade-left');
+          elements.forEach((element) => {
+            const rect = element.getBoundingClientRect();
+            const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+            if (rect.top <= windowHeight * 0.75) {
+              element.classList.add('aos-animate');
+            }
+          });
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     handleScroll();
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -398,7 +405,7 @@ const About: React.FC = () => {
                   animate="visible"
                   whileHover="hover"
                   variants={missionVisionVariants}
-                  className="relative rounded-2xl bg-gradient-to-br from-white/95 to-teal-100/70 backdrop-blur-xl shadow-lg border border-teal-200/30 p-6 md:p-8 overflow-hidden"
+                  className="relative rounded-2xl bg-gradient-to-br from-white/95 to-teal-100/70 backdrop-blur-xl shadow-lg border border-teal-200/30 p-6 md:p-8 overflow-hidden lg:mb-8"
                 >
                   <GlowingEffect spread={30} glow={true} proximity={50} className="rounded-2xl" />
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(20,184,166,0.15)_0,_transparent_70%)] opacity-60"></div>
