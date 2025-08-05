@@ -147,7 +147,7 @@ const FAQ = () => {
             >
               <motion.button
                 onClick={() => toggleFAQ(index)}
-                className="w-full text-left p-4 sm:p-5 md:p-6 bg-gray-800/80 rounded-xl sm:rounded-2xl shadow-xl flex justify-between items-center transition-all duration-300 hover:bg-gradient-to-r hover:from-cyan-500/30 hover:to-purple-500/30 group relative overflow-hidden"
+                className="w-full text-left p-4 sm:p-5 md:p-6 bg-gray-800/80 rounded-xl sm:rounded-2xl shadow-xl flex justify-between items-start transition-all duration-300 hover:bg-gradient-to-r hover:from-cyan-500/30 hover:to-purple-500/30 group relative overflow-hidden min-h-[80px] sm:min-h-[90px] md:min-h-[100px]"
                 whileHover={{ scale: 1.03, boxShadow: "0 0 15px rgba(0, 255, 255, 0.3)" }}
                 whileTap={{ scale: 0.97 }}
               >
@@ -156,11 +156,11 @@ const FAQ = () => {
                   className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100"
                   transition={{ duration: 0.3 }}
                 />
-                <span className="text-base sm:text-lg md:text-xl font-semibold text-white group-hover:text-cyan-300 transition-colors duration-300 relative z-10">
+                <span className="text-base sm:text-lg md:text-xl font-semibold text-white group-hover:text-cyan-300 transition-colors duration-300 relative z-10 flex-1 pr-4 leading-relaxed">
                   {faq.question}
                 </span>
                 <ChevronDown
-                  className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-cyan-400 transition-transform duration-300 relative z-10 ${openFAQ === index ? 'rotate-180' : ''}`}
+                  className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-cyan-400 transition-transform duration-300 relative z-10 flex-shrink-0 mt-1 ${openFAQ === index ? 'rotate-180' : ''}`}
                 />
               </motion.button>
 

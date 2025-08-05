@@ -7,7 +7,7 @@ import {
   Clock,
   ArrowRight
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { TiltedCard } from '../components/ui/tilted-card';
 import { motion } from 'framer-motion';
 
@@ -23,6 +23,7 @@ interface Service {
 
 const Services = () => {
   const [headerHeight, setHeaderHeight] = useState(0);
+  const location = useLocation();
 
   // Function to calculate header height
   const updateHeaderHeight = useCallback(() => {
@@ -66,6 +67,16 @@ const Services = () => {
       animatedElements.forEach(el => observer.unobserve(el));
     };
   }, [updateHeaderHeight]);
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }, [location]);
 
   const services: Service[] = [
     {
@@ -255,7 +266,7 @@ const Services = () => {
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {service.features.map((feature, i) => (
                   <li
-                    key={i}
+                    key={`${feature}-${i}`}
                     className="flex items-start feature-item aos-slide-in"
                     style={{ '--index': i } as React.CSSProperties}
                   >

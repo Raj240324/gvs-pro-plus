@@ -232,13 +232,13 @@ const Gallery = () => {
               Our Expertise
             </motion.span>
             <motion.h1
-              className="text-xl sm:text-2xl md:text-3xl font-extrabold font-mono bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-violet-500 leading-tight max-w-[90vw] mx-auto break-words"
+              className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-extrabold font-mono bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-violet-500 leading-tight max-w-[95vw] mx-auto break-words px-2"
               variants={textVariants}
             >
               PCC, MCC & PLC cum VFD Control Panels Gallery
             </motion.h1>
             <motion.p
-              className="text-sm sm:text-base text-gray-300 mt-4 max-w-2xl mx-auto break-words"
+              className="text-xs sm:text-sm md:text-base text-gray-300 mt-4 max-w-2xl mx-auto break-words px-4"
               variants={textVariants}
             >
               Discover GVS Controls' innovative and cost-effective engineering solutions for power and automation systems, redefining customer satisfaction.
@@ -301,7 +301,7 @@ const Gallery = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             onClick={closeLightbox}
-            key={selectedImage.id}
+            key={`${selectedImage.id || ''}-${selectedImage.src || ''}`}
           >
             <motion.div
               className="relative w-full max-w-[95vw] sm:max-w-4xl max-h-[90vh]"
