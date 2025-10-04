@@ -281,10 +281,10 @@ const Footer = () => {
                 >
                   <Mail size={18} className="text-[#ff6f61] mr-2 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
                   <a
-                    href="mailto:info@gvscontrols.com"
+                    href="mailto:gvscontrols@gmail.com"
                     className="text-[#4a0e78]/90 hover:text-[#ff6f61] relative text-sm group-hover:text-[#ff6f61]"
                   >
-                    info@gvscontrols.com
+                    gvscontrols@gmail.com
                     <motion.span
                       className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-[#ff6f61] to-[#4a0e78]"
                       initial={{ width: 0 }}
