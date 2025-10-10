@@ -610,11 +610,11 @@ const About: React.FC = () => {
                 Core values guiding our work with clients like SAIL, NTPC, and TISCO, ensuring innovative and reliable solutions.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
               {teamValues.map((value, i) => (
                 <div
                   key={i}
-                  className="relative team-value-card"
+                  className="relative team-value-card h-full"
                   data-index={i}
                   style={{ 
                     perspective: '1000px',
@@ -627,7 +627,7 @@ const About: React.FC = () => {
                     animate="visible"
                     whileHover={!isMobile ? "hover" : undefined}
                     variants={cardVariants}
-                    className="relative bg-gradient-to-br from-white/80 to-teal-50/50 backdrop-blur-md p-6 rounded-xl shadow-xl border border-teal-200/50 overflow-hidden transform-gpu"
+                    className="relative bg-gradient-to-br from-white/80 to-teal-50/50 backdrop-blur-md p-6 rounded-xl shadow-xl border border-teal-200/50 overflow-hidden transform-gpu h-full min-h-[260px] flex flex-col"
                     style={{
                       transformStyle: 'preserve-3d',
                       transform: isMobile && visibleCards.includes(i) ? 'rotateY(180deg)' : 'rotateY(0deg)',
