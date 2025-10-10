@@ -73,7 +73,9 @@ const Services = () => {
       const id = location.hash.replace('#', '');
       const el = document.getElementById(id);
       if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const elementTop = el.getBoundingClientRect().top + window.pageYOffset;
+        const offset = Math.max(headerHeight + 16, 0); // add small spacing below navbar
+        window.scrollTo({ top: elementTop - offset, behavior: 'smooth' });
       }
     }
   }, [location]);
@@ -256,6 +258,7 @@ const Services = () => {
             index === 3 ? 'bg-gradient-to-br from-teal-50 to-blue-50' :
             'bg-gradient-to-br from-indigo-50 to-gray-50'
           }`}
+          style={{ scrollMarginTop: `${headerHeight + 24}px` }}
         >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="aos-fade-up">
