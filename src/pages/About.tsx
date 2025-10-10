@@ -3,6 +3,7 @@ import { CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { GlowingEffect } from '../components/ui/glowing-effect';
 import { Timeline } from '../components/ui/timeline';
+import SEO from '../components/SEO';
 import pp1 from "../assets/pp-1.png";
 import pp2 from "../assets/pp-2.png";
 import pp3 from "../assets/pp-3.png";
@@ -362,6 +363,11 @@ const About: React.FC = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="About GVS Controls"
+        description="Learn about GVS Controls, established in 2017, offering innovative electrical engineering solutions with 30+ years of industry experience."
+        canonical={typeof window !== 'undefined' ? window.location.origin + '/about' : undefined}
+      />
       {/* Spacer to push content below fixed header */}
       <div className="h-[84px] lg:h-[140px]"></div>
       <main className="overflow-hidden">

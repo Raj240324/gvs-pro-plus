@@ -57,10 +57,52 @@ const SEO = ({
       <meta name="twitter:image:alt" content={title} />
       
       {/* Structured Data */}
-      {structuredData && (
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
+      {structuredData ? (
+        <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
+      ) : (
+        <>
+          {/* Organization */}
+          <script type="application/ld+json">
+            {JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'GVS CONTROLS',
+              url: typeof window !== 'undefined' ? window.location.origin : undefined,
+              logo: ogImage,
+              sameAs: [
+                'https://www.linkedin.com/company/gvs-controls',
+                'https://x.com/gvscontrols',
+                'https://www.facebook.com/gvscontrols',
+                'https://www.instagram.com/gvscontrols'
+              ],
+              contactPoint: [
+                {
+                  '@type': 'ContactPoint',
+                  telephone: '+91-7338880027',
+                  contactType: 'customer service',
+                  areaServed: 'IN',
+                  availableLanguage: ['en']
+                },
+                {
+                  '@type': 'ContactPoint',
+                  telephone: '+91-9884001597',
+                  contactType: 'sales',
+                  areaServed: 'IN',
+                  availableLanguage: ['en']
+                }
+              ]
+            })}
+          </script>
+          {/* WebSite */}
+          <script type="application/ld+json">
+            {JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'GVS CONTROLS - Electrical, Automation & Consultancy',
+              url: typeof window !== 'undefined' ? window.location.origin : undefined
+            })}
+          </script>
+        </>
       )}
     </Helmet>
   );

@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Textarea } from '../components/ui/textarea';
 import { useContactModal } from '../hooks/use-contact-modal';
 import Button from '../components/ui/Button';
+import SEO from '../components/SEO';
 import emailjs from '@emailjs/browser';
 import { Input } from '../components/ui/input';
 
@@ -225,6 +226,11 @@ const Contact = () => {
 
   return (
     <ErrorBoundary>
+      <SEO
+        title="Contact"
+        description="Reach out to GVS Controls for cutting-edge engineering solutions. Visit our Chengalpattu office or connect online."
+        canonical={typeof window !== 'undefined' ? window.location.origin + '/contact' : undefined}
+      />
       {/* Spacer to push content below fixed header, matching other pages */}
       <div className="h-[84px] lg:h-[140px]"></div>
       <main className="overflow-hidden">

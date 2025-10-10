@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const WhyUs = () => {
   useEffect(() => {
-    document.title = 'Why Choose GVS Controls';
+    document.title = 'Why Us - GVS Controls';
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute(

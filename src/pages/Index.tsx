@@ -8,6 +8,7 @@ import Hero from '../components/home/Hero';
 import FAQ from '../components/home/FAQ';
 import Button from '../components/ui/Button';
 import Highlights from '../components/home/Highlights';
+import SEO from '../components/SEO';
 
 const Index = () => {
   const contactModal = useContactModal();
@@ -86,17 +87,24 @@ const Index = () => {
     setTimeout(handleScroll, 100);
     window.addEventListener('scroll', handleScroll);
 
-    // Intersection Observer for flip cards on mobile
-    if (isMobile) {
+  // Intersection Observer for flip cards on mobile
+  if (isMobile) {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               const cardIndex = parseInt(entry.target.getAttribute('data-card-index') || '0');
-              // Add delay before flipping the card
+            // Timed flip: flip, wait, then flip back
+            setTimeout(() => {
+              setFlippedCards(prev => new Set([...prev, cardIndex]));
               setTimeout(() => {
-                setFlippedCards(prev => new Set([...prev, cardIndex]));
-              }, cardIndex * 500 + 1000); // 1 second base delay + 500ms per card
+                setFlippedCards(prev => {
+                  const next = new Set(prev);
+                  next.delete(cardIndex);
+                  return next;
+                });
+              }, 2000); // visible for 2s, then flip back
+            }, cardIndex * 500 + 800); // slight stagger
             }
           });
         },
@@ -124,6 +132,10 @@ const Index = () => {
 
   return (
     <main>
+      <SEO
+        title="Innovative Electrical Engineering Solutions"
+        description="GVS Controls offers innovative electrical and automation solutions for industries like power, steel, and renewable energy."
+      />
       <Hero />
 
       <section className="section-padding bg-gradient-to-br from-gray-900 via-blue-900 to-teal-900 dark:from-gray-950 dark:via-blue-950 dark:to-teal-950 relative overflow-hidden">

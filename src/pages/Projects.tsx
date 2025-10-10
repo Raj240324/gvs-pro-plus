@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight as ChevronRightIcon } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
+import SEO from '../components/SEO';
 import powerPlant1 from "../assets/pp-1.png";
 import powerPlant2 from "../assets/pp-2.png";
 import powerPlant3 from "../assets/pp-3.png";
@@ -345,6 +346,11 @@ const Projects: React.FC = () => {
 
   return (
     <main style={{ paddingTop: headerHeight + 'px' }} className="min-h-screen w-full max-w-full bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+      <SEO
+        title="Projects"
+        description="Discover GVS Controls’ projects in power, steel, cement, chemical, and automation sectors."
+        canonical={typeof window !== 'undefined' ? window.location.origin + '/projects' : undefined}
+      />
       <style>{`
         .tilt-card {
           transform-style: preserve-3d;

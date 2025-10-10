@@ -21,6 +21,7 @@ import cop17 from '../assets/cop-17.png';
 import cop18 from '../assets/cop-18.png';
 import cop19 from '../assets/cop-19.png';
 import React from 'react';
+import SEO from '../components/SEO';
 
 // Define gallery image type
 interface GalleryImage {
@@ -214,6 +215,11 @@ const Gallery = () => {
 
   return (
     <main style={{ paddingTop: `${headerHeight}px` }} className="bg-gray-950 text-white min-h-screen">
+      <SEO
+        title="Control Panels Gallery"
+        description="Explore GVS Controls' PCC, MCC, and PLC cum VFD control panels, manufactured for industrial automation and power management."
+        canonical={typeof window !== 'undefined' ? window.location.origin + '/gallery' : undefined}
+      />
       {/* Hero Section */}
       <motion.section
         className="relative bg-[radial-gradient(circle_at_center,_#1e3a8a_0,_#0f172a_70%)] py-12 sm:py-16 md:py-20 overflow-hidden"

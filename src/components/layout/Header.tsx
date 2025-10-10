@@ -87,7 +87,7 @@ const TopContactBar = () => (
       <div className="flex items-center gap-3 pr-6 border-r border-[#e0e0e0] dark:border-[#333] z-10">
         <span className="font-semibold text-xs text-[#4a0e78] dark:text-white/80 mr-2 tracking-wide">Follow</span>
         <motion.a
-          href="https://facebook.com"
+          href="https://www.facebook.com/gvscontrols"
           target="_blank"
           rel="noopener noreferrer"
           className="group focus:outline-none bg-transparent p-0 border-0 inline-flex items-center justify-center"
@@ -103,7 +103,7 @@ const TopContactBar = () => (
           </motion.span>
         </motion.a>
         <motion.a
-          href="https://x.com"
+          href="https://x.com/gvscontrols"
           target="_blank"
           rel="noopener noreferrer"
           className="group focus:outline-none bg-transparent p-0 border-0 inline-flex items-center justify-center"
@@ -119,7 +119,7 @@ const TopContactBar = () => (
           </motion.span>
         </motion.a>
         <motion.a
-          href="https://instagram.com"
+          href="https://www.instagram.com/gvscontrols"
           target="_blank"
           rel="noopener noreferrer"
           className="group focus:outline-none bg-transparent p-0 border-0 inline-flex items-center justify-center"
@@ -180,11 +180,11 @@ const TopContactBar = () => (
         </div>
         <span className="w-1 h-1 rounded-full bg-[#4a0e78]/30 dark:bg-white/30 mx-1" />
         <motion.a
-          href="tel:+919958611814"
+          href="tel:+919884001597"
           className="flex items-center gap-1 px-2 py-0.5 rounded bg-gradient-to-r from-[#e6fff7] to-[#e0f7ff] dark:from-[#2a403a] dark:to-[#2a3a3a] shadow-sm font-semibold text-[#4a0e78] dark:text-[#ffd700] text-xs group relative overflow-hidden whitespace-nowrap min-w-0"
           whileHover={{ scale: 1.04, boxShadow: "0 2px 8px #4a0e7833" }}
           whileTap={{ scale: 0.97 }}
-          aria-label="Call us at +91 9958611814"
+          aria-label="Call us at +91 9884001597"
           style={{ maxWidth: 140 }}
         >
           <motion.span
@@ -493,7 +493,7 @@ const Header = () => {
                   </div>
                   <div className="flex justify-center gap-4 mb-3">
                     <a
-                      href="https://facebook.com"
+                      href="https://www.facebook.com/gvscontrols"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-[#4a0e78] hover:text-[#ff6f61] transition-colors"
@@ -502,7 +502,7 @@ const Header = () => {
                       <Facebook size={16} />
                     </a>
                     <a
-                      href="https://x.com"
+                      href="https://x.com/gvscontrols"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-[#4a0e78] hover:text-[#ff6f61] transition-colors"
@@ -511,7 +511,7 @@ const Header = () => {
                       <SiX size={16} />
                     </a>
                     <a
-                      href="https://instagram.com"
+                      href="https://www.instagram.com/gvscontrols"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-[#4a0e78] hover:text-[#ff6f61] transition-colors"
