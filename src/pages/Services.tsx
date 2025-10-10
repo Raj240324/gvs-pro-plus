@@ -10,6 +10,7 @@ import {
 import { Link, useLocation } from 'react-router-dom';
 import { TiltedCard } from '../components/ui/tilted-card';
 import { motion } from 'framer-motion';
+import SEO from '../components/SEO';
 
 // Define TypeScript interface for service objects
 interface Service {
@@ -159,6 +160,11 @@ const Services = () => {
 
   return (
     <main className="bg-gray-50" style={{ paddingTop: `${headerHeight}px` }}>
+      <SEO
+        title="Services"
+        description="GVS Controls offers consultancy, automation, installation, and renovation services for industrial electrical and automation systems."
+        canonical={typeof window !== 'undefined' ? window.location.origin + '/services' : undefined}
+      />
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-teal-500 via-cyan-500 to-blue-500 text-white py-20 overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

@@ -147,7 +147,7 @@ const FAQ = () => {
             >
               <motion.button
                 onClick={() => toggleFAQ(index)}
-                className="w-full text-left p-4 sm:p-5 md:p-6 bg-gray-800/80 rounded-xl sm:rounded-2xl shadow-xl flex justify-between items-start transition-all duration-300 hover:bg-gradient-to-r hover:from-cyan-500/30 hover:to-purple-500/30 group relative overflow-hidden min-h-[80px] sm:min-h-[90px] md:min-h-[100px]"
+                className="w-full text-left p-4 sm:p-5 md:p-6 bg-gray-800/80 rounded-xl sm:rounded-2xl shadow-xl flex justify-between items-center transition-all duration-300 hover:bg-gradient-to-r hover:from-cyan-500/30 hover:to-purple-500/30 group relative overflow-hidden min-h-[80px] sm:min-h-[90px] md:min-h-[100px]"
                 whileHover={{ scale: 1.03, boxShadow: "0 0 15px rgba(0, 255, 255, 0.3)" }}
                 whileTap={{ scale: 0.97 }}
               >
@@ -160,7 +160,7 @@ const FAQ = () => {
                   {faq.question}
                 </span>
                 <ChevronDown
-                  className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-cyan-400 transition-transform duration-300 relative z-10 flex-shrink-0 mt-1 ${openFAQ === index ? 'rotate-180' : ''}`}
+                  className={`w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-cyan-400 transition-transform duration-300 relative z-10 flex-shrink-0 ${openFAQ === index ? 'rotate-180' : ''}`}
                 />
               </motion.button>
 
@@ -172,7 +172,7 @@ const FAQ = () => {
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    className="p-4 sm:p-5 md:p-6 bg-gray-700/90 rounded-b-xl sm:rounded-b-2xl text-gray-100 text-sm sm:text-base md:text-lg relative overflow-hidden"
+                    className="p-4 sm:p-5 md:p-6 bg-gradient-to-br from-cyan-900/60 via-indigo-900/50 to-purple-900/60 rounded-b-xl sm:rounded-b-2xl text-gray-100 text-sm sm:text-base md:text-lg relative overflow-hidden backdrop-blur-md border-t border-white/10"
                   >
                     {/* Glowing Edge */}
                     <motion.div

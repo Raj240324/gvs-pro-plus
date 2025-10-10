@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { CheckCircle2, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -117,6 +118,11 @@ const Clients: React.FC = () => {
 
   return (
     <main ref={mainRef} className="pt-16 sm:pt-20 md:pt-24 lg:pt-28 overflow-hidden">
+      <SEO
+        title="Our Clients"
+        description="Explore our partnerships with industry leaders like Aumund Engineering and Loesche Energy."
+        canonical={typeof window !== 'undefined' ? window.location.origin + '/clients' : undefined}
+      />
       <style>
         {`
           /* Global Styles */

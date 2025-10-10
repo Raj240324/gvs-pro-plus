@@ -34,9 +34,9 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { href: 'https://linkedin.com/company/gvs-controls', Icon: Linkedin, label: 'LinkedIn' },
-    { href: 'https://twitter.com/gvs-controls', Icon: Twitter, label: 'X Platform' },
-    { href: 'https://facebook.com/gvscontrols', Icon: Facebook, label: 'Facebook' },
+    { href: 'https://www.linkedin.com/company/gvs-controls', Icon: Linkedin, label: 'LinkedIn' },
+    { href: 'https://x.com/gvscontrols', Icon: Twitter, label: 'Twitter' },
+    { href: 'https://www.facebook.com/gvscontrols', Icon: Facebook, label: 'Facebook' },
   ];
 
   return (
