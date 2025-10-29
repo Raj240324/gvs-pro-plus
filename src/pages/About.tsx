@@ -1,9 +1,19 @@
 import { useEffect, useState } from 'react';
-import { CheckCircle2 } from 'lucide-react';
+import { 
+  CheckCircle2, 
+  Target, 
+  Lightbulb, 
+  Shield, 
+  Star, 
+  Users, 
+  Zap 
+} from 'lucide-react';
 import { motion } from 'framer-motion';
 import { GlowingEffect } from '../components/ui/glowing-effect';
 import { Timeline } from '../components/ui/timeline';
 import SEO from '../components/SEO';
+
+// Local Images
 import pp1 from '../assets/pp-1.png';
 import pp2 from '../assets/pp-2.png';
 import pp3 from '../assets/pp-3.png';
@@ -21,15 +31,13 @@ import cop14 from '../assets/cop-14.png';
 import cop15 from '../assets/cop-15.png';
 import cop16 from '../assets/cop-16.png';
 import cop17 from '../assets/cop-17.png';
-import cop18 from '../assets/cop-18.png'; // ← fixed path
+import cop18 from '../assets/cop-18.png';
 
-// Free placeholder images (Pexels)
-const missionImageUrl =
-  'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg';
-const visionImageUrl =
-  'https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg';
+// Placeholder Images
+const missionImageUrl = 'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg';
+const visionImageUrl = 'https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg';
 
-// Local asset arrays
+// Image Arrays
 const powerPlantImages = [pp1, pp2, pp3, pp4, pp5, pp6];
 const renewableEnergyImages = [re1, re2, re3, re4, re5, re6];
 const controlPanelImages = [cop1, cop14, cop15, cop16, cop17, cop18];
@@ -40,13 +48,12 @@ interface TimelineItem {
 }
 
 const About: React.FC = () => {
-  // Image rotation state
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [currentControlPanelIndex, setCurrentControlPanelIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
 
-  // Rotate power/renewable images every 2s
+  // Rotate Power/Renewable Images
   useEffect(() => {
     const id = setInterval(() => {
       setCurrentImageIndex((i) => (i + 1) % renewableEnergyImages.length);
@@ -54,7 +61,7 @@ const About: React.FC = () => {
     return () => clearInterval(id);
   }, []);
 
-  // Rotate control panel images every 2s
+  // Rotate Control Panel Images
   useEffect(() => {
     const id = setInterval(() => {
       setCurrentControlPanelIndex((i) => (i + 1) % controlPanelImages.length);
@@ -62,15 +69,16 @@ const About: React.FC = () => {
     return () => clearInterval(id);
   }, []);
 
-  // SEO + AOS scroll trigger
+  // SEO + AOS Scroll Trigger
   useEffect(() => {
     document.title = 'About GVS Controls - Our Journey and Expertise';
     const desc = document.querySelector('meta[name="description"]');
-    if (desc)
+    if (desc) {
       desc.setAttribute(
         'content',
         'Learn about GVS Controls, established in 2017, offering innovative electrical engineering solutions with 30+ years of industry experience.'
       );
+    }
 
     let ticking = false;
     const handleScroll = () => {
@@ -94,7 +102,7 @@ const About: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Mobile detection
+  // Mobile Detection
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
@@ -102,7 +110,7 @@ const About: React.FC = () => {
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  // Intersection observer for flip cards
+  // Flip Card Intersection Observer
   useEffect(() => {
     const obs = new IntersectionObserver(
       (entries) => {
@@ -118,9 +126,7 @@ const About: React.FC = () => {
     return () => obs.disconnect();
   }, []);
 
-  /* ------------------------------------------------------------------
-   *  TIMELINE – 100 % based on supplied copy
-   * ------------------------------------------------------------------ */
+  // Timeline Data
   const timelineData: TimelineItem[] = [
     {
       title: '2017',
@@ -216,144 +222,41 @@ const About: React.FC = () => {
     },
   ];
 
-  /* ------------------------------------------------------------------
-   *  TEAM VALUES – exact wording from “WHY US”
-   * ------------------------------------------------------------------ */
+  // Team Values – Icons from Lucide
   const teamValues = [
     {
       title: 'Integrity',
       desc: 'Upholding ethical standards in all dealings, ensuring trust and reliability with clients like SAIL, TISCO, and RINL.',
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
-          <path d="M12 9v4" />
-          <path d="M12 17h.01" />
-        </svg>
-      ),
+      icon: <Shield className="w-6 h-6" />,
     },
     {
       title: 'Innovation',
       desc: 'Pioneering cutting-edge automation and engineering solutions for complex challenges across power plants, renewable energy, and process industries.',
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M12 2v5" />
-          <path d="m19.07 7.93-3.54 3.54" />
-          <path d="M22 12h-5" />
-          <path d="m19.07 16.07-3.54-3.54" />
-          <path d="M12 22v-5" />
-          <path d="m4.93 16.07 3.54-3.54" />
-          <path d="M2 12h5" />
-          <path d="m4.93 7.93 3.54 3.54" />
-        </svg>
-      ),
+      icon: <Lightbulb className="w-6 h-6" />,
     },
     {
       title: 'Reliability',
       desc: 'Delivering quality solutions on time with tailored timelines, backed by 30+ years of experience with industry leaders like Shriram EPC and L&T.',
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5.4L2 8zm0-6l7 5.4L16 8" />
-          <path d="M20 4H4a2 2 0 0 0-2 2v2l7 5.4L16 8l7-5.4V6a2 2 0 0 0-2-2z" />
-        </svg>
-      ),
+      icon: <Zap className="w-6 h-6" />,
     },
     {
       title: 'Excellence',
       desc: 'Striving for top-tier results in every project, leveraging updated technology and quality manufacturing for turnkey solutions.',
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="12" cy="12" r="10" />
-          <path d="m9 12 2 2 4-4" />
-        </svg>
-      ),
+      icon: <Star className="w-6 h-6" />,
     },
     {
       title: 'Customer Focus',
       desc: 'Listening to your needs and offering flexible, cost-effective services tailored to your business and technical objectives.',
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-          <circle cx="9" cy="7" r="4" />
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-        </svg>
-      ),
+      icon: <Users className="w-6 h-6" />,
     },
     {
       title: 'Efficiency',
       desc: 'Maximizing resource efficiency to deliver results swiftly, with expertise in utility systems and operations.',
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="12" cy="12" r="10" />
-          <path d="M12 2v10" />
-          <path d="M12 12l-4-4" />
-          <path d="M12 12l4-4" />
-        </svg>
-      ),
+      icon: <Target className="w-6 h-6" />,
     },
   ];
 
-  // Animation variants (unchanged – only content updated)
+  // Animation Variants
   const cardVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: (i: number) => ({
@@ -363,19 +266,22 @@ const About: React.FC = () => {
     }),
     hover: { scale: 1.05, transition: { duration: 0.3 } },
   };
-  const flipVariants = { hidden: { rotateY: 0 }, visible: { rotateY: 180 } };
+
   const iconVariants = {
     hover: { scale: 1.2, rotate: 10, transition: { duration: 0.4, yoyo: Infinity } },
   };
+
   const missionVisionVariants = {
     hidden: { opacity: 0, scale: 0.95 },
     visible: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: 'easeOut' } },
     hover: { scale: 1.02, boxShadow: '0 15px 30px rgba(0,0,0,0.2)', transition: { duration: 0.3 } },
   };
+
   const imageVariants = {
     hidden: { opacity: 0, x: 50 },
     visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
   };
+
   const timelineItemVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: (i: number) => ({
@@ -393,11 +299,11 @@ const About: React.FC = () => {
         canonical={typeof window !== 'undefined' ? window.location.origin + '/about' : undefined}
       />
 
-      {/* Header spacer */}
+      {/* Header Spacer */}
       <div className="h-[84px] lg:h-[140px]" />
 
       <main className="overflow-hidden">
-        {/* ── Hero ── */}
+        {/* Hero Section */}
         <section className="bg-gradient-to-br from-indigo-800 via-teal-600 to-fuchsia-700 text-white py-20 md:py-28 relative">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.2)_0,transparent_60%)] opacity-80" />
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPjxwYXR0ZXJuIGlkPSJhIiB3aWR0aD0iMjAiIGhlaWdodD0iMjAiPjxjaXJjbGUgY3g9IjIuNSIgY3k9IjIuNSIgcj0iMS41IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMSkiLz48L3BhdHRlcm4+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNhKSIvPjwvc3ZnPg==')] opacity-30" />
@@ -416,7 +322,7 @@ const About: React.FC = () => {
           </div>
         </section>
 
-        {/* ── Mission & Vision ── */}
+        {/* Mission & Vision */}
         <section className="py-16 md:py-20 bg-gradient-to-tr from-teal-100 via-indigo-200 to-purple-200 relative">
           <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(255,255,255,0.1)_25%,transparent_25%,transparent_75%,rgba(255,255,255,0.1)_75%)] bg-[size:20px_20px] opacity-50" />
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -444,10 +350,7 @@ const About: React.FC = () => {
                 <div className="relative z-10">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="p-2.5 rounded-full bg-teal-500/10 text-teal-600">
-                      <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="16" cy="16" r="16" fill="currentColor" fillOpacity="0.2" />
-                        <path d="M10 16.5L14 20.5L22 12.5" stroke="#14b8a6" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
+                      <Target className="w-6 h-6" />
                     </div>
                     <h2 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">
                       Our Mission
@@ -521,10 +424,7 @@ const About: React.FC = () => {
                 <div className="relative z-10">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="p-2.5 rounded-full bg-indigo-500/10 text-indigo-600">
-                      <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="16" cy="16" r="16" fill="currentColor" fillOpacity="0.2" />
-                        <path d="M16 10c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79-4-4-4z" fill="#4f46e5" />
-                      </svg>
+                      <Lightbulb className="w-6 h-6" />
                     </div>
                     <h2 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-teal-600">
                       Our Vision
@@ -564,7 +464,7 @@ const About: React.FC = () => {
           </div>
         </section>
 
-        {/* ── Timeline ── */}
+        {/* Timeline */}
         <section className="py-16 md:py-20 bg-gradient-to-br from-teal-200 via-blue-300 to-indigo-400 relative">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.3)_0,transparent_70%)] opacity-60" />
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-4xl">
@@ -600,7 +500,7 @@ const About: React.FC = () => {
           </div>
         </section>
 
-        {/* ── Team Values (Flip Cards) ── */}
+        {/* Team Values – Flip Cards */}
         <section className="py-16 md:py-20 bg-gradient-to-bl from-indigo-100 via-teal-100 to-fuchsia-200 relative">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+PHBhdGggZD0iTTYwIDMwIHEtMTUgMTUtMzAgMCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMSkiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==')] opacity-40" />
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
