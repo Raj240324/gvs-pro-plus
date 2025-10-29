@@ -2,34 +2,32 @@ import { useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useNavigate } from 'react-router-dom';
-import { FaRegLightbulb, FaCogs, FaIndustry, FaTools, FaSyncAlt } from 'react-icons/fa';
-import cop9 from "../../assets/cop-9.png"
-import renovation from "../../assets/renovation.png";
-import erection from "../../assets/electrical-erection.png"
+import {
+  FaRegLightbulb,
+  FaCogs,
+  FaIndustry,
+  FaTools,
+  FaSyncAlt,
+} from 'react-icons/fa';
+import cop9 from '../../assets/cop-9.png';
+import renovation from '../../assets/renovation.png';
+import erection from '../../assets/electrical-erection.png';
 
 const Highlights = () => {
   const controls = useAnimation();
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.2,
-  });
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (inView) {
-      controls.start('visible');
-    }
+    if (inView) controls.start('visible');
   }, [controls, inView]);
 
-  // Animation Variants
+  // ── Animation Variants ─────────────────────────────────────
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
+      transition: { staggerChildren: 0.2, delayChildren: 0.3 },
     },
   };
 
@@ -39,57 +37,46 @@ const Highlights = () => {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: {
-        type: 'spring',
-        stiffness: 100,
-        damping: 15,
-        duration: 0.5,
-      },
+      transition: { type: 'spring', stiffness: 100, damping: 15, duration: 0.5 },
     },
     hover: {
       scale: 1.05,
-      boxShadow: '0 15px 30px rgba(0, 0, 0, 0.2)',
-      transition: {
-        type: 'spring',
-        stiffness: 300,
-        damping: 20,
-      },
+      boxShadow: '0 15px 30px rgba(0,0,0,0.2)',
+      transition: { type: 'spring', stiffness: 300, damping: 20 },
     },
   };
 
   const textVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: 'easeOut',
-      },
-    },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
   };
 
-  // Expertise Data
+  // ── Expertise Data (now 100% in sync with the supplied copy) ─────
   const expertiseContent = [
     {
       title: 'Consultancy',
-      description: 'Project management consultancy, system design, and procurement assistance for turnkey projects, including engineering documents, equipment selection, and consultant approvals.',
-      image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
+      description:
+        'Project management consultancy (PMC), system/field study & optimum design for turnkey projects, basic & detail engineering documents, control design via relay logic & PLC, sizing/selection of HT/LT equipment, owner‑consultant approvals, procurement assistance, material selection, inspection & dispatch certification.',
+      image:
+        'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
       gradient: 'from-blue-600 to-indigo-700',
       serviceId: 'consultancy-engineering',
       icon: <FaRegLightbulb className="text-3xl md:text-4xl text-blue-500 drop-shadow-lg" />,
     },
     {
       title: 'Automation',
-      description: 'Innovative automation and process control solutions using PLC and relay logic, with instrumentation products and site services for process and machine applications.',
-      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
+      description:
+        'Total automation & process control solutions using PLC/relay logic, complete instrumentation products, innovative cost‑effective systems, engineering per standard practices, and pragmatic site services for process & machine applications.',
+      image:
+        'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
       gradient: 'from-teal-600 to-cyan-700',
       serviceId: 'automation-solutions',
       icon: <FaCogs className="text-3xl md:text-4xl text-cyan-600 drop-shadow-lg" />,
     },
     {
       title: 'Product Manufacturing',
-      description: 'Manufacturing electrical control panels per CEIG standards, including MV, PCC, MCC, VFD, APFC, and custom panels, with bus ducts and junction boxes.',
+      description:
+        'Manufacturing of electrical control panels per CEIG standards: MV panels (single/double bus), PCC, MCC, VFD, APFC, AMF, relay/PLC panels, bus ducts, sandwich bus ducts, rising mains, push‑button stations, junction boxes, lighting panels (MLDB/LDB/SLDB), utility DBs, and custom‑built panels.',
       image: cop9,
       gradient: 'from-orange-600 to-red-700',
       serviceId: 'panel-manufacturing',
@@ -97,7 +84,8 @@ const Highlights = () => {
     },
     {
       title: 'Erection & Commissioning',
-      description: 'Erection, testing, troubleshooting, and commissioning of electrical systems, including PCC, MCC, VFD panels, and plant shutdown services.',
+      description:
+        'Erection, testing, troubleshooting & commissioning of bus ducts, PCC, MCC, VFD, APFC, AMF, PLC panels, synchronizing panels, special‑purpose panels, plant shutdown/turnaround services, supervisory assistance, and comprehensive start‑up support.',
       image: erection,
       gradient: 'from-gray-600 to-blue-700',
       serviceId: 'installation-commissioning',
@@ -105,7 +93,8 @@ const Highlights = () => {
     },
     {
       title: 'Renovation & Revamping',
-      description: 'Renovation and revamping of electrical systems with site surveys and client coordination to enhance safety and efficiency.',
+      description:
+        'Renovation & revamping of existing electrical systems to improve safety and efficiency. Site surveys, client coordination, assessment of optimum requirements, and execution by trained professionals.',
       image: renovation,
       gradient: 'from-purple-600 to-pink-700',
       serviceId: 'renovation-revamping',
@@ -113,7 +102,6 @@ const Highlights = () => {
     },
   ];
 
-  // Handle card click to navigate to services page with hash
   const handleCardClick = (serviceId: string) => {
     navigate(`/services#${serviceId}`);
   };
@@ -121,7 +109,7 @@ const Highlights = () => {
   return (
     <section className="relative py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+        {/* Header */}
         <motion.div
           initial="hidden"
           animate="visible"
@@ -148,7 +136,7 @@ const Highlights = () => {
           </motion.p>
         </motion.div>
 
-        {/* Expertise Cards */}
+        {/* Cards */}
         <motion.div
           ref={ref}
           initial="hidden"
@@ -156,16 +144,16 @@ const Highlights = () => {
           variants={containerVariants}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
         >
-          {expertiseContent.map((item, index) => (
+          {expertiseContent.map((item, idx) => (
             <motion.div
-              key={index}
+              key={idx}
               variants={cardVariants}
               whileHover="hover"
               onClick={() => handleCardClick(item.serviceId)}
               className="relative group bg-white/60 dark:bg-gray-800/60 backdrop-blur-lg border border-white/30 dark:border-gray-700/40 rounded-2xl shadow-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl"
-              style={{ boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.15)' }}
+              style={{ boxShadow: '0 8px 32px 0 rgba(31,38,135,0.15)' }}
             >
-              {/* Image with Gradient Overlay */}
+              {/* Image + Gradient */}
               <div className="relative h-48 md:h-56 overflow-hidden">
                 <img
                   src={item.image}
@@ -186,20 +174,23 @@ const Highlights = () => {
                 </h3>
               </div>
 
-              {/* Description & CTA */}
+              {/* Text + CTA */}
               <div className="p-6 flex flex-col h-full justify-between">
                 <p className="text-gray-700 dark:text-gray-200 text-base md:text-lg leading-relaxed font-medium mb-4">
                   {item.description}
                 </p>
                 <button
                   className="mt-auto inline-block px-5 py-2 rounded-full bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white font-semibold shadow-md hover:from-[#4a0e78] hover:to-[#ff6f61] transition-colors duration-300 text-sm md:text-base"
-                  onClick={e => { e.stopPropagation(); handleCardClick(item.serviceId); }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCardClick(item.serviceId);
+                  }}
                 >
                   Learn More
                 </button>
               </div>
 
-              {/* Decorative Element */}
+              {/* Decorative corner */}
               <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-[#ff6f61]/20 to-[#4a0e78]/20 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </motion.div>
           ))}

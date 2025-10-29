@@ -296,4 +296,4 @@ const FeaturedClients = () => {
   );
 };
 
-export default FeaturedClients;
+export default FeaturedClients;  

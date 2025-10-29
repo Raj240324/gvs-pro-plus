@@ -17,7 +17,7 @@ interface Product {
   description: string;
   items: string[];
   icon: JSX.Element;
-  color: [number, number, number][];
+  color: [number, number, number][]; // RGB arrays
   images: string[];
 }
 
@@ -26,7 +26,7 @@ const ProductSection = ({ product, index }: { product: Product; index: number })
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % product.images.length);
+      setCurrentImageIndex((prev) => (prev + 1) % product.images.length);
     }, 2000);
     return () => clearInterval(interval);
   }, [product.images.length]);
@@ -74,7 +74,7 @@ const ProductSection = ({ product, index }: { product: Product; index: number })
                       strokeLinejoin="round"
                       className="text-teal-500 mr-2 sm:mr-3 flex-shrink-0 group-hover:scale-110 transition-transform w-5 h-5 sm:w-6 sm:h-6"
                     >
-                      <path d="m5 12 5 5L20 7"/>
+                      <path d="m5 12 5 5L20 7" />
                     </svg>
                     <span className="text-gray-700 text-sm sm:text-base group-hover:text-teal-600 transition-colors">{item}</span>
                   </li>
@@ -109,11 +109,11 @@ const ProductSection = ({ product, index }: { product: Product; index: number })
 const ManufacturingSupply = () => {
   useEffect(() => {
     document.title = 'Manufacturing & Supply - GVS Controls';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute(
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) {
+      meta.setAttribute(
         'content',
-        'GVS Controls manufactures electrical control panels and supplies field instruments for various industries, adhering to IE Standard Electrical Inspectorate Rules and Regulation (CEIG).'
+        'GVS Controls manufactures IE/CEIG-compliant electrical control panels and supplies field instruments for power plants, material handling, cement, renewable energy, and more.'
       );
     }
   }, []);
@@ -143,7 +143,7 @@ const ManufacturingSupply = () => {
         'Special Purpose and Other Custom Built Panels',
       ],
       icon: <Box size={50} strokeWidth={2} className="text-teal-600" />,
-      color: [[0, 128, 128]],
+      color: [[0, 128, 128], [0, 150, 136]], // teal gradient
       images: [cop1, cop2, cop3],
     },
     {
@@ -165,7 +165,7 @@ const ManufacturingSupply = () => {
         'Instruments for Wind Mills and Switches of any Special Requirements',
       ],
       icon: <Box size={50} strokeWidth={2} className="text-indigo-600" />,
-      color: [[150, 0, 255]], // Brighter purple for glittering effect
+      color: [[138, 43, 226], [75, 0, 130]], // purple gradient
       images: [pp1, pp2, pp3],
     },
   ];
@@ -240,7 +240,7 @@ const ManufacturingSupply = () => {
 
   return (
     <main className="pt-[84px] lg:pt-[140px] bg-gray-50">
-      {/* Hero Section */}
+      {/* Hero */}
       <motion.section
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -255,12 +255,14 @@ const ManufacturingSupply = () => {
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-teal-200 to-indigo-300">
               Manufacturing & Supply
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl mx-auto">We manufacture Electrical Control Panels as per IE Standard Electrical Inspectorate Rules and Regulation (CEIG) and supply field instruments for various industries.</p>
+            <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl mx-auto">
+              We manufacture Electrical Control Panels as per IE Standard Electrical Inspectorate Rules and Regulation (CEIG) and supply field instruments for various industries.
+            </p>
           </div>
         </div>
       </motion.section>
 
-      {/* Products Overview */}
+      {/* Overview Cards */}
       <motion.section
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -278,8 +280,12 @@ const ManufacturingSupply = () => {
             className="text-center mb-10 sm:mb-12 md:mb-16"
             style={{ willChange: 'transform, opacity' }}
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-700">Our Manufacturing & Supply Capabilities</h2>
-            <p className="text-gray-700 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed">Wide range of electrical control panels and field instruments tailored to industry needs.</p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-700">
+              Our Manufacturing & Supply Capabilities
+            </h2>
+            <p className="text-gray-700 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
+              Wide range of IE/CEIG-compliant control panels and field instruments tailored to industry needs.
+            </p>
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
             {products.map((product) => (
@@ -289,12 +295,12 @@ const ManufacturingSupply = () => {
         </div>
       </motion.section>
 
-      {/* Product Details */}
+      {/* Detailed Sections */}
       {products.map((product, index) => (
         <ProductSection key={product.id} product={product} index={index} />
       ))}
 
-      {/* Call to Action */}
+      {/* CTA */}
       <motion.section
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -306,8 +312,12 @@ const ManufacturingSupply = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.2)_0,_transparent_80%)] opacity-50 animate-pulse"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-teal-200 to-white">Need Reliable Manufacturing & Supply?</h2>
-            <p className="text-white/90 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto">Contact GVS Controls for high-quality electrical control panels and field instruments tailored to your needs.</p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-teal-200 to-white">
+              Need Reliable Manufacturing & Supply?
+            </h2>
+            <p className="text-white/90 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto">
+              Contact GVS Controls for high-quality electrical control panels and field instruments tailored to your needs.
+            </p>
             <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
               <Link
                 to="/contact"
