@@ -92,7 +92,7 @@ const Footer = () => {
                 </span>
               </div>
               <p className="font-montserrat text-sm leading-relaxed mb-2 text-[#ffbf00] italic font-bold">
-                Our Vision To Your Solution
+                (Our Vision To Your Solution)
               </p>
               <p className="text-[#4a0e78]/90 text-sm sm:text-md leading-relaxed break-words">
                 Since 2017, GVS Controls has delivered innovative, cost-effective engineering solutions, empowering clients with cutting-edge technology. Your vision, our mission.

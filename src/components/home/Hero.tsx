@@ -191,16 +191,40 @@ const Hero = () => {
             </p>
 
             <p className="text-lg sm:text-xl lg:text-2xl font-bold italic mb-6">
-              <span style={{ 
-                color: "#FF8C00", 
-                textShadow: "0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 140, 0, 0.5)",
-                fontWeight: "700"
-              }}>Electrical</span> & <span style={{ 
-                color: "#00FFFF", 
-                textShadow: "0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 255, 255, 0.5)",
-                fontWeight: "700"
-              }}>Automation</span>
-            </p>
+  <span
+    style={{
+      color: "#FF8C00",
+      textShadow:
+        "0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 140, 0, 0.5)",
+      fontWeight: "700",
+    }}
+  >
+    Electrical,{" "}
+  </span>
+
+  {/* ---- UPDATED INSTRUMENTATION SPAN ---- */}
+  <span
+    style={{
+      color: "#FFD700",                     // bright gold
+      textShadow:
+        "0 2px 4px rgba(0,0,0,0.8), 0 0 12px rgba(255,215,0,0.7)", // stronger glow for readability
+      fontWeight: "700",
+    }}
+  >
+    Instrumentation
+  </span>
+  {" "}&{" "}
+  <span
+    style={{
+      color: "#00FFFF",
+      textShadow:
+        "0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 255, 255, 0.5)",
+      fontWeight: "700",
+    }}
+  >
+    Automation
+  </span>
+</p>
 
             <motion.button
               onClick={() => navigate("/services")}

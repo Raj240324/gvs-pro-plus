@@ -138,7 +138,7 @@ const TopContactBar = () => (
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center w-full pointer-events-none">
         <span className="flex flex-col items-center text-xs font-bold tracking-wide text-[#4a0e78] dark:text-white/90 px-6 py-2 rounded-full bg-white/70 dark:bg-black/40 shadow border border-white/30 dark:border-white/10 backdrop-blur-md drop-shadow-sm uppercase pointer-events-auto">
         Consultant, Engineering, Manufacturing (Supply & Services)
-        <span>Electrical & Automation</span>
+        <span>Electrical, Instrumentation & Automation</span>
         </span>
       </div>
       <div className="flex items-center gap-2 pl-4 border-l border-[#e0e0e0] dark:border-[#333] z-10 min-w-0">
