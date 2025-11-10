@@ -395,22 +395,21 @@ const Gallery = () => {
             className="text-gray-300 font-mono text-xs sm:text-sm max-w-xl mx-auto break-words"
             variants={textVariants}
           >
-            <p>Office & Works: Plot No.1476, Sengundram Main Road, Gokulapuram Chengalpattu Dist, Pin-603204 (Land Mark – Mas Robotics)</p>
-            <p>Reg. Office: No.46/1, 5th Cross Street, Bagavathy Nagar, Govindarajapuram, Guduvanchery – 603202, Kanchipuram Dist</p>
-            <p>Mobile: +91 7338880027 & 9884001597</p>
+            <p>Office & Works: Plot No.1476, Segundram Main Road, Gokulapuram- MaraimalaiNagar, Chengalpattu-(District), Pin:603209</p>
+            <p>Reg. Office: No.46/1, 5th Cross Street, Bagavathy Nagar Govindarajapuram, Nandhivaram, Guduvanchery – 603202, Chengalpattu-(Dist)</p>
+            <p>Mobile: 7338880027 & 9884001597</p>
             <p>
               Email:{' '}
               <a href="mailto:projects@gvscontrols.com" className="text-cyan-400 hover:underline">
                 projects@gvscontrols.com
               </a>
-              {', '}
-              <a href="mailto:services@gvscontrols.com" className="text-cyan-400 hover:underline">
-                services@gvscontrols.com
-              </a>
-              {', '}
+              {' & '}
               <a href="mailto:gvscontrols@gmail.com" className="text-cyan-400 hover:underline">
                 gvscontrols@gmail.com
               </a>
+            </p>
+            <p>
+              Website: <a href="https://www.gvscontrols.com" className="text-cyan-400 hover:underline" target="_blank" rel="noopener noreferrer">www.gvscontrols.com</a>
             </p>
           </motion.div>
         </motion.div>

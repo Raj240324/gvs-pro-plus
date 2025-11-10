@@ -56,7 +56,7 @@ const Highlights = () => {
     {
       title: 'Consultancy',
       description:
-        'Project management consultancy (PMC), system/field study & optimum design for turnkey projects, basic & detail engineering documents, control design via relay logic & PLC, sizing/selection of HT/LT equipment, owner‑consultant approvals, procurement assistance, material selection, inspection & dispatch certification.',
+        'Project Management Consultancy (PMC), System/Field Study & Optimum Design For Turnkey Projects, Basic & Detail Engineering Documents, Control Design Via Relay Logic & PLC, Sizing/Selection Of HT/LT Equipment, Owner‑Consultant Approvals, Procurement Assistance, Material Selection, Inspection & Dispatch Certification.',
       image:
         'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
       gradient: 'from-blue-600 to-indigo-700',
@@ -66,7 +66,7 @@ const Highlights = () => {
     {
       title: 'Automation',
       description:
-        'Total automation & process control solutions using PLC/relay logic, complete instrumentation products, innovative cost‑effective systems, engineering per standard practices, and pragmatic site services for process & machine applications.',
+        'Total Automation & Process Control Solutions Using PLC/Relay Logic, Complete Instrumentation Products, Innovative Cost‑Effective Systems, Engineering Per Standard Practices, And Pragmatic Site Services For Process & Machine Applications.',
       image:
         'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80',
       gradient: 'from-teal-600 to-cyan-700',
@@ -76,7 +76,7 @@ const Highlights = () => {
     {
       title: 'Product Manufacturing',
       description:
-        'Manufacturing of electrical control panels per CEIG standards: MV panels (single/double bus), PCC, MCC, VFD, APFC, AMF, relay/PLC panels, bus ducts, sandwich bus ducts, rising mains, push‑button stations, junction boxes, lighting panels (MLDB/LDB/SLDB), utility DBs, and custom‑built panels.',
+        'Manufacturing Of Electrical Control Panels Per CEIG Standards: PCC (Single/Double Bus), MCC, VFD, APFC, AMF, Relay/PLC Panels, Bus Ducts, Sandwich Bus Ducts, Rising Mains, Push‑Button Stations, Junction Boxes, Lighting Panels (MLDB/LDB/SLDB), Utility DBs, And Custom‑Built Panels.',
       image: cop9,
       gradient: 'from-orange-600 to-red-700',
       serviceId: 'panel-manufacturing',
@@ -85,7 +85,7 @@ const Highlights = () => {
     {
       title: 'Erection & Commissioning',
       description:
-        'Erection, testing, troubleshooting & commissioning of bus ducts, PCC, MCC, VFD, APFC, AMF, PLC panels, synchronizing panels, special‑purpose panels, plant shutdown/turnaround services, supervisory assistance, and comprehensive start‑up support.',
+        'Erection, Testing, Troubleshooting & Commissioning Of Bus Ducts, PCC, MCC, VFD, APFC, AMF, DG Synchronizing, PLC Panels, Synchronizing Panels, Machinery Control Panels, Plant Shutdown/Turnaround Services, Supervisory Assistance, And Comprehensive Start‑Up Support.',
       image: erection,
       gradient: 'from-gray-600 to-blue-700',
       serviceId: 'installation-commissioning',
@@ -94,7 +94,7 @@ const Highlights = () => {
     {
       title: 'Renovation & Revamping',
       description:
-        'Renovation & revamping of existing electrical systems to improve safety and efficiency. Site surveys, client coordination, assessment of optimum requirements, and execution by trained professionals.',
+        'Renovation & Revamping Of Existing Electrical Systems To Improve Safety And Efficiency. Site Surveys, Client Coordination, Assessment Of Optimum Requirements, And Execution By Trained Professionals.',
       image: renovation,
       gradient: 'from-purple-600 to-pink-700',
       serviceId: 'renovation-revamping',

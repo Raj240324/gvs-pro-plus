@@ -24,7 +24,7 @@ const FAQ = () => {
     },
     {
       question: "Do you offer customized control panel solutions?",
-      answer: "Yes, we design and manufacture custom-built control panels as per IE Standards & CEIG regulations, including power control centers, motor control centers, synchronizing panels, PLC/VFD Panels, and special-purpose panels."
+      answer: "Yes, we design and manufacture custom-built control panels as per IE Standards & CEIG regulations, including power control centers, motor control centers, synchronizing panels, PLC/VFD Panels, and Machinery Control Panels."
     },
     {
       question: "What are the benefits of working with GVS CONTROLS?",
@@ -44,7 +44,7 @@ const FAQ = () => {
     },
     {
       question: "How can I contact GVS CONTROLS?",
-      answer: "Office & Works: Plot No.1476, Sengundram Main Road, Gokulapuram Chengalpattu Dist, Pin-603204\n(Land Mark – Mas Robotics)\nReg. Office: No.46/1, 5th Cross Street, Bagavathy Nagar, Govindarajapuram, Guduvanchery – 603202, Kanchipuram Dist\nMobile: +91 7338880027 & 9884001597\nEmail: projects@gvscontrols.com, services@gvscontrols.com, gvscontrols@gmail.com"
+      answer: "Office & Works: Plot No.1476, Segundram Main Road, Gokulapuram- MaraimalaiNagar, Chengalpattu-(District), Pin:603209\nReg. Office: No.46/1, 5th Cross Street, Bagavathy Nagar Govindarajapuram, Nandhivaram, Guduvanchery – 603202, Chengalpattu-(Dist)\nMobile: 7338880027 & 9884001597\nEmail: projects@gvscontrols.com & gvscontrols@gmail.com\nWebsite: www.gvscontrols.com"
     }
   ];
 

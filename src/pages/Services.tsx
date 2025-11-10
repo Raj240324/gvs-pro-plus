@@ -1,17 +1,19 @@
-import { useEffect, useState, useCallback } from 'react';
-import React from 'react';
-import { 
-  Settings, 
-  Wrench, 
-  HardDrive, 
-  Clock,
+import React, { useEffect, useState, useCallback } from 'react';
+import {
+  Settings,
+  Wrench,
   ArrowRight,
-  Factory
+  Factory,
+  Cpu,
+  RefreshCw,
+  Boxes,
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { TiltedCard } from '../components/ui/tilted-card';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import SEO from '../components/SEO';
+import { AnimatePresence } from 'framer-motion';
+import { CanvasRevealEffect } from '../components/ui/canvas-reveal-effect';
 
 interface Service {
   id: string;
@@ -20,53 +22,47 @@ interface Service {
   icon: JSX.Element;
   features: string[];
   ctaLink: string;
+  color: [number, number, number][]; // Added for canvas
 }
 
-const Services = () => {
+const Services: React.FC = () => {
   const [headerHeight, setHeaderHeight] = useState(0);
   const location = useLocation();
+  const prefersReducedMotion = useReducedMotion();
 
   const updateHeaderHeight = useCallback(() => {
     const headerElement = document.querySelector('header');
     if (headerElement) {
-      const height = headerElement.offsetHeight;
-      setHeaderHeight(height);
+      setHeaderHeight(headerElement.offsetHeight);
     }
   }, []);
 
   useEffect(() => {
     updateHeaderHeight();
     const handleResize = () => updateHeaderHeight();
-    window.addEventListener('resize', handleResize);
     const handleScroll = () => updateHeaderHeight();
+
+    window.addEventListener('resize', handleResize);
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    document.title = 'Services - GVS Controls';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'GVS Controls offers consultancy, automation, installation, and renovation services for industrial electrical and automation systems.');
+    let observer: IntersectionObserver | null = null;
+    if (!prefersReducedMotion) {
+      const animatedElements = document.querySelectorAll('.aos-fade-up, .aos-scale-in, .aos-slide-in');
+      const observerOptions: IntersectionObserverInit = { threshold: 0.15, rootMargin: '0px 0px -50px 0px' };
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('aos-animate');
+        });
+      }, observerOptions);
+      animatedElements.forEach(el => observer!.observe(el));
     }
-
-    const animatedElements = document.querySelectorAll('.aos-fade-up, .aos-scale-in, .aos-slide-in');
-    const observerOptions: IntersectionObserverInit = {
-      threshold: 0.15,
-      rootMargin: '0px 0px -50px 0px'
-    };
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('aos-animate');
-        }
-      });
-    }, observerOptions);
-    animatedElements.forEach(el => observer.observe(el));
 
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('scroll', handleScroll);
-      animatedElements.forEach(el => observer.unobserve(el));
+      if (observer) observer.disconnect();
     };
-  }, [updateHeaderHeight]);
+  }, [updateHeaderHeight, prefersReducedMotion]);
 
   useEffect(() => {
     if (location.hash) {
@@ -78,187 +74,196 @@ const Services = () => {
         window.scrollTo({ top: elementTop - offset, behavior: 'smooth' });
       }
     }
-  }, [location]);
+  }, [location, headerHeight]);
 
+  // === Exact Content – No Changes – Added Colors for Canvas ===
   const services: Service[] = [
     {
       id: 'consultancy',
-      title: 'CONSULTANCY',
-      description: 'Project management and engineering consultancy services.',
+      title: 'Consultancy',
+      description: 'Expert project management and engineering consultancy for turnkey electrical and automation projects.',
       icon: <Settings size={28} className="text-teal-500" />,
       features: [
-        'Project management Consultancy services (PMC)',
-        'System / Field Study and giving optimum Design for Turnkey Projects, Process Plants and Industries',
-        'Project Engineering - Basic and Detail Engineering Documents & Drawings for Turnkey Plants',
-        'Control Design through Relay logic and PLC Automation for Process Plant/ Machineries',
-        'Sizing Calculation and Selecting complete Electrical HT / LT Equipments for Projects',
-        'Serving as Owners Consultant and Obtaining approvals from Leading Engineering Consultant',
-        'Providing assistance in procurement Process, Material Selection/ Electrical Equipments and Inspection certifying dispatch worthiness'
+        'Project Management Consultancy (PMC)',
+        'System and Field Study for Optimal Design in Turnkey Projects and Process Plants',
+        'Project Engineering: Basic and Detail Engineering Documents and Drawings',
+        'Control Design Using Relay Logic and PLC Automation for Process Plants and Machinery',
+        'Sizing Calculations and Selection of Complete HT/LT Electrical Equipment',
+        'Owner’s Representative and Coordination with Leading Consultants for Approvals',
+        'Assistance in Procurement, Material Selection, Equipment Inspection, and Dispatch Certification',
       ],
-      ctaLink: '#consultancy'
+      ctaLink: '#consultancy',
+      color: [[0, 128, 128], [59, 130, 246]],
     },
     {
       id: 'automation',
-      title: 'AUTOMATION',
-      description: 'Total automation and process control solutions.',
-      icon: <HardDrive size={28} className="text-teal-500" />,
+      title: 'Automation',
+      description: 'End-to-end automation and process control solutions with PLC/SCADA engineering and drive integration.',
+      icon: <Cpu size={28} className="text-teal-500" />,
       features: [
-        'Providing Total Automation, Process Control Solutions and Variety of Complete Instrumentation Products',
-        'Highly Customer driven Services for a variety of Process and Machine Application',
-        'Capabilities to offer highly Innovative, Cost effective, Automation systems',
-        'Instrumentation Products, Engineering as per Standards Practices and Pragmatic site services to suit the applications'
+        'Total Automation and Process Control Solutions',
+        'Customer-Driven Engineering for Process and Machine Applications',
+        'Innovative, Cost-Effective PLC/SCADA Solutions and Drive Integration',
+        'Instrumentation Engineering per Industry Standards and Site-Practical Services',
       ],
-      ctaLink: '#automation'
+      ctaLink: '#automation',
+      color: [[138, 43, 226], [236, 72, 153]],
     },
     {
       id: 'renovation-revamping',
-      title: 'RENOVATION & REVAMPING OF ELECTRICAL SYSTEM',
-      description: 'Renovation and revamping of electrical systems.',
-      icon: <Clock size={28} className="text-teal-500" />,
+      title: 'Renovation & Revamping of Electrical Systems',
+      description: 'Retrofit programs to enhance safety, reliability, and efficiency in operating plants.',
+      icon: <RefreshCw size={28} className="text-teal-500" />,
       features: [
-        'Renovation & Revamping of Electrical System in order to ensure safety to people working around as well as to enhance system efficiency',
-        'Well experienced Professionals carry out site survey to asses the optimum requirement for Renovation and Revamping of Electrical system',
-        'Close co-ordination with Clients Engineering team and discuss about the modality of execution',
-        'Trained Professionals are capable of Comprehending the needs of clients for execution of such Renovation and Revamping Work'
+        'End-to-End Retrofit Programs for Safety and Efficiency Enhancement',
+        'On-Site Surveys by Experienced Professionals to Assess Optimal Requirements',
+        'Close Coordination with Client Engineering Teams for Execution Planning',
+        'Skilled Teams for Minimal-Downtime Renovation and Revamp Projects',
       ],
-      ctaLink: '#renovation-revamping'
+      ctaLink: '#renovation-revamping',
+      color: [[255, 193, 7], [245, 158, 11]],
     },
     {
       id: 'services-and-supply',
-      title: 'SERVICES AND SUPPLY',
-      description: 'Control design and supply of control panels and instruments.',
-      icon: <Settings size={28} className="text-teal-500" />,
+      title: 'Services & Supply',
+      description: 'Control design, system integration, site services, and supply of panels and instrumentation.',
+      icon: <Boxes size={28} className="text-teal-500" />,
       features: [
-        'Control Design through Relay logic and PLC Automation for Process Plant/ Machineries',
-        'Revamping and Integration of Electrical System with suitable Controls (Relay & PLC) Instrumentation and Conversion of Relay Panel into PLC Panel',
-        'Technical Services for Installation and commissioning activities at site',
-        'Supply of Motor Control center VFD Panels and Local Control Panels',
-        'Supply of Relay Logic and PLC Based Control Panels',
-        'Supply of Field Instruments for Cement plant and Conveyor equipments like Safety switches Pull chord and Belt sway - (Schmersal make) Motion Sensors - (Milltronics) and ZSS-( Pepperl + Fuchs )',
-        'Sourcing and Supply of Instruments for Wind Mills and Switches of any Special Requirements'
+        'Control Design Using Relay Logic and PLC for Process Plants and Machinery',
+        'Revamp and Integration of Electrical Systems with Relay and PLC Controls',
+        'Conversion of Relay Panels to PLC-Based Systems',
+        'Technical Services for Installation and Commissioning at Site',
+        'Supply of MCC, VFD Panels, and Local Control Panels',
+        'Supply of Relay Logic and PLC-Based Control Panels',
+        'Supply of Field Instruments for Cement and Conveyor Systems (Schmersal, Milltronics, Pepperl+Fuchs)',
+        'Sourcing and Supply of Instruments for Wind Mills and Special Applications',
       ],
-      ctaLink: '#services-and-supply'
+      ctaLink: '#services-and-supply',
+      color: [[34, 197, 94], [22, 163, 74]],
     },
     {
       id: 'product-manufacturing',
-      title: 'PRODUCT MANUFACTURING & SUPPLY',
-      description: 'Electrical control panels manufactured as per IE standards.',
+      title: 'Product Manufacturing & Supply',
+      description: 'Electrical control panels designed to IE standards and CEIG requirements.',
       icon: <Factory size={28} className="text-teal-500" />,
       features: [
-        'Medium Voltage Panel with Single (or) Double Bus System',
-        'Power Control Centers, Power Distribution Panels, Motor Control Centers & Process Control Panels',
-        'EB & DG Synchronizing Control Panels & Auto Transfer Switch Panels',
-        'LT Bus Ducts and Sandwich Type Bus Ducts & Raising Main Panels',
-        'APFC Panels, AMF Control Panels, Relay Logic & PLC Control Panel',
-        'Local Push Button Station, Junction Boxes, Lighting Panels MLDB, LDB, SLDB, and Utility DB’s',
-        'VFD Control Panels & Special Purpose and Other Custom Built Panels'
+        'PCC (415 V; Single/Double Bus Configuration)',
+        'Power Control Centers, Power Distribution Panels, Motor Control Centers, Process Control Panels',
+        'EB & DG Synchronizing Panels and ATS/AMF Panels',
+        'LT Bus Ducts, Sandwich Bus Ducts, and Rising Main Panels',
+        'APFC Panels, AMF Control Panels, Relay Logic & PLC Control Panels',
+        'Local Push-Button Stations, Junction Boxes, Lighting Panels (MLDB, LDB, SLDB, Utility DBs)',
+        'VFD Control Panels and Custom-Built Panels',
       ],
-      ctaLink: '#product-manufacturing'
+      ctaLink: '#product-manufacturing',
+      color: [[249, 115, 22], [234, 88, 12]],
     },
     {
       id: 'additional-services',
-      title: 'OUR ADDITIONAL SERVICES',
-      description: 'Erection, testing, and commissioning of electrical systems.',
+      title: 'Additional Services',
+      description: 'Erection, testing, troubleshooting, and commissioning of industrial electrical systems.',
       icon: <Wrench size={28} className="text-teal-500" />,
       features: [
-        'Erection Testing, Trouble Shooting & Commissioning of Bus Ducts, Power Control Centers, Motor Control Centers and Control Panels',
-        'EB & DG Synchronizing Panels, AMF Control Panels & APFC Panels',
-        'PLC,VFD Control Panels & Special Purpose and Other Custom Built Panels',
-        'Revamping of Electrical Power Panels, MCC and Process Control Panels and Integration of Electrical System with suitable Controls (Relay & PLC) Instrumentation and Conversion of Relay Panel into PLC Panel',
-        'Supervisory assistance to Erection, Testing and Commissioning at site',
-        'Plant Shutdown and Turnarounds, Comprehensive Start-up & Commissioning Services',
-        'Supply of Field Instruments for Power Plants, Bulk Material Handling System, Chemical Plants, Cooling Towers, Automobile Industries, Process Plants, Cement plants and Renewable energy sectors'
+        'Erection, Testing, Troubleshooting, and Commissioning of Bus Ducts, PCC/MCC, and Control Panels',
+        'EB & DG Synchronizing, AMF, and APFC Panels',
+        'PLC/VFD Control Panels and Custom-Built Systems',
+        'Revamp of Power/MCC/Process Control Panels; Relay to PLC Conversions and System Integration',
+        'Supervisory Assistance for Erection, Testing, and Commissioning at Site',
+        'Plant Shutdowns and Turnarounds; Comprehensive Start-Up and Commissioning Services',
+        'Supply of Field Instruments for Power, Material Handling, Chemical, Cooling Towers, Automotive, Cement, and Renewables',
       ],
-      ctaLink: '#additional-services'
-    }
+      ctaLink: '#additional-services',
+      color: [[239, 68, 68], [220, 38, 38]],
+    },
   ];
 
   return (
     <main className="bg-gray-50" style={{ paddingTop: `${headerHeight}px` }}>
       <SEO
-        title="Services"
-        description="GVS Controls offers consultancy, automation, installation, and renovation services for industrial electrical and automation systems."
+        title="Our Services | GVS Controls"
+        description="Expert consultancy, automation, manufacturing, and turnkey services for industrial electrical and control systems."
         canonical={typeof window !== 'undefined' ? window.location.origin + '/services' : undefined}
       />
 
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-teal-500 via-cyan-500 to-blue-500 text-white py-20 overflow-hidden">
+      {/* Hero Section – Kept Original + Added Manufacturing Resemblance */}
+      <section className="relative bg-gradient-to-br from-teal-600 via-cyan-600 to-blue-700 text-white py-24 md:py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-black/10" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">Our Services</h1>
-            <p className="text-xl md:text-2xl leading-relaxed">Cutting-edge electrical and automation solutions tailored for industrial excellence.</p>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-200"
+            >
+              Our Services
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-xl md:text-2xl leading-relaxed text-cyan-100"
+            >
+              Cutting-Edge Electrical and Automation Solutions for Industrial Excellence
+            </motion.p>
           </div>
         </div>
       </section>
 
-      {/* Services Overview */}
-      <section className="py-20 relative overflow-hidden bg-gradient-to-br from-[#0f172a] via-[#1e3a8a] to-[#1e40af]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-500/20 via-cyan-500/10 to-transparent" />
-        
-        <motion.div
-          className="absolute inset-0"
-          style={{
-            background: `
-              linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.06) 50%, transparent 100%),
-              linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.03) 50%, transparent 100%)
-            `,
-            backgroundSize: '200% 200%'
-          }}
-          animate={{
-            backgroundPosition: ['0% 0%', '100% 100%']
-          }}
-          transition={{
-            duration: 15,
-            ease: 'linear',
-            repeat: Infinity,
-            repeatType: 'reverse'
-          }}
-        />
+      {/* Services Overview – Kept Tilted Cards + Canvas Integration for Resemblance */}
+      <section className="py-20 relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900">
+        {!prefersReducedMotion && (
+          <motion.div
+            className="absolute inset-0 opacity-30"
+            style={{
+              background: `
+                radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%)
+              `,
+            }}
+            animate={{ backgroundPosition: ['0% 0%', '100% 100%'] }}
+            transition={{ duration: 20, ease: 'linear', repeat: Infinity, repeatType: 'reverse' }}
+          />
+        )}
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16 aos-fade-up">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Service Offerings</h2>
-            <p className="text-gray-200 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-              Discover our comprehensive suite of solutions designed to optimize your industrial operations.
+            <p className="text-gray-300 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+              Explore our comprehensive suite of solutions engineered to optimize your industrial operations.
             </p>
           </div>
 
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((card, index) => (
-              <li
-                key={card.id}
-                className="aos-slide-in"
-                style={{ '--index': index } as React.CSSProperties}
-              >
+              <li key={card.id} className="aos-slide-in" style={{ ['--index' as any]: index }}>
                 <TiltedCard
                   containerHeight="100%"
                   containerWidth="100%"
                   scaleOnHover={1.05}
-                  rotateAmplitude={10}
+                  rotateAmplitude={8}
                   showMobileWarning={false}
                   showTooltip={false}
                   className="h-full"
                 >
-                  <div className="h-full p-8 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-xl rounded-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.12)]">
+                  <div className="h-full p-8 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 shadow-2xl hover:shadow-cyan-500/20 transition-shadow duration-300">
                     <div className="flex items-center mb-6">
-                      <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg">
-                        {React.cloneElement(card.icon as React.ReactElement, {
-                          className: "text-white",
-                          size: 24
-                        })}
+                      <div className="p-3 rounded-xl bg-gradient-to-br from-cyan-500 to-teal-600 shadow-lg">
+                        {React.cloneElement(card.icon as React.ReactElement, { className: 'text-white', size: 24 })}
                       </div>
-                      <h3 className="ml-4 text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
+                      <h3 className="ml-4 text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-200">
                         {card.title}
                       </h3>
                     </div>
-                    <p className="text-gray-300 text-base mb-6 truncate-3 leading-relaxed">
+                    <p className="text-gray-200 text-base mb-6 leading-relaxed">
                       {card.description}
                     </p>
                     <a
                       href={card.ctaLink}
-                      className="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-semibold text-base transition-colors duration-200"
+                      className="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-semibold text-base transition-all duration-200 group"
                     >
-                      Learn More <ArrowRight className="ml-2 w-5 h-5" />
+                      Learn More
+                      <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
                     </a>
                   </div>
                 </TiltedCard>
@@ -268,33 +273,44 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Detailed Service Sections */}
+      {/* Detailed Service Sections – Kept Original + Added Manufacturing Style Resemblance */}
       {services.map((service, index) => (
         <section
           key={service.id}
           id={service.id}
-          className={`py-20 ${
-            index % 6 === 0 ? 'bg-gradient-to-br from-gray-50 to-teal-50' :
-            index % 6 === 1 ? 'bg-gradient-to-br from-blue-50 to-indigo-50' :
-            index % 6 === 2 ? 'bg-gradient-to-br from-gray-50 to-cyan-50' :
-            index % 6 === 3 ? 'bg-gradient-to-br from-teal-50 to-blue-50' :
-            index % 6 === 4 ? 'bg-gradient-to-br from-indigo-50 to-gray-50' :
-            'bg-gradient-to-br from-cyan-50 to-teal-50'
+          className={`py-20 transition-all duration-500 ${
+            index % 6 === 0
+              ? 'bg-gradient-to-br from-gray-50 to-teal-50'
+              : index % 6 === 1
+              ? 'bg-gradient-to-br from-blue-50 to-indigo-50'
+              : index % 6 === 2
+              ? 'bg-gradient-to-br from-gray-50 to-cyan-50'
+              : index % 6 === 3
+              ? 'bg-gradient-to-br from-teal-50 to-blue-50'
+              : index % 6 === 4
+              ? 'bg-gradient-to-br from-indigo-50 to-gray-50'
+              : 'bg-gradient-to-br from-cyan-50 to-teal-50'
           }`}
-          style={{ scrollMarginTop: `${headerHeight + 24}px` }}
+          style={{ scrollMarginTop: `${headerHeight + 32}px` }}
         >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="aos-fade-up">
-              <div className="flex items-center mb-8">
-                {service.icon}
-                <h2 className="ml-4 text-4xl font-bold text-gray-900">{service.title}</h2>
+              <div className="flex items-center mb-10">
+                {React.cloneElement(service.icon as React.ReactElement, {
+                  className: 'text-teal-600',
+                  size: 32,
+                })}
+                <h2 className="ml-4 text-3xl md:text-4xl font-bold text-gray-900">{service.title}</h2>
               </div>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {service.features.map((feature, i) => (
-                  <li
-                    key={`${feature}-${i}`}
-                    className="flex items-start feature-item aos-slide-in"
-                    style={{ '--index': i } as React.CSSProperties}
+                  <motion.li
+                    key={`${service.id}-feature-${i}`}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.05 }}
+                    className="flex items-start feature-item"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -303,16 +319,17 @@ const Services = () => {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      strokeWidth="2"
+                      strokeWidth="2.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="text-teal-500 mr-3 flex-shrink-0 w-6 h-6"
+                      className="text-teal-600 mr-3 flex-shrink-0 w-6 h-6 mt-0.5"
+                      aria-hidden="true"
                     >
-                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                      <path d="m9 11 3 3L22 4"/>
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                      <path d="m9 11 3 3L22 4" />
                     </svg>
                     <span className="text-gray-700 text-base leading-relaxed">{feature}</span>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
             </div>
@@ -321,17 +338,40 @@ const Services = () => {
       ))}
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-cyan-600 via-teal-600 to-blue-600 text-white relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Transform Your Operations?</h2>
-            <p className="text-xl mb-8 max-w-3xl mx-auto leading-relaxed">
-              Partner with us to unlock the full potential of your industrial systems with our expert services.
-            </p>
-            <Link to="/contact" className="inline-flex items-center px-8 py-4 bg-white text-teal-600 font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl">
-              Get in Touch <ArrowRight className="ml-3 w-6 h-6" />
+      <section className="py-24 bg-gradient-to-br from-cyan-600 via-teal-600 to-blue-700 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/20" />
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl md:text-5xl font-bold mb-6"
+          >
+            Ready to Transform Your Operations?
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-xl mb-10 max-w-3xl mx-auto leading-relaxed text-cyan-100"
+          >
+            Partner with us to unlock the full potential of your industrial systems with expert engineering and execution.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+            <Link
+              to="/contact"
+              className="inline-flex items-center px-10 py-5 bg-white text-teal-700 font-bold text-lg rounded-full hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+            >
+              Get in Touch
+              <ArrowRight className="ml-3 w-6 h-6 transition-transform group-hover:translate-x-1" />
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
     </main>

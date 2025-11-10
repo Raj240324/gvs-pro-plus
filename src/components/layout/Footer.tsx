@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Home, Info, Briefcase, Folder, Contact, Shield, FileText, Wrench, Users, Star, Image } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Globe, Home, Info, Briefcase, Folder, Contact, Shield, FileText, Wrench, Users, Star, Image } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 
@@ -35,8 +35,6 @@ const Footer = () => {
 
   const socialLinks = [
     { href: 'https://www.linkedin.com/company/gvs-controls', Icon: Linkedin, label: 'LinkedIn' },
-    { href: 'https://x.com/gvscontrols', Icon: Twitter, label: 'Twitter' },
-    { href: 'https://www.facebook.com/gvscontrols', Icon: Facebook, label: 'Facebook' },
   ];
 
   return (
@@ -228,7 +226,7 @@ const Footer = () => {
                 >
                   <MapPin size={18} className="text-[#ff6f61] mr-2 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
                   <p className="text-[#4a0e78]/90 text-sm">
-                    Office & Works: Plot No.1476, Sengundram Main Road, Gokulapuram Chengalpattu Dist, Pin-603204 (Land Mark – Mas Robotics)
+                    Office & Works: Plot No.1476, Segundram Main Road, Gokulapuram- MaraimalaiNagar, Chengalpattu-(District), Pin:603209
                   </p>
                 </motion.div>
                 <motion.div
@@ -238,7 +236,7 @@ const Footer = () => {
                 >
                   <MapPin size={18} className="text-[#ff6f61] mr-2 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
                   <p className="text-[#4a0e78]/90 text-sm">
-                    Reg. Office: No.46/1, 5th Cross Street, Bagavathy Nagar, Govindarajapuram, Guduvanchery – 603202, Kanchipuram Dist
+                    Reg. Office: No.46/1, 5th Cross Street, Bagavathy Nagar Govindarajapuram, Nandhivaram, Guduvanchery – 603202, Chengalpattu-(Dist)
                   </p>
                 </motion.div>
                 <motion.div
@@ -275,16 +273,51 @@ const Footer = () => {
                   </div>
                 </motion.div>
                 <motion.div
+                  className="flex items-start group"
+                  whileHover={{ x: 3 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Mail size={18} className="text-[#ff6f61] mr-2 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
+                  <div className="flex flex-col">
+                    <a
+                      href="mailto:projects@gvscontrols.com"
+                      className="text-[#4a0e78]/90 hover:text-[#ff6f61] relative text-sm group-hover:text-[#ff6f61]"
+                    >
+                      projects@gvscontrols.com
+                      <motion.span
+                        className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-[#ff6f61] to-[#4a0e78]"
+                        initial={{ width: 0 }}
+                        whileHover={{ width: '100%' }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </a>
+                    <a
+                      href="mailto:gvscontrols@gmail.com"
+                      className="text-[#4a0e78]/90 hover:text-[#ff6f61] relative text-sm group-hover:text-[#ff6f61]"
+                    >
+                      gvscontrols@gmail.com
+                      <motion.span
+                        className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-[#ff6f61] to-[#4a0e78]"
+                        initial={{ width: 0 }}
+                        whileHover={{ width: '100%' }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </a>
+                  </div>
+                </motion.div>
+                <motion.div
                   className="flex items-center group"
                   whileHover={{ x: 3 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <Mail size={18} className="text-[#ff6f61] mr-2 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
+                  <Globe size={18} className="text-[#ff6f61] mr-2 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
                   <a
-                    href="mailto:gvscontrols@gmail.com"
+                    href="https://www.gvscontrols.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-[#4a0e78]/90 hover:text-[#ff6f61] relative text-sm group-hover:text-[#ff6f61]"
                   >
-                    gvscontrols@gmail.com
+                    www.gvscontrols.com
                     <motion.span
                       className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-[#ff6f61] to-[#4a0e78]"
                       initial={{ width: 0 }}

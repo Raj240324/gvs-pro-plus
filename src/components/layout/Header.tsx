@@ -1,12 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { Phone, Mail, Facebook, Instagram } from "lucide-react";
+import { Phone, Mail, Linkedin } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "../../components/ui/Button";
 import ContactModal from "../../components/ContactModal";
 import { useContactModal } from "../../hooks/use-contact-modal";
 import { cn } from "../../lib/utils";
-import { SiX } from "react-icons/si";
 
 // Utility function to debounce scroll events
 function debounce<T extends (...args: unknown[]) => void>(func: T, wait: number): (...args: Parameters<T>) => void {
@@ -87,51 +86,19 @@ const TopContactBar = () => (
       <div className="flex items-center gap-3 pr-6 border-r border-[#e0e0e0] dark:border-[#333] z-10">
         <span className="font-semibold text-xs text-[#4a0e78] dark:text-white/80 mr-2 tracking-wide">Follow</span>
         <motion.a
-          href="https://www.facebook.com/gvscontrols"
+          href="https://www.linkedin.com/company/gvs-controls"
           target="_blank"
           rel="noopener noreferrer"
           className="group focus:outline-none bg-transparent p-0 border-0 inline-flex items-center justify-center"
-          aria-label="Facebook"
+          aria-label="LinkedIn"
           style={{ background: "none", border: "none" }}
         >
           <motion.span
-            className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#1877F3]/90 to-[#3b5998]/80 shadow-md transition-all duration-300 overflow-hidden"
-            whileHover={{ scale: 1.18, rotate: -8, boxShadow: "0 4px 16px #1877f355" }}
+            className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#0A66C2]/90 to-[#004182]/80 shadow-md transition-all duration-300 overflow-hidden"
+            whileHover={{ scale: 1.18, rotate: -8, boxShadow: "0 4px 16px #0A66C255" }}
             whileTap={{ scale: 0.95 }}
           >
-            <Facebook size={20} className="text-white group-hover:text-[#ffd700] transition" />
-          </motion.span>
-        </motion.a>
-        <motion.a
-          href="https://x.com/gvscontrols"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group focus:outline-none bg-transparent p-0 border-0 inline-flex items-center justify-center"
-          aria-label="X (Twitter)"
-          style={{ background: "none", border: "none" }}
-        >
-          <motion.span
-            className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#000000]/90 to-[#23272f]/80 shadow-md transition-all duration-300 overflow-hidden"
-            whileHover={{ scale: 1.18, rotate: 8, boxShadow: "0 4px 16px #00000033" }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <SiX size={20} className="text-white group-hover:text-[#ffd700] transition" />
-          </motion.span>
-        </motion.a>
-        <motion.a
-          href="https://www.instagram.com/gvscontrols"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group focus:outline-none bg-transparent p-0 border-0 inline-flex items-center justify-center"
-          aria-label="Instagram"
-          style={{ background: "none", border: "none" }}
-        >
-          <motion.span
-            className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#E4405F]/90 via-[#fd1d1d]/80 to-[#fcb045]/80 shadow-md transition-all duration-300 overflow-hidden"
-            whileHover={{ scale: 1.18, rotate: -8, boxShadow: "0 4px 16px #E4405F55" }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Instagram size={20} className="text-white group-hover:text-[#ffd700] transition" />
+            <Linkedin size={20} className="text-white group-hover:text-[#ffd700] transition" />
           </motion.span>
         </motion.a>
       </div>
@@ -180,11 +147,11 @@ const TopContactBar = () => (
         </div>
         <span className="w-1 h-1 rounded-full bg-[#4a0e78]/30 dark:bg-white/30 mx-1" />
         <motion.a
-          href="tel:+919884001597"
+          href="tel:+917338880027"
           className="flex items-center gap-1 px-2 py-0.5 rounded bg-gradient-to-r from-[#e6fff7] to-[#e0f7ff] dark:from-[#2a403a] dark:to-[#2a3a3a] shadow-sm font-semibold text-[#4a0e78] dark:text-[#ffd700] text-xs group relative overflow-hidden whitespace-nowrap min-w-0"
           whileHover={{ scale: 1.04, boxShadow: "0 2px 8px #4a0e7833" }}
           whileTap={{ scale: 0.97 }}
-          aria-label="Call us at +91 9884001597"
+          aria-label="Call us at +91 7338880027"
           style={{ maxWidth: 140 }}
         >
           <motion.span
@@ -194,7 +161,7 @@ const TopContactBar = () => (
           >
             <Phone size={14} className="text-[#4a0e78] group-hover:scale-110 transition-transform duration-300" />
           </motion.span>
-          <span className="ml-0.5 truncate group-hover:text-[#4a0e78] transition">+91 9884001597</span>
+          <span className="ml-0.5 truncate group-hover:text-[#4a0e78] transition">+91 7338880027</span>
         </motion.a>
       </div>
     </div>
@@ -315,7 +282,7 @@ const Header = () => {
                 />
                 <div className="hidden lg:flex flex-col">
                   <span className="text-[#ff0000] font-bold text-lg">GVS CONTROLS</span>
-                  <span className="text-[#ffbf00] font-medium italic">Our Vision To Your Solution</span>
+                  <span className="text-[#ffbf00] font-medium italic">(Our Vision To Your Solution)</span>
                 </div>
               </NavLink>
             </div>
@@ -470,7 +437,14 @@ const Header = () => {
                   </nav>
                   <div className="flex flex-col gap-1 text-[#4a0e78] text-[13px] font-medium mb-3">
                     <a
-                      href="tel:+919958611814"
+                      href="tel:+917338880027"
+                      className="flex items-center gap-1.5 hover:text-[#ff6f61] transition-colors py-1.5"
+                    >
+                      <Phone size={14} />
+                      +91 7338880027
+                    </a>
+                    <a
+                      href="tel:+919884001597"
                       className="flex items-center gap-1.5 hover:text-[#ff6f61] transition-colors py-1.5"
                     >
                       <Phone size={14} />
@@ -493,31 +467,13 @@ const Header = () => {
                   </div>
                   <div className="flex justify-center gap-4 mb-3">
                     <a
-                      href="https://www.facebook.com/gvscontrols"
+                      href="https://www.linkedin.com/company/gvs-controls"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-[#4a0e78] hover:text-[#ff6f61] transition-colors"
-                      aria-label="Facebook"
+                      aria-label="LinkedIn"
                     >
-                      <Facebook size={16} />
-                    </a>
-                    <a
-                      href="https://x.com/gvscontrols"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#4a0e78] hover:text-[#ff6f61] transition-colors"
-                      aria-label="X"
-                    >
-                      <SiX size={16} />
-                    </a>
-                    <a
-                      href="https://www.instagram.com/gvscontrols"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#4a0e78] hover:text-[#ff6f61] transition-colors"
-                      aria-label="Instagram"
-                    >
-                      <Instagram size={16} />
+                      <Linkedin size={16} />
                     </a>
                   </div>
                 </div>

@@ -232,11 +232,11 @@ const PrivacyPolicy = () => {
             </p>
             <address className="not-italic mb-4">
               <strong>GVS Controls</strong><br />
-              Office & Works: Plot No.1476, Sengundram Main Road, Gokulapuram Chengalpattu Dist, Pin-603204<br />
-              (Land Mark – Mas Robotics)<br />
-              Reg. Office: No.46/1, 5th Cross Street, Bagavathy Nagar, Govindarajapuram, Guduvanchery – 603202, Kanchipuram Dist<br />
-              Mobile: <a href="tel:+917338880027" className="underline hover:no-underline">+91 73388 80027</a> & <a href="tel:+919884001597" className="underline hover:no-underline">+91 98840 01597</a><br />
-              Email: <a href="mailto:projects@gvscontrols.com" className="underline hover:no-underline">projects@gvscontrols.com</a>, <a href="mailto:services@gvscontrols.com" className="underline hover:no-underline">services@gvscontrols.com</a>, <a href="mailto:gvscontrols@gmail.com" className="underline hover:no-underline">gvscontrols@gmail.com</a>
+              Office & Works: Plot No.1476, Segundram Main Road, Gokulapuram- MaraimalaiNagar, Chengalpattu-(District), Pin:603209<br />
+              Reg. Office: No.46/1, 5th Cross Street, Bagavathy Nagar Govindarajapuram, Nandhivaram, Guduvanchery – 603202, Chengalpattu-(Dist)<br />
+              Mobile: <a href="tel:+917338880027" className="underline hover:no-underline">7338880027</a> & <a href="tel:+919884001597" className="underline hover:no-underline">9884001597</a><br />
+              Email: <a href="mailto:projects@gvscontrols.com" className="underline hover:no-underline">projects@gvscontrols.com</a> & <a href="mailto:gvscontrols@gmail.com" className="underline hover:no-underline">gvscontrols@gmail.com</a><br />
+              Website: <a href="https://www.gvscontrols.com" className="underline hover:no-underline" target="_blank" rel="noopener noreferrer">www.gvscontrols.com</a>
             </address>
           </div>
         </motion.div>

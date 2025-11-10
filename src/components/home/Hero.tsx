@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, FacebookIcon, LinkedinIcon, TwitterIcon } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { FaWhatsapp, FaFilePdf, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import TypewriterEffectSmoothDemo from "../../components/ui/typewriter-effect-demo-1";
 import { TextRoll } from "../../components/ui/text-roll";

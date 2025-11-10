@@ -156,7 +156,7 @@ const Index = () => {
                   </div>
                   <h3 className="text-lg font-bold text-blue-700 dark:text-blue-200 mb-1">Our Foundation</h3>
                   <span className="inline-block bg-blue-100/60 dark:bg-blue-900/40 text-blue-700 dark:text-blue-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">Est. 2017</span>
-                  <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Rooted in innovation and problem‑solving.</p>
+                  <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Rooted in Innovation and problem‑solving.</p>
                 </div>
                 <div className="flip-card-back bg-gradient-to-br from-blue-500/90 to-blue-700/90 dark:from-blue-700/90 dark:to-blue-900/90 text-white rounded-2xl shadow-2xl border border-blue-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30"
                   style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
@@ -190,7 +190,7 @@ const Index = () => {
                 <div className="flip-card-back bg-gradient-to-br from-green-500/90 to-green-700/90 dark:from-green-700/90 dark:to-green-900/90 text-white rounded-2xl shadow-2xl border border-green-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30"
                   style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
                   <p className="text-sm leading-relaxed text-center font-medium">
-                    Our promoters bring over 30 years of EPC experience, having worked with Shriram EPC Ltd., L&T, and leading consultants, delivering projects in power plants, material handling, and renewable energy.
+                    Our promoters bring over 30 years of EPC experience, having worked with Shriram EPC Ltd., L&T, and leading consultants, delivering projects in Power plants, Material handling, and Renewable energy.
                   </p>
                 </div>
               </div>
@@ -213,13 +213,13 @@ const Index = () => {
                     <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                   </div>
                   <h3 className="text-lg font-bold text-red-700 dark:text-red-200 mb-1">Our Expertise</h3>
-                  <span className="inline-block bg-red-100/60 dark:bg-red-900/40 text-red-700 dark:text-red-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">Automation</span>
-                  <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Total automation & process control.</p>
+                  <span className="inline-block bg-red-100/60 dark:bg-red-900/40 text-red-700 dark:text-red-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">Instrumentation</span>
+                  <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Instrumentation, Total automation & Process control.</p>
                 </div>
                 <div className="flip-card-back bg-gradient-to-br from-red-500/90 to-red-700/90 dark:from-red-700/90 dark:to-red-900/90 text-white rounded-2xl shadow-2xl border border-red-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30"
                   style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
                   <p className="text-sm leading-relaxed text-center font-medium">
-                    We provide total automation, process control solutions, and innovative instrumentation products, delivering customer‑driven services and cost‑effective systems tailored to diverse process and machine applications.
+                    We provide Total Automation, Process control solutions, and Innovative Instrumentation products, delivering customer‑driven services and cost‑effective systems tailored to diverse process and machine applications.
                   </p>
                 </div>
               </div>
@@ -243,12 +243,12 @@ const Index = () => {
                   </div>
                   <h3 className="text-lg font-bold text-yellow-700 dark:text-yellow-200 mb-1">Our Services</h3>
                   <span className="inline-block bg-yellow-100/60 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">Turnkey</span>
-                  <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Consultancy, manufacturing, revamping.</p>
+                  <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Consultancy, Manufacturing, Revamping.</p>
                 </div>
                 <div className="flip-card-back bg-gradient-to-br from-yellow-500/90 to-yellow-700/90 dark:from-yellow-700/90 dark:to-yellow-900/90 text-white rounded-2xl shadow-2xl border border-yellow-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30"
                   style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
                   <p className="text-sm leading-relaxed text-center font-medium">
-                    We offer consultancy, manufacturing of control panels & bus ducts, erection, testing, commissioning, and revamping of electrical systems for safety and efficiency.
+                    We offer Consultancy, Manufacturing of Control panels & Bus ducts, Erection, Testing, Commissioning, and Revamping of Electrical systems for safety and efficiency.
                   </p>
                 </div>
               </div>
@@ -308,7 +308,7 @@ const Index = () => {
               Ready to Start Your Project?
             </h2>
             <p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto animate-fade-in delay-200">
-              Our team of expert engineers is ready to help you with electrical systems, automation, and engineering needs.
+              Our team of Expert Engineers is ready to help you with Electrical systems, Automation, and Engineering needs.
             </p>
             <Button
               variant="gradient"

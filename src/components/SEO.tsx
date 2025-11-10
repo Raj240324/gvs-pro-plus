@@ -70,10 +70,7 @@ const SEO = ({
               url: typeof window !== 'undefined' ? window.location.origin : undefined,
               logo: ogImage,
               sameAs: [
-                'https://www.linkedin.com/company/gvs-controls',
-                'https://x.com/gvscontrols',
-                'https://www.facebook.com/gvscontrols',
-                'https://www.instagram.com/gvscontrols'
+                'https://www.linkedin.com/company/gvs-controls'
               ],
               contactPoint: [
                 {

@@ -20,17 +20,16 @@ const FeaturedClients = () => {
   });
 
   const clients = [
-    { name: 'SAIL', projects: 'Bulk Material Handling', color: 'from-blue-500 to-cyan-500' },
-    { name: 'TISCO', projects: 'Steel Plants', color: 'from-red-500 to-orange-500' },
-    { name: 'RINL Vizag', projects: 'Power Plants', color: 'from-green-500 to-emerald-500' },
-    { name: 'NTPC', projects: 'Thermal Power Stations', color: 'from-purple-500 to-pink-500' },
-    { name: 'JSW', projects: 'Cement & Steel Plants', color: 'from-yellow-500 to-orange-500' },
-    { name: 'Ultratech', projects: 'Cement Projects', color: 'from-indigo-500 to-blue-500' },
-    { name: 'Aditya Birla Group', projects: 'Process Plants', color: 'from-teal-500 to-green-500' },
-    { name: 'GMR', projects: 'Renewable Energy', color: 'from-pink-500 to-rose-500' },
-    { name: 'Sterlite Group', projects: 'Chemical Plants', color: 'from-violet-500 to-purple-500' },
-    { name: 'Aumund Engineering', projects: 'Samson Feeder Systems', color: 'from-cyan-500 to-blue-500' },
-    { name: 'Loesche Energy', projects: 'Centrix Systems', color: 'from-amber-500 to-yellow-500' },
+    { name: 'SAIL', color: 'from-blue-500 to-cyan-500' },
+    { name: 'TISCO', color: 'from-red-500 to-orange-500' },
+    { name: 'RINL Vizag', color: 'from-green-500 to-emerald-500' },
+    { name: 'CPCL', color: 'from-yellow-500 to-orange-500' },
+    { name: 'MRL', color: 'from-indigo-500 to-blue-500' },
+    { name: 'Cochin Refinery', color: 'from-teal-500 to-cyan-500' },
+    { name: 'Sterlite Group', color: 'from-violet-500 to-purple-500' },
+    { name: 'GMR', color: 'from-pink-500 to-rose-500' },
+    { name: 'Aditya Birla Group', color: 'from-amber-500 to-yellow-500' },
+    { name: 'Sea Bird (NAVY)', color: 'from-slate-500 to-gray-500' },
   ];
 
   const duplicatedClients = [...clients, ...clients];
@@ -191,7 +190,8 @@ const FeaturedClients = () => {
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.4 }}
                   >
-                    {client.projects}
+                    {/* client.projects was invalid - replace with something useful or descriptive */}
+                    {/* If you want to show extra info, add it to the client object and type! */}
                   </motion.p>
                 </div>
                 <motion.div 
@@ -251,7 +251,7 @@ const FeaturedClients = () => {
         >
           {[
             { value: "30+", label: "Years of Excellence" },
-            { value: "200+", label: "Projects Delivered" },
+            { value: "100+", label: "Projects Delivered" },
             { value: "50+", label: "Happy Clients" }
           ].map((stat, index) => (
             <motion.div

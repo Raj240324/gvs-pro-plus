@@ -1,5 +1,5 @@
 import { useEffect, useState, Component, ErrorInfo, ReactNode } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle, Linkedin, Facebook, Twitter, Instagram } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle, Linkedin } from 'lucide-react';
 import { useToast } from "../hooks/use-toast";
 import { motion } from 'framer-motion';
 import { Textarea } from '../components/ui/textarea';
@@ -287,21 +287,21 @@ const Contact = () => {
                 {
                   icon: <MapPin size={24} className="sm:w-8 sm:h-8" />,
                   title: 'Office & Works',
-                  content: 'Plot No.1476, Sengundram Main Road, Gokulapuram Chengalpattu Dist, Pin-603204 (Land Mark – Mas Robotics)',
-                  link: 'https://maps.google.com/?q=Gokulapuram+Chengalpattu',
+                  content: 'Plot No.1476, Segundram Main Road, Gokulapuram- MaraimalaiNagar, Chengalpattu-(District), Pin:603209',
+                  link: 'https://www.google.com/maps/place/12%C2%B046\'13.5%22N+80%C2%B002\'10.0%22E/@12.7704061,80.0335333,17z/data=!3m1!4b1!4m4!3m3!8m2!3d12.7704061!4d80.0361082?entry=ttu&g_ep=EgoyMDI1MTEwNC4xIKXMDSoASAFQAw%3D%3D',
                   linkText: 'View on Map',
                 },
                 {
                   icon: <MapPin size={24} className="sm:w-8 sm:h-8" />,
                   title: 'Reg. Office',
-                  content: 'No.46/1, 5th Cross Street, Bagavathy Nagar, Govindarajapuram, Guduvanchery – 603202, Kanchipuram Dist',
-                  link: 'https://maps.google.com/?q=Govindarajapuram+Guduvanchery',
+                  content: 'No.46/1, 5th Cross Street, Bagavathy Nagar Govindarajapuram, Nandhivaram, Guduvanchery – 603202, Chengalpattu-(Dist)',
+                  link: 'https://maps.google.com/?q=Govindarajapuram+Nandhivaram+Guduvanchery',
                   linkText: 'View on Map',
                 },
                 {
                   icon: <Mail size={24} className="sm:w-8 sm:h-8" />,
                   title: 'Email Us',
-                  content: ['Projects: projects@gvscontrols.com', 'Services: services@gvscontrols.com', 'General: gvscontrols@gmail.com'],
+                  content: ['Projects: projects@gvscontrols.com', 'General: gvscontrols@gmail.com', 'Website: www.gvscontrols.com'],
                   link: 'mailto:projects@gvscontrols.com',
                   linkText: 'Send an Email',
                 },
@@ -505,14 +505,14 @@ const Contact = () => {
                   transition={{ duration: 0.3 }}
                 >
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.1234567890123!2d79.9770!3d12.6847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52f712b82805b7%3A0xfcf142a03e07e756!2sGVS+Controls%2C+Plot+No.1476%2C+Sengundram+Main+Road%2C+Gokulapuram%2C+Chengalpattu%2C+Tamil+Nadu+603204!5e0!3m2!1sen!2sin!4v1650956281050!5m2!1sen!2sin"
+                    src="https://www.google.com/maps?q=12.7704061,80.0361082&z=17&output=embed"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="GVS Controls Location - Plot No.1476, Sengundram Main Road, Gokulapuram, Chengalpattu"
+                    title="GVS Controls Location - 12.7704061, 80.0361082"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
                 </motion.div>
@@ -528,9 +528,9 @@ const Contact = () => {
                         Office & Works
                       </h3>
                       <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-                        Plot No.1476, Sengundram Main Road, Gokulapuram<br />
-                        Chengalpattu Dist, Tamil Nadu - 603204<br />
-                        <span className="font-medium text-teal-600">Land Mark: Mas Robotics</span>
+                        Plot No.1476, Segundram Main Road<br />
+                        Gokulapuram- MaraimalaiNagar<br />
+                        Chengalpattu-(District), Pin:603209
                       </p>
                     </div>
                   </div>
@@ -541,9 +541,9 @@ const Contact = () => {
                         Reg. Office
                       </h3>
                       <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-                        No.46/1, 5th Cross Street, Bagavathy Nagar<br />
-                        Govindarajapuram, Guduvanchery - 603202<br />
-                        Kanchipuram Dist, Tamil Nadu
+                        No.46/1, 5th Cross Street<br />
+                        Bagavathy Nagar Govindarajapuram, Nandhivaram<br />
+                        Guduvanchery – 603202, Chengalpattu-(Dist)
                       </p>
                     </div>
                   </div>
@@ -572,24 +572,6 @@ const Contact = () => {
                     link: "https://www.linkedin.com/company/gvs-controls",
                     name: "LinkedIn",
                     hoverColor: "#0A66C2",
-                  },
-                  {
-                    icon: <Facebook size={20} className="sm:w-7 sm:h-7" />,
-                    link: "https://www.facebook.com/gvscontrols",
-                    name: "Facebook",
-                    hoverColor: "#1877F2",
-                  },
-                  {
-                    icon: <Twitter size={20} className="sm:w-7 sm:h-7" />,
-                    link: "https://x.com/gvscontrols",
-                    name: "Twitter",
-                    hoverColor: "#1D9BF0",
-                  },
-                  {
-                    icon: <Instagram size={20} className="sm:w-7 sm:h-7" />,
-                    link: "https://www.instagram.com/gvscontrols",
-                    name: "Instagram",
-                    hoverColor: "#E4405F",
                   },
                 ].map((social, index) => (
                   <motion.a

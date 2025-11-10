@@ -1,584 +1,289 @@
-import { useEffect, useState } from 'react';
-import { 
-  CheckCircle2, 
-  Target, 
-  Lightbulb, 
-  Shield, 
-  Star, 
-  Users, 
-  Zap 
-} from 'lucide-react';
-import { motion } from 'framer-motion';
-import { GlowingEffect } from '../components/ui/glowing-effect';
-import { Timeline } from '../components/ui/timeline';
-import SEO from '../components/SEO';
+import React, { useEffect, useMemo, useRef } from 'react';
+import { motion, useMotionValue, useTransform, useSpring, useReducedMotion, useScroll, useTransform as transformScroll } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
+import { useInView } from 'react-intersection-observer';
 
-// Local Images
-import pp1 from '../assets/pp-1.png';
-import pp2 from '../assets/pp-2.png';
-import pp3 from '../assets/pp-3.png';
-import pp4 from '../assets/pp-4.png';
-import pp5 from '../assets/pp-5.png';
-import pp6 from '../assets/pp-6.png';
-import re1 from '../assets/re-1.png';
-import re2 from '../assets/re-2.png';
-import re3 from '../assets/re-3.png';
-import re4 from '../assets/re-4.png';
-import re5 from '../assets/re-5.png';
-import re6 from '../assets/re-6.png';
-import cop1 from '../assets/cop-1.png';
-import cop14 from '../assets/cop-14.png';
-import cop15 from '../assets/cop-15.png';
-import cop16 from '../assets/cop-16.png';
-import cop17 from '../assets/cop-17.png';
-import cop18 from '../assets/cop-18.png';
+// Clean Placeholder
+const PlaceholderImg = ({ text }: { text: string }) => (
+  <div className="w-full h-full grid place-items-center bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 to-slate-900">
+    <span className="text-slate-400 font-medium text-sm">{text}</span>
+  </div>
+);
 
-// Placeholder Images
-const missionImageUrl = 'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg';
-const visionImageUrl = 'https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg';
-
-// Image Arrays
-const powerPlantImages = [pp1, pp2, pp3, pp4, pp5, pp6];
-const renewableEnergyImages = [re1, re2, re3, re4, re5, re6];
-const controlPanelImages = [cop1, cop14, cop15, cop16, cop17, cop18];
-
-interface TimelineItem {
-  title: string;
-  content: JSX.Element;
+// Subtle Glow
+function Glow({ className = '' }: { className?: string }) {
+  return (
+    <div className={`pointer-events-none absolute inset-0 rounded-3xl blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 ${className}`} />
+  );
 }
 
-const About: React.FC = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [currentControlPanelIndex, setCurrentControlPanelIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  const [visibleCards, setVisibleCards] = useState<number[]>([]);
+// Smooth 3D Tilt
+function Tilt({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
 
-  // Rotate Power/Renewable Images
-  useEffect(() => {
-    const id = setInterval(() => {
-      setCurrentImageIndex((i) => (i + 1) % renewableEnergyImages.length);
-    }, 2000);
-    return () => clearInterval(id);
-  }, []);
+  const rotateX = useSpring(reduce ? 0 : useTransform(y, [0, 1], [12, -12]), { stiffness: 180, damping: 30 });
+  const rotateY = useSpring(reduce ? 0 : useTransform(x, [0, 1], [-12, 12]), { stiffness: 180, damping: 30 });
 
-  // Rotate Control Panel Images
-  useEffect(() => {
-    const id = setInterval(() => {
-      setCurrentControlPanelIndex((i) => (i + 1) % controlPanelImages.length);
-    }, 2000);
-    return () => clearInterval(id);
-  }, []);
-
-  // SEO + AOS Scroll Trigger
-  useEffect(() => {
-    document.title = 'About GVS Controls - Our Journey and Expertise';
-    const desc = document.querySelector('meta[name="description"]');
-    if (desc) {
-      desc.setAttribute(
-        'content',
-        'Learn about GVS Controls, established in 2017, offering innovative electrical engineering solutions with 30+ years of industry experience.'
-      );
-    }
-
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          document
-            .querySelectorAll('.aos-fade-up, .aos-fade-in, .aos-fade-right, .aos-fade-left')
-            .forEach((el) => {
-              const rect = el.getBoundingClientRect();
-              if (rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.75) {
-                el.classList.add('aos-animate');
-              }
-            });
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Mobile Detection
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
-
-  // Flip Card Intersection Observer
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          const idx = Number(e.target.getAttribute('data-index'));
-          if (e.isIntersecting) setVisibleCards((p) => [...p, idx]);
-          else setVisibleCards((p) => p.filter((i) => i !== idx));
-        });
-      },
-      { threshold: 0.2 }
-    );
-    document.querySelectorAll('.team-value-card').forEach((c) => obs.observe(c));
-    return () => obs.disconnect();
-  }, []);
-
-  // Timeline Data
-  const timelineData: TimelineItem[] = [
-    {
-      title: '2017',
-      content: (
-        <div>
-          <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">
-            Founded GVS Controls
-          </h3>
-          <p className="text-gray-600 mt-2">
-            Established as a proprietary company with a vision for innovative, cost‑effective engineering solutions.
-          </p>
-          <img
-            src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?q=80&w=2946&auto=format&fit=crop"
-            alt="Founded GVS Controls"
-            className="w-full h-40 md:h-48 object-cover rounded-xl shadow-md mt-4"
-          />
-        </div>
-      ),
-    },
-    {
-      title: '2018‑2020',
-      content: (
-        <div>
-          <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">
-            Early EPC Projects
-          </h3>
-          <p className="text-gray-600 mt-2">
-            Collaborated with Shriram EPC Ltd., Black Stone Group Technologies, and L&T on power plants, bulk material handling, and chemical plants.
-          </p>
-          <img
-            src={powerPlantImages[currentImageIndex]}
-            alt={`Power Plant ${currentImageIndex + 1}`}
-            className="w-full h-40 md:h-48 object-cover rounded-xl shadow-md mt-4"
-          />
-        </div>
-      ),
-    },
-    {
-      title: '2021',
-      content: (
-        <div>
-          <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">
-            Automation Leadership
-          </h3>
-          <p className="text-gray-600 mt-2">
-            Introduced PLC & relay‑logic automation, VFD panels, and instrumentation for process & machine applications.
-          </p>
-          <div className="w-full h-40 md:h-48 overflow-hidden rounded-xl shadow-md mt-4">
-            <img
-              src={controlPanelImages[currentControlPanelIndex]}
-              alt={`Control Panel ${currentControlPanelIndex + 1}`}
-              className="w-full h-full object-cover object-center"
-            />
-          </div>
-        </div>
-      ),
-    },
-    {
-      title: '2022‑2023',
-      content: (
-        <div>
-          <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">
-            Global Expansion
-          </h3>
-          <p className="text-gray-600 mt-2">
-            Executed projects for SAIL, TISCO, RINL, CPCL, Sterlite, GMR, Aditya Birla Group, and international clients like Titan Cement (Egypt) & Republic Cement (Philippines).
-          </p>
-          <img
-            src={renewableEnergyImages[currentImageIndex]}
-            alt={`Renewable Energy ${currentImageIndex + 1}`}
-            className="w-full h-40 md:h-48 object-cover rounded-xl shadow-md mt-4"
-          />
-        </div>
-      ),
-    },
-    {
-      title: '2024‑2025',
-      content: (
-        <div>
-          <h3 className="text-xl font-bold text-gray-800 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">
-            Turnkey Excellence
-          </h3>
-          <p className="text-gray-600 mt-2">
-            Delivered complete turnkey solutions – design, manufacturing, erection, testing, commissioning, and revamping – across power, steel, cement, and renewable sectors.
-          </p>
-          <img
-            src="https://images.unsplash.com/photo-1727610542348-9636c3b65d2a?q=80&w=3179&auto=format&fit=crop"
-            alt="Turnkey Excellence"
-            className="w-full h-40 md:h-48 object-cover rounded-xl shadow-md mt-4"
-          />
-        </div>
-      ),
-    },
-  ];
-
-  // Team Values – Icons from Lucide
-  const teamValues = [
-    {
-      title: 'Integrity',
-      desc: 'Upholding ethical standards in all dealings, ensuring trust and reliability with clients like SAIL, TISCO, and RINL.',
-      icon: <Shield className="w-6 h-6" />,
-    },
-    {
-      title: 'Innovation',
-      desc: 'Pioneering cutting-edge automation and engineering solutions for complex challenges across power plants, renewable energy, and process industries.',
-      icon: <Lightbulb className="w-6 h-6" />,
-    },
-    {
-      title: 'Reliability',
-      desc: 'Delivering quality solutions on time with tailored timelines, backed by 30+ years of experience with industry leaders like Shriram EPC and L&T.',
-      icon: <Zap className="w-6 h-6" />,
-    },
-    {
-      title: 'Excellence',
-      desc: 'Striving for top-tier results in every project, leveraging updated technology and quality manufacturing for turnkey solutions.',
-      icon: <Star className="w-6 h-6" />,
-    },
-    {
-      title: 'Customer Focus',
-      desc: 'Listening to your needs and offering flexible, cost-effective services tailored to your business and technical objectives.',
-      icon: <Users className="w-6 h-6" />,
-    },
-    {
-      title: 'Efficiency',
-      desc: 'Maximizing resource efficiency to deliver results swiftly, with expertise in utility systems and operations.',
-      icon: <Target className="w-6 h-6" />,
-    },
-  ];
-
-  // Animation Variants
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: i * 0.2, duration: 0.5, ease: 'easeOut' },
-    }),
-    hover: { scale: 1.05, transition: { duration: 0.3 } },
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (reduce || !ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    x.set(mouseX / width);
+    y.set(mouseY / height);
   };
 
-  const iconVariants = {
-    hover: { scale: 1.2, rotate: 10, transition: { duration: 0.4, yoyo: Infinity } },
-  };
-
-  const missionVisionVariants = {
-    hidden: { opacity: 0, scale: 0.95 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: 'easeOut' } },
-    hover: { scale: 1.02, boxShadow: '0 15px 30px rgba(0,0,0,0.2)', transition: { duration: 0.3 } },
-  };
-
-  const imageVariants = {
-    hidden: { opacity: 0, x: 50 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-  };
-
-  const timelineItemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: i * 0.2, duration: 0.5, ease: 'easeOut' },
-    }),
+  const handleMouseLeave = () => {
+    x.set(0.5);
+    y.set(0.5);
   };
 
   return (
-    <div className="min-h-screen">
-      <SEO
-        title="About GVS Controls"
-        description="Learn about GVS Controls, established in 2017, offering innovative electrical engineering solutions with 30+ years of industry experience."
-        canonical={typeof window !== 'undefined' ? window.location.origin + '/about' : undefined}
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ rotateX, rotateY, transformStyle: 'preserve-3d', perspective: 1200 }}
+      className={`relative ${className}`}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+// Elegant Timeline
+interface NodeItem { title: string; text: string; img?: string; imgAlt?: string }
+function FuturisticTimeline({ items }: { items: NodeItem[] }) {
+  const { scrollYProgress } = useScroll();
+  const lineScale = transformScroll(scrollYProgress, [0, 1], [0, 1]);
+
+  return (
+    <div className="relative max-w-7xl mx-auto px-6">
+      <style>{`
+        @keyframes flow { 0%{background-position:0% 50%} 100%{background-position:200% 50%} }
+        .neon-line {
+          background: linear-gradient(90deg, #14b8a6, #6366f1, #ec4899);
+          background-size: 200% 100%;
+          animation: flow 10s linear infinite;
+        }
+      `}</style>
+
+      <motion.div
+        className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-0.5 neon-line rounded-full"
+        style={{ scaleY: lineScale }}
+        initial={{ scaleY: 0 }}
+        aria-hidden="true"
       />
 
-      {/* Header Spacer */}
-      <div className="h-[84px] lg:h-[140px]" />
+      <ol className="space-y-32">
+        {items.map((it, i) => {
+          const [ref, inView] = useInView({ threshold: 0.4, triggerOnce: true });
 
-      <main className="overflow-hidden">
-        {/* Hero Section */}
-        <section className="bg-gradient-to-br from-indigo-800 via-teal-600 to-fuchsia-700 text-white py-20 md:py-28 relative">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.2)_0,transparent_60%)] opacity-80" />
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPjxwYXR0ZXJuIGlkPSJhIiB3aWR0aD0iMjAiIGhlaWdodD0iMjAiPjxjaXJjbGUgY3g9IjIuNSIgY3k9IjIuNSIgcj0iMS41IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMSkiLz48L3BhdHRlcm4+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNhKSIvPjwvc3ZnPg==')] opacity-30" />
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="max-w-3xl mx-auto text-center">
-              <span className="inline-block px-4 py-1 rounded-full bg-white/20 backdrop-blur-md text-teal-200 text-sm mb-6 border border-white/30 shadow-md">
-                Our Story
-              </span>
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-teal-300 drop-shadow-md">
-                About GVS Controls
-              </h1>
-              <p className="text-lg text-white/90 leading-relaxed drop-shadow-sm">
-                M/s GVS Controls – Started in the year 2017 as a Proprietary Company, The Company was established with Objective of highly Innovative and Cost Effective Engineering Solution and works with Single minded dedication, constantly redefining the term “Customer Satisfaction”.
-              </p>
-            </div>
-          </div>
-        </section>
+          return (
+            <li key={i} ref={ref} className="relative grid md:grid-cols-2 gap-12 items-center">
+              <motion.span
+                className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-white shadow-lg ring-4 ring-teal-500/30 z-10"
+                initial={{ scale: 0 }}
+                animate={inView ? { scale: 1 } : {}}
+                transition={{ duration: 0.5 }}
+                aria-hidden="true"
+              />
 
-        {/* Mission & Vision */}
-        <section className="py-16 md:py-20 bg-gradient-to-tr from-teal-100 via-indigo-200 to-purple-200 relative">
-          <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(255,255,255,0.1)_25%,transparent_25%,transparent_75%,rgba(255,255,255,0.1)_75%)] bg-[size:20px_20px] opacity-50" />
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center mb-12 aos-fade-up">
-              <span className="inline-block px-3 py-1 bg-teal-100/80 text-teal-800 rounded-full text-sm font-medium mb-3 border border-teal-200 shadow-sm">
-                Our Purpose
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 drop-shadow-md">Mission & Vision</h2>
-              <p className="text-gray-700 max-w-2xl mx-auto">
-                Discover the driving force behind GVS Controls' commitment to innovation and excellence.
-              </p>
-            </div>
-
-            {/* Mission */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center aos-fade-right">
+              {/* Text */}
               <motion.div
-                initial="hidden"
-                animate="visible"
-                whileHover="hover"
-                variants={missionVisionVariants}
-                className="relative rounded-2xl bg-gradient-to-br from-white/95 to-teal-100/70 backdrop-blur-xl shadow-lg border border-teal-200/30 p-6 md:p-8 overflow-hidden"
+                className={`order-2 md:order-${i % 2 === 0 ? '1' : '2'} ${i % 2 === 0 ? 'md:pr-16' : ''}`}
+                initial={{ opacity: 0, y: 50 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, ease: 'easeOut' }}
               >
-                <GlowingEffect spread={30} glow={true} proximity={50} className="rounded-2xl" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(20,184,166,0.15)_0,transparent_70%)] opacity-60" />
-                <div className="relative z-10">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2.5 rounded-full bg-teal-500/10 text-teal-600">
-                      <Target className="w-6 h-6" />
-                    </div>
-                    <h2 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">
-                      Our Mission
-                    </h2>
+                <Tilt className="group">
+                  <div className="relative bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-white/30 dark:border-slate-700/50 rounded-3xl p-10 shadow-xl">
+                    <Glow className="bg-gradient-to-br from-teal-400 to-indigo-600" />
+                    <h3 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-700 dark:from-teal-400 dark:to-indigo-400">
+                      {it.title}
+                    </h3>
+                    <p className="mt-4 text-base md:text-lg text-slate-700 dark:text-slate-300 leading-relaxed font-light">
+                      {it.text}
+                    </p>
                   </div>
-                  <p className="text-gray-700 text-base md:text-lg leading-relaxed mb-4">
-                    To deliver <strong>innovative</strong> and <strong>cost‑effective</strong> engineering solutions, ensuring optimal man‑machine interaction and redefining <strong>customer satisfaction</strong>.
-                  </p>
-                  <p className="text-gray-600 text-sm md:text-base leading-relaxed">
-                    With over <strong>30 years of experience</strong> in EPC projects, our team has collaborated with industry leaders like Shriram EPC Ltd., Black Stone Group, and L&T, providing a vast service spectrum focused on client success.
-                  </p>
-                  <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    {[
-                      { icon: <CheckCircle2 className="text-teal-500 w-4 h-4" />, title: 'Innovation', desc: 'Pioneering solutions.' },
-                      { icon: <CheckCircle2 className="text-indigo-500 w-4 h-4" />, title: 'Customer Focus', desc: 'Your needs first.' },
-                      { icon: <CheckCircle2 className="text-fuchsia-500 w-4 h-4" />, title: 'Excellence', desc: 'Top‑tier quality.' },
-                    ].map((item, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.2, duration: 0.4 }}
-                        className="flex items-start gap-2 bg-white/50 rounded-lg p-3 shadow-sm border border-teal-100/30"
-                      >
-                        <div className="mt-1">{item.icon}</div>
-                        <div>
-                          <h3 className="text-sm font-semibold text-gray-800">{item.title}</h3>
-                          <p className="text-xs text-gray-600">{item.desc}</p>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-teal-400 to-indigo-400 opacity-70" />
+                </Tilt>
               </motion.div>
 
+              {/* Image */}
               <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={imageVariants}
-                className="relative rounded-2xl overflow-hidden shadow-xl border border-teal-200/30"
+                className={`order-1 md:order-${i % 2 === 0 ? '2' : '1'} ${i % 2 === 0 ? '' : 'md:pl-16'}`}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={inView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.9, delay: 0.2 }}
               >
-                <img src={missionImageUrl} alt="Our Mission" className="w-full h-[250px] md:h-[400px] object-cover" />
-                <div className="absolute bottom-4 left-4 bg-gradient-to-r from-teal-500 to-indigo-600 text-white p-4 rounded-lg shadow-lg">
-                  <p className="text-xl font-bold">30+ Years</p>
-                  <p className="text-sm">Industry Experience</p>
+                <div className="rounded-3xl overflow-hidden shadow-2xl border border-white/20">
+                  {it.img ? (
+                    <img
+                      src={it.img}
+                      alt={it.imgAlt || it.title}
+                      className="w-full h-72 md:h-80 object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <PlaceholderImg text="Milestone" />
+                  )}
                 </div>
               </motion.div>
-            </div>
-
-            {/* Vision */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center aos-fade-left">
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={imageVariants}
-                className="relative rounded-2xl overflow-hidden shadow-xl border border-indigo-200/30 order-2 lg:order-1"
-              >
-                <img src={visionImageUrl} alt="Our Vision" className="w-full h-[250px] md:h-[400px] object-cover" />
-              </motion.div>
-
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                whileHover="hover"
-                variants={missionVisionVariants}
-                className="relative rounded-2xl bg-gradient-to-br from-white/95 to-indigo-100/70 backdrop-blur-xl shadow-lg border border-indigo-200/30 p-6 md:p-8 overflow-hidden order-1 lg:order-2"
-              >
-                <GlowingEffect spread={30} glow={true} proximity={50} className="rounded-2xl" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(79,70,229,0.15)_0,transparent_70%)] opacity-60" />
-                <div className="relative z-10">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2.5 rounded-full bg-indigo-500/10 text-indigo-600">
-                      <Lightbulb className="w-6 h-6" />
-                    </div>
-                    <h2 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-teal-600">
-                      Our Vision
-                    </h2>
-                  </div>
-                  <p className="text-gray-700 text-base md:text-lg leading-relaxed mb-4">
-                    To lead globally in <strong>innovative automation</strong> and <strong>engineering solutions</strong>, driving sustainable growth and setting new standards in excellence.
-                  </p>
-                  <p className="text-gray-600 text-sm md:text-base leading-relaxed">
-                    Leveraging our <strong>30+ years of expertise</strong>, we aim to pioneer cutting‑edge technologies and deliver unmatched value to clients worldwide.
-                  </p>
-                  <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    {[
-                      { icon: <CheckCircle2 className="text-indigo-500 w-4 h-4" />, title: 'Global Leadership', desc: 'Leading worldwide.' },
-                      { icon: <CheckCircle2 className="text-teal-500 w-4 h-4" />, title: 'Sustainability', desc: 'Eco‑friendly focus.' },
-                      { icon: <CheckCircle2 className="text-fuchsia-500 w-4 h-4" />, title: 'Excellence', desc: 'Industry standards.' },
-                    ].map((item, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.2, duration: 0.4 }}
-                        className="flex items-start gap-2 bg-white/50 rounded-lg p-3 shadow-sm border border-indigo-100/30"
-                      >
-                        <div className="mt-1">{item.icon}</div>
-                        <div>
-                          <h3 className="text-sm font-semibold text-gray-800">{item.title}</h3>
-                          <p className="text-xs text-gray-600">{item.desc}</p>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-indigo-400 to-teal-400 opacity-70" />
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Timeline */}
-        <section className="py-16 md:py-20 bg-gradient-to-br from-teal-200 via-blue-300 to-indigo-400 relative">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.3)_0,transparent_70%)] opacity-60" />
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-4xl">
-            <div className="text-center mb-12 aos-fade-up">
-              <span className="inline-block px-3 py-1 bg-teal-100/80 text-teal-800 rounded-full text-sm font-medium mb-3 border border-teal-200 shadow-sm">
-                Our Journey
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 drop-shadow-md">Our Milestones</h2>
-              <p className="text-gray-700 max-w-xl mx-auto text-base md:text-lg">
-                Explore key milestones in GVS Controls' growth since 2017.
-              </p>
-            </div>
-
-            <style>{`
-              .timeline-circle { display: none !important; }
-              .timeline-item { position: relative; margin-bottom: 2rem; padding-left: 2rem; }
-              .timeline-item::before {
-                content: '';
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 2px;
-                height: 100%;
-                background: linear-gradient(to bottom, #14b8a6, #4f46e5);
-              }
-              @media (min-width: 768px) { .timeline-item { padding-left: 3rem; } }
-            `}</style>
-
-            <Timeline data={timelineData} />
-            {timelineData.map((_, i) => (
-              <motion.div key={i} custom={i} initial="hidden" animate="visible" variants={timelineItemVariants} className="hidden" />
-            ))}
-          </div>
-        </section>
-
-        {/* Team Values – Flip Cards */}
-        <section className="py-16 md:py-20 bg-gradient-to-bl from-indigo-100 via-teal-100 to-fuchsia-200 relative">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+PHBhdGggZD0iTTYwIDMwIHEtMTUgMTUtMzAgMCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMSkiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==')] opacity-40" />
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center mb-12 aos-fade-up">
-              <span className="inline-block px-3 py-1 bg-indigo-100/80 text-indigo-800 rounded-full text-sm font-medium mb-3 border border-indigo-200 shadow-sm">
-                Our Values
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 drop-shadow-md">What Drives Us</h2>
-              <p className="text-gray-700 max-w-2xl mx-auto">
-                Core values guiding our work with clients like SAIL, TISCO, RINL, and many more.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
-              {teamValues.map((v, i) => (
-                <div
-                  key={i}
-                  className="relative team-value-card h-full"
-                  data-index={i}
-                  style={{ perspective: '1000px', transformStyle: 'preserve-3d' }}
-                >
-                  <motion.div
-                    custom={i}
-                    initial="hidden"
-                    animate="visible"
-                    whileHover={!isMobile ? 'hover' : undefined}
-                    variants={cardVariants}
-                    className="relative bg-gradient-to-br from-white/80 to-teal-50/50 backdrop-blur-md p-6 rounded-xl shadow-xl border border-teal-200/50 overflow-hidden transform-gpu h-full min-h-[260px] flex flex-col"
-                    style={{
-                      transformStyle: 'preserve-3d',
-                      transform: isMobile && visibleCards.includes(i) ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                      transition: 'transform 0.8s cubic-bezier(0.4,0,0.2,1)',
-                    }}
-                  >
-                    <GlowingEffect spread={40} glow={true} proximity={64} className="rounded-xl" />
-
-                    {/* Front */}
-                    <div
-                      className="relative z-10"
-                      style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
-                    >
-                      <motion.div
-                        variants={iconVariants}
-                        className="w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center text-teal-600 mb-4 shadow-sm"
-                      >
-                        {v.icon}
-                      </motion.div>
-                      <h3 className="text-xl font-bold text-gray-800 mb-2 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">
-                        {v.title}
-                      </h3>
-                      <p className="text-gray-600 text-sm leading-relaxed">{v.desc}</p>
-                    </div>
-
-                    {/* Back */}
-                    <div
-                      className="absolute inset-0 bg-gradient-to-tr from-teal-500/10 to-indigo-500/10 rounded-xl flex items-center justify-center p-6 text-center"
-                      style={{
-                        backfaceVisibility: 'hidden',
-                        WebkitBackfaceVisibility: 'hidden',
-                        transform: 'rotateY(180deg)',
-                      }}
-                    >
-                      <div>
-                        <h3 className="text-xl font-bold text-gray-800 mb-4 bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-indigo-600">
-                          {v.title}
-                        </h3>
-                        <p className="text-gray-700 text-sm leading-relaxed">{v.desc}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      </main>
+            </li>
+          );
+        })}
+      </ol>
     </div>
   );
-};
+}
 
-export default About;
+// Assets
+import milestone1 from '../assets/pp-1.png';
+import milestone2 from '../assets/pp-2.png';
+import milestone3 from '../assets/pp-3.png';
+
+export default function AboutUnified() {
+  const { scrollYProgress } = useScroll();
+  const heroBgOpacity = transformScroll(scrollYProgress, [0, 0.4], [1, 0.85]);
+
+  const companyMilestones = useMemo<NodeItem[]>(() => [
+    {
+      title: 'Founded in 2017',
+      text: 'M/s GVS Controls was established as a proprietary company with the primary objective of delivering highly innovative and cost-effective engineering solutions. Focused on redefining customer satisfaction through a problem-solving culture and optimal man-machine interface.',
+      img: milestone1,
+      imgAlt: 'GVS Controls foundation year'
+    },
+    {
+      title: 'IE & CEIG Compliant Manufacturing',
+      text: 'Built a state-of-the-art facility for manufacturing electrical control panels strictly adhering to Indian Electrical Standards and Chief Electrical Inspectorate to Government (CEIG) regulations. Full turnkey capabilities from design to commissioning.',
+      img: milestone2,
+      imgAlt: 'Manufacturing unit'
+    },
+    {
+      title: 'Trusted Turnkey Partner',
+      text: 'Delivered complete bidding support, detail engineering, supply, erection, testing, commissioning and revamping projects for prestigious clients including Aumund Engineering, Loesche Energy, Meenakshi Medical College & Hospital, ARS Hydrojet Services and leading cement & power sector giants.',
+      img: milestone3,
+      imgAlt: 'Project delivery'
+    }
+  ], []);
+
+  return (
+    <>
+      <head>
+        <title>About Us | GVS Controls – Innovative Electrical & Automation Solutions Since 2017</title>
+        <meta name="description" content="M/s GVS Controls: Founded in 2017. IE & CEIG compliant electrical control panels and turnkey automation solutions for power, cement, steel & process industries." />
+      </head>
+
+      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 to-slate-900">
+        <div className="h-[84px] lg:h-[120px]" />
+
+        {/* HERO – Original Rich Gradient + Improved Text */}
+        <motion.section
+          className="relative py-32 md:py-40 bg-gradient-to-br from-indigo-900 via-teal-700 to-purple-800 overflow-hidden"
+          style={{ opacity: heroBgOpacity }}
+        >
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15),transparent_70%)]" />
+          <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
+            <motion.span
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="inline-block px-6 py-2 rounded-full bg-white/25 backdrop-blur-md border border-white/40 text-teal-200 text-xs md:text-sm font-semibold tracking-widest mb-8 shadow-xl"
+            >
+              ESTABLISHED 2017 • BUILT ON DECADES OF EXPERTISE
+            </motion.span>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.2 }}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-white via-teal-100 to-pink-100 drop-shadow-2xl"
+            >
+              M/s GVS CONTROLS
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6, duration: 1 }}
+              className="mt-8 text-lg md:text-xl lg:text-2xl text-teal-50 max-w-4xl mx-auto leading-relaxed font-light tracking-wide"
+            >
+              Pioneering innovative, cost-effective electrical control panels and automation solutions with unwavering dedication to quality, safety, and customer satisfaction since 2017.
+            </motion.p>
+          </div>
+        </motion.section>
+
+        {/* TIMELINE – Original Light Gradient + Premium Text */}
+        <section className="py-28 md:py-36 bg-gradient-to-b from-teal-50 via-cyan-50 to-indigo-50">
+          <div className="max-w-7xl mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-20"
+            >
+              <span className="inline-block px-6 py-2 bg-teal-700 text-white rounded-full text-sm font-bold tracking-wider">
+                OUR JOURNEY
+              </span>
+              <h2 className="mt-6 text-3xl md:text-4xl lg:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-teal-700 to-indigo-800">
+                Milestones Since Inception
+              </h2>
+              <p className="mt-4 text-base md:text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed">
+                From a visionary start in 2017 to becoming a trusted name in turnkey electrical and automation engineering.
+              </p>
+            </motion.div>
+
+            <FuturisticTimeline items={companyMilestones} />
+          </div>
+        </section>
+
+        {/* CTA – Original Deep Gradient + Crisp White Text */}
+        <section className="py-24 md:py-32 bg-gradient-to-r from-teal-600 to-indigo-700">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9 }}
+            className="max-w-4xl mx-auto px-6 text-center"
+          >
+            <h3 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-6 drop-shadow-md">
+              Ready to Elevate Your Electrical Systems?
+            </h3>
+            <p className="text-lg md:text-xl text-teal-50 mb-10 font-light">
+              Share your requirements and receive a tailored proposal within 48 hours.
+            </p>
+            <a
+              href="/contact"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-white text-teal-700 font-bold text-base md:text-lg rounded-full shadow-2xl hover:scale-105 hover:shadow-teal-500/50 transition-all"
+            >
+              Get Free Consultation <ArrowRight className="w-5 h-5" />
+            </a>
+          </motion.div>
+        </section>
+
+        {/* JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "M/s GVS CONTROLS",
+              "url": "https://www.gvscontrols.com",
+              "logo": "https://www.gvscontrols.com/logo.png",
+              "foundingDate": "2017",
+              "description": "Innovative electrical control panels & automation solutions | IE & CEIG compliant | Turnkey execution since 2017",
+              "contactPoint": { "@type": "ContactPoint", "email": "info@gvscontrols.com", "contactType": "Customer Service" }
+            })
+          }}
+        />
+      </div>
+    </>
+  );
+}
