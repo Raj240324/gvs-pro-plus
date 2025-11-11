@@ -112,7 +112,7 @@ const Index = () => {
   return (
     <main>
       <SEO
-        title="GVS Controls – 30+ Years of EPC Excellence"
+        title="GVS Controls - Electrical, Instrumentation, Automation & Consultancy | Industrial Solutions"
         description="Turnkey electrical, automation & control solutions for power, steel, cement, renewable energy, and material handling. Trusted by SAIL, NTPC, Aumund, and 50+ industry leaders."
       />
       <Hero />

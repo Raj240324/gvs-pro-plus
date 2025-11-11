@@ -180,11 +180,9 @@ export default function AboutUnified() {
       </head>
 
       <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 to-slate-900">
-        <div className="h-[84px] lg:h-[120px]" />
-
         {/* HERO – Original Rich Gradient + Improved Text */}
         <motion.section
-          className="relative py-32 md:py-40 bg-gradient-to-br from-indigo-900 via-teal-700 to-purple-800 overflow-hidden"
+          className="relative pt-48 md:pt-56 pb-32 md:pb-40 bg-gradient-to-br from-indigo-900 via-teal-700 to-purple-800 overflow-hidden"
           style={{ opacity: heroBgOpacity }}
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15),transparent_70%)]" />

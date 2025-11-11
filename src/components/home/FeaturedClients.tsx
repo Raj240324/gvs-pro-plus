@@ -169,13 +169,13 @@ const FeaturedClients = () => {
                   >
                     <span
                       className={`flex items-center justify-center w-full h-full text-center font-mono leading-none
-                        ${client.name.split(' ').map(word => word[0]).join('').length > 2
+                        ${client.name.split(' ').map(word => word[0]).filter(char => /[A-Za-z]/.test(char)).join('').length > 2
                           ? 'text-xl sm:text-2xl lg:text-3xl tracking-tight'
                           : 'text-2xl sm:text-3xl lg:text-4xl'
                         } font-extrabold text-white drop-shadow-md`}
                       style={{paddingTop: '2px'}}
                     >
-                      {client.name.split(' ').map(word => word[0]).join('')}
+                      {client.name.split(' ').map(word => word[0]).filter(char => /[A-Za-z]/.test(char)).join('')}
                     </span>
                   </motion.div>
                   <motion.p 
