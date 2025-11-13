@@ -74,7 +74,7 @@ const Hero = () => {
       id: "catalogue",
       icon: "BookOpen",
       text: "Catalogue",
-      action: () => window.open("/catalogue/gvs_catalogue.pdf", "_blank"),
+      action: () => window.open("/catalogue/gvs-controls-com.pdf", "_blank"),
     },
     {
       id: "call",
