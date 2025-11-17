@@ -303,7 +303,9 @@ export const Timeline3D: React.FC<Timeline3DProps> = ({
 
         <div className="relative">
           {/* Center Line */}
-          <div className={`absolute left-1/2 transform -translate-x-1/2 h-full w-1 ${primaryColor} rounded-full`} style={{ boxShadow: `0 0 15px ${primaryColor}` }}></div>
+          <div
+            className={`hidden lg:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 ${primaryColor} rounded-full shadow-[0_0_18px_rgba(34,197,94,0.35)]`}
+          ></div>
 
           {/* Events */}
           {events.map((event, index) => (
