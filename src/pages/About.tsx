@@ -20,7 +20,7 @@ export default function AboutUnified() {
     {
       id: '1',
       title: 'Company Founded',
-      description: 'M/s GVS Controls was established as a proprietary firm with a mission to deliver innovative, cost-effective engineering solutions. Driven by problem-solving culture and customer satisfaction, we optimize man-machine interaction across industries.',
+      description: 'M/s GVS Controls Was Established as a Proprietary Firm With a Mission to Deliver Innovative, Cost-Effective Engineering Solutions. Driven by Problem-Solving Culture and Customer Satisfaction, We Optimize Man-Machine Interaction Across Industries.',
       icon: <Building2 className="text-white w-5 h-5" />,
       image: [gvsMain, gvsFront],
       category: 'Foundation',
@@ -30,7 +30,7 @@ export default function AboutUnified() {
     {
       id: '2',
       title: 'IE & CEIG Compliant Manufacturing',
-      description: 'Launched state-of-the-art facility for manufacturing electrical control panels compliant with Indian Electrical Standards and CEIG regulations. Full turnkey capability: design, supply, erection, testing & commissioning.',
+      description: 'Launched State-of-the-Art Facility for Manufacturing Electrical Control Panels Compliant With Indian Electrical Standards and CEIG Regulations. Full Turnkey Capability: Design, Supply, Erection, Testing & Commissioning.',
       icon: <Factory className="text-white w-5 h-5" />,
       image: infrastructure,
       category: 'Infrastructure',
@@ -40,7 +40,7 @@ export default function AboutUnified() {
     {
       id: '3',
       title: 'Major Projects & Industry Recognition',
-      description: 'Executed turnkey E&I projects for SAIL, NTPC, TISCO, CPCL, Indian Navy (Sea Bird), Aditya Birla, GMR, and cement giants via Aumund & Loesche. Delivered PCC, MCC, PLC/VFD panels, revamping, and automation across power, steel, and process plants.',
+      description: 'Executed Turnkey E&I Projects for SAIL, NTPC, TISCO, CPCL, Indian Navy (Sea Bird), Aditya Birla, GMR, and Cement Giants via Aumund & Loesche. Delivered PCC, MCC, PLC/VFD Panels, Revamping, and Automation Across Power, Steel, and Process Plants.',
       icon: <Award className="text-white w-5 h-5" />,
       image: projectAbout,
       category: 'Achievement',
@@ -91,7 +91,7 @@ export default function AboutUnified() {
               transition={{ delay: 0.6, duration: 1 }}
               className="mt-8 text-lg md:text-xl lg:text-2xl text-teal-50 max-w-4xl mx-auto leading-relaxed font-light tracking-wide"
             >
-              Turnkey Electrical panels, PLC Automation, and Revamping Solutions since 2017 — Compliant, Innovative, and Trusted by India’s leading industries.
+              Turnkey Electrical Panels, PLC Automation, and Revamping Solutions since 2017 — Compliant, Innovative, and Trusted by India’s Leading Industries.
             </motion.p>
           </div>
         </motion.section>
@@ -145,7 +145,7 @@ export default function AboutUnified() {
               "url": "https://www.gvscontrols.com",
               "logo": "https://www.gvscontrols.com/logo.png",
               "foundingDate": "2017",
-              "description": "IE & CEIG compliant electrical control panels, PLC automation, turnkey E&I execution since 2017",
+              "description": "IE & CEIG Compliant Electrical Control Panels, PLC Automation, Turnkey E&I Execution Since 2017",
               "contactPoint": { "@type": "ContactPoint", "email": "info@gvscontrols.com", "contactType": "Customer Service" }
             })
           }}

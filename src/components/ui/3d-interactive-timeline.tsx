@@ -297,7 +297,7 @@ export const Timeline3D: React.FC<Timeline3DProps> = ({
             </span>
           </h2>
           <p className="mt-4 text-base md:text-lg max-w-3xl mx-auto">
-            From vision to trusted partner in electrical & automation engineering.
+            From Vision to Trusted Partner in Electrical & Automation Engineering.
           </p>
         </motion.div>
 
