@@ -74,7 +74,7 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Company Info */}
             <motion.div
-              className="backdrop-blur-lg bg-white/20 p-6 rounded-xl border border-white/30 shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
+              className="backdrop-blur-lg bg-white/20 p-5 rounded-xl border border-white/30 shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -83,7 +83,7 @@ const Footer = () => {
                 boxShadow: "0 8px 30px rgba(74, 14, 120, 0.2)"
               }}
             >
-              <div className="flex items-center mb-4">
+              <div className="flex items-center mb-3">
                 <img src="/logo.png" alt="GVS Controls Logo" className="h-10 w-auto" />
                 <span className="font-montserrat font-bold text-xl ml-3 text-[#ff0000]">
                   GVS CONTROLS
@@ -92,10 +92,10 @@ const Footer = () => {
               <p className="font-montserrat text-sm leading-relaxed mb-2 text-[#ffbf00] italic font-bold">
                 (Our Vision To Your Solution)
               </p>
-              <p className="text-[#4a0e78]/90 text-sm sm:text-md leading-relaxed break-words">
+              <p className="text-[#4a0e78]/90 text-sm sm:text-md leading-relaxed break-words mb-3">
                 Since 2017, GVS Controls has delivered innovative, cost-effective engineering solutions, empowering clients with cutting-edge technology. Your vision, our mission.
               </p>
-              <div className="flex space-x-3 mt-4">
+              <div className="flex space-x-3">
                 {socialLinks.map(({ href, Icon, label }) => (
                   <motion.a
                     key={label}
@@ -115,7 +115,7 @@ const Footer = () => {
 
             {/* Quick Links */}
             <motion.div
-              className="backdrop-blur-lg bg-white/20 p-6 rounded-xl border border-white/30 shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
+              className="backdrop-blur-lg bg-white/20 p-5 rounded-xl border border-white/30 shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
@@ -124,10 +124,10 @@ const Footer = () => {
                 boxShadow: "0 8px 30px rgba(74, 14, 120, 0.2)"
               }}
             >
-              <h3 className="font-montserrat font-semibold text-xl mb-4 text-[#4a0e78]">
+              <h3 className="font-montserrat font-semibold text-xl mb-3 text-[#4a0e78]">
                 Explore More
               </h3>
-              <nav className="grid grid-cols-2 gap-x-4 gap-y-3">
+              <nav className="grid grid-cols-2 gap-x-3 gap-y-2">
                 {navLinks.map(({ to, label, Icon }) => (
                   <NavLink
                     key={label}
@@ -161,7 +161,7 @@ const Footer = () => {
 
             {/* Services */}
             <motion.div
-              className="backdrop-blur-lg bg-white/20 p-6 rounded-xl border border-white/30 shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
+              className="backdrop-blur-lg bg-white/20 p-5 rounded-xl border border-white/30 shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
@@ -170,10 +170,10 @@ const Footer = () => {
                 boxShadow: "0 8px 30px rgba(74, 14, 120, 0.2)"
               }}
             >
-              <h3 className="font-montserrat font-semibold text-xl mb-4 text-[#4a0e78]">
+              <h3 className="font-montserrat font-semibold text-xl mb-3 text-[#4a0e78]">
                 What We Offer
               </h3>
-              <nav className="grid gap-3">
+              <nav className="grid gap-2">
                 {serviceLinks.map(({ to, label }) => (
                   <NavLink
                     key={label}
@@ -206,7 +206,7 @@ const Footer = () => {
 
             {/* Contact Info */}
             <motion.div
-              className="backdrop-blur-lg bg-white/20 p-6 rounded-xl border border-white/30 shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
+              className="backdrop-blur-lg bg-white/20 p-5 rounded-xl border border-white/30 shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
@@ -215,10 +215,10 @@ const Footer = () => {
                 boxShadow: "0 8px 30px rgba(74, 14, 120, 0.2)"
               }}
             >
-              <h3 className="font-montserrat font-semibold text-xl mb-4 text-[#4a0e78]">
+              <h3 className="font-montserrat font-semibold text-xl mb-3 text-[#4a0e78]">
                 Reach Out
               </h3>
-              <div className="space-y-4 text-base">
+              <div className="space-y-3 text-base">
                 <motion.div
                   className="flex items-start group"
                   whileHover={{ x: 3 }}

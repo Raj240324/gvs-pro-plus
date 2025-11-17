@@ -1,5 +1,5 @@
 import { useEffect, useState, Component, ErrorInfo, ReactNode } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle, Linkedin } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle, Linkedin, Clock } from 'lucide-react';
 import { useToast } from "../hooks/use-toast";
 import { motion } from 'framer-motion';
 import { Textarea } from '../components/ui/textarea';
@@ -312,6 +312,14 @@ const Contact = () => {
                   link: 'tel:+917338880027',
                   linkText: 'Call Now',
                 },
+                {
+                  icon: <Clock size={24} className="sm:w-8 sm:h-8" />,
+                  title: 'Working Hours',
+                  content: '9:30 AM to 5:30 PM',
+                  subContent: 'Monday to Saturday',
+                  link: '#',
+                  linkText: '',
+                },
               ].map((item, index) => (
                 <motion.div
                   key={index}
@@ -331,18 +339,26 @@ const Contact = () => {
                     <h3 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-3 sm:mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-teal-500 group-hover:to-purple-600 transition-all duration-300">
                       {item.title}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4 sm:mb-6 text-xs sm:text-sm md:text-base leading-relaxed">
+                    <p className="text-gray-600 dark:text-gray-300 mb-2 text-xs sm:text-sm md:text-base leading-relaxed">
                       {Array.isArray(item.content) ? item.content.map((line, i) => <span key={i} className="block">{line}</span>) : item.content}
                     </p>
-                    <a
-                      href={item.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-teal-600 font-semibold hover:text-purple-600 transition-colors duration-300 relative group/link text-sm sm:text-base"
-                    >
-                      <span>{item.linkText}</span>
-                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-purple-600 group-hover/link:w-full transition-all duration-300"></span>
-                    </a>
+                    {item.subContent && (
+                      <p className="text-gray-500 dark:text-gray-400 mb-4 sm:mb-6 text-xs sm:text-sm leading-relaxed">
+                        {item.subContent}
+                      </p>
+                    )}
+                    {!item.subContent && <div className="mb-4 sm:mb-6"></div>}
+                    {item.linkText && (
+                      <a
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-teal-600 font-semibold hover:text-purple-600 transition-colors duration-300 relative group/link text-sm sm:text-base"
+                      >
+                        <span>{item.linkText}</span>
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-purple-600 group-hover/link:w-full transition-all duration-300"></span>
+                      </a>
+                    )}
                   </div>
                 </motion.div>
               ))}

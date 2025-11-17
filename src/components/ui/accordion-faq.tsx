@@ -117,7 +117,7 @@ export function AccordionFAQ() {
                         {item.id}
                       </span>
                     </div>
-                    <h3 className="uppercase text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:via-blue-400 group-hover:to-purple-400 text-white transition-all duration-300">
+                    <h3 className="text-base sm:text-lg md:text-xl font-semibold leading-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:via-blue-400 group-hover:to-purple-400 text-white transition-all duration-300">
                       {item.question}
                     </h3>
                   </div>
