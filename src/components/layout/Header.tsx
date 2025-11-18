@@ -47,14 +47,12 @@ const AnimatedMenuButton = ({ open, onClick }: { open: boolean; onClick: () => v
       touchHandled.current = false;
       return;
     }
-    e.preventDefault();
     e.stopPropagation();
     onClick();
   };
 
   const handleTouchStart = (e: React.TouchEvent<HTMLButtonElement>) => {
     touchHandled.current = true;
-    e.preventDefault();
     e.stopPropagation();
     onClick();
     // Reset after a short delay to allow click event if needed
@@ -412,12 +410,7 @@ const Header = () => {
               animate="open"
               exit="closed"
               className="lg:hidden fixed inset-0 bg-black/70 z-[1999]"
-              onClick={(e) => {
-                e.stopPropagation();
-                setMobileMenuOpen(false);
-              }}
-              onTouchStart={(e) => {
-                e.stopPropagation();
+              onClick={() => {
                 setMobileMenuOpen(false);
               }}
             />

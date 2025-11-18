@@ -50,7 +50,7 @@ export default function AboutUnified() {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 to-slate-900">
+      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 to-slate-900 relative">
         {/* HERO */}
         <motion.section
           className="relative pt-48 md:pt-56 pb-32 md:pb-40 bg-gradient-to-br from-indigo-900 via-teal-700 to-purple-800 overflow-hidden"
