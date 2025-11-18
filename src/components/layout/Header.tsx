@@ -38,47 +38,86 @@ const XIcon = ({ size = 20, className = "" }: XIconProps) => (
   </svg>
 );
 
-const AnimatedMenuButton = ({ open, onClick }: { open: boolean; onClick: () => void }) => (
-  <motion.button
-    onClick={onClick}
-    className="lg:hidden text-[#4a0e78] hover:text-[#ff6f61] p-2 rounded-full hover:bg-white/20 transition-all duration-300"
-    aria-label={open ? "Close menu" : "Open menu"}
-    initial={false}
-    animate={open ? "open" : "closed"}
-    whileTap={{ scale: 0.9 }}
-    style={{ outline: "none", border: "none", background: "none" }}
-  >
-    <motion.svg
-      width="32"
-      height="32"
-      viewBox="0 0 32 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="block"
+const AnimatedMenuButton = ({ open, onClick }: { open: boolean; onClick: () => void }) => {
+  const touchHandled = useRef(false);
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // Prevent double-firing on mobile (touch + click)
+    if (touchHandled.current) {
+      touchHandled.current = false;
+      return;
+    }
+    e.preventDefault();
+    e.stopPropagation();
+    onClick();
+  };
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLButtonElement>) => {
+    touchHandled.current = true;
+    e.preventDefault();
+    e.stopPropagation();
+    onClick();
+    // Reset after a short delay to allow click event if needed
+    setTimeout(() => {
+      touchHandled.current = false;
+    }, 300);
+  };
+
+  return (
+    <motion.button
+      onClick={handleClick}
+      onTouchStart={handleTouchStart}
+      className="lg:hidden text-[#4a0e78] hover:text-[#ff6f61] p-2 rounded-full hover:bg-white/20 transition-all duration-300 relative z-[2001] touch-manipulation"
+      aria-label={open ? "Close menu" : "Open menu"}
+      initial={false}
+      animate={open ? "open" : "closed"}
+      whileTap={{ scale: 0.95 }}
+      style={{ 
+        outline: "none", 
+        border: "none", 
+        background: "none",
+        touchAction: "manipulation",
+        WebkitTapHighlightColor: "transparent",
+        userSelect: "none",
+        WebkitUserSelect: "none",
+        cursor: "pointer",
+        position: "relative",
+        zIndex: 2001
+      }}
     >
-      <motion.rect
-        x="6"
-        y="10"
-        width="20"
-        height="2.5"
-        rx="1.25"
-        animate={open ? { rotate: 45, y: 11, x: 6 } : { rotate: 0, y: 10, x: 6 }}
-        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-        fill="currentColor"
-      />
-      <motion.rect
-        x="6"
-        y="19.5"
-        width="20"
-        height="2.5"
-        rx="1.25"
-        animate={open ? { rotate: -45, y: 11, x: 6 } : { rotate: 0, y: 19.5, x: 6 }}
-        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-        fill="currentColor"
-      />
-    </motion.svg>
-  </motion.button>
-);
+      <motion.svg
+        width="32"
+        height="32"
+        viewBox="0 0 32 32"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="block pointer-events-none"
+        style={{ pointerEvents: "none" }}
+      >
+        <motion.rect
+          x="6"
+          y="10"
+          width="20"
+          height="2.5"
+          rx="1.25"
+          animate={open ? { rotate: 45, y: 11, x: 6 } : { rotate: 0, y: 10, x: 6 }}
+          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          fill="currentColor"
+        />
+        <motion.rect
+          x="6"
+          y="19.5"
+          width="20"
+          height="2.5"
+          rx="1.25"
+          animate={open ? { rotate: -45, y: 11, x: 6 } : { rotate: 0, y: 19.5, x: 6 }}
+          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          fill="currentColor"
+        />
+      </motion.svg>
+    </motion.button>
+  );
+};
 
 const TopContactBar = () => (
   <div className="hidden lg:block bg-gradient-to-r from-white/80 via-[#f8fafc]/80 to-white/80 dark:from-black/40 dark:via-[#23272f]/60 dark:to-black/40 backdrop-blur-xl border-b border-white/40 dark:border-white/10 shadow-sm relative">
@@ -292,7 +331,14 @@ const Header = () => {
                 <span className="block text-[#ffbf00] font-medium italic">Our Vision To Your Solution</span>
               </div>
             </div>
-            <AnimatedMenuButton open={mobileMenuOpen} onClick={() => setMobileMenuOpen(!mobileMenuOpen)} />
+            <div className="relative z-[2001]">
+              <AnimatedMenuButton 
+                open={mobileMenuOpen} 
+                onClick={() => {
+                  setMobileMenuOpen(prev => !prev);
+                }} 
+              />
+            </div>
             <div className="hidden lg:flex items-center justify-end w-full lg:w-auto mt-2 lg:mt-0">
               <nav className="flex items-center">
                 <div className="flex items-center gap-1 bg-white/20 border border-white/30 rounded-full py-1 px-2">
@@ -366,7 +412,14 @@ const Header = () => {
               animate="open"
               exit="closed"
               className="lg:hidden fixed inset-0 bg-black/70 z-[1999]"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setMobileMenuOpen(false);
+              }}
+              onTouchStart={(e) => {
+                e.stopPropagation();
+                setMobileMenuOpen(false);
+              }}
             />
             <motion.div
               variants={mobileMenuVariants}
