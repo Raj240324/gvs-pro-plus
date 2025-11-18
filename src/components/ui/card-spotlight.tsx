@@ -1,7 +1,7 @@
 "use client";
 
 import { useMotionValue, motion, useMotionTemplate } from "framer-motion";
-import React, { MouseEvent as ReactMouseEvent, useState } from "react";
+import React, { MouseEvent as ReactMouseEvent, useState, useRef } from "react";
 import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
 import { cn } from "@/lib/utils";
 
@@ -18,15 +18,21 @@ export const CardSpotlight = ({
 } & React.HTMLAttributes<HTMLDivElement>) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  const rafId = useRef<number | null>(null);
   
+  // Throttle mouse move for better performance
   function handleMouseMove({
     currentTarget,
     clientX,
     clientY,
   }: ReactMouseEvent<HTMLDivElement>) {
-    let { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
+    if (rafId.current) return;
+    rafId.current = requestAnimationFrame(() => {
+      let { left, top } = currentTarget.getBoundingClientRect();
+      mouseX.set(clientX - left);
+      mouseY.set(clientY - top);
+      rafId.current = null;
+    });
   }
 
   const [isHovering, setIsHovering] = useState(false);
@@ -60,13 +66,13 @@ export const CardSpotlight = ({
       >
         {isHovering && (
           <CanvasRevealEffect
-            animationSpeed={2}
+            animationSpeed={1.5}
             containerClassName="bg-transparent absolute inset-0 pointer-events-none"
             colors={[
               [59, 130, 246],
               [139, 92, 246],
             ]}
-            dotSize={4}
+            dotSize={5}
             showGradient={false}
           />
         )}
