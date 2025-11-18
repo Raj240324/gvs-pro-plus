@@ -1,9 +1,10 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
-import { CanvasRevealEffect } from '../components/ui/canvas-reveal-effect';
+import { motion } from 'framer-motion';
+import { CardSpotlight } from '../components/ui/card-spotlight';
 import { Factory, Shield, Zap, Wrench } from 'lucide-react';
+import React from 'react';
 
 interface Product {
   id: string;
@@ -17,43 +18,43 @@ interface Product {
 const ProductSection = ({ product, index }: { product: Product; index: number }) => {
   return (
     <motion.section
-      initial={{ opacity: 0, y: 80 }}
+      initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      viewport={{ once: true, amount: 0.2, margin: "-100px" }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       className={`py-20 md:py-28 overflow-hidden relative ${
         index % 2 === 0
           ? 'bg-gradient-to-br from-teal-50/60 via-cyan-50/60 to-indigo-50/60'
           : 'bg-gradient-to-bl from-indigo-50/60 via-purple-50/60 to-pink-50/60'
       }`}
     >
-      {/* Subtle Animated Background Orbs */}
+      {/* Animated Background Orbs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div
           animate={{ x: [0, 80, 0], y: [0, -80, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-          className="absolute top-10 left-10 w-72 h-72 bg-teal-300/20 rounded-full blur-3xl"
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute top-10 left-10 w-72 h-72 bg-teal-300/15 rounded-full blur-3xl"
         />
         <motion.div
           animate={{ x: [0, -100, 0], y: [0, 100, 0] }}
-          transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-20 right-20 w-64 h-64 bg-indigo-300/20 rounded-full blur-3xl"
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute bottom-20 right-20 w-64 h-64 bg-indigo-300/15 rounded-full blur-3xl"
         />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          {/* Text Content – Perfect Typography */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left: Full Content (Original) */}
           <motion.div
-            initial={{ opacity: 0, x: index % 2 === 0 ? -80 : 80 }}
+            initial={{ opacity: 0, x: index % 2 === 0 ? -60 : 60 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className={`space-y-7 ${index % 2 === 0 ? 'lg:order-1' : 'lg:order-2'}`}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className={`space-y-8 ${index % 2 === 0 ? 'lg:order-1' : 'lg:order-2'}`}
           >
             <div className="flex items-center gap-5">
               <motion.div
-                whileHover={{ rotate: 360, scale: 1.15 }}
+                whileHover={{ rotate: 360, scale: 1.2 }}
                 transition={{ duration: 0.6 }}
                 className="p-4 rounded-2xl bg-gradient-to-br from-teal-500 to-indigo-600 shadow-xl"
               >
@@ -75,10 +76,10 @@ const ProductSection = ({ product, index }: { product: Product; index: number })
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.08 }}
-                  className="group flex items-start gap-3 p-3.5 rounded-xl bg-white/80 backdrop-blur-sm shadow-md hover:shadow-xl hover:bg-white transition-all duration-300"
+                  transition={{ delay: i * 0.06, duration: 0.5 }}
+                  className="group flex items-start gap-3 p-4 rounded-xl bg-white/90 shadow-md hover:shadow-xl hover:bg-white transition-all duration-300 border border-gray-100"
                 >
-                  <div className="p-1.5 rounded-lg bg-gradient-to-br from-teal-400 to-indigo-500 group-hover:scale-110 transition-transform">
+                  <div className="p-2 rounded-lg bg-gradient-to-br from-teal-400 to-indigo-500 group-hover:scale-110 transition-transform">
                     <Zap className="w-5 h-5 text-white" />
                   </div>
                   <span className="text-gray-800 font-medium text-sm md:text-base group-hover:text-teal-700 transition-colors">
@@ -89,15 +90,15 @@ const ProductSection = ({ product, index }: { product: Product; index: number })
             </div>
           </motion.div>
 
-          {/* Interactive Canvas Card – Balanced Size */}
+          {/* Right: Perfectly Centered Spotlight Card */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.85 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
             className={`relative ${index % 2 === 0 ? 'lg:order-2' : 'lg:order-1'}`}
           >
-            <HoverCanvasCard product={product} />
+            <ProductSpotlightCard product={product} />
           </motion.div>
         </div>
       </div>
@@ -105,81 +106,53 @@ const ProductSection = ({ product, index }: { product: Product; index: number })
   );
 };
 
-const HoverCanvasCard = ({ product }: { product: Product }) => {
-  const [hovered, setHovered] = useState(false);
+const ProductSpotlightCard = ({ product }: { product: Product }) => {
+  const spotlightColor = useMemo(() => {
+    const [r1, g1, b1] = product.color[0];
+    const [r2, g2, b2] = product.color[1] || product.color[0];
+    return `rgb(${Math.floor((r1 + r2) / 2)}, ${Math.floor((g1 + g2) / 2)}, ${Math.floor((b1 + b2) / 2)})`;
+  }, [product.color]);
 
   return (
-    <motion.div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      whileHover={{ y: -12 }}
-      className="relative w-full max-w-md mx-auto"
-    >
-      <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-1">
-        <div className="relative z-10 bg-black/95 backdrop-blur-2xl rounded-3xl p-10 text-center">
+    <div className="relative w-full max-w-md mx-auto">
+      <CardSpotlight
+        radius={450}
+        color={spotlightColor}
+        className="rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-slate-900 via-purple-900/60 to-slate-900 h-[560px] border border-white/10"
+      >
+        <div className="relative z-20 flex flex-col items-center justify-center h-full px-8 text-center space-y-12">
+          {/* Elegant Icon */}
           <motion.div
-            animate={{ rotate: hovered ? 360 : 0 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-teal-500/20 to-indigo-500/20 backdrop-blur-md flex items-center justify-center border-4 border-white/10"
+            whileHover={{ scale: 1.12, rotate: 6 }}
+            transition={{ duration: 0.4 }}
+            className="p-8 rounded-full bg-gradient-to-br from-teal-400 via-cyan-500 to-indigo-600 shadow-2xl ring-8 ring-white/10"
           >
-            <motion.div
-              whileHover={{ scale: 1.2 }}
-              className="p-6 rounded-full bg-gradient-to-br from-teal-400 to-indigo-600 shadow-xl"
-            >
-              {product.icon}
-            </motion.div>
+            {React.cloneElement(product.icon as React.ReactElement, {
+              className: "w-20 h-20 text-white",
+            })}
           </motion.div>
 
-          <h3 className="text-2xl font-bold text-white mb-3">
+          {/* Clean & Sophisticated Title */}
+          <h3 className="text-3xl md:text-4xl font-bold text-white leading-snug tracking-tight max-w-xs">
             {product.name}
           </h3>
-          <p className="text-teal-300 text-base font-medium">
+
+          {/* Subtle & Premium Subtitle */}
+          <p className="text-teal-200 text-base md:text-lg font-medium tracking-wider opacity-90">
             IE & CEIG Compliant • Premium Quality
           </p>
 
+          {/* Refined Progress Bar */}
           <motion.div
             initial={{ width: 0 }}
-            whileInView={{ width: "100%" }}
-            transition={{ duration: 1.2, delay: 0.4 }}
-            className="h-1.5 bg-gradient-to-r from-teal-500 to-indigo-600 rounded-full mt-6"
+            whileInView={{ width: "65%" }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.8, delay: 0.6, ease: "easeOut" }}
+            className="h-1.5 bg-gradient-to-r from-teal-400 via-cyan-400 to-indigo-500 rounded-full shadow-lg shadow-cyan-500/40 max-w-xs"
           />
         </div>
-
-        <AnimatePresence>
-          {hovered && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 rounded-3xl"
-            >
-              <CanvasRevealEffect
-                animationSpeed={3}
-                containerClassName="bg-black"
-                colors={product.color}
-                dotSize={2}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Subtle Floating Particles */}
-        {hovered && (
-          <>
-            {[...Array(5)].map((_, i) => (
-              <motion.div
-                key={i}
-                initial={{ y: 0, opacity: 0 }}
-                animate={{ y: [-15, -80], opacity: [0.7, 0] }}
-                transition={{ duration: 1.8 + i * 0.2, repeat: Infinity, delay: i * 0.15 }}
-                className="absolute w-2 h-2 bg-teal-400 rounded-full blur-sm"
-                style={{ top: "50%", left: `${25 + i * 12}%` }}
-              />
-            ))}
-          </>
-        )}
-      </div>
-    </motion.div>
+      </CardSpotlight>
+    </div>
   );
 };
 
@@ -199,7 +172,7 @@ const ManufacturingSupply = () => {
         'EB & DG Synchronizing Control Panels & Auto Transfer Switch Panels',
         'LT Bus Ducts and Sandwich Type Bus Ducts & Raising Main Panels',
         'APFC Panels, AMF Control Panels, Relay Logic & PLC Control Panel',
-        'Local Push Button Station, Junction Boxes, Lighting Panels MLDB, LDB, SLDB, and Utility DB’s',
+        'Local Push Button Station, Junction Boxes, Lighting Panels ML singular, LDB, SLDB, and Utility DB’s',
         'VFD Control Panels & Special Purpose and Other Custom Built Panels',
       ],
       icon: <Factory className="w-16 h-16 text-white" />,
@@ -222,20 +195,20 @@ const ManufacturingSupply = () => {
 
   return (
     <main className="pt-[84px] lg:pt-[140px] bg-gradient-to-b from-slate-50 via-teal-50 to-indigo-50 min-h-screen">
-      {/* Hero – Perfectly Balanced */}
+      {/* Hero Section */}
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         className="relative py-28 md:py-36 bg-gradient-to-br from-indigo-900 via-teal-800 to-purple-900 overflow-hidden"
       >
-        <div className="absolute inset-0 opacity-25">
+        <div className="absolute inset-0 opacity-30">
           <motion.div
             animate={{ backgroundPosition: ['0% 0%', '100% 100%'] }}
-            transition={{ duration: 18, repeat: Infinity, repeatType: "reverse" }}
+            transition={{ duration: 25, repeat: Infinity, repeatType: "reverse" }}
             className="absolute inset-0"
             style={{
-              background: `radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.25) 0%, transparent 50%),
-                           radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.25) 0%, transparent 50%)`
+              background: `radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.3) 0%, transparent 50%),
+                           radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.3) 0%, transparent 50%)`,
             }}
           />
         </div>
@@ -267,22 +240,23 @@ const ManufacturingSupply = () => {
         </div>
       </motion.section>
 
-      {/* Detailed Sections */}
+      {/* Product Sections */}
       {products.map((product, index) => (
         <ProductSection key={product.id} product={product} index={index} />
       ))}
 
-      {/* CTA – Clean & Professional */}
+      {/* CTA Section */}
       <motion.section
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
         className="py-28 bg-gradient-to-r from-teal-600 via-indigo-600 to-purple-700"
       >
         <div className="container mx-auto px-6 text-center">
           <motion.h2
             initial={{ scale: 0.9 }}
             whileInView={{ scale: 1 }}
-            className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-6"
+            className="text-4xl md:text-5xl font-extrabold text-white mb-6"
           >
             Ready for Premium Solutions?
           </motion.h2>
@@ -290,20 +264,17 @@ const ManufacturingSupply = () => {
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-lg text-teal-100 mb-10 max-w-2xl mx-auto"
+            className="text-xl text-teal-100 mb-12 max-w-2xl mx-auto"
           >
             Custom quote within 24 hours • Unmatched quality guarantee
           </motion.p>
-          <motion.div
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
-          >
+          <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
             <Link
               to="/contact"
-              className="inline-flex items-center px-10 py-4 bg-white text-teal-700 font-bold text-lg rounded-full shadow-2xl hover:shadow-teal-500/50 transition-all"
+              className="inline-flex items-center px-12 py-5 bg-white text-teal-700 font-bold text-xl rounded-full shadow-2xl hover:shadow-teal-500/60 transition-all duration-300"
             >
               Get Started Today
-              <Wrench className="ml-3 w-6 h-6" />
+              <Wrench className="ml-4 w-7 h-7" />
             </Link>
           </motion.div>
         </div>

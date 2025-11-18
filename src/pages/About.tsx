@@ -2,7 +2,6 @@ import React, { useEffect, useMemo } from 'react';
 import { motion, useScroll, useTransform as transformScroll } from 'framer-motion';
 import { ArrowRight, Building2, Factory, Award } from 'lucide-react';
 import Timeline3D, { TimelineEvent } from '@/components/ui/3d-interactive-timeline';
-import companyLogo from '../../public/logo.png';
 import gvsFront from '../assets/about-image/gvs-front.jpeg';
 import gvsMain from '../assets/about-image/gvs-main.jpeg';
 import infrastructure from '../assets/about-image/infrastructure.jpeg';
@@ -70,7 +69,7 @@ export default function AboutUnified() {
 
             <div className="flex justify-center mb-8">
               <img
-                src={companyLogo}
+                src="/logo.png"
                 alt="M/s GVS Controls Logo"
                 className="w-32 h-32 md:w-48 md:h-48 object-contain"
               />
