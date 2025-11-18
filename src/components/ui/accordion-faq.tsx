@@ -99,7 +99,7 @@ export function AccordionFAQ() {
 
         {/* Accordion – matches accordion-05 design */}
         <div className="w-full max-w-3xl mx-auto">
-          <Accordion type="single" defaultValue="1" collapsible className="w-full">
+          <Accordion type="single" collapsible className="w-full">
             {faqs.map((item) => (
               <AccordionItem
                 key={item.id}
