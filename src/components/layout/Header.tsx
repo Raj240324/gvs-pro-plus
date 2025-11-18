@@ -447,7 +447,7 @@ const Header = () => {
                   />
                   <span className="text-[#ff0000] font-bold text-[16px] leading-tight">GVS Controls</span>
                   <span className="text-[#ffbf00] text-xs font-medium mb-1.5 leading-tight">
-                    Our Vision To Your Solution
+                    (Our Vision To Your Solution)
                   </span>
                 </div>
                 <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-4">
