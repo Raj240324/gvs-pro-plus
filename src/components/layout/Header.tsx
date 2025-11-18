@@ -326,7 +326,7 @@ const Header = () => {
             <div className="flex-1 flex justify-center items-center lg:hidden">
               <div className="text-center">
                 <span className="block text-[#ff0000] font-bold text-xl">GVS CONTROLS</span>
-                <span className="block text-[#ffbf00] font-medium italic">Our Vision To Your Solution</span>
+                <span className="block text-[#ffbf00] font-medium italic">(Our Vision To Your Solution)</span>
               </div>
             </div>
             <div className="relative z-[2001]">
