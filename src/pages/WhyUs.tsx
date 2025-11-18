@@ -190,7 +190,7 @@ const WhyUs = () => {
               <div className="h-1 w-20 sm:w-32 rounded-full bg-gradient-to-r from-gvs-green to-gvs-blue" />
             </div>
             <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base md:text-lg">
-              With over 30 years of expertise, we deliver exceptional value through specialized services.
+              With over 30 years of Promoter Experience in EPC Projects, we deliver exceptional value through specialized services.
             </p>
           </div>
 

@@ -64,7 +64,7 @@ export default function AboutUnified() {
               transition={{ duration: 0.8 }}
               className="inline-block px-6 py-2 rounded-full bg-white/25 backdrop-blur-md border border-white/40 text-teal-200 text-xs md:text-sm font-semibold tracking-widest mb-8 shadow-xl"
             >
-              ESTABLISHED 2017 • 30+ YEARS OF PROMOTER EXPERIENCE
+              ESTABLISHED 2017 • 30+ YEARS OF PROMOTER EXPERIENCE IN EPC PROJECTS
             </motion.span>
 
             <div className="flex justify-center mb-8">

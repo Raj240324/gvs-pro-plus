@@ -16,7 +16,7 @@ const Index = () => {
   const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
 
   useEffect(() => {
-    document.title = 'GVS Controls - 30+ Years of EPC Excellence';
+    document.title = 'GVS Controls - 30+ Years of Promoter Experience in EPC Projects';
     const meta = document.querySelector('meta[name="description"]');
     if (meta) {
       meta.setAttribute(
@@ -130,7 +130,7 @@ const Index = () => {
               About Us
             </span>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              30+ Years of EPC Excellence – <span className="bg-gradient-to-r from-yellow-300 to-orange-500 text-transparent bg-clip-text drop-shadow-lg">Founded 2017</span>
+              30+ Years of Promoter Experience in EPC Projects – <span className="bg-gradient-to-r from-yellow-300 to-orange-500 text-transparent bg-clip-text drop-shadow-lg">Founded 2017</span>
             </h2>
             <p className="text-white/80 max-w-2xl mx-auto leading-relaxed animate-fade-in delay-200">
               M/s GVS Controls, founded in 2017, delivers innovative, cost‑effective engineering solutions, redefining customer satisfaction through advanced automation and man‑machine interfaces.
@@ -190,7 +190,7 @@ const Index = () => {
                 <div className="flip-card-back bg-gradient-to-br from-green-500/90 to-green-700/90 dark:from-green-700/90 dark:to-green-900/90 text-white rounded-2xl shadow-2xl border border-green-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30"
                   style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
                   <p className="text-sm leading-relaxed text-center font-medium">
-                    Our promoters bring over 30 years of EPC experience, having worked with Shriram EPC Ltd., L&T, and leading consultants, delivering projects in Power plants, Material handling, and Renewable energy.
+                    Our promoters bring over 30 years of Promoter Experience in EPC Projects, having worked with Shriram EPC Ltd., L&T, and leading consultants, delivering projects in Power plants, Material handling, and Renewable energy.
                   </p>
                 </div>
               </div>

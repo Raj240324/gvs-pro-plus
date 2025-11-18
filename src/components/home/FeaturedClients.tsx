@@ -250,7 +250,7 @@ const FeaturedClients = () => {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-12 sm:mt-16 lg:mt-24"
         >
           {[
-            { value: "30+", label: "Years of Excellence" },
+            { value: "30+", label: "Years of Promoter Experience in EPC Projects" },
             { value: "100+", label: "Projects Delivered" },
             { value: "50+", label: "Happy Clients" }
           ].map((stat, index) => (

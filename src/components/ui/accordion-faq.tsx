@@ -43,7 +43,7 @@ const faqs: FAQItem[] = [
     id: "5",
     question: "What are the benefits of working with GVS CONTROLS?",
     answer:
-      "- Experienced Team: Over 30 years of industry experience.\n- Cost-Effective Solutions: Tailored designs to optimize project costs.\n- Cutting-Edge Technology: Up-to-date automation & electrical solutions.\n- Customer-Centric Approach: Flexible and customized engineering services.",
+      "- Experienced Team: Over 30 years of Promoter Experience in EPC Projects.\n- Cost-Effective Solutions: Tailored designs to optimize project costs.\n- Cutting-Edge Technology: Up-to-date automation & electrical solutions.\n- Customer-Centric Approach: Flexible and customized engineering services.",
   },
   {
     id: "6",
