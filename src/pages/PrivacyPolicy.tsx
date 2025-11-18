@@ -41,10 +41,10 @@ const PrivacyPolicy = () => {
         >
           <div className="prose max-w-none text-[#1e2a44] prose-headings:text-[#ff6f61] prose-a:text-[#2a9d8f] prose-a:hover:text-[#ff6f61] text-base leading-relaxed">
             <p className="mb-4 text-right text-sm text-[#666]">
-              <strong>Last Updated: April 20, 2025</strong>
+              <strong>Last Updated: November 18, 2025</strong>
             </p>
             <p className="mb-6">
-              At <strong>GVS Controls</strong>, a leading provider of electrical and automation solutions since 2017, we are committed to protecting your privacy. Our services span consultancy, engineering, manufacturing, and automation across industries such as power plants, renewable energy, cement, and automotive sectors. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, <span className="font-semibold">www.gvscontrols.com</span>, engage with our services, or interact with our turnkey project solutions.
+              At <strong>M/s GVS Controls</strong> ("GVS Controls", "we", "us", or "our"), a leading provider of electrical and automation solutions established in 2017 with 30+ years of Promoter Experience in EPC Projects, we are committed to protecting your privacy. Our vision—"Our Vision To Your Solution"—drives our problem-solving culture that ensures optimal interaction between the Man-machine interface. Our services span expert consultancy, electrical control panel manufacturing, PLC automation, engineering, erection, testing & commissioning, renovation & revamping, and turnkey project solutions across industries including power plants, renewable energy, material handling, cement, automotive, and process plants. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, <span className="font-semibold">www.gvscontrols.com</span>, engage with our services, or interact with our solutions.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>1. Information We Collect</h2>
@@ -55,11 +55,13 @@ const PrivacyPolicy = () => {
               <div>
                 <h3 className="text-lg font-semibold text-[#2a9d8f]">Personal Information</h3>
                 <ul className="list-disc pl-5">
-                  <li>Contact information (name, email address, phone number)</li>
-                  <li>Company information (company name, job title, department)</li>
-                  <li>Project requirements and specifications</li>
-                  <li>Communication preferences</li>
-                  <li>Payment information (when applicable)</li>
+                  <li>Contact information (name, email address, phone number, postal address)</li>
+                  <li>Company information (company name, job title, department, industry sector)</li>
+                  <li>Project requirements, specifications, and technical details</li>
+                  <li>Business inquiries and service requests</li>
+                  <li>Communication preferences and correspondence history</li>
+                  <li>Payment and billing information (when applicable for commercial transactions)</li>
+                  <li>Professional credentials and certifications (for consultancy services)</li>
                 </ul>
               </div>
               <div>
@@ -86,10 +88,12 @@ const PrivacyPolicy = () => {
               <div>
                 <h3 className="text-lg font-semibold text-[#2a9d8f]">Service Delivery</h3>
                 <ul className="list-disc pl-5">
-                  <li>Process and fulfill your requests for our services</li>
-                  <li>Provide technical support and customer service</li>
-                  <li>Manage and maintain your account</li>
-                  <li>Send service-related communications</li>
+                  <li>Process and fulfill your requests for our services (consultancy, manufacturing, automation, EPC projects)</li>
+                  <li>Provide technical support, customer service, and project management</li>
+                  <li>Manage and maintain client accounts and project documentation</li>
+                  <li>Send service-related communications, project updates, and technical information</li>
+                  <li>Coordinate with partners, suppliers, and subcontractors for project execution</li>
+                  <li>Comply with IE (Indian Electricity) Standards and CEIG (Chief Electrical Inspectorate) regulations</li>
                 </ul>
               </div>
               <div>
@@ -135,16 +139,20 @@ const PrivacyPolicy = () => {
                   <li>Website hosting and maintenance</li>
                   <li>Data analysis and analytics</li>
                   <li>Customer service and support</li>
-                  <li>Payment processing</li>
+                  <li>Payment processing and financial services</li>
+                  <li>Email service providers (e.g., EmailJS for contact forms)</li>
+                  <li>Cloud storage and backup services</li>
                 </ul>
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-[#2a9d8f]">Business Partners</h3>
                 <p>Trusted partners who help us deliver our services, including:</p>
                 <ul className="list-disc pl-5">
-                  <li>Technology providers</li>
-                  <li>Manufacturing partners</li>
-                  <li>Distribution networks</li>
+                  <li>Technology providers (PLC manufacturers, automation system vendors)</li>
+                  <li>Manufacturing partners and component suppliers</li>
+                  <li>EPC contractors and project consultants</li>
+                  <li>Field instrument suppliers and distributors</li>
+                  <li>Testing and certification agencies</li>
                 </ul>
               </div>
               <div>
@@ -198,12 +206,13 @@ const PrivacyPolicy = () => {
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>7. International Data Transfers</h2>
             <p className="mb-4">
-              Your information may be transferred to and processed in countries other than your own, particularly for projects involving global clients. We ensure appropriate safeguards are in place for such transfers, including:
+              As a company operating primarily in India, your information is primarily processed within India. However, for projects involving international clients or global technology partners, your information may be transferred to and processed in countries other than your own. We ensure appropriate safeguards are in place for such transfers, including:
             </p>
             <ul className="list-disc pl-5 mb-4">
-              <li>Standard contractual clauses</li>
-              <li>Data processing agreements</li>
-              <li>Compliance with applicable data protection laws</li>
+              <li>Standard contractual clauses and data processing agreements</li>
+              <li>Compliance with applicable data protection laws, including the Information Technology Act, 2000 and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011</li>
+              <li>Implementation of adequate technical and organizational measures</li>
+              <li>Regular security assessments and audits</li>
             </ul>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>8. Data Retention</h2>
@@ -213,7 +222,7 @@ const PrivacyPolicy = () => {
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>9. Children's Privacy</h2>
             <p className="mb-4">
-              Our website and services are not intended for children under the age of 18. We do not knowingly collect personal information from children. If we become aware that we have inadvertently received personal data from a child under 18, we will delete such information from our records.
+              Our website and services are not intended for children under the age of 18. We do not knowingly collect personal information from children. If we become aware that we have inadvertently received personal data from a child under 18, we will delete such information from our records immediately. If you are a parent or guardian and believe your child has provided us with personal information, please contact us at <a href="mailto:gvscontrols@gmail.com" className="underline hover:no-underline">gvscontrols@gmail.com</a>.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>10. Data Breach Notification</h2>
@@ -223,7 +232,7 @@ const PrivacyPolicy = () => {
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>11. Updates to This Privacy Policy</h2>
             <p className="mb-4">
-              We may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements. We will post the updated policy on this page and update the "Last Updated" date at the top. We encourage you to review this policy periodically for any changes.
+              We may update this Privacy Policy from time to time to reflect changes in our practices, services, or legal requirements. We will post the updated policy on this page and update the "Last Updated" date at the top. Material changes will be communicated through our website or via email to registered users. We encourage you to review this policy periodically for any changes. Your continued use of our website and services after any modifications indicates your acceptance of the updated Privacy Policy.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>12. Contact Us</h2>

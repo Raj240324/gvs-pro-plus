@@ -19,7 +19,7 @@ const faqs: FAQItem[] = [
     id: "1",
     question: "What services does GVS CONTROLS provide?",
     answer:
-      "GVS CONTROLS specializes in Electrical & Instrumentation, including consultancy, engineering, and manufacturing. Our services cover project management, Process automation, and turnkey solutions for various industries.",
+      "GVS CONTROLS specializes in Electrical & Instrumentation, including Consultancy, Engineering, and Manufacturing. Our Services cover Project management, Process automation, and Turnkey solutions for various industries.",
   },
   {
     id: "2",

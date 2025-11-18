@@ -147,8 +147,8 @@ const Services: React.FC = () => {
       description: 'Electrical control panels designed to IE standards and CEIG requirements.',
       icon: <Factory size={28} className="text-teal-500" />,
       features: [
-        'PCC (415 V; Single/Double Bus Configuration)',
         'Power Control Centers, Power Distribution Panels, Motor Control Centers, Process Control Panels',
+        'PCC (415 V; Single/Double Bus Configuration)',
         'EB & DG Synchronizing Panels and ATS/AMF Panels',
         'LT Bus Ducts, Sandwich Bus Ducts, and Rising Main Panels',
         'APFC Panels, AMF Control Panels, Relay Logic & PLC Control Panels',

@@ -92,8 +92,8 @@ const Footer = () => {
               <p className="font-montserrat text-sm leading-relaxed mb-2 text-[#ffbf00] italic font-bold">
                 (Our Vision To Your Solution)
               </p>
-              <p className="text-[#4a0e78]/90 text-sm sm:text-md leading-relaxed break-words mb-3">
-                Since 2017, GVS Controls has delivered innovative, cost-effective engineering solutions, empowering clients with cutting-edge technology. Your vision, our mission.
+              <p className="text-[#4a0e78]/90 text-sm sm:text-md leading-relaxed break-words mb-3 italic">
+                An inherent problem-solving culture ensures optimal interaction between the Man-machine interface. The service spectrum of the company is vast, but focused on a single objective, constantly redefining the term—"Customer Satisfaction."
               </p>
               <div className="flex space-x-3">
                 {socialLinks.map(({ href, Icon, label }) => (

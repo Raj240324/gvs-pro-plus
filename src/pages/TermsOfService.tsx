@@ -41,18 +41,19 @@ const TermsOfService = () => {
         >
           <div className="prose max-w-none text-[#1e2a44] prose-headings:text-[#ff6f61] prose-a:text-[#2a9d8f] prose-a:hover:text-[#ff6f61] text-base leading-relaxed">
             <p className="mb-4 text-right text-sm text-[#666]">
-              <strong>Last Updated: April 20, 2025</strong>
+              <strong>Last Updated: November 18, 2025</strong>
             </p>
             <p className="mb-6">
-              Welcome to <strong>www.gvscontrols.com</strong> (the "Website"), operated by GVS Controls ("Company", "we", "us", or "our"). These Terms of Service ("Terms") govern your access to and use of the Website and any services, information, or content provided by GVS Controls. By accessing or using the Website, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you do not agree to these Terms, please refrain from using the Website.
+              Welcome to <strong>www.gvscontrols.com</strong> (the "Website"), operated by <strong>M/s GVS Controls</strong> ("Company", "we", "us", or "our"), a proprietary firm established in 2017 with 30+ years of Promoter Experience in EPC Projects. Our vision—"Our Vision To Your Solution"—reflects our commitment to delivering innovative, cost-effective engineering solutions. These Terms of Service ("Terms") govern your access to and use of the Website and any services, information, or content provided by GVS Controls, including but not limited to electrical control panel manufacturing, PLC automation, consultancy, engineering, erection, testing & commissioning, renovation & revamping, and turnkey project solutions. By accessing or using the Website, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you do not agree to these Terms, please refrain from using the Website.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>1. Definitions</h2>
             <p className="mb-4">
               <strong>"User"</strong> refers to any individual or entity accessing or using the Website.<br />
-              <strong>"Content"</strong> means all information, text, images, graphics, logos, documents, and other materials available on the Website.<br />
-              <strong>"Services"</strong> refers to consultancy, engineering, manufacturing, automation, and related services offered by GVS Controls.<br />
-              <strong>"Intellectual Property"</strong> means all patents, trademarks, service marks, trade names, copyrights, trade secrets, and other intellectual property rights owned or licensed by GVS Controls.
+              <strong>"Content"</strong> means all information, text, images, graphics, logos, documents, technical specifications, project portfolios, and other materials available on the Website.<br />
+              <strong>"Services"</strong> refers to all services offered by GVS Controls, including but not limited to: expert consultancy, electrical control panel manufacturing (IE & CEIG compliant), PLC automation, engineering services, erection, testing & commissioning, renovation & revamping, services & supply, and turnkey EPC project solutions across industries such as power plants, renewable energy, material handling, cement, automotive, and process plants.<br />
+              <strong>"Intellectual Property"</strong> means all patents, trademarks, service marks, trade names, copyrights, trade secrets, technical know-how, proprietary designs, and other intellectual property rights owned or licensed by GVS Controls.<br />
+              <strong>"EPC Projects"</strong> refers to Engineering, Procurement, and Construction projects undertaken by GVS Controls or its promoters.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>2. Use of the Website</h2>
@@ -85,18 +86,21 @@ const TermsOfService = () => {
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>4. Services and Contracts</h2>
             <p className="mb-4">
-              The information provided on the Website regarding our Services is for general informational purposes only and does not constitute a binding offer. Any engagement for Services shall be subject to a separate written agreement between you and GVS Controls, which will set forth the specific terms and conditions applicable to such engagement.
+              The information provided on the Website regarding our Services, including technical specifications, project portfolios, and service descriptions, is for general informational purposes only and does not constitute a binding offer, warranty, or guarantee. Any engagement for Services shall be subject to a separate written agreement between you and GVS Controls, which will set forth the specific terms and conditions, pricing, delivery schedules, quality standards (including IE & CEIG compliance requirements), and other applicable terms for such engagement.
             </p>
             <p className="mb-4">
-              We reserve the right to modify, suspend, or discontinue any aspect of our Services at any time, including the availability of any feature, database, or content. We may also impose limits on certain features and services or restrict your access to parts or all of the Services without notice or liability.
+              All Services provided by GVS Controls shall comply with applicable Indian laws, regulations, and industry standards, including but not limited to the Indian Electricity Act, 2003, and the rules and regulations of the Chief Electrical Inspectorate (CEIG). We reserve the right to modify, suspend, or discontinue any aspect of our Services at any time, including the availability of any feature, database, or content. We may also impose limits on certain features and services or restrict your access to parts or all of the Services without notice or liability.
+            </p>
+            <p className="mb-4">
+              <strong>Quality Assurance:</strong> Our electrical control panels and automation systems are manufactured in compliance with IE (Indian Electricity) Standards and CEIG (Chief Electrical Inspectorate) regulations. All products undergo rigorous testing and quality checks before delivery. However, specific warranties and guarantees will be detailed in individual service agreements.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>5. Privacy and Data Protection</h2>
             <p className="mb-4">
-              Your privacy is important to us. Any personal information you provide through the Website will be handled in accordance with our <a href="/privacy-policy" className="underline hover:no-underline">Privacy Policy</a>. By using the Website, you consent to the collection, use, and disclosure of your information as described in the Privacy Policy.
+              Your privacy is important to us. Any personal information you provide through the Website will be handled in accordance with our <a href="/privacy-policy" className="underline hover:no-underline">Privacy Policy</a> and applicable Indian data protection laws, including the Information Technology Act, 2000 and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011. By using the Website, you consent to the collection, use, and disclosure of your information as described in the Privacy Policy.
             </p>
             <p className="mb-4">
-              We implement appropriate technical and organizational measures to protect your personal data against unauthorized or unlawful processing, accidental loss, destruction, or damage. However, no method of transmission over the Internet or electronic storage is 100% secure.
+              We implement appropriate technical and organizational measures to protect your personal data against unauthorized or unlawful processing, accidental loss, destruction, or damage. However, no method of transmission over the Internet or electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your personal information, we cannot guarantee its absolute security.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>6. Limitation of Liability</h2>
@@ -128,7 +132,10 @@ const TermsOfService = () => {
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>9. Governing Law and Dispute Resolution</h2>
             <p className="mb-4">
-              These Terms shall be governed by and construed in accordance with the laws of the State of Tamil Nadu, India, without regard to its conflict of law principles. Any disputes arising out of or relating to these Terms or your use of the Website shall be subject to the exclusive jurisdiction of the courts located in Chengalpattu, Tamil Nadu, India.
+              These Terms shall be governed by and construed in accordance with the laws of India, specifically the laws of the State of Tamil Nadu, without regard to its conflict of law principles. Any disputes arising out of or relating to these Terms, your use of the Website, or any Services provided by GVS Controls shall be subject to the exclusive jurisdiction of the courts located in Chengalpattu District, Tamil Nadu, India.
+            </p>
+            <p className="mb-4">
+              In the event of any dispute, the parties agree to first attempt to resolve the matter amicably through good faith negotiations. If such negotiations fail, the dispute shall be resolved through arbitration in accordance with the Arbitration and Conciliation Act, 2015, by a sole arbitrator appointed by mutual consent, or failing such consent, by the competent court in Chengalpattu District, Tamil Nadu. The arbitration proceedings shall be conducted in English and the seat of arbitration shall be Chengalpattu, Tamil Nadu.
             </p>
             <p className="mb-4">
               You agree that any cause of action arising out of or related to the Website must commence within one (1) year after the cause of action accrues. Otherwise, such cause of action is permanently barred.
