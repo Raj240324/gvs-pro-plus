@@ -27,7 +27,6 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
   useEffect(() => {
     const userID = import.meta.env.VITE_EMAILJS_USER_ID;
     if (!userID) {
-      console.error('EmailJS userID is undefined. Please check your .env file for VITE_EMAILJS_USER_ID.');
       toast({
         title: "Configuration Error",
         description: "EmailJS userID is missing. Please contact support.",
@@ -38,11 +37,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
     }
     try {
       emailjs.init({ publicKey: userID });
-      if (import.meta.env.DEV) {
-        console.log('EmailJS initialized successfully');
-      }
     } catch (error) {
-      console.error('Failed to initialize EmailJS:', error);
       toast({
         title: "Configuration Error",
         description: "Failed to initialize EmailJS. Please try again later.",
@@ -78,11 +73,6 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
 
     if (!serviceID || !customerTemplateID || !ownerTemplateID) {
       setIsSubmitting(false);
-      console.error('EmailJS configuration is incomplete:', {
-        serviceID,
-        customerTemplateID,
-        ownerTemplateID,
-      });
       toast({
         title: "Configuration Error",
         description: "EmailJS configuration is missing. Please check your .env file.",
@@ -138,15 +128,6 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
         description: "Failed to send message. Please try again later.",
         variant: "destructive",
         className: "bg-red-500 text-white rounded-lg shadow-lg max-w-[90vw] mx-auto bottom-4",
-      });
-      console.error('EmailJS error:', error);
-      console.error('Error details:', {
-        errorText: error.text || 'No error text provided',
-        errorStatus: error.status || 'No status provided',
-        serviceID,
-        customerTemplateID,
-        ownerTemplateID,
-        templateParams,
       });
     }
   };

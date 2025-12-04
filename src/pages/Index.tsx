@@ -30,47 +30,55 @@ const Index = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
-    // AOS‑style fade‑in on scroll
+    // Throttle scroll handler for better performance
+    let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
     const handleScroll = () => {
-      const winH = window.innerHeight;
-      document.querySelectorAll('.aos-fade-up, .aos-fade-in, .aos-fade-right, .aos-fade-left')
-        .forEach(el => {
-          if (el.getBoundingClientRect().top <= winH * 0.8) el.classList.add('aos-animate');
-        });
+      if (scrollTimeout) return; // Skip if already scheduled
 
-      // Counter animation
-      const statsEl = statsRef.current;
-      if (statsEl && statsEl.dataset.animated !== 'true') {
-        const rect = statsEl.getBoundingClientRect();
-        if (rect.top <= winH * 0.9) {
-          statsEl.dataset.animated = 'true';
-          statsEl.querySelectorAll<HTMLElement>('.stat-counter').forEach(counter => {
-            const target = parseInt(counter.dataset.target || '0', 10);
-            if (!target) return;
+      scrollTimeout = setTimeout(() => {
+        const winH = window.innerHeight;
 
-            let cur = 0;
-            const dur = 2000;
-            const inc = target / (dur / 16);
-            let start: number | null = null;
-
-            const step = (ts: number) => {
-              if (!start) start = ts;
-              const prog = ts - start;
-              cur = Math.min(target, Math.ceil((prog / dur) * target));
-              counter.textContent = `${cur}`;
-              if (cur < target) requestAnimationFrame(step);
-              else counter.textContent = `${target}+`;
-            };
-            requestAnimationFrame(step);
+        // AOS-style fade-in on scroll (throttled)
+        document.querySelectorAll('.aos-fade-up, .aos-fade-in, .aos-fade-right, .aos-fade-left')
+          .forEach(el => {
+            if (el.getBoundingClientRect().top <= winH * 0.8) el.classList.add('aos-animate');
           });
+
+        // Counter animation
+        const statsEl = statsRef.current;
+        if (statsEl && statsEl.dataset.animated !== 'true') {
+          const rect = statsEl.getBoundingClientRect();
+          if (rect.top <= winH * 0.9) {
+            statsEl.dataset.animated = 'true';
+            statsEl.querySelectorAll<HTMLElement>('.stat-counter').forEach(counter => {
+              const target = parseInt(counter.dataset.target || '0', 10);
+              if (!target) return;
+
+              let cur = 0;
+              const dur = 2000;
+              let start: number | null = null;
+
+              const step = (ts: number) => {
+                if (!start) start = ts;
+                const prog = ts - start;
+                cur = Math.min(target, Math.ceil((prog / dur) * target));
+                counter.textContent = `${cur}`;
+                if (cur < target) requestAnimationFrame(step);
+                else counter.textContent = `${target}+`;
+              };
+              requestAnimationFrame(step);
+            });
+          }
         }
-      }
+
+        scrollTimeout = null;
+      }, 16); // ~60fps throttle
     };
 
     setTimeout(handleScroll, 100);
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Mobile flip‑card auto‑rotate
+    // Mobile flip-card auto-rotate
     if (isMobile) {
       const observer = new IntersectionObserver(
         entries => {
@@ -100,12 +108,14 @@ const Index = () => {
         observer.disconnect();
         window.removeEventListener('scroll', handleScroll);
         window.removeEventListener('resize', checkMobile);
+        if (scrollTimeout) clearTimeout(scrollTimeout);
       };
     }
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', checkMobile);
+      if (scrollTimeout) clearTimeout(scrollTimeout);
     };
   }, [isMobile]);
 
@@ -152,7 +162,7 @@ const Index = () => {
                 <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-blue-400/30 group-hover:shadow-blue-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20"
                   style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
                   <div className="w-14 h-14 flex items-center justify-center mb-4 rounded-full bg-gradient-to-br from-blue-300 to-blue-100 dark:from-blue-300 dark:to-blue-600 shadow-lg border-2 border-blue-300/50">
-                    <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                   </div>
                   <h3 className="text-lg font-bold text-blue-700 dark:text-blue-200 mb-1">Our Foundation</h3>
                   <span className="inline-block bg-blue-100/60 dark:bg-blue-900/40 text-blue-700 dark:text-blue-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">Est. 2017</span>
@@ -181,7 +191,7 @@ const Index = () => {
                 <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-green-400/30 group-hover:shadow-green-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20"
                   style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
                   <div className="w-14 h-14 flex items-center justify-center mb-4 rounded-full bg-gradient-to-br from-green-300 to-green-100 dark:from-green-300 dark:to-green-600 shadow-lg border-2 border-green-300/50">
-                    <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                   </div>
                   <h3 className="text-lg font-bold text-green-700 dark:text-green-200 mb-1">Our Experience</h3>
                   <span className="inline-block bg-green-100/60 dark:bg-green-900/40 text-green-700 dark:text-green-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">30+ Years</span>
@@ -210,7 +220,7 @@ const Index = () => {
                 <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-red-400/30 group-hover:shadow-red-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20"
                   style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
                   <div className="w-14 h-14 flex items-center justify-center mb-4 rounded-full bg-gradient-to-br from-red-300 to-red-100 dark:from-red-300 dark:to-red-600 shadow-lg border-2 border-red-300/50">
-                    <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                   </div>
                   <h3 className="text-lg font-bold text-red-700 dark:text-red-200 mb-1">Our Expertise</h3>
                   <span className="inline-block bg-red-100/60 dark:bg-red-900/40 text-red-700 dark:text-red-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">Instrumentation</span>
@@ -239,7 +249,7 @@ const Index = () => {
                 <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-yellow-400/30 group-hover:shadow-yellow-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20"
                   style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
                   <div className="w-14 h-14 flex items-center justify-center mb-4 rounded-full bg-gradient-to-br from-yellow-300 to-yellow-100 dark:from-yellow-300 dark:to-yellow-600 shadow-lg border-2 border-yellow-300/50">
-                    <svg className="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"/></svg>
+                    <svg className="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>
                   </div>
                   <h3 className="text-lg font-bold text-yellow-700 dark:text-yellow-200 mb-1">Our Services</h3>
                   <span className="inline-block bg-yellow-100/60 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">Turnkey</span>
@@ -268,7 +278,7 @@ const Index = () => {
                 <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-purple-400/30 group-hover:shadow-purple-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20"
                   style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
                   <div className="w-14 h-14 flex items-center justify-center mb-4 rounded-full bg-gradient-to-br from-purple-300 to-purple-100 dark:from-purple-300 dark:to-purple-600 shadow-lg border-2 border-purple-300/50">
-                    <svg className="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                    <svg className="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                   </div>
                   <h3 className="text-lg font-bold text-purple-700 dark:text-purple-200 mb-1">Our Clients</h3>
                   <span className="inline-block bg-purple-100/60 dark:bg-purple-900/40 text-purple-700 dark:text-purple-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">50+ Leaders</span>

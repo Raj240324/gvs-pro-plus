@@ -19,7 +19,7 @@ export const CardSpotlight = ({
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const rafId = useRef<number | null>(null);
-  
+
   // Throttle mouse move for better performance
   function handleMouseMove({
     currentTarget,
@@ -28,7 +28,7 @@ export const CardSpotlight = ({
   }: ReactMouseEvent<HTMLDivElement>) {
     if (rafId.current) return;
     rafId.current = requestAnimationFrame(() => {
-      let { left, top } = currentTarget.getBoundingClientRect();
+      const { left, top } = currentTarget.getBoundingClientRect();
       mouseX.set(clientX - left);
       mouseY.set(clientY - top);
       rafId.current = null;

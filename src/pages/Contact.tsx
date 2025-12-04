@@ -39,6 +39,18 @@ interface FormData {
   name: string; email: string; phone: string; subject: string; message: string;
 }
 
+interface ContactItem {
+  icon: JSX.Element;
+  title: string;
+  content?: string;
+  link?: string;
+  linkText?: string;
+  emails?: { label: string; email: string; url?: string }[];
+  phones?: string[];
+  hours?: string;
+  days?: string;
+}
+
 const Contact = () => {
   const [formData, setFormData] = useState<FormData>({ name: '', email: '', phone: '', subject: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -171,6 +183,8 @@ const Contact = () => {
               variants={staggerContainer}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10 mb-12 sm:mb-16"
             >
+
+
               {[
                 {
                   icon: <MapPin size={24} className="sm:w-8 sm:h-8" />,
@@ -202,7 +216,7 @@ const Contact = () => {
                   hours: '9:30 AM to 5:30 PM',
                   days: 'Monday to Saturday',
                 },
-              ].map((item: any, index: number) => (
+              ].map((item: ContactItem, index: number) => (
                 <motion.div
                   key={index}
                   variants={fadeInUp}
@@ -233,7 +247,7 @@ const Contact = () => {
                     {/* Emails */}
                     {item.emails && (
                       <div className="space-y-3 text-xs sm:text-sm">
-                        {item.emails.map((e: any, i: number) => (
+                        {item.emails.map((e, i: number) => (
                           <div key={i}>
                             <span className="block text-gray-500 dark:text-gray-400">{e.label}:</span>
                             {e.url ? (
@@ -296,38 +310,38 @@ const Contact = () => {
 
             {/* Form + Map + Social - Your Original */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12">
-  {/* Contact Form - now flex col to match height exactly */}
-  <motion.div
-    initial={{ opacity: 0, x: -40 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.7 }}
-    className="bg-gradient-to-br from-teal-200 to-purple-200 dark:from-teal-800 dark:to-purple-800 backdrop-blur-md rounded-xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 flex flex-col"
-  >
-    <h2 className="text-2xl sm:text-3xl font-extrabold mb-4 bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
-      Send Us a Message
-    </h2>
-    <p className="text-gray-600 dark:text-gray-300 mb-8 text-sm sm:text-base">
-      We're excited to hear from you—let's get started!
-    </p>
-    <form onSubmit={handleSubmit} className="space-y-6 flex-1 flex flex-col justify-between">                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                    <div className="space-y-2">
-                      <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200">
-                        Name <span className="text-red-500">*</span>
-                      </label>
-                      <Input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required
-                        className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base"
-                        disabled={isSubmitting} />
-                    </div>
-                    <div className="space-y-2">
-                      <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200">
-                        Email <span className="text-red-500">*</span>
-                      </label>
-                      <Input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required
-                        className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base"
-                        disabled={isSubmitting} />
-                    </div>
+              {/* Contact Form - now flex col to match height exactly */}
+              <motion.div
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7 }}
+                className="bg-gradient-to-br from-teal-200 to-purple-200 dark:from-teal-800 dark:to-purple-800 backdrop-blur-md rounded-xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 flex flex-col"
+              >
+                <h2 className="text-2xl sm:text-3xl font-extrabold mb-4 bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
+                  Send Us a Message
+                </h2>
+                <p className="text-gray-600 dark:text-gray-300 mb-8 text-sm sm:text-base">
+                  We're excited to hear from you—let's get started!
+                </p>
+                <form onSubmit={handleSubmit} className="space-y-6 flex-1 flex flex-col justify-between">                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                  <div className="space-y-2">
+                    <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200">
+                      Name <span className="text-red-500">*</span>
+                    </label>
+                    <Input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required
+                      className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base"
+                      disabled={isSubmitting} />
                   </div>
+                  <div className="space-y-2">
+                    <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200">
+                      Email <span className="text-red-500">*</span>
+                    </label>
+                    <Input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required
+                      className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base"
+                      disabled={isSubmitting} />
+                  </div>
+                </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     <div className="space-y-2">
                       <label htmlFor="phone" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200">Phone</label>
@@ -358,51 +372,51 @@ const Contact = () => {
                       disabled={isSubmitting} />
                   </div>
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="mt-8">
-        <Button type="submit" disabled={isSubmitting} className="w-full py-3 px-8 bg-gradient-to-r from-teal-500 to-purple-600 text-white font-semibold rounded-full shadow-md hover:from-teal-600 hover:to-purple-700 transition-all duration-300">
-          {isSubmitting ? 'Sending...' : isSubmitted ? 'Sent!' : 'Send Message'} {isSubmitted && <CheckCircle className="inline ml-2" />}
-        </Button>
-      </motion.div>
-    </form>
-  </motion.div>
-              
-             {/* Map + Working Hours - same exact container style */}
-  <motion.div
-    initial={{ opacity: 0, x: 40 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.7 }}
-    className="bg-gradient-to-br from-teal-200 to-purple-200 dark:from-teal-800 dark:to-purple-800 backdrop-blur-md rounded-xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 flex flex-col"
-  >
-    <h2 className="text-2xl sm:text-3xl font-extrabold mb-4 bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
-      Our Location
-    </h2>
+                    <Button type="submit" disabled={isSubmitting} className="w-full py-3 px-8 bg-gradient-to-r from-teal-500 to-purple-600 text-white font-semibold rounded-full shadow-md hover:from-teal-600 hover:to-purple-700 transition-all duration-300">
+                      {isSubmitting ? 'Sending...' : isSubmitted ? 'Sent!' : 'Send Message'} {isSubmitted && <CheckCircle className="inline ml-2" />}
+                    </Button>
+                  </motion.div>
+                </form>
+              </motion.div>
 
-    <div className="flex-1 rounded-xl overflow-hidden shadow-inner mb-6">
-      <iframe
-        src="https://www.google.com/maps?q=12.7704061,80.0361082&z=17&output=embed"
-        width="100%"
-        height="100%"
-        style={{ border: 0, minHeight: '360px' }}
-        allowFullScreen
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-        title="GVS Controls Location"
-      />
-    </div>
+              {/* Map + Working Hours - same exact container style */}
+              <motion.div
+                initial={{ opacity: 0, x: 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7 }}
+                className="bg-gradient-to-br from-teal-200 to-purple-200 dark:from-teal-800 dark:to-purple-800 backdrop-blur-md rounded-xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 flex flex-col"
+              >
+                <h2 className="text-2xl sm:text-3xl font-extrabold mb-4 bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
+                  Our Location
+                </h2>
 
-    {/* Working Hours - now here */}
-          <div className="bg-white/40 dark:bg-black/30 backdrop-blur-sm rounded-lg p-6 text-center border border-white/40">
-            <div className="flex items-center justify-center gap-3 mb-2">
-              <Clock className="w-7 h-7 text-teal-600 dark:text-teal-400" />
-              <span className="text-xl font-bold text-gray-800 dark:text-white">
-                9:30 AM to 5:30 PM
-              </span>
-            </div>
-            <p className="text-gray-700 dark:text-gray-300">
-              Monday to Saturday
-            </p>
-          </div>
-  </motion.div>
+                <div className="flex-1 rounded-xl overflow-hidden shadow-inner mb-6">
+                  <iframe
+                    src="https://www.google.com/maps?q=12.7704061,80.0361082&z=17&output=embed"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0, minHeight: '360px' }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="GVS Controls Location"
+                  />
+                </div>
+
+                {/* Working Hours - now here */}
+                <div className="bg-white/40 dark:bg-black/30 backdrop-blur-sm rounded-lg p-6 text-center border border-white/40">
+                  <div className="flex items-center justify-center gap-3 mb-2">
+                    <Clock className="w-7 h-7 text-teal-600 dark:text-teal-400" />
+                    <span className="text-xl font-bold text-gray-800 dark:text-white">
+                      9:30 AM to 5:30 PM
+                    </span>
+                  </div>
+                  <p className="text-gray-700 dark:text-gray-300">
+                    Monday to Saturday
+                  </p>
+                </div>
+              </motion.div>
             </div>
           </div>
         </section>

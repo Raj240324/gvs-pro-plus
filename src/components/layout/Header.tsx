@@ -70,9 +70,9 @@ const AnimatedMenuButton = ({ open, onClick }: { open: boolean; onClick: () => v
       initial={false}
       animate={open ? "open" : "closed"}
       whileTap={{ scale: 0.95 }}
-      style={{ 
-        outline: "none", 
-        border: "none", 
+      style={{
+        outline: "none",
+        border: "none",
         background: "none",
         touchAction: "manipulation",
         WebkitTapHighlightColor: "transparent",
@@ -141,8 +141,8 @@ const TopContactBar = () => (
       </div>
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center w-full pointer-events-none">
         <span className="flex flex-col items-center text-xs font-bold tracking-wide text-[#4a0e78] dark:text-white/90 px-6 py-2 rounded-full bg-white/70 dark:bg-black/40 shadow border border-white/30 dark:border-white/10 backdrop-blur-md drop-shadow-sm uppercase pointer-events-auto">
-        Consultant, Engineering, Manufacturing (Supply & Services)
-        <span>Electrical, Instrumentation & Automation</span>
+          Consultant, Engineering, Manufacturing (Supply & Services)
+          <span>Electrical, Instrumentation & Automation</span>
         </span>
       </div>
       <div className="flex items-center gap-2 pl-4 border-l border-[#e0e0e0] dark:border-[#333] z-10 min-w-0">
@@ -330,11 +330,11 @@ const Header = () => {
               </div>
             </div>
             <div className="relative z-[2001]">
-              <AnimatedMenuButton 
-                open={mobileMenuOpen} 
+              <AnimatedMenuButton
+                open={mobileMenuOpen}
                 onClick={() => {
                   setMobileMenuOpen(prev => !prev);
-                }} 
+                }}
               />
             </div>
             <div className="hidden lg:flex items-center justify-end w-full lg:w-auto mt-2 lg:mt-0">
@@ -390,7 +390,6 @@ const Header = () => {
                 className="ml-4 bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white hover:from-[#ff6f61] hover:to-[#4a0e78] hover:bg-gradient-to-l transition-all duration-300 text-sm px-4 py-1.5 rounded-full whitespace-nowrap shrink-0 border-none outline-none ring-0 focus:ring-0 focus:outline-none active:ring-0 no-pseudo-border z-[10000]"
                 onClick={(e) => {
                   e.stopPropagation();
-                  console.log('Get in Touch button clicked, opening modal');
                   contactModal.onOpen();
                 }}
               >
@@ -529,7 +528,6 @@ const Header = () => {
                     className="w-full bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white hover:from-[#ff6f61] hover:to-[#4a0e78] hover:bg-gradient-to-l transition-all duration-300 rounded-lg py-2 text-[15px] font-semibold shadow-lg no-pseudo-border z-[10000]"
                     onClick={(e) => {
                       e.stopPropagation();
-                      console.log('Contact Us button clicked, opening modal');
                       setMobileMenuOpen(false);
                       setTimeout(() => contactModal.onOpen(), 300);
                     }}

@@ -236,7 +236,7 @@ const Services: React.FC = () => {
 
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((card, index) => (
-              <li key={card.id} className="aos-slide-in" style={{ ['--index' as any]: index }}>
+              <li key={card.id} className="aos-slide-in" style={{ '--index': index } as React.CSSProperties}>
                 <TiltedCard
                   containerHeight="100%"
                   containerWidth="100%"
@@ -278,19 +278,18 @@ const Services: React.FC = () => {
         <section
           key={service.id}
           id={service.id}
-          className={`py-20 transition-all duration-500 ${
-            index % 6 === 0
+          className={`py-20 transition-all duration-500 ${index % 6 === 0
               ? 'bg-gradient-to-br from-gray-50 to-teal-50'
               : index % 6 === 1
-              ? 'bg-gradient-to-br from-blue-50 to-indigo-50'
-              : index % 6 === 2
-              ? 'bg-gradient-to-br from-gray-50 to-cyan-50'
-              : index % 6 === 3
-              ? 'bg-gradient-to-br from-teal-50 to-blue-50'
-              : index % 6 === 4
-              ? 'bg-gradient-to-br from-indigo-50 to-gray-50'
-              : 'bg-gradient-to-br from-cyan-50 to-teal-50'
-          }`}
+                ? 'bg-gradient-to-br from-blue-50 to-indigo-50'
+                : index % 6 === 2
+                  ? 'bg-gradient-to-br from-gray-50 to-cyan-50'
+                  : index % 6 === 3
+                    ? 'bg-gradient-to-br from-teal-50 to-blue-50'
+                    : index % 6 === 4
+                      ? 'bg-gradient-to-br from-indigo-50 to-gray-50'
+                      : 'bg-gradient-to-br from-cyan-50 to-teal-50'
+            }`}
           style={{ scrollMarginTop: `${headerHeight + 32}px` }}
         >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">

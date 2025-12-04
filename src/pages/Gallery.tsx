@@ -30,6 +30,28 @@ interface GalleryImage {
   alt: string;
 }
 
+const galleryImages: GalleryImage[] = [
+  { id: '1', src: cop1, alt: 'PCC Panel Manufacturing for Industrial Power Distribution' },
+  { id: '2', src: cop2, alt: 'MCC Panel Manufacturing for Motor Control Systems' },
+  { id: '3', src: cop3, alt: 'PLC cum VFD Control Panel Manufacturing for Automation' },
+  { id: '4', src: cop4, alt: 'PCC Panel Assembly for Power Control Centers' },
+  { id: '5', src: cop5, alt: 'MCC Panel Fabrication for Industrial Applications' },
+  { id: '6', src: cop6, alt: 'VFD Control Panel Manufacturing for Process Control' },
+  { id: '7', src: cop7, alt: 'PCC Panel Manufacturing with Advanced Wiring' },
+  { id: '8', src: cop8, alt: 'MCC Panel Manufacturing for Heavy-Duty Motors' },
+  { id: '9', src: cop9, alt: 'PLC cum VFD Panel Manufacturing for Precision Automation' },
+  { id: '10', src: cop10, alt: 'PCC Panel Manufacturing for Energy Management' },
+  { id: '11', src: cop11, alt: 'MCC Panel Manufacturing for Industrial Automation' },
+  { id: '12', src: cop12, alt: 'VFD Control Panel Manufacturing for Power Plants' },
+  { id: '13', src: cop13, alt: 'PCC Panel Manufacturing for Process Industries' },
+  { id: '14', src: cop14, alt: 'MCC Panel Manufacturing for Bulk Material Handling' },
+  { id: '15', src: cop15, alt: 'PLC cum VFD Panel Manufacturing for Renewable Energy' },
+  { id: '16', src: cop16, alt: 'APFC Panel Manufacturing for Power Factor Correction' },
+  { id: '17', src: cop17, alt: 'AMF Control Panel Manufacturing for Automatic Mains Failure' },
+  { id: '18', src: cop18, alt: 'Relay Logic Control Panel Manufacturing for Process Plants' },
+  { id: '19', src: cop19, alt: 'EB & DG Synchronizing Control Panel for Power Distribution' }
+];
+
 // Custom Card Component (Memoized)
 const CustomCard = React.memo(({ title, src, onClick }: { title: string; src: string; onClick: () => void }) => {
   return (
@@ -64,27 +86,8 @@ const Gallery = () => {
   const [direction, setDirection] = useState<number>(0);
 
   // Define gallery images
-  const galleryImages: GalleryImage[] = [
-    { id: '1', src: cop1, alt: 'PCC Panel Manufacturing for Industrial Power Distribution' },
-    { id: '2', src: cop2, alt: 'MCC Panel Manufacturing for Motor Control Systems' },
-    { id: '3', src: cop3, alt: 'PLC cum VFD Control Panel Manufacturing for Automation' },
-    { id: '4', src: cop4, alt: 'PCC Panel Assembly for Power Control Centers' },
-    { id: '5', src: cop5, alt: 'MCC Panel Fabrication for Industrial Applications' },
-    { id: '6', src: cop6, alt: 'VFD Control Panel Manufacturing for Process Control' },
-    { id: '7', src: cop7, alt: 'PCC Panel Manufacturing with Advanced Wiring' },
-    { id: '8', src: cop8, alt: 'MCC Panel Manufacturing for Heavy-Duty Motors' },
-    { id: '9', src: cop9, alt: 'PLC cum VFD Panel Manufacturing for Precision Automation' },
-    { id: '10', src: cop10, alt: 'PCC Panel Manufacturing for Energy Management' },
-    { id: '11', src: cop11, alt: 'MCC Panel Manufacturing for Industrial Automation' },
-    { id: '12', src: cop12, alt: 'VFD Control Panel Manufacturing for Power Plants' },
-    { id: '13', src: cop13, alt: 'PCC Panel Manufacturing for Process Industries' },
-    { id: '14', src: cop14, alt: 'MCC Panel Manufacturing for Bulk Material Handling' },
-    { id: '15', src: cop15, alt: 'PLC cum VFD Panel Manufacturing for Renewable Energy' },
-    { id: '16', src: cop16, alt: 'APFC Panel Manufacturing for Power Factor Correction' },
-    { id: '17', src: cop17, alt: 'AMF Control Panel Manufacturing for Automatic Mains Failure' },
-    { id: '18', src: cop18, alt: 'Relay Logic Control Panel Manufacturing for Process Plants' },
-    { id: '19', src: cop19, alt: 'EB & DG Synchronizing Control Panel for Power Distribution' }
-  ];
+  // Define gallery images moved outside component
+
 
   // Preload images and set images immediately
   useEffect(() => {
@@ -205,9 +208,9 @@ const Gallery = () => {
   };
 
   // Debounce utility
-  function debounce(fn: Function, ms: number) {
+  function debounce<T extends (...args: unknown[]) => void>(fn: T, ms: number) {
     let timeoutId: NodeJS.Timeout;
-    return (...args: any[]) => {
+    return (...args: Parameters<T>) => {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => fn(...args), ms);
     };
@@ -301,16 +304,17 @@ const Gallery = () => {
       <AnimatePresence mode="wait" custom={direction}>
         {selectedImage && (
           <motion.div
-            className="fixed inset-0 z-[2500] bg-gray-950/95 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6"
+            className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex items-center justify-center overflow-hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             onClick={closeLightbox}
-            key={`${selectedImage.id || ''}-${selectedImage.src || ''}`}
+            key={`lightbox-${selectedImage.id}`}
           >
+            {/* Image Container - Centered */}
             <motion.div
-              className="relative w-full max-w-[95vw] sm:max-w-4xl max-h-[90vh]"
+              className="relative max-w-[85vw] max-h-[85vh]"
               custom={direction}
               variants={lightboxVariants}
               initial="initial"
@@ -318,54 +322,63 @@ const Gallery = () => {
               exit="exit"
               onClick={(e: React.MouseEvent) => e.stopPropagation()}
             >
+              {/* Main Image */}
               <img
                 src={selectedImage.src}
                 alt={selectedImage.alt}
-                className="w-full h-96 sm:h-auto max-h-[80vh] sm:max-h-[85vh] object-contain rounded-xl shadow-2xl border border-cyan-500/30"
-                loading="lazy"
-                onError={(e) => {
-                  e.currentTarget.src = '/fallback-image.png';
-                }}
+                className="max-w-full max-h-[85vh] w-auto h-auto object-contain rounded-lg shadow-2xl border-2 border-cyan-500/50"
               />
+
+              {/* Close Button - Top Right of Image */}
               <button
-                className="absolute -top-4 -right-4 bg-white/90 hover:bg-cyan-200 text-cyan-900 p-2 rounded-full shadow-lg ring-2 ring-cyan-400 transition-colors z-10 group"
+                className="absolute -top-3 -right-3 bg-white hover:bg-red-500 text-gray-900 hover:text-white p-2 sm:p-3 rounded-full shadow-2xl transition-all duration-300 z-50"
                 onClick={closeLightbox}
                 aria-label="Close lightbox"
               >
-                <X size={32} className="transition-transform duration-300 group-hover:rotate-180" />
+                <X size={20} className="sm:w-6 sm:h-6 transition-transform duration-300 hover:rotate-90" />
               </button>
+
+              {/* Desktop Navigation - Left Arrow (Inside viewport) */}
               <button
-                className="hidden sm:block absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-cyan-200 text-cyan-900 p-2 rounded-full shadow-lg ring-2 ring-cyan-400 transition-colors z-10"
+                className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-cyan-500 text-gray-900 hover:text-white p-2 sm:p-3 rounded-full shadow-xl transition-all duration-300"
                 onClick={goToPreviousImage}
                 aria-label="Previous image"
               >
-                <ChevronLeft size={32} />
+                <ChevronLeft size={24} className="sm:w-7 sm:h-7" />
               </button>
+
+              {/* Desktop Navigation - Right Arrow (Inside viewport) */}
               <button
-                className="hidden sm:block absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-cyan-200 text-cyan-900 p-2 rounded-full shadow-lg ring-2 ring-cyan-400 transition-colors z-10"
+                className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-cyan-500 text-gray-900 hover:text-white p-2 sm:p-3 rounded-full shadow-xl transition-all duration-300"
                 onClick={goToNextImage}
                 aria-label="Next image"
               >
-                <ChevronRight size={32} />
+                <ChevronRight size={24} className="sm:w-7 sm:h-7" />
               </button>
-              {/* Mobile arrow controls below image */}
-              <div className="flex sm:hidden justify-center gap-8 mt-4">
-                <button
-                  className="bg-white/90 hover:bg-cyan-200 text-cyan-900 p-2 rounded-full shadow-lg ring-2 ring-cyan-400 transition-colors z-10"
-                  onClick={goToPreviousImage}
-                  aria-label="Previous image"
-                >
-                  <ChevronLeft size={32} />
-                </button>
-                <button
-                  className="bg-white/90 hover:bg-cyan-200 text-cyan-900 p-2 rounded-full shadow-lg ring-2 ring-cyan-400 transition-colors z-10"
-                  onClick={goToNextImage}
-                  aria-label="Next image"
-                >
-                  <ChevronRight size={32} />
-                </button>
+
+              {/* Image Counter */}
+              <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-black/70 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium backdrop-blur-sm whitespace-nowrap">
+                {currentImageIndex + 1} / {images.length}
               </div>
             </motion.div>
+
+            {/* Mobile Navigation - Bottom Fixed */}
+            <div className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 flex gap-4 z-50">
+              <button
+                className="bg-white/90 hover:bg-cyan-500 text-gray-900 hover:text-white p-3 rounded-full shadow-xl transition-all duration-300"
+                onClick={goToPreviousImage}
+                aria-label="Previous image"
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button
+                className="bg-white/90 hover:bg-cyan-500 text-gray-900 hover:text-white p-3 rounded-full shadow-xl transition-all duration-300"
+                onClick={goToNextImage}
+                aria-label="Next image"
+              >
+                <ChevronRight size={24} />
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

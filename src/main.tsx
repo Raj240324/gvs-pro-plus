@@ -41,7 +41,6 @@ const router = createBrowserRouter(
     future: {
       v7_normalizeFormMethod: true,
       v7_relativeSplatPath: true,
-      v7_startTransition: true,
     },
   }
 );
