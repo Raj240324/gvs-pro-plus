@@ -150,7 +150,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         showCloseButton={false}
-        className="w-[95vw] max-w-[400px] sm:max-w-[500px] md:max-w-[700px] lg:max-w-[800px] p-3 sm:p-5 bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg border border-white/20 dark:border-white/10 shadow-lg rounded-xl z-[2500] sm:mt-0 h-auto max-h-[95vh] overflow-y-auto"
+        className="w-[95vw] max-w-[400px] sm:max-w-[500px] md:max-w-[700px] lg:max-w-[800px] p-4 sm:p-5 bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg border border-white/20 dark:border-white/10 shadow-lg rounded-xl z-[2500] sm:mt-0 h-auto max-h-[95vh] overflow-y-auto"
       >
         <div className="relative flex flex-col h-full">
           {/* Custom Close Button */}
@@ -189,10 +189,10 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
           </div>
 
           <DialogHeader className="relative z-10 shrink-0 mt-1 sm:mt-0">
-            <DialogTitle className="text-base sm:text-xl md:text-2xl font-bold text-center bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
+            <DialogTitle className="text-lg sm:text-xl md:text-2xl font-bold text-center bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
               Connect With Us
             </DialogTitle>
-            <DialogDescription className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-300 text-center">
+            <DialogDescription className="text-xs sm:text-xs text-gray-600 dark:text-gray-300 text-center">
               Share your thoughts, and we’ll respond promptly.
             </DialogDescription>
           </DialogHeader>
@@ -221,7 +221,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
             <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-3 mt-2 sm:mt-3 relative z-10 grow flex flex-col">
               <div className="grid grid-cols-1 gap-2 sm:gap-3">
                 <div className="space-y-0.5 sm:space-y-1">
-                  <label htmlFor="modal-name" className="block text-[10px] sm:text-xs font-medium text-gray-700 dark:text-gray-300">
+                  <label htmlFor="modal-name" className="block text-xs sm:text-xs font-medium text-gray-700 dark:text-gray-300">
                     Your Name <span className="text-red-500">*</span>
                   </label>
                   <Input
@@ -232,11 +232,11 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
                     onChange={handleChange}
                     required
                     disabled={isSubmitting}
-                    className="text-[10px] sm:text-xs py-0.5 sm:py-1.5 h-7 sm:h-9 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
+                    className="text-xs sm:text-xs py-1.5 sm:py-1.5 h-9 sm:h-9 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
                   />
                 </div>
                 <div className="space-y-0.5 sm:space-y-1">
-                  <label htmlFor="modal-email" className="block text-[10px] sm:text-xs font-medium text-gray-700 dark:text-gray-300">
+                  <label htmlFor="modal-email" className="block text-xs sm:text-xs font-medium text-gray-700 dark:text-gray-300">
                     Email Address <span className="text-red-500">*</span>
                   </label>
                   <Input
@@ -247,14 +247,14 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
                     onChange={handleChange}
                     required
                     disabled={isSubmitting}
-                    className="text-[10px] sm:text-xs py-0.5 sm:py-1.5 h-7 sm:h-9 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
+                    className="text-xs sm:text-xs py-1.5 sm:py-1.5 h-9 sm:h-9 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 gap-2 sm:gap-3">
                 <div className="space-y-0.5 sm:space-y-1">
-                  <label htmlFor="modal-phone" className="block text-[10px] sm:text-xs font-medium text-gray-700 dark:text-gray-300">
+                  <label htmlFor="modal-phone" className="block text-xs sm:text-xs font-medium text-gray-700 dark:text-gray-300">
                     Phone Number
                   </label>
                   <Input
@@ -264,11 +264,11 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
                     value={formData.phone}
                     onChange={handleChange}
                     disabled={isSubmitting}
-                    className="text-[10px] sm:text-xs py-0.5 sm:py-1.5 h-7 sm:h-9 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
+                    className="text-xs sm:text-xs py-1.5 sm:py-1.5 h-9 sm:h-9 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
                   />
                 </div>
                 <div className="space-y-0.5 sm:space-y-1">
-                  <label htmlFor="modal-subject" className="block text-[10px] sm:text-xs font-medium text-gray-700 dark:text-gray-300">
+                  <label htmlFor="modal-subject" className="block text-xs sm:text-xs font-medium text-gray-700 dark:text-gray-300">
                     Subject
                   </label>
                   <select
@@ -276,7 +276,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className="w-full px-2 py-0.5 sm:px-3 sm:py-1.5 h-7 sm:h-9 text-[10px] sm:text-xs bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300 text-gray-700 dark:text-gray-300"
+                    className="w-full px-2 py-1.5 sm:px-3 sm:py-1.5 h-9 sm:h-9 text-xs sm:text-xs bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300 text-gray-700 dark:text-gray-300"
                     disabled={isSubmitting}
                   >
                     <option value="">Select a subject</option>
@@ -290,7 +290,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
               </div>
 
               <div className="space-y-0.5 sm:space-y-1 flex-grow">
-                <label htmlFor="modal-message" className="block text-[10px] sm:text-xs font-medium text-gray-700 dark:text-gray-300">
+                <label htmlFor="modal-message" className="block text-xs sm:text-xs font-medium text-gray-700 dark:text-gray-300">
                   Your Message <span className="text-red-500">*</span>
                 </label>
                 <Textarea
@@ -300,7 +300,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
                   onChange={handleChange}
                   rows={2}
                   required
-                  className="w-full text-[10px] sm:text-xs bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300 h-[60px] sm:h-[80px]"
+                  className="w-full text-xs sm:text-xs bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300 h-20 sm:h-[80px]"
                   disabled={isSubmitting}
                 />
               </div>
@@ -309,7 +309,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
                 <motion.button
                   type="submit"
                   disabled={isSubmitting}
-                  className="relative overflow-hidden w-full px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-md bg-gradient-to-r from-teal-500 to-purple-600 text-white font-semibold shadow-md hover:from-teal-600 hover:to-purple-700 transition-all duration-300 group text-xs sm:text-sm"
+                  className="relative overflow-hidden w-full px-3 py-2 sm:px-5 sm:py-2.5 rounded-md bg-gradient-to-r from-teal-500 to-purple-600 text-white font-semibold shadow-md hover:from-teal-600 hover:to-purple-700 transition-all duration-300 group text-sm sm:text-sm"
                   whileHover={{ scale: 1.01, boxShadow: "0 5px 15px rgba(0, 0, 0, 0.2)" }}
                   whileTap={{ scale: 0.99 }}
                 >
