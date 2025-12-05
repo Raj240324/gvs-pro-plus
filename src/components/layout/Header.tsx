@@ -214,17 +214,7 @@ const Header = () => {
   const prevScrollY = useRef(0);
   const [hovered, setHovered] = useState<number | null>(null);
 
-  // Apply blur to body when contact modal is open
-  useEffect(() => {
-    if (contactModal.isOpen) {
-      document.body.classList.add("modal-blur", "modal-open");
-    } else {
-      document.body.classList.remove("modal-blur", "modal-open");
-    }
-    return () => {
-      document.body.classList.remove("modal-blur", "modal-open");
-    };
-  }, [contactModal.isOpen]);
+
 
   const handleScroll = useCallback(
     debounce(() => {
@@ -244,12 +234,15 @@ const Header = () => {
 
   useEffect(() => {
     if (mobileMenuOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.classList.add("no-scroll");
+      document.documentElement.classList.add("no-scroll");
     } else {
-      document.body.style.overflow = "";
+      document.body.classList.remove("no-scroll");
+      document.documentElement.classList.remove("no-scroll");
     }
     return () => {
-      document.body.style.overflow = "";
+      document.body.classList.remove("no-scroll");
+      document.documentElement.classList.remove("no-scroll");
     };
   }, [mobileMenuOpen]);
 
@@ -309,40 +302,27 @@ const Header = () => {
       >
         <TopContactBar />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3">
-          <div className="flex items-center justify-between min-h-[60px]">
-            <div className="flex items-center shrink-0">
-              <NavLink to="/" className="flex items-center gap-3" onClick={handleNavClick}>
-                <img
-                  src="/logo.png"
-                  alt="GVS Controls Logo"
-                  className="h-12 w-auto max-w-[150px] transition-transform hover:scale-105"
-                />
-                <div className="hidden lg:flex flex-col">
-                  <span className="text-[#ff0000] font-bold text-lg">GVS CONTROLS</span>
-                  <span className="text-[#ffbf00] font-medium italic">(Our Vision To Your Solution)</span>
-                </div>
-              </NavLink>
-            </div>
-            <div className="flex-1 flex justify-center items-center lg:hidden">
-              <div className="text-center">
-                <span className="block text-[#ff0000] font-bold text-xl">GVS CONTROLS</span>
-                <span className="block text-[#ffbf00] font-medium italic">(Our Vision To Your Solution)</span>
+          <div className="flex items-center justify-between min-h-[60px] relative">
+            <div className="flex items-center gap-4 xl:gap-8 flex-1">
+              <div className="flex items-center shrink-0">
+                <NavLink to="/" className="flex items-center gap-3" onClick={handleNavClick}>
+                  <img
+                    src="/logo.png"
+                    alt="GVS Controls Logo"
+                    className="h-12 w-auto max-w-[150px] transition-transform hover:scale-105"
+                  />
+                  <div className="hidden lg:flex flex-col ml-2">
+                    <span className="text-[#ff0000] font-bold text-sm lg:text-sm xl:text-lg leading-tight">GVS CONTROLS</span>
+                    <span className="text-[#ffbf00] font-medium italic text-[10px] lg:text-[10px] xl:text-xs leading-tight">(Our Vision To Your Solution)</span>
+                  </div>
+                </NavLink>
               </div>
-            </div>
-            <div className="relative z-[2001]">
-              <AnimatedMenuButton
-                open={mobileMenuOpen}
-                onClick={() => {
-                  setMobileMenuOpen(prev => !prev);
-                }}
-              />
-            </div>
-            <div className="hidden lg:flex items-center justify-end w-full lg:w-auto mt-2 lg:mt-0">
-              <nav className="flex items-center">
-                <div className="flex items-center gap-1 bg-white/20 border border-white/30 rounded-full py-1 px-2">
+
+              <nav className="hidden lg:flex items-center flex-1 px-4">
+                <div className="flex items-center w-full justify-evenly bg-white/20 border border-white/30 rounded-full py-1.5 px-2 shadow-sm backdrop-blur-sm">
                   <motion.div
                     onMouseLeave={() => setHovered(null)}
-                    className="flex items-center justify-center"
+                    className="flex items-center justify-evenly w-full"
                   >
                     {navLinks.map((link, idx) => (
                       <NavLink
@@ -353,7 +333,7 @@ const Header = () => {
                         onMouseEnter={() => setHovered(idx)}
                         className={({ isActive }) =>
                           cn(
-                            "relative px-3 py-1.5 text-sm font-semibold rounded-full transition-colors whitespace-nowrap",
+                            "relative px-2 lg:px-2 xl:px-4 py-1.5 text-xs lg:text-xs xl:text-sm font-semibold rounded-full transition-colors whitespace-nowrap",
                             isActive
                               ? "text-[#ff6f61]"
                               : "text-[#4a0e78] hover:text-[#ff6f61]"
@@ -384,17 +364,38 @@ const Header = () => {
                   </motion.div>
                 </div>
               </nav>
-              <Button
-                variant="gradient"
-                size="sm"
-                className="ml-4 bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white hover:from-[#ff6f61] hover:to-[#4a0e78] hover:bg-gradient-to-l transition-all duration-300 text-sm px-4 py-1.5 rounded-full whitespace-nowrap shrink-0 border-none outline-none ring-0 focus:ring-0 focus:outline-none active:ring-0 no-pseudo-border z-[10000]"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  contactModal.onOpen();
-                }}
-              >
-                Get in Touch
-              </Button>
+            </div>
+
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 lg:hidden pointer-events-none">
+              <div className="text-center pointer-events-auto">
+                <span className="block text-[#ff0000] font-bold text-base sm:text-lg leading-tight">GVS CONTROLS</span>
+                <span className="block text-[#ffbf00] font-medium italic text-xs sm:text-sm leading-tight">(Our Vision To Your Solution)</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="relative z-[2001] lg:hidden">
+                <AnimatedMenuButton
+                  open={mobileMenuOpen}
+                  onClick={() => {
+                    setMobileMenuOpen(prev => !prev);
+                  }}
+                />
+              </div>
+
+              <div className="hidden lg:block">
+                <Button
+                  variant="gradient"
+                  size="sm"
+                  className="bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white hover:from-[#ff6f61] hover:to-[#4a0e78] hover:bg-gradient-to-l transition-all duration-300 text-xs lg:text-xs xl:text-sm px-2 lg:px-2 xl:px-4 py-1.5 rounded-full whitespace-nowrap shrink-0 border-none outline-none ring-0 focus:ring-0 focus:outline-none active:ring-0 no-pseudo-border z-[10000]"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    contactModal.onOpen();
+                  }}
+                >
+                  Get in Touch
+                </Button>
+              </div>
             </div>
           </div>
         </div>

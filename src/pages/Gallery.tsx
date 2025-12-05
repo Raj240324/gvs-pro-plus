@@ -129,12 +129,14 @@ const Gallery = () => {
     setSelectedImage(image);
     setCurrentImageIndex(newIndex);
     setDirection(0);
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('no-scroll');
+    document.documentElement.classList.add('no-scroll');
   }, [images]);
 
   const closeLightbox = useCallback(() => {
     setSelectedImage(null);
-    document.body.style.overflow = 'auto';
+    document.body.classList.remove('no-scroll');
+    document.documentElement.classList.remove('no-scroll');
   }, []);
 
   const goToPreviousImage = useCallback(() => {
@@ -304,7 +306,7 @@ const Gallery = () => {
       <AnimatePresence mode="wait" custom={direction}>
         {selectedImage && (
           <motion.div
-            className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex items-center justify-center overflow-hidden"
+            className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-4 overflow-hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -312,9 +314,9 @@ const Gallery = () => {
             onClick={closeLightbox}
             key={`lightbox-${selectedImage.id}`}
           >
-            {/* Image Container - Centered */}
+            {/* Image Wrapper - Relative for Close Button */}
             <motion.div
-              className="relative max-w-[85vw] max-h-[85vh]"
+              className="relative flex-shrink-1 min-h-0 flex items-center justify-center"
               custom={direction}
               variants={lightboxVariants}
               initial="initial"
@@ -322,48 +324,24 @@ const Gallery = () => {
               exit="exit"
               onClick={(e: React.MouseEvent) => e.stopPropagation()}
             >
-              {/* Main Image */}
               <img
                 src={selectedImage.src}
                 alt={selectedImage.alt}
-                className="max-w-full max-h-[85vh] w-auto h-auto object-contain rounded-lg shadow-2xl border-2 border-cyan-500/50"
+                className="max-w-[90vw] max-h-[75vh] w-auto h-auto object-contain rounded-lg shadow-2xl border-2 border-cyan-500/50"
               />
 
-              {/* Close Button - Top Right of Image */}
+              {/* Close Button - Attached to Image Corner */}
               <button
-                className="absolute -top-3 -right-3 bg-white hover:bg-red-500 text-gray-900 hover:text-white p-2 sm:p-3 rounded-full shadow-2xl transition-all duration-300 z-50"
+                className="absolute -top-3 -right-3 bg-white hover:bg-red-500 text-gray-900 hover:text-white p-2 rounded-full shadow-2xl transition-all duration-300 z-50"
                 onClick={closeLightbox}
                 aria-label="Close lightbox"
               >
-                <X size={20} className="sm:w-6 sm:h-6 transition-transform duration-300 hover:rotate-90" />
+                <X size={20} className="transition-transform duration-300 hover:rotate-90" />
               </button>
-
-              {/* Desktop Navigation - Left Arrow (Inside viewport) */}
-              <button
-                className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-cyan-500 text-gray-900 hover:text-white p-2 sm:p-3 rounded-full shadow-xl transition-all duration-300"
-                onClick={goToPreviousImage}
-                aria-label="Previous image"
-              >
-                <ChevronLeft size={24} className="sm:w-7 sm:h-7" />
-              </button>
-
-              {/* Desktop Navigation - Right Arrow (Inside viewport) */}
-              <button
-                className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-cyan-500 text-gray-900 hover:text-white p-2 sm:p-3 rounded-full shadow-xl transition-all duration-300"
-                onClick={goToNextImage}
-                aria-label="Next image"
-              >
-                <ChevronRight size={24} className="sm:w-7 sm:h-7" />
-              </button>
-
-              {/* Image Counter */}
-              <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-black/70 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium backdrop-blur-sm whitespace-nowrap">
-                {currentImageIndex + 1} / {images.length}
-              </div>
             </motion.div>
 
-            {/* Mobile Navigation - Bottom Fixed */}
-            <div className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 flex gap-4 z-50">
+            {/* Controls Wrapper - Below Image */}
+            <div className="flex-shrink-0 mt-6 flex items-center gap-6 z-50" onClick={(e) => e.stopPropagation()}>
               <button
                 className="bg-white/90 hover:bg-cyan-500 text-gray-900 hover:text-white p-3 rounded-full shadow-xl transition-all duration-300"
                 onClick={goToPreviousImage}
@@ -371,6 +349,11 @@ const Gallery = () => {
               >
                 <ChevronLeft size={24} />
               </button>
+
+              <div className="bg-black/70 text-white px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm whitespace-nowrap border border-white/10">
+                {currentImageIndex + 1} / {images.length}
+              </div>
+
               <button
                 className="bg-white/90 hover:bg-cyan-500 text-gray-900 hover:text-white p-3 rounded-full shadow-xl transition-all duration-300"
                 onClick={goToNextImage}
