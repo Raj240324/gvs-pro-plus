@@ -301,28 +301,28 @@ const Header = () => {
         )}
       >
         <TopContactBar />
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3">
+        <div className="container mx-auto px-2 sm:px-4 lg:px-4 py-3">
           <div className="flex items-center justify-between min-h-[60px] relative">
-            <div className="flex items-center gap-4 xl:gap-8 flex-1">
+            <div className="flex items-center gap-1 lg:gap-1.5 xl:gap-3 2xl:gap-8 flex-1">
               <div className="flex items-center shrink-0">
-                <NavLink to="/" className="flex items-center gap-3" onClick={handleNavClick}>
+                <NavLink to="/" className="flex items-center gap-1.5" onClick={handleNavClick}>
                   <img
                     src="/logo.png"
                     alt="GVS Controls Logo"
-                    className="h-12 w-auto max-w-[150px] transition-transform hover:scale-105"
+                    className="h-10 xl:h-12 w-auto transition-transform hover:scale-105"
                   />
-                  <div className="hidden lg:flex flex-col ml-2">
-                    <span className="text-[#ff0000] font-bold text-sm lg:text-sm xl:text-lg leading-tight">GVS CONTROLS</span>
-                    <span className="text-[#ffbf00] font-medium italic text-[10px] lg:text-[10px] xl:text-xs leading-tight">(Our Vision To Your Solution)</span>
+                  <div className="hidden xl:flex flex-col ml-2">
+                    <span className="text-[#ff0000] font-bold text-sm 2xl:text-lg leading-tight">GVS CONTROLS</span>
+                    <span className="text-[#ffbf00] font-medium italic text-[10px] 2xl:text-xs leading-tight">(Our Vision To Your Solution)</span>
                   </div>
                 </NavLink>
               </div>
 
-              <nav className="hidden lg:flex items-center flex-1 px-4">
-                <div className="flex items-center w-full justify-evenly bg-white/20 border border-white/30 rounded-full py-1.5 px-2 shadow-sm backdrop-blur-sm">
+              <nav className="hidden lg:flex items-center flex-1 px-1 xl:px-4">
+                <div className="flex items-center w-full justify-between bg-white/20 border border-white/30 rounded-full py-1.5 px-1 shadow-sm backdrop-blur-sm">
                   <motion.div
                     onMouseLeave={() => setHovered(null)}
-                    className="flex items-center justify-evenly w-full"
+                    className="flex items-center justify-between w-full gap-0.5 xl:gap-1 2xl:gap-4"
                   >
                     {navLinks.map((link, idx) => (
                       <NavLink
@@ -333,7 +333,7 @@ const Header = () => {
                         onMouseEnter={() => setHovered(idx)}
                         className={({ isActive }) =>
                           cn(
-                            "relative px-2 lg:px-2 xl:px-4 py-1.5 text-xs lg:text-xs xl:text-sm font-semibold rounded-full transition-colors whitespace-nowrap",
+                            "relative px-1.5 xl:px-2.5 2xl:px-6 py-2 text-[11px] xl:text-xs 2xl:text-sm font-bold rounded-full transition-colors whitespace-nowrap",
                             isActive
                               ? "text-[#ff6f61]"
                               : "text-[#4a0e78] hover:text-[#ff6f61]"
@@ -387,7 +387,7 @@ const Header = () => {
                 <Button
                   variant="gradient"
                   size="sm"
-                  className="bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white hover:from-[#ff6f61] hover:to-[#4a0e78] hover:bg-gradient-to-l transition-all duration-300 text-xs lg:text-xs xl:text-sm px-2 lg:px-2 xl:px-4 py-1.5 rounded-full whitespace-nowrap shrink-0 border-none outline-none ring-0 focus:ring-0 focus:outline-none active:ring-0 no-pseudo-border z-[10000]"
+                  className="bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white hover:from-[#ff6f61] hover:to-[#4a0e78] hover:bg-gradient-to-l transition-all duration-300 text-[11px] xl:text-xs 2xl:text-sm px-3 xl:px-4 2xl:px-8 py-2 xl:py-2.5 rounded-full whitespace-nowrap shrink-0 border-none outline-none ring-0 focus:ring-0 focus:outline-none active:ring-0 no-pseudo-border z-[10000]"
                   onClick={(e) => {
                     e.stopPropagation();
                     contactModal.onOpen();

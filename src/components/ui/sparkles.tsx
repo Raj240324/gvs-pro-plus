@@ -1,11 +1,11 @@
 "use client";
-import React, { useId, useMemo } from "react";
+import React, { useId } from "react";
 import { useEffect, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
-import type { Container, SingleOrMultiple } from "@tsparticles/engine";
+import type { Container } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
 import { cn } from "../../lib/utils";
-import { motion, useAnimation } from "motion/react";
+import { motion, useAnimation } from "framer-motion";
 
 type ParticlesProps = {
   id?: string;
@@ -87,20 +87,13 @@ export const SparklesCore = (props: ParticlesProps) => {
               },
               color: {
                 value: particleColor || "#ffffff",
-                animation: {
-                  h: { count: 0, enable: false, speed: 1, decay: 0, delay: 0, sync: true, offset: 0 },
-                  s: { count: 0, enable: false, speed: 1, decay: 0, delay: 0, sync: true, offset: 0 },
-                  l: { count: 0, enable: false, speed: 1, decay: 0, delay: 0, sync: true, offset: 0 },
-                },
               },
-              effect: { close: true, fill: true, options: {}, type: {} as SingleOrMultiple<string> | undefined },
               groups: {},
               move: {
                 angle: { offset: 0, value: 90 },
                 attract: { distance: 200, enable: false, rotate: { x: 3000, y: 3000 } },
                 center: { x: 50, y: 50, mode: "percent", radius: 0 },
                 decay: 0,
-                distance: {},
                 direction: "none",
                 drift: 0,
                 enable: true,
@@ -112,7 +105,7 @@ export const SparklesCore = (props: ParticlesProps) => {
                 speed: { min: 0.1, max: 1 },
                 spin: { acceleration: 0, enable: false },
                 straight: false,
-                trail: { enable: false, length: 10, fill: {} },
+                trail: { enable: false, length: 10 },
                 vibrate: false,
                 warp: false,
               },
@@ -147,7 +140,7 @@ export const SparklesCore = (props: ParticlesProps) => {
               rotate: { value: 0, animation: { enable: false, speed: 0, decay: 0, sync: false }, direction: "clockwise", path: false },
               orbit: { animation: { count: 0, enable: false, speed: 1, decay: 0, delay: 0, sync: false }, enable: false, opacity: 1, rotation: { value: 45 }, width: 1 },
               links: { blink: false, color: { value: "#fff" }, consent: false, distance: 100, enable: false, frequency: 1, opacity: 1, shadow: { blur: 5, color: { value: "#000" }, enable: false }, triangles: { enable: false, frequency: 1 }, width: 1, warp: false },
-              repulse: { value: 0, enabled: false, distance: 1, duration: 1, factor: 1, speed: 1 },
+              repulse: { value: 0, enable: false, distance: 1, duration: 1, factor: 1, speed: 1 },
             },
             detectRetina: true,
           }}

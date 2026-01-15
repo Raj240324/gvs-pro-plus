@@ -1,15 +1,19 @@
-import { defineConfig } from 'vite';
+import { defineConfig, type ConfigEnv, type UserConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 import { createHash } from 'crypto';
 import { readFileSync, existsSync, statSync } from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Custom plugin to manage cache headers
-const CacheHeadersPlugin = ({ command }) => {
+const CacheHeadersPlugin = ({ command }: { command: string }) => {
   return {
     name: 'cache-headers-plugin',
-    configureServer(server) {
-      server.middlewares.use((req, res, next) => {
+    configureServer(server: any) {
+      server.middlewares.use((req: any, res: any, next: any) => {
         // Target PNG files not processed by Vite's asset pipeline
         if (req.url?.endsWith('.png') && !req.url.includes('/assets/')) {
           try {
@@ -36,10 +40,10 @@ const CacheHeadersPlugin = ({ command }) => {
             res.setHeader('Last-Modified', lastModified);
 
             // Handle conditional requests
-            const cacheControl = req.headers['cache-control'];
+            const cacheControl = req.headers['cache-control'] as string | undefined;
             const forceFresh = cacheControl?.includes('no-cache');
-            const ifNoneMatch = req.headers['if-none-match'];
-            const ifModifiedSince = req.headers['if-modified-since'];
+            const ifNoneMatch = req.headers['if-none-match'] as string | undefined;
+            const ifModifiedSince = req.headers['if-modified-since'] as string | undefined;
 
             if (!forceFresh && command !== 'build') {
               const isNotModified =
@@ -62,8 +66,8 @@ const CacheHeadersPlugin = ({ command }) => {
             res.setHeader('Content-Type', 'image/png');
             res.writeHead(200);
             res.end(fileContent);
-          } catch (err) {
-            console.error(`Error for ${req.url}: ${err.message}`);
+          } catch (err: any) {
+            console.error(`Error for ${req.url}: ${err instanceof Error ? err.message : String(err)}`);
             return next();
           }
         } else {
