@@ -307,7 +307,7 @@ const Header = () => {
               <div className="flex items-center shrink-0">
                 <NavLink to="/" className="flex items-center gap-1.5" onClick={handleNavClick}>
                   <img
-                    src="/logo.png"
+                    src="/gvs-logo.png"
                     alt="GVS Controls Logo"
                     className="h-10 xl:h-12 w-auto transition-transform hover:scale-105"
                   />
@@ -441,7 +441,7 @@ const Header = () => {
                 </motion.button>
                 <div className="flex flex-col items-center pt-4 pb-2 px-4 shrink-0">
                   <img
-                    src="/logo.png"
+                    src="/gvs-logo.png"
                     alt="GVS Controls Logo"
                     className="h-8 w-auto mb-1.5 rounded-lg shadow-md bg-white/80"
                   />

@@ -219,7 +219,7 @@ const Gallery = () => {
   }
 
   return (
-    <main style={{ paddingTop: `${headerHeight}px` }} className="bg-gray-950 text-white min-h-screen">
+    <main className="bg-gray-950 text-white min-h-screen pt-[84px] lg:pt-[140px]">
       <SEO
         title="Control Panels Gallery"
         description="Explore GVS Controls' PCC, MCC, and PLC cum VFD control panels, manufactured for industrial automation and power management."
@@ -227,7 +227,7 @@ const Gallery = () => {
       />
       {/* Hero Section */}
       <motion.section
-        className="relative bg-[radial-gradient(circle_at_center,_#1e3a8a_0,_#0f172a_70%)] py-12 sm:py-16 md:py-20 overflow-hidden"
+        className="relative bg-[radial-gradient(circle_at_center,_#1e3a8a_0,_#0f172a_70%)] min-h-[50vh] flex items-center py-16 md:py-20 overflow-hidden"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -240,19 +240,19 @@ const Gallery = () => {
               className="inline-block px-4 py-2 rounded-full bg-cyan-500/20 text-cyan-300 text-xs sm:text-sm font-mono mb-6 border border-cyan-500/30"
               variants={textVariants}
             >
-              Our Expertise
+              Manufacturing Showcase
             </motion.span>
             <motion.h1
-              className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-extrabold font-mono bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-violet-500 leading-tight max-w-[95vw] mx-auto break-words px-2"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-violet-500 leading-tight max-w-4xl mx-auto px-2"
               variants={textVariants}
             >
-              PCC, MCC & PLC cum VFD Control Panels Gallery
+              Control Panels Gallery
             </motion.h1>
             <motion.p
-              className="text-xs sm:text-sm md:text-base text-gray-300 mt-4 max-w-2xl mx-auto break-words px-4"
+              className="text-base sm:text-lg md:text-xl text-gray-300 mt-6 max-w-3xl mx-auto leading-relaxed px-4"
               variants={textVariants}
             >
-              Discover GVS Controls' innovative and cost-effective engineering solutions for power and automation systems, redefining customer satisfaction.
+              Explore our IE & CEIG compliant PCC, MCC, VFD & PLC Control Panels — Manufactured for Power Plants, Steel, Cement & Industrial Automation.
             </motion.p>
           </motion.div>
         </div>

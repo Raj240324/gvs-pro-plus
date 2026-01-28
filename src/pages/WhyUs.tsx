@@ -142,21 +142,9 @@ const WhyUs = () => {
   ];
 
   return (
-    <main className="pt-16 sm:pt-20 md:pt-24 lg:pt-28">
+    <main className="pt-[84px] lg:pt-[140px]">
       <style>
         {`
-          header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 50;
-            background: #fff;
-          }
-          main {
-            margin-top: 0;
-            transition: padding-top 0.3s ease;
-          }
           .hero-section {
             background-size: cover;
             background-position: 50% 0%;
@@ -165,15 +153,15 @@ const WhyUs = () => {
       </style>
 
       {/* Hero Section */}
-      <section className="hero-section bg-gradient-to-r from-gvs-green to-gvs-blue text-white py-16 sm:py-20 md:py-24 lg:py-28">
+      <section className="hero-section bg-gradient-to-r from-gvs-green to-gvs-blue text-white min-h-[50vh] flex items-center py-16 md:py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="hero-content max-w-3xl mx-auto text-center">
             <span className="inline-block px-4 py-1 sm:px-4 sm:py-2 rounded-full bg-white/10 backdrop-blur-sm text-xs sm:text-sm mb-4 sm:mb-6">
-              Key Advantages
+              30+ Years of Promoter Experience
             </span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">Why Us</h1>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">Why Choose GVS Controls?</h1>
             <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed">
-              Working with M/s GVS Controls will ensure several key advantages.
+              MSME & IE/CEIG Compliant • Innovative Problem-Solving Culture • Customer-First Approach
             </p>
           </div>
         </div>

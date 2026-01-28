@@ -144,28 +144,27 @@ const Contact = () => {
   return (
     <ErrorBoundary>
       <SEO title="Contact" description="Reach out to GVS Controls..." canonical="/contact" />
-      <div className="h-[84px] lg:h-[140px]"></div>
 
-      <main className="overflow-hidden">
+      <main className="overflow-hidden pt-[84px] lg:pt-[140px]">
         {/* Hero */}
-        <section className="relative bg-gradient-to-br from-teal-600 via-indigo-600 to-purple-700 overflow-hidden">
+        <section className="relative bg-gradient-to-br from-teal-600 via-indigo-600 to-purple-700 min-h-[50vh] flex items-center overflow-hidden">
           <Particles />
-          <div className="relative z-10 py-16 sm:py-20 md:py-24 lg:py-32">
+          <div className="relative z-10 py-16 md:py-20 w-full">
             <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="container mx-auto px-4 sm:px-6 lg:px-8">
               <div className="max-w-4xl mx-auto text-center">
                 <motion.span variants={fadeInUp} className="inline-block px-4 py-1 sm:px-6 sm:py-2 mb-6 sm:mb-8 text-xs sm:text-base font-semibold text-white bg-white/10 backdrop-blur-lg rounded-full border border-white/20 shadow-lg hover:bg-white/20 transition-all duration-300">
-                  Let's Connect
+                  Get in Touch
                 </motion.span>
                 <motion.h1 variants={fadeInUp} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white via-teal-200 to-purple-200 drop-shadow-md">
                   Contact GVS Controls
                 </motion.h1>
                 <motion.p variants={fadeInUp} className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl mx-auto">
-                  Reach out to explore innovative solutions tailored to your needs.
+                  Get expert consultation for Electrical Panels, PLC Automation & Turnkey EPC Solutions. Custom quote within 24 hours.
                 </motion.p>
                 <motion.div variants={fadeInUp} className="mt-6 sm:mt-8 md:mt-10">
                   <Button variant="gradient" size="lg" onClick={contactModal.onOpen}
                     className="bg-gradient-to-r from-teal-500 to-indigo-500 text-white hover:from-teal-600 hover:to-indigo-600 shadow-lg hover:shadow-xl transition-all duration-300 px-6 py-2 sm:px-8 sm:py-3 rounded-full border-none">
-                    Start a Conversation
+                    Request a Quote
                   </Button>
                 </motion.div>
               </div>

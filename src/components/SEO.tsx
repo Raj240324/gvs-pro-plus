@@ -15,7 +15,7 @@ const SEO = ({
   title,
   description,
   keywords,
-  ogImage = 'https://gvs-pro-plus.vercel.app/logo.png',
+  ogImage = 'https://gvs-pro-plus.vercel.app/gvs-logo.png',
   ogType = 'website',
   canonical,
   noindex = false,

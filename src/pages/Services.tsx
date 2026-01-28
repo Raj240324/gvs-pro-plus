@@ -178,7 +178,7 @@ const Services: React.FC = () => {
   ];
 
   return (
-    <main className="bg-gray-50" style={{ paddingTop: `${headerHeight}px` }}>
+    <main className="bg-gray-50 pt-[84px] lg:pt-[140px]">
       <SEO
         title="Our Services | GVS Controls"
         description="Expert consultancy, automation, manufacturing, and turnkey services for industrial electrical and control systems."
@@ -186,7 +186,7 @@ const Services: React.FC = () => {
       />
 
       {/* Hero Section – Kept Original + Added Manufacturing Resemblance */}
-      <section className="relative bg-gradient-to-br from-teal-600 via-cyan-600 to-blue-700 text-white py-24 md:py-32 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-teal-600 via-cyan-600 to-blue-700 text-white min-h-[50vh] flex items-center py-16 md:py-20 overflow-hidden">
         <div className="absolute inset-0 bg-black/10" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">

@@ -193,14 +193,14 @@ const Index = () => {
                   <div className="w-14 h-14 flex items-center justify-center mb-4 rounded-full bg-gradient-to-br from-green-300 to-green-100 dark:from-green-300 dark:to-green-600 shadow-lg border-2 border-green-300/50">
                     <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                   </div>
-                  <h3 className="text-lg font-bold text-green-700 dark:text-green-200 mb-1">Our Experience</h3>
+                  <h3 className="text-lg font-bold text-green-700 dark:text-green-200 mb-1">Founder's Experience</h3>
                   <span className="inline-block bg-green-100/60 dark:bg-green-900/40 text-green-700 dark:text-green-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">30+ Years</span>
-                  <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Deep EPC project expertise.</p>
+                  <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Deep EPC expertise before founding GVS.</p>
                 </div>
                 <div className="flip-card-back bg-gradient-to-br from-green-500/90 to-green-700/90 dark:from-green-700/90 dark:to-green-900/90 text-white rounded-2xl shadow-2xl border border-green-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30"
                   style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
                   <p className="text-sm leading-relaxed text-center font-medium">
-                    Our promoters bring over 30 years of Promoter Experience in EPC Projects, having worked with Shriram EPC Ltd., L&T, and leading consultants, delivering projects in Power plants, Material handling, and Renewable energy.
+                    Before founding GVS Controls in 2017, our promoter worked with Shriram EPC Ltd., L&T, and Black Stone Group — delivering projects for SAIL, TISCO, NTPC, and leading industries.
                   </p>
                 </div>
               </div>

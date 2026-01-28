@@ -1,17 +1,16 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { Mail, Phone, MapPin, Linkedin, Globe, Home, Info, Briefcase, Folder, Contact, Shield, FileText, Wrench, Users, Star, Image } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Globe, Home, Info, Briefcase, Folder, Contact, Wrench, Users, Star, Image, ArrowRight, Clock, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 
 const Footer = () => {
   const location = useLocation();
 
-  // Scroll to top on route change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [location.pathname]);
 
-  const navLinks = [
+  const quickLinks = [
     { to: '/', label: 'Home', Icon: Home },
     { to: '/about', label: 'About Us', Icon: Info },
     { to: '/services', label: 'Services', Icon: Briefcase },
@@ -21,14 +20,12 @@ const Footer = () => {
     { to: '/why-us', label: 'Why Us', Icon: Star },
     { to: '/gallery', label: 'Gallery', Icon: Image },
     { to: '/contact', label: 'Contact', Icon: Contact },
-    { to: '/privacy-policy', label: 'Privacy Policy', Icon: Shield },
-    { to: '/terms-of-service', label: 'Terms of Service', Icon: FileText },
   ];
 
   const serviceLinks = [
     { to: '/services#consultancy', label: 'Expert Consultancy' },
     { to: '/services#automation', label: 'Smart Automation' },
-    { to: '/services#additional-services', label: 'Erection, Testing & Commissioning' },
+    { to: '/services#additional-services', label: 'Erection & Commissioning' },
     { to: '/services#renovation-revamping', label: 'Renovation & Revamping' },
     { to: '/services#services-and-supply', label: 'Services & Supply' },
   ];
@@ -38,312 +35,181 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative bg-gradient-to-r from-[#b2ff8b]/95 via-[#4ecdc4]/95 to-[#2a9d8f]/95 text-[#4a0e78] overflow-hidden">
-      {/* Modern Gradient Overlay */}
-      <motion.div
-        className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-[#b2ff8b]/20 via-[#4ecdc4]/10 to-transparent"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.5 }}
-      />
-      
-      {/* Animated Gradient Lines */}
-      <motion.div
-        className="absolute inset-0"
-        style={{
-          background: `
-            linear-gradient(90deg, transparent 0%, rgba(78, 205, 196, 0.1) 50%, transparent 100%),
-            linear-gradient(180deg, transparent 0%, rgba(42, 157, 143, 0.05) 50%, transparent 100%)
-          `,
-          backgroundSize: '200% 200%'
-        }}
-        animate={{
-          backgroundPosition: ['0% 0%', '100% 100%']
-        }}
-        transition={{
-          duration: 15,
-          ease: 'linear',
-          repeat: Infinity,
-          repeatType: 'reverse'
-        }}
-      />
+    <footer className="relative bg-gradient-to-r from-[#b2ff8b]/95 via-[#4ecdc4]/95 to-[#2a9d8f]/95 text-[#1a1a2e] overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v22H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%23000' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+      }} />
+
+      {/* Top CTA Banner */}
+      <div className="relative z-10 bg-[#1a1a2e] py-5">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
+              <div className="flex items-center gap-2 text-white">
+                <Award className="w-5 h-5 text-[#b2ff8b]" />
+                <span className="text-sm font-medium">Established 2017</span>
+              </div>
+              <div className="hidden md:block w-px h-5 bg-white/20" />
+              <div className="flex items-center gap-2 text-white">
+                <Clock className="w-5 h-5 text-[#4ecdc4]" />
+                <span className="text-sm font-medium">30+ Years Promoter Experience</span>
+              </div>
+            </div>
+            <motion.a
+              href="/contact"
+              className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[#b2ff8b] to-[#4ecdc4] text-[#1a1a2e] font-bold rounded-full shadow-lg hover:shadow-xl transition-all text-sm"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Request a Quote <ArrowRight className="w-4 h-4" />
+            </motion.a>
+          </div>
+        </div>
+      </div>
 
       {/* Main Footer Content */}
-      <div className="relative z-10 pt-16 pb-10">
+      <div className="relative z-10 py-14">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Company Info */}
-            <motion.div
-              className="backdrop-blur-lg bg-white/20 p-5 rounded-xl border border-white/30 shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
-              whileHover={{ 
-                scale: 1.02,
-                boxShadow: "0 8px 30px rgba(74, 14, 120, 0.2)"
-              }}
-            >
-              <div className="flex items-center mb-3">
-                <img src="/logo.png" alt="GVS Controls Logo" className="h-10 w-auto" />
-                <span className="font-montserrat font-bold text-xl ml-3 text-[#ff0000]">
-                  GVS CONTROLS
-                </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+            
+            {/* Column 1: Company Info */}
+            <div>
+              <div className="flex items-center gap-3 mb-5">
+                <img src="/gvs-logo.png" alt="GVS Controls Logo" className="h-14 w-14 object-contain rounded-lg shadow-md" />
+                <div>
+                  <h3 className="font-bold text-lg text-[#c40000]">GVS CONTROLS</h3>
+                  <p className="text-xs text-[#b8860b] font-semibold italic">Our Vision To Your Solution</p>
+                </div>
               </div>
-              <p className="font-montserrat text-sm leading-relaxed mb-2 text-[#ffbf00] italic font-bold">
-                (Our Vision To Your Solution)
+              <p className="text-[#1a1a2e]/80 text-sm leading-relaxed mb-5">
+                Delivering innovative, cost-effective engineering solutions. Our problem-solving culture ensures optimal man-machine interaction, focused on one objective — Customer Satisfaction.
               </p>
-              <p className="text-[#4a0e78]/90 text-sm sm:text-md leading-relaxed break-words mb-3 italic">
-                An inherent problem-solving culture ensures optimal interaction between the Man-machine interface. The service spectrum of the company is vast, but focused on a single objective, constantly redefining the term—"Customer Satisfaction."
-              </p>
-              <div className="flex space-x-3">
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-semibold text-[#1a1a2e]/60 uppercase tracking-wide">Follow Us</span>
                 {socialLinks.map(({ href, Icon, label }) => (
                   <motion.a
                     key={label}
                     href={href}
-                    className="p-2 rounded-full bg-white/30 hover:bg-white/40 transition-all duration-300 border border-white/30"
+                    className="w-9 h-9 rounded-full bg-[#1a1a2e] flex items-center justify-center text-white hover:bg-[#0077b5] transition-colors"
                     aria-label={label}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ scale: 1.15, rotate: 5 }}
-                    whileTap={{ scale: 0.9 }}
+                    whileHover={{ scale: 1.1 }}
                   >
-                    <Icon size={18} className="text-[#4a0e78] hover:text-[#ff6f61]" />
+                    <Icon size={16} />
                   </motion.a>
                 ))}
               </div>
-            </motion.div>
+            </div>
 
-            {/* Quick Links */}
-            <motion.div
-              className="backdrop-blur-lg bg-white/20 p-5 rounded-xl border border-white/30 shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
-              whileHover={{ 
-                scale: 1.02,
-                boxShadow: "0 8px 30px rgba(74, 14, 120, 0.2)"
-              }}
-            >
-              <h3 className="font-montserrat font-semibold text-xl mb-3 text-[#4a0e78]">
-                Explore More
-              </h3>
-              <nav className="grid grid-cols-2 gap-x-3 gap-y-2">
-                {navLinks.map(({ to, label, Icon }) => (
+            {/* Column 2: Quick Links */}
+            <div>
+              <h4 className="font-bold text-base mb-5 text-[#1a1a2e] uppercase tracking-wide border-b-2 border-[#1a1a2e]/20 pb-2">
+                Quick Links
+              </h4>
+              <nav className="grid grid-cols-1 gap-2.5">
+                {quickLinks.map(({ to, label, Icon }) => (
                   <NavLink
                     key={label}
                     to={to}
-                    className="text-[#4a0e78]/90 hover:text-[#ff6f61] text-sm relative group flex items-center"
+                    className="flex items-center gap-2 text-[#1a1a2e]/80 hover:text-[#c40000] text-sm transition-colors group"
                   >
-                    <motion.div
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                      transition={{ duration: 0.3 }}
-                      className="mr-2"
-                    >
-                      <Icon size={14} className="text-[#ff6f61]" />
-                    </motion.div>
-                    <motion.span
-                      whileHover={{ x: 5 }}
-                      transition={{ duration: 0.3 }}
-                      className="text-sm"
-                    >
-                      {label}
-                    </motion.span>
-                    <motion.span
-                      className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-[#ff6f61] to-[#4a0e78]"
-                      initial={{ width: 0 }}
-                      whileHover={{ width: '100%' }}
-                      transition={{ duration: 0.3 }}
-                    />
+                    <Icon size={14} className="text-[#1a1a2e]/50 group-hover:text-[#c40000]" />
+                    <span>{label}</span>
                   </NavLink>
                 ))}
               </nav>
-            </motion.div>
+            </div>
 
-            {/* Services */}
-            <motion.div
-              className="backdrop-blur-lg bg-white/20 p-5 rounded-xl border border-white/30 shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
-              whileHover={{ 
-                scale: 1.02,
-                boxShadow: "0 8px 30px rgba(74, 14, 120, 0.2)"
-              }}
-            >
-              <h3 className="font-montserrat font-semibold text-xl mb-3 text-[#4a0e78]">
-                What We Offer
-              </h3>
-              <nav className="grid gap-2">
+            {/* Column 3: Our Services */}
+            <div>
+              <h4 className="font-bold text-base mb-5 text-[#1a1a2e] uppercase tracking-wide border-b-2 border-[#1a1a2e]/20 pb-2">
+                Our Services
+              </h4>
+              <nav className="grid grid-cols-1 gap-2.5">
                 {serviceLinks.map(({ to, label }) => (
                   <NavLink
                     key={label}
                     to={to}
-                    className="text-[#4a0e78]/90 hover:text-[#ff6f61] text-base relative group flex items-center"
+                    className="flex items-center gap-2 text-[#1a1a2e]/80 hover:text-[#c40000] text-sm transition-colors group"
                   >
-                    <motion.div
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                      transition={{ duration: 0.3 }}
-                      className="mr-2"
-                    >
-                      <Briefcase size={16} className="text-[#ff6f61]" />
-                    </motion.div>
-                    <motion.span
-                      whileHover={{ x: 5 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {label}
-                    </motion.span>
-                    <motion.span
-                      className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-[#ff6f61] to-[#4a0e78]"
-                      initial={{ width: 0 }}
-                      whileHover={{ width: '100%' }}
-                      transition={{ duration: 0.3 }}
-                    />
+                    <Briefcase size={14} className="text-[#1a1a2e]/50 group-hover:text-[#c40000]" />
+                    <span>{label}</span>
                   </NavLink>
                 ))}
               </nav>
-            </motion.div>
+            </div>
 
-            {/* Contact Info */}
-            <motion.div
-              className="backdrop-blur-lg bg-white/20 p-5 rounded-xl border border-white/30 shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
-              whileHover={{ 
-                scale: 1.02,
-                boxShadow: "0 8px 30px rgba(74, 14, 120, 0.2)"
-              }}
-            >
-              <h3 className="font-montserrat font-semibold text-xl mb-3 text-[#4a0e78]">
-                Reach Out
-              </h3>
-              <div className="space-y-3 text-base">
-                <motion.div
-                  className="flex items-start group"
-                  whileHover={{ x: 3 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <MapPin size={18} className="text-[#ff6f61] mr-2 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                  <p className="text-[#4a0e78]/90 text-sm">
-                    Office & Works: Plot No.1476, Segundram Main Road, Gokulapuram- MaraimalaiNagar, Chengalpattu-(District), Pin:603209
+            {/* Column 4: Contact Us */}
+            <div>
+              <h4 className="font-bold text-base mb-5 text-[#1a1a2e] uppercase tracking-wide border-b-2 border-[#1a1a2e]/20 pb-2">
+                Contact Us
+              </h4>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <MapPin size={18} className="text-[#c40000] flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-[#1a1a2e]/80 leading-relaxed">
+                    Plot No.1476, Segundram Main Road, Gokulapuram, MaraimalaiNagar, Chengalpattu - 603209
                   </p>
-                </motion.div>
-                <motion.div
-                  className="flex items-start group"
-                  whileHover={{ x: 3 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <MapPin size={18} className="text-[#ff6f61] mr-2 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                  <p className="text-[#4a0e78]/90 text-sm">
-                    Reg. Office: No.46/1, 5th Cross Street, Bagavathy Nagar Govindarajapuram, Nandhivaram, Guduvanchery – 603202, Chengalpattu-(Dist)
-                  </p>
-                </motion.div>
-                <motion.div
-                  className="flex items-center group"
-                  whileHover={{ x: 3 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Phone size={18} className="text-[#ff6f61] mr-2 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                  <div className="flex flex-col">
-                    <a
-                      href="tel:+917338880027"
-                      className="text-[#4a0e78]/90 hover:text-[#ff6f61] relative text-sm group-hover:text-[#ff6f61]"
-                    >
-                      +91 73388 80027
-                      <motion.span
-                        className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-[#ff6f61] to-[#4a0e78]"
-                        initial={{ width: 0 }}
-                        whileHover={{ width: '100%' }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    </a>
-                    <a
-                      href="tel:+919884001597"
-                      className="text-[#4a0e78]/90 hover:text-[#ff6f61] relative text-sm group-hover:text-[#ff6f61]"
-                    >
-                      +91 98840 01597
-                      <motion.span
-                        className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-[#ff6f61] to-[#4a0e78]"
-                        initial={{ width: 0 }}
-                        whileHover={{ width: '100%' }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    </a>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Phone size={18} className="text-[#c40000] flex-shrink-0 mt-0.5" />
+                  <div className="text-sm">
+                    <a href="tel:+917338880027" className="block text-[#1a1a2e]/80 hover:text-[#c40000] transition-colors">+91 73388 80027</a>
+                    <a href="tel:+919884001597" className="block text-[#1a1a2e]/80 hover:text-[#c40000] transition-colors">+91 98840 01597</a>
                   </div>
-                </motion.div>
-                <motion.div
-                  className="flex items-start group"
-                  whileHover={{ x: 3 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Mail size={18} className="text-[#ff6f61] mr-2 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                  <div className="flex flex-col">
-                    <a
-                      href="mailto:projects@gvscontrols.com"
-                      className="text-[#4a0e78]/90 hover:text-[#ff6f61] relative text-sm group-hover:text-[#ff6f61]"
-                    >
-                      projects@gvscontrols.com
-                      <motion.span
-                        className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-[#ff6f61] to-[#4a0e78]"
-                        initial={{ width: 0 }}
-                        whileHover={{ width: '100%' }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    </a>
-                    <a
-                      href="mailto:gvscontrols@gmail.com"
-                      className="text-[#4a0e78]/90 hover:text-[#ff6f61] relative text-sm group-hover:text-[#ff6f61]"
-                    >
-                      gvscontrols@gmail.com
-                      <motion.span
-                        className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-[#ff6f61] to-[#4a0e78]"
-                        initial={{ width: 0 }}
-                        whileHover={{ width: '100%' }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    </a>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Mail size={18} className="text-[#c40000] flex-shrink-0 mt-0.5" />
+                  <div className="text-sm">
+                    <a href="mailto:projects@gvscontrols.com" className="block text-[#1a1a2e]/80 hover:text-[#c40000] transition-colors">projects@gvscontrols.com</a>
+                    <a href="mailto:gvscontrols@gmail.com" className="block text-[#1a1a2e]/80 hover:text-[#c40000] transition-colors">gvscontrols@gmail.com</a>
                   </div>
-                </motion.div>
-                <motion.div
-                  className="flex items-center group"
-                  whileHover={{ x: 3 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Globe size={18} className="text-[#ff6f61] mr-2 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                  <a
-                    href="https://www.gvscontrols.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#4a0e78]/90 hover:text-[#ff6f61] relative text-sm group-hover:text-[#ff6f61]"
-                  >
+                </div>
+                <div className="flex items-center gap-3">
+                  <Globe size={18} className="text-[#c40000] flex-shrink-0" />
+                  <a href="https://www.gvscontrols.com" target="_blank" rel="noopener noreferrer" className="text-sm text-[#1a1a2e]/80 hover:text-[#c40000] transition-colors">
                     www.gvscontrols.com
-                    <motion.span
-                      className="absolute bottom-0 left-0 w-0 h-px bg-gradient-to-r from-[#ff6f61] to-[#4a0e78]"
-                      initial={{ width: 0 }}
-                      whileHover={{ width: '100%' }}
-                      transition={{ duration: 0.3 }}
-                    />
                   </a>
-                </motion.div>
+                </div>
               </div>
-            </motion.div>
+            </div>
           </div>
+        </div>
+      </div>
 
-          {/* Copyright Section */}
-          <motion.div
-            className="mt-12 pt-8 border-t border-white/30"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            <div className="text-center text-xs sm:text-sm text-[#4a0e78]/80 break-words px-4">
-              <p>© {new Date().getFullYear()} GVS Controls. All rights reserved.</p>
-              <p className="mt-2">
-                GVS Controls is a registered business in India, committed to delivering quality engineering solutions with integrity and professionalism.
+      {/* Bottom Bar - Copyright & Legal */}
+      <div className="relative z-10 bg-[#1a1a2e] py-5">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            {/* Copyright */}
+            <div className="text-center md:text-left">
+              <p className="text-white/90 text-sm font-medium">
+                © {new Date().getFullYear()} M/s GVS Controls. All Rights Reserved.
+              </p>
+              <p className="text-white/50 text-xs mt-1">
+                MSME Registered | IE & CEIG Compliant
               </p>
             </div>
-          </motion.div>
+
+            {/* Legal Links */}
+            <div className="flex items-center gap-6">
+              <NavLink 
+                to="/privacy-policy" 
+                className="text-white/70 hover:text-white text-sm transition-colors"
+              >
+                Privacy Policy
+              </NavLink>
+              <span className="text-white/30">|</span>
+              <NavLink 
+                to="/terms-of-service" 
+                className="text-white/70 hover:text-white text-sm transition-colors"
+              >
+                Terms of Service
+              </NavLink>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

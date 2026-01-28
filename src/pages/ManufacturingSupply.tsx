@@ -140,7 +140,7 @@ const ManufacturingSupply = () => {
   return (
     <main className="pt-[84px] lg:pt-[140px] bg-gradient-to-b from-slate-50 via-teal-50 to-indigo-50 min-h-screen">
       {/* Hero Section */}
-      <section className="relative py-16 sm:py-20 md:py-28 lg:py-36 bg-gradient-to-br from-indigo-900 via-teal-800 to-purple-900 overflow-hidden">
+      <section className="relative min-h-[50vh] flex items-center py-16 md:py-20 bg-gradient-to-br from-indigo-900 via-teal-800 to-purple-900 overflow-hidden">
         {/* Static background - Removed animation for performance */}
         <div className="absolute inset-0 opacity-20">
           <div

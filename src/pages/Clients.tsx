@@ -34,7 +34,7 @@ const Clients: React.FC = () => {
   ], []);
 
   return (
-    <main style={{ paddingTop: `${headerHeight}px` }} className="min-h-screen bg-black text-white overflow-hidden">
+    <main className="min-h-screen bg-black text-white overflow-hidden pt-[84px] lg:pt-[140px]">
       <SEO
         title="Our Clients Since 2017 | GVS Controls"
         description="Elite post-2017 partners: Aumund Engineering, Loesche Energy, Metco Roofing, ARS Hydrojet, Meenakshi Hospital, Black Stone Technologies, Dukes Engineering."
@@ -42,7 +42,7 @@ const Clients: React.FC = () => {
       />
 
       {/* Hero - Same epic style, now buttery smooth */}
-      <section className="relative py-32 md:py-40 overflow-hidden">
+      <section className="relative min-h-[50vh] flex items-center py-16 md:py-20 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <motion.div
             animate={{ x: [0, 100, 0], y: [0, -100, 0] }}
@@ -61,10 +61,10 @@ const Clients: React.FC = () => {
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1, type: "spring", stiffness: 100 }}
-            className="inline-block px-8 py-3 rounded-full bg-white/5 backdrop-blur-2xl border border-white/10 mb-10 text-sm md:text-base"
+            className="inline-block px-6 py-2 rounded-full bg-white/5 backdrop-blur-2xl border border-white/10 mb-6 text-xs sm:text-sm"
           >
             <span className="bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent font-bold tracking-widest uppercase">
-              Post-2017 Elite Partners
+              Trusted Partners Since 2017
             </span>
           </motion.div>
 
@@ -72,10 +72,10 @@ const Clients: React.FC = () => {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1.2, type: "spring", stiffness: 80 }}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-none"
+            className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-6 leading-tight"
           >
             <span className="bg-gradient-to-r from-emerald-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
-              OUR CLIENTS
+              Our Valued Clients
             </span>
           </motion.h1>
 
@@ -83,9 +83,9 @@ const Clients: React.FC = () => {
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="text-lg sm:text-xl md:text-2xl text-gray-400 max-w-4xl mx-auto font-light leading-relaxed"
+            className="text-sm sm:text-base md:text-lg text-gray-400 max-w-3xl mx-auto font-light leading-relaxed"
           >
-            Industry leaders who chose excellence. Trusted by the best since 2017.
+            Industry leaders across Power, Steel, Cement & Engineering sectors who trust GVS Controls for excellence.
           </motion.p>
         </div>
       </section>
