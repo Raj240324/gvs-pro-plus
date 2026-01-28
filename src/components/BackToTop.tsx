@@ -1,24 +1,32 @@
-import { useState, useEffect } from 'react';
-import { ChevronUp } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { ChevronUp, ChevronDown } from 'lucide-react';
 
 const BackToTop = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isScrollingDown, setIsScrollingDown] = useState(true);
+  const lastScrollY = useRef(0);
 
-  // Show button when page is scrolled beyond 300px
   const toggleVisibility = () => {
-    if (window.pageYOffset > 300) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
+    const currentScrollY = window.scrollY;
+    
+    // Determine scroll direction
+    if (currentScrollY > lastScrollY.current) {
+      setIsScrollingDown(true);
+    } else if (currentScrollY < lastScrollY.current) {
+      setIsScrollingDown(false);
     }
-  };
 
-  // Scroll to top with smooth behavior
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    // Check if at bottom (Force Up arrow)
+    // Using offsetHeight and minimal buffer
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 20) {
+      setIsScrollingDown(false); 
+    }
+    
+    // Check if at top (Force Down arrow)
+    if (currentScrollY === 0) {
+        setIsScrollingDown(true);
+    }
+
+    lastScrollY.current = currentScrollY;
   };
 
   useEffect(() => {
@@ -29,13 +37,33 @@ const BackToTop = () => {
     };
   }, []);
 
+  const handleScroll = () => {
+     if (isScrollingDown) {
+         // Scroll to bottom
+         window.scrollTo({
+             top: document.body.scrollHeight,
+             behavior: 'smooth'
+         });
+     } else {
+         // Scroll to top
+         window.scrollTo({
+             top: 0,
+             behavior: 'smooth'
+         });
+     }
+  };
+
+  // If at very top, default to scrolling down
+  const showDownArrow = isScrollingDown;
+
   return (
     <button
-      onClick={scrollToTop}
-      className={`back-to-top ${isVisible ? 'visible' : ''}`}
-      aria-label="Back to top"
+      onClick={handleScroll}
+      className={`back-to-top visible`} 
+      aria-label={showDownArrow ? "Scroll to bottom" : "Back to top"}
+      title={showDownArrow ? "Scroll to bottom" : "Back to top"}
     >
-      <ChevronUp size={20} />
+      {showDownArrow ? <ChevronDown size={20} /> : <ChevronUp size={20} />}
     </button>
   );
 };

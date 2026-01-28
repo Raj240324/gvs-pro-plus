@@ -32,10 +32,11 @@ const FeaturedClients = () => {
     { name: 'Sea Bird (NAVY)', color: 'from-slate-500 to-gray-500' },
   ];
 
-  const duplicatedClients = [...clients, ...clients];
+  // Create two sets of clients for seamless infinite scroll
+  const allClients = [...clients, ...clients];
 
-  const [windowWidth, setWindowWidth] = useState(0);
   const [scrollWidth, setScrollWidth] = useState(2000);
+  const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -48,21 +49,9 @@ const FeaturedClients = () => {
 
   useEffect(() => {
     if (scrollContainerRef.current) {
-      setScrollWidth(scrollContainerRef.current.scrollWidth / 2); // half, since we duplicate for seamless
+      setScrollWidth(scrollContainerRef.current.scrollWidth / 2);
     }
   }, [windowWidth]);
-
-  const getAnimationDuration = () => {
-    if (!windowWidth) return 25;
-    if (windowWidth < 640) return 20;
-    if (windowWidth < 1024) return 25;
-    return 30;
-  };
-
-  // Create two sets of clients for seamless infinite scroll
-  const firstSet = [...clients];
-  const secondSet = [...clients];
-  const allClients = [...firstSet, ...secondSet];
 
   return (
     <section ref={sectionRef} className="relative py-12 sm:py-16 lg:py-24 bg-black text-white overflow-hidden font-futura">
@@ -71,7 +60,7 @@ const FeaturedClients = () => {
         className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.3)_0%,transparent_70%)] z-0"
         style={{ opacity: backgroundOpacity }}
       >
-        <div className="absolute inset-0 animate-pulse bg-[url('data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFFFFF' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30v4h4v2h-4v4h-2v-4h-4v-2h4v-4h2zM6 34v4h4v2h-4v4h-2v-4h-4v-2h4v-4h2zM6 4v4h-4v2h4v4h2v-4h4v-2h-4v-4h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]" />
+        <div className="absolute inset-0 animate-pulse bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23FFFFFF\' fill-opacity=\'0.15\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30v4h4v2h-4v4h-2v-4h-4v-2h4v-4h2zM6 34v4h4v2h-4v4h-2v-4h-4v-2h4v-4h2zM6 4v4h-4v2h4v4h2v-4h4v-2h-4v-4h-2z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]" />
         <div className="absolute inset-0 pointer-events-none">
           {[...Array(windowWidth < 640 ? 5 : windowWidth < 1024 ? 10 : 20)].map((_, i) => (
             <motion.div
@@ -100,39 +89,39 @@ const FeaturedClients = () => {
         {/* Header Section */}
         <motion.div
           style={{ opacity: contentOpacity }}
-          className="text-center mb-8 sm:mb-12 lg:mb-16"
+          className="text-center mb-12 sm:mb-16 lg:mb-20"
         >
           <motion.span 
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-amber-500/20 rounded-full text-xs sm:text-sm font-medium text-amber-300 border border-amber-500/40 shadow-[0_0_20px_rgba(245,158,11,0.4)]"
+            className="inline-block px-3 sm:px-4 py-1.5 bg-amber-500/10 rounded-full text-xs sm:text-sm font-semibold tracking-wider text-amber-300 border border-amber-500/30 shadow-[0_0_15px_rgba(245,158,11,0.2)] mb-4"
           >
-            Founder's 30+ Years Experience
+            FOUNDER'S LEGACY & EXPERIENCE
           </motion.span>
           <motion.h2 
             initial={{ y: 30, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.9, delay: 0.2 }}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 tracking-tight"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400 tracking-tight mb-4"
           >
-            Industry Expertise
+            Trusted by Industry Leaders
           </motion.h2>
           <motion.p 
             initial={{ y: 40, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.9, delay: 0.4 }}
-            className="text-sm sm:text-base md:text-lg text-gray-300 max-w-3xl mx-auto mt-3 sm:mt-4 font-light"
+            className="text-sm sm:text-base md:text-lg text-slate-400 max-w-2xl mx-auto font-light leading-relaxed"
           >
-            Our founder's prior experience across India's leading industries — now powering GVS Controls.
+            Our founder's 30+ years of expertise delivering critical solutions for India's largest industrial conglomerates.
           </motion.p>
         </motion.div>
 
-        {/* Infinite Scroll with Enhanced Glassmorphic Cards */}
-        <div className="relative overflow-hidden py-6 sm:py-8">
+        {/* Infinite Scroll with Modern Industrial Cards */}
+        <div className="relative overflow-hidden py-10">
           <motion.div
             ref={scrollContainerRef}
-            className="flex min-w-max space-x-4 sm:space-x-6 lg:space-x-8"
+            className="flex min-w-max space-x-6 sm:space-x-8"
             animate={{
               x: [0, -scrollWidth],
             }}
@@ -140,7 +129,7 @@ const FeaturedClients = () => {
               x: {
                 repeat: Infinity,
                 repeatType: "loop",
-                duration: getAnimationDuration(),
+                duration: 40, // Smoother, slower scroll
                 ease: "linear",
               },
             }}
@@ -148,106 +137,44 @@ const FeaturedClients = () => {
             {allClients.map((client, index) => (
               <motion.div
                 key={`${client.name}-${index}`}
-                initial={{ opacity: 0, y: 50, rotateX: 30 }}
-                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-                whileHover={{ 
-                  y: windowWidth < 640 ? -10 : -20,
-                  rotateY: windowWidth < 640 ? 5 : 10,
-                  scale: windowWidth < 640 ? 1.02 : 1.05,
-                  boxShadow: "0 15px 30px rgba(59,130,246,0.3)"
-                }}
-                transition={{ 
-                  duration: 0.7, 
-                  ease: "easeOut",
-                  hover: { duration: 0.3 }
-                }}
-                className="flex-shrink-0 w-48 sm:w-56 lg:w-64 bg-gradient-to-br from-gray-900/20 to-blue-900/10 rounded-xl sm:rounded-2xl border border-blue-500/30 backdrop-blur-xl shadow-xl group perspective-1000 overflow-visible mt-14"
+                className="group relative flex-shrink-0 w-72 h-36 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden cursor-pointer"
+                whileHover={{ y: -5, scale: 1.02 }}
               >
-                <div className="relative flex flex-col items-center w-full pt-12 sm:pt-20 pb-4">
-                  <motion.div 
-                    className={`absolute left-1/2 -top-7 sm:-top-10 lg:-top-12 -translate-x-1/2 flex items-center justify-center w-14 h-14 sm:w-20 sm:h-20 lg:w-24 lg:h-24 aspect-square rounded-full bg-gradient-to-br ${client.color} shadow-lg border-4 border-white/10 z-10`}
-                  >
-                    <span
-                      className={`flex items-center justify-center w-full h-full text-center font-mono leading-none
-                        ${client.name.split(' ').map(word => word[0]).filter(char => /[A-Za-z]/.test(char)).join('').length > 2
-                          ? 'text-xl sm:text-2xl lg:text-3xl tracking-tight'
-                          : 'text-2xl sm:text-3xl lg:text-4xl'
-                        } font-extrabold text-white drop-shadow-md`}
-                      style={{paddingTop: '2px'}}
-                    >
-                      {client.name.split(' ').map(word => word[0]).filter(char => /[A-Za-z]/.test(char)).join('')}
-                    </span>
-                  </motion.div>
-                  <motion.p 
-                    className="mt-2 text-base sm:text-lg lg:text-xl font-semibold text-white group-hover:text-blue-300 transition-colors duration-500 text-center"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.4 }}
+                {/* Dynamic Gradient Border/Glow */}
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${client.color} mix-blend-overlay`} />
+                
+                {/* Metallic shine on hover */}
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent transform skew-x-12" />
+
+                <div className="relative h-full flex flex-col items-center justify-center p-6 z-10">
+                  <motion.h3 
+                    className="text-2xl font-black tracking-tight text-white/80 group-hover:text-white transition-colors duration-300 text-center uppercase"
                   >
                     {client.name}
-                  </motion.p>
-                  <motion.p 
-                    className="mt-2 text-xs sm:text-sm text-gray-400 group-hover:text-blue-200 transition-colors duration-500 text-center"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    {/* client.projects was invalid - replace with something useful or descriptive */}
-                    {/* If you want to show extra info, add it to the client object and type! */}
-                  </motion.p>
-                </div>
-                <motion.div 
-                  className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.4)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                />
-                <div className="absolute inset-0 pointer-events-none">
-                  <motion.div 
-                    className="absolute w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full top-2 right-2"
-                    animate={{
-                      scale: [1, 1.5, 1],
-                      opacity: [0.5, 1, 0.5],
-                      transition: {
-                        duration: 2,
-                        repeat: Infinity
-                      }
-                    }}
-                  />
-                  <motion.div 
-                    className="absolute w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full bottom-2 left-2"
-                    animate={{
-                      scale: [1, 1.5, 1],
-                      opacity: [0.5, 1, 0.5],
-                      transition: {
-                        duration: 2,
-                        repeat: Infinity,
-                        delay: 0.5
-                      }
-                    }}
-                  />
-                  <motion.div
-                    className="absolute w-32 h-32 sm:w-40 sm:h-40 bg-blue-400/30 rounded-full -top-16 -left-16 sm:-top-20 sm:-left-20"
-                    animate={{
-                      x: [-100, 400],
-                      y: [-100, 400],
-                      opacity: [0, 0.3, 0],
-                      transition: {
-                        duration: 5,
-                        repeat: Infinity,
-                        delay: Math.random() * 2
-                      }
-                    }}
-                  />
+                  </motion.h3>
+                  
+                  {/* Decorative Elements */}
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-12 h-0.5 bg-white/10 rounded-full group-hover:w-24 group-hover:bg-white/30 transition-all duration-500" />
+                  
+                  {/* Tech corners */}
+                  <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-white/20 group-hover:border-white/60 transition-colors" />
+                  <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-white/20 group-hover:border-white/60 transition-colors" />
+                  <div className="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-white/20 group-hover:border-white/60 transition-colors" />
+                  <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-white/20 group-hover:border-white/60 transition-colors" />
                 </div>
               </motion.div>
             ))}
           </motion.div>
-          <div className="absolute inset-y-0 left-0 w-8 sm:w-12 lg:w-24 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-8 sm:w-12 lg:w-24 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+          
+          {/* Fade edges */}
+          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
         </div>
 
-        {/* Stats Section */}
+        {/* Stats Section - Redesigned to match */}
         <motion.div
           style={{ scale: statsScale }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-12 sm:mt-16 lg:mt-24"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-16 lg:mt-24"
         >
           {[
             { value: "30+", label: "Years of Promoter Experience in EPC Projects" },
@@ -256,37 +183,23 @@ const FeaturedClients = () => {
           ].map((stat, index) => (
             <motion.div
               key={index}
-              initial={{ y: 50, opacity: 0, rotateX: 20 }}
-              whileInView={{ y: 0, opacity: 1, rotateX: 0 }}
-              whileHover={{ 
-                y: -10, 
-                scale: 1.05, 
-                boxShadow: "0 0 25px rgba(59,130,246,0.6)" 
-              }}
-              transition={{ duration: 0.8, delay: index * 0.3 }}
-              className="relative p-6 sm:p-8 bg-gray-900/20 rounded-xl border border-blue-500/40 backdrop-blur-xl shadow-[0_0_20px_rgba(59,130,246,0.3)]"
+              initial={{ y: 50, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              className="relative p-8 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm group hover:bg-white/10 transition-colors duration-300"
             >
-              <motion.span 
-                className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500"
-                whileHover={{ scale: 1.1 }}
-                transition={{ duration: 0.4 }}
+              <motion.div 
+                className="text-5xl sm:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-br from-blue-400 to-purple-400 mb-4"
               >
                 {stat.value}
-              </motion.span>
-              <p className="text-base sm:text-lg text-gray-300 mt-2 sm:mt-3 font-medium">{stat.label}</p>
-              <div className="absolute inset-0 pointer-events-none">
-                <motion.div 
-                  className="absolute w-2 h-2 bg-blue-500 rounded-full top-2 right-2"
-                  animate={{
-                    scale: [1, 2, 1],
-                    opacity: [0.5, 1, 0.5],
-                    transition: {
-                      duration: 1.5,
-                      repeat: Infinity
-                    }
-                  }}
-                />
-              </div>
+              </motion.div>
+              <p className="text-lg text-slate-400 font-medium leading-snug group-hover:text-slate-300 transition-colors">
+                {stat.label}
+              </p>
+              
+              {/* Corner accent */}
+              <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-white/5 to-transparent rounded-bl-full" />
             </motion.div>
           ))}
         </motion.div>
@@ -296,4 +209,4 @@ const FeaturedClients = () => {
   );
 };
 
-export default FeaturedClients;  
+export default FeaturedClients;

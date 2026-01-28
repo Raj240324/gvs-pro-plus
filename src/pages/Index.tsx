@@ -193,7 +193,7 @@ const Index = () => {
                   <div className="w-14 h-14 flex items-center justify-center mb-4 rounded-full bg-gradient-to-br from-green-300 to-green-100 dark:from-green-300 dark:to-green-600 shadow-lg border-2 border-green-300/50">
                     <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                   </div>
-                  <h3 className="text-lg font-bold text-green-700 dark:text-green-200 mb-1">Founder's Experience</h3>
+                  <h3 className="text-lg font-bold text-green-700 dark:text-green-200 mb-1 whitespace-nowrap">Founder's Experience</h3>
                   <span className="inline-block bg-green-100/60 dark:bg-green-900/40 text-green-700 dark:text-green-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">30+ Years</span>
                   <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Deep EPC expertise before founding GVS.</p>
                 </div>

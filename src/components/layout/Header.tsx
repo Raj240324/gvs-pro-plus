@@ -118,89 +118,67 @@ const AnimatedMenuButton = ({ open, onClick }: { open: boolean; onClick: () => v
 };
 
 const TopContactBar = () => (
-  <div className="hidden lg:block bg-gradient-to-r from-white/80 via-[#f8fafc]/80 to-white/80 dark:from-black/40 dark:via-[#23272f]/60 dark:to-black/40 backdrop-blur-xl border-b border-white/40 dark:border-white/10 shadow-sm relative">
-    <div className="container mx-auto px-8 flex items-center justify-between h-14 text-sm font-inter text-[#2d2250] dark:text-white/90 relative">
-      <div className="flex items-center gap-3 pr-6 border-r border-[#e0e0e0] dark:border-[#333] z-10">
-        <span className="font-semibold text-xs text-[#4a0e78] dark:text-white/80 mr-2 tracking-wide">Follow</span>
+  <div className="hidden lg:flex h-11 bg-white/80 dark:bg-slate-900/90 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800 relative z-50 items-center justify-between px-6 lg:px-12 transition-colors duration-300">
+    {/* Left: Socials */}
+    <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
+        <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Follow Us</span>
         <motion.a
           href="https://www.linkedin.com/company/gvs-controls"
           target="_blank"
           rel="noopener noreferrer"
-          className="group focus:outline-none bg-transparent p-0 border-0 inline-flex items-center justify-center"
-          aria-label="LinkedIn"
-          style={{ background: "none", border: "none" }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="flex items-center justify-center w-7 h-7 rounded-lg bg-blue-600 text-white shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 transition-all"
         >
-          <motion.span
-            className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#0A66C2]/90 to-[#004182]/80 shadow-md transition-all duration-300 overflow-hidden"
-            whileHover={{ scale: 1.18, rotate: -8, boxShadow: "0 4px 16px #0A66C255" }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Linkedin size={20} className="text-white group-hover:text-[#ffd700] transition" />
-          </motion.span>
+          <Linkedin size={14} strokeWidth={2} />
         </motion.a>
       </div>
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center w-full pointer-events-none">
-        <span className="flex flex-col items-center text-xs font-bold tracking-wide text-[#4a0e78] dark:text-white/90 px-6 py-2 rounded-full bg-white/70 dark:bg-black/40 shadow border border-white/30 dark:border-white/10 backdrop-blur-md drop-shadow-sm uppercase pointer-events-auto">
-          Consultant, Engineering, Manufacturing (Supply & Services)
-          <span>Electrical, Instrumentation & Automation</span>
+    </div>
+
+    {/* Center: Expertise Ticker */}
+    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden xl:flex items-center justify-center pointer-events-none">
+      <div className="px-4 py-1 rounded-full bg-slate-100/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 flex items-center gap-2 shadow-sm whitespace-nowrap pointer-events-auto">
+        <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+        <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 tracking-wide uppercase">
+          Consultant • Engineering • Manufacturing
+        </span>
+        <div className="w-[1px] h-3 bg-slate-300 dark:bg-slate-600" />
+        <span className="text-[11px] font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 uppercase tracking-wide">
+          Electrical, Instrumentation & Automation
         </span>
       </div>
-      <div className="flex items-center gap-2 pl-4 border-l border-[#e0e0e0] dark:border-[#333] z-10 min-w-0">
-        <div className="flex flex-col gap-1">
-          <motion.a
-            href="mailto:projects@gvscontrols.com"
-            className="flex items-center gap-1 px-2 py-0.5 rounded bg-gradient-to-r from-[#fff7e6] to-[#ffe0e0] dark:from-[#2a2a40] dark:to-[#3a2a3a] shadow-sm font-semibold text-[#4a0e78] dark:text-[#ffd700] text-xs group relative overflow-hidden whitespace-nowrap min-w-0"
-            whileHover={{ scale: 1.04, boxShadow: "0 2px 8px #ff6f6133" }}
-            whileTap={{ scale: 0.97 }}
-            aria-label="Email us at projects@gvscontrols.com"
-            style={{ maxWidth: 180 }}
-          >
-            <motion.span
-              className="flex items-center justify-center"
-              animate={{ y: [0, -2, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-            >
-              <Mail size={14} className="text-[#ff6f61] group-hover:scale-110 transition-transform duration-300" />
-            </motion.span>
-            <span className="ml-0.5 truncate group-hover:text-[#ff6f61] transition">projects@gvscontrols.com</span>
-          </motion.a>
-          <motion.a
-            href="mailto:gvscontrols@gmail.com"
-            className="flex items-center gap-1 px-2 py-0.5 rounded bg-gradient-to-r from-[#fff7e6] to-[#ffe0e0] dark:from-[#2a2a40] dark:to-[#3a2a3a] shadow-sm font-semibold text-[#4a0e78] dark:text-[#ffd700] text-xs group relative overflow-hidden whitespace-nowrap min-w-0"
-            whileHover={{ scale: 1.04, boxShadow: "0 2px 8px #ff6f6133" }}
-            whileTap={{ scale: 0.97 }}
-            aria-label="Email us at gvscontrols@gmail.com"
-            style={{ maxWidth: 180 }}
-          >
-            <motion.span
-              className="flex items-center justify-center"
-              animate={{ y: [0, -2, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-            >
-              <Mail size={14} className="text-[#ff6f61] group-hover:scale-110 transition-transform duration-300" />
-            </motion.span>
-            <span className="ml-0.5 truncate group-hover:text-[#ff6f61] transition">gvscontrols@gmail.com</span>
-          </motion.a>
+    </div>
+
+    {/* Right: Contact Hub */}
+    <div className="flex items-center gap-6">
+      <motion.a 
+        href="mailto:projects@gvscontrols.com" 
+        className="flex items-center gap-2 group"
+        whileHover={{ y: -1 }}
+      >
+        <div className="p-1.5 rounded-md bg-orange-50 dark:bg-orange-900/20 text-orange-500 group-hover:bg-orange-100 dark:group-hover:bg-orange-900/30 transition-colors">
+          <Mail size={12} strokeWidth={2.5} />
         </div>
-        <span className="w-1 h-1 rounded-full bg-[#4a0e78]/30 dark:bg-white/30 mx-1" />
-        <motion.a
-          href="tel:+917338880027"
-          className="flex items-center gap-1 px-2 py-0.5 rounded bg-gradient-to-r from-[#e6fff7] to-[#e0f7ff] dark:from-[#2a403a] dark:to-[#2a3a3a] shadow-sm font-semibold text-[#4a0e78] dark:text-[#ffd700] text-xs group relative overflow-hidden whitespace-nowrap min-w-0"
-          whileHover={{ scale: 1.04, boxShadow: "0 2px 8px #4a0e7833" }}
-          whileTap={{ scale: 0.97 }}
-          aria-label="Call us at +91 7338880027"
-          style={{ maxWidth: 140 }}
-        >
-          <motion.span
-            className="flex items-center justify-center"
-            animate={{ y: [0, -2, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut", delay: 0.5 }}
-          >
-            <Phone size={14} className="text-[#4a0e78] group-hover:scale-110 transition-transform duration-300" />
-          </motion.span>
-          <span className="ml-0.5 truncate group-hover:text-[#4a0e78] transition">+91 7338880027</span>
-        </motion.a>
-      </div>
+        <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
+          projects@gvscontrols.com
+        </span>
+      </motion.a>
+
+      <div className="h-4 w-[1px] bg-slate-200 dark:bg-slate-800" />
+
+      <motion.a 
+        href="tel:+917338880027" 
+        className="flex items-center gap-2 group"
+        whileHover={{ y: -1 }}
+      >
+        <div className="p-1.5 rounded-md bg-green-50 dark:bg-green-900/20 text-green-600 group-hover:bg-green-100 dark:group-hover:bg-green-900/30 transition-colors">
+          <Phone size={12} strokeWidth={2.5} />
+        </div>
+        <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
+          +91 7338880027
+        </span>
+      </motion.a>
     </div>
   </div>
 );

@@ -107,42 +107,49 @@ const Highlights = () => {
   };
 
   return (
-    <section className="relative py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative py-20 md:py-32 bg-slate-50 dark:bg-slate-950 overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl opacity-50" />
+        <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-3xl opacity-30" />
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <motion.div
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={{ once: true }}
           variants={containerVariants}
-          className="text-center mb-12 md:mb-16"
+          className="text-center mb-16 md:mb-24"
         >
           <motion.span
             variants={textVariants}
-            className="inline-block px-4 py-2 bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white text-sm font-semibold rounded-full mb-4 shadow-md"
+            className="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold tracking-wider uppercase mb-6"
           >
-            Our Expertise
+            Capabilities
           </motion.span>
           <motion.h2
             variants={textVariants}
-            className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight"
+            className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight mb-6"
           >
-            Engineering Excellence Unveiled
+            Engineering <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Excellence</span>
           </motion.h2>
           <motion.p
             variants={textVariants}
-            className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mt-4 max-w-3xl mx-auto"
+            className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed"
           >
-            Discover our comprehensive solutions designed to elevate your projects with innovation and precision.
+            Comprehensive solutions designed to elevate your projects with innovation, precision, and decades of expertise.
           </motion.p>
         </motion.div>
 
-        {/* Cards */}
+        {/* Immersive Grid */}
         <motion.div
           ref={ref}
           initial="hidden"
           animate={controls}
           variants={containerVariants}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+          className="flex flex-wrap justify-center gap-6 lg:gap-8"
         >
           {expertiseContent.map((item, idx) => (
             <motion.div
@@ -150,51 +157,50 @@ const Highlights = () => {
               variants={cardVariants}
               whileHover="hover"
               onClick={() => handleCardClick(item.serviceId)}
-              className="relative group bg-white/60 dark:bg-gray-800/60 backdrop-blur-lg border border-white/30 dark:border-gray-700/40 rounded-2xl shadow-xl overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl"
-              style={{ boxShadow: '0 8px 32px 0 rgba(31,38,135,0.15)' }}
+              className="group relative w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.34rem)] h-[450px] bg-slate-900 rounded-3xl overflow-hidden cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500"
             >
-              {/* Image + Gradient */}
-              <div className="relative h-48 md:h-56 overflow-hidden">
+              {/* Background Image */}
+              <div className="absolute inset-0">
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   loading="lazy"
                 />
-                <div
-                  className={`absolute inset-0 bg-gradient-to-t ${item.gradient} opacity-70 group-hover:opacity-80 transition-opacity duration-300`}
-                />
-                <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
-                  <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/80 shadow-lg border border-white/70 backdrop-blur-md">
-                    {item.icon}
-                  </span>
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent opacity-95 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-30 mix-blend-overlay group-hover:opacity-50 transition-opacity duration-500`} />
+              </div>
+
+              {/* Content Overlay */}
+              <div className="absolute inset-0 p-8 flex flex-col items-start justify-end">
+                {/* Icon Badge */}
+                <div className="absolute top-8 right-8 w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white transform group-hover:rotate-12 transition-transform duration-500 shadow-lg">
+                   {item.icon}
                 </div>
-                <h3 className="absolute bottom-4 left-4 text-xl md:text-2xl font-bold text-white z-10 drop-shadow-lg">
+
+                <h3 className="text-2xl font-bold text-white mb-3 drop-shadow-md group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-blue-200 transition-all duration-300">
                   {item.title}
                 </h3>
-              </div>
 
-              {/* Text + CTA */}
-              <div className="p-6 flex flex-col h-full justify-between">
-                <p className="text-gray-700 dark:text-gray-200 text-base md:text-lg leading-relaxed font-medium mb-4">
+                <p className="text-gray-100 text-sm leading-relaxed mb-6 line-clamp-4 drop-shadow-sm font-medium group-hover:text-white transition-colors duration-300">
                   {item.description}
                 </p>
-                <button
-                  className="mt-auto inline-block px-5 py-2 rounded-full bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white font-semibold shadow-md hover:from-[#4a0e78] hover:to-[#ff6f61] transition-colors duration-300 text-sm md:text-base"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleCardClick(item.serviceId);
-                  }}
-                >
-                  Learn More
-                </button>
-              </div>
 
-              {/* Decorative corner */}
-              <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-[#ff6f61]/20 to-[#4a0e78]/20 rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="flex items-center text-white font-semibold text-sm tracking-wide gap-2 group/btn">
+                  <span className="border-b border-transparent group-hover/btn:border-white transition-all duration-300">EXPLORE SOLUTION</span>
+                  <svg className="w-5 h-5 transform group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </div>
+              </div>
             </motion.div>
           ))}
         </motion.div>
+        
+        {/* Centering Logic Fix: If we want the last 2 items centered in a 3-col grid, we can just use flexbox for the container or specific classes. 
+            Since grid is used, let's leave it as standard alignment (left-aligned last row) which is standard for bento grids, 
+            OR change container to flex flex-wrap justify-center. Flex wrap is better for centering odd items.
+         */}
       </div>
     </section>
   );
