@@ -41,7 +41,7 @@ const PrivacyPolicy = () => {
         >
           <div className="prose max-w-none text-[#1e2a44] prose-headings:text-[#ff6f61] prose-a:text-[#2a9d8f] prose-a:hover:text-[#ff6f61] text-base leading-relaxed">
             <p className="mb-4 text-right text-sm text-[#666]">
-              <strong>Last Updated: November 18, 2025</strong>
+              <strong>Last Updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</strong>
             </p>
             <p className="mb-6">
               At <strong>M/s GVS Controls</strong> ("GVS Controls", "we", "us", or "our"), a leading provider of electrical and automation solutions established in 2017 with 30+ years of Promoter Experience in EPC Projects, we are committed to protecting your privacy. Our vision—"Our Vision To Your Solution"—drives our problem-solving culture that ensures optimal interaction between the Man-machine interface. Our services span expert consultancy, electrical control panel manufacturing, PLC automation, engineering, erection, testing & commissioning, renovation & revamping, and turnkey project solutions across industries including power plants, renewable energy, material handling, cement, automotive, and process plants. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, <span className="font-semibold">www.gvscontrols.com</span>, engage with our services, or interact with our solutions.
@@ -247,6 +247,16 @@ const PrivacyPolicy = () => {
               Email: <a href="mailto:projects@gvscontrols.com" className="underline hover:no-underline">projects@gvscontrols.com</a> & <a href="mailto:gvscontrols@gmail.com" className="underline hover:no-underline">gvscontrols@gmail.com</a><br />
               Website: <a href="https://www.gvscontrols.com" className="underline hover:no-underline" target="_blank" rel="noopener noreferrer">www.gvscontrols.com</a>
             </address>
+            <div className="mt-8 pt-6 border-t border-[#2a9d8f]/20">
+              <h3 className="text-lg font-semibold text-[#2a9d8f] mb-3">Website Development & Technical Contact</h3>
+              <p className="mb-2">
+                This website is developed and maintained by <strong>NagaDev</strong>. For any technical issues, accessibility concerns, or website-related inquiries, please contact:
+              </p>
+              <address className="not-italic">
+                <strong>NagaDev</strong><br />
+                Email: <a href="mailto:nagarajan.webdev@gmail.com" className="underline hover:no-underline">nagarajan.webdev@gmail.com</a>
+              </address>
+            </div>
           </div>
         </motion.div>
       </div>
