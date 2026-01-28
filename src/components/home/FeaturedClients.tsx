@@ -106,9 +106,9 @@ const FeaturedClients = () => {
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-blue-500/20 rounded-full text-xs sm:text-sm font-medium text-blue-300 border border-blue-500/40 shadow-[0_0_20px_rgba(59,130,246,0.4)]"
+            className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-amber-500/20 rounded-full text-xs sm:text-sm font-medium text-amber-300 border border-amber-500/40 shadow-[0_0_20px_rgba(245,158,11,0.4)]"
           >
-            Strategic Partners
+            Founder's 30+ Years Experience
           </motion.span>
           <motion.h2 
             initial={{ y: 30, opacity: 0 }}
@@ -116,7 +116,7 @@ const FeaturedClients = () => {
             transition={{ duration: 0.9, delay: 0.2 }}
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 tracking-tight"
           >
-            Pioneering Progress
+            Industry Expertise
           </motion.h2>
           <motion.p 
             initial={{ y: 40, opacity: 0 }}
@@ -124,7 +124,7 @@ const FeaturedClients = () => {
             transition={{ duration: 0.9, delay: 0.4 }}
             className="text-sm sm:text-base md:text-lg text-gray-300 max-w-3xl mx-auto mt-3 sm:mt-4 font-light"
           >
-            Collaborating with visionaries to shape the future.
+            Our founder's prior experience across India's leading industries — now powering GVS Controls.
           </motion.p>
         </motion.div>
 

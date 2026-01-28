@@ -21,7 +21,7 @@ const Index = () => {
     if (meta) {
       meta.setAttribute(
         'content',
-        'GVS Controls delivers turnkey electrical, automation & control solutions for power, steel, cement, renewable energy, and material handling sectors. Trusted by SAIL, NTPC, Aumund, and 50+ industry leaders.'
+        'GVS Controls delivers turnkey electrical, automation & control solutions for power, steel, cement, renewable energy, and material handling sectors. 30+ years of promoter experience. Serving Aumund, Loesche, and 50+ clients since 2017.'
       );
     }
 
@@ -123,7 +123,7 @@ const Index = () => {
     <main>
       <SEO
         title="GVS Controls - Electrical, Instrumentation, Automation & Consultancy | Industrial Solutions"
-        description="Turnkey electrical, automation & control solutions for power, steel, cement, renewable energy, and material handling. Trusted by SAIL, NTPC, Aumund, and 50+ industry leaders."
+        description="Turnkey electrical, automation & control solutions for power, steel, cement, renewable energy, and material handling. 30+ years of promoter experience. Serving Aumund, Loesche, and 50+ industry leaders since 2017."
       />
       <Hero />
 
@@ -287,7 +287,7 @@ const Index = () => {
                 <div className="flip-card-back bg-gradient-to-br from-teal-500/90 to-teal-700/90 dark:from-teal-700/90 dark:to-teal-900/90 text-white rounded-2xl shadow-2xl border border-purple-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30"
                   style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
                   <p className="text-sm leading-relaxed text-center font-medium">
-                    SAIL, TISCO, RINL, NTPC, JSW, Ultratech, Aditya Birla, GMR, Sterlite, CPCL, MRL, Cochin Refinery, Sea Bird (NAVY), Aumund, Loesche, Metco, ARS, Meenakshi – collaborating with EIL, MECON, Fichtner, Tata Consulting Engineers, Black Stone Group, and Shriram EPC.
+                    <strong>GVS Clients:</strong> Aumund, Loesche, Metco, ARS, Meenakshi, Dukes, Black Stone. <strong>Founder's Prior Experience:</strong> SAIL, TISCO, RINL, NTPC, JSW, GMR, Sterlite, CPCL, MRL, Cochin Refinery, Sea Bird (NAVY).
                   </p>
                 </div>
               </div>

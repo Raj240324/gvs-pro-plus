@@ -55,7 +55,7 @@ const faqs: FAQItem[] = [
     id: "7",
     question: "What major projects have you executed?",
     answer:
-      "We have successfully executed projects for SAIL, TISCO, Rastriya Ispat Nigam Ltd (Vizag), CPCL, MRL, Cochin Refinery, Sterlite Group, GMR, Aditya Birla Group, BHEL, NMDC, NTPC and Indian Navy (Sea Bird Project).",
+      "GVS Controls (since 2017) has executed projects for Aumund Engineering, Loesche Energy, Metco Roofing, ARS Hydrojet, and Meenakshi Medical College. Our founder, with 30+ years of prior EPC experience, has worked on projects for SAIL, TISCO, RINL (Vizag), CPCL, Cochin Refinery, Sterlite Group, GMR, Aditya Birla Group, NTPC, and Indian Navy (Sea Bird Project).",
   },
   {
     id: "8",
