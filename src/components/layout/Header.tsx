@@ -319,7 +319,7 @@ const Header = () => {
               </div>
 
               <nav className="hidden lg:flex items-center flex-1 px-1 xl:px-4">
-                <div className="flex items-center w-full justify-between bg-white/20 border border-white/30 rounded-full py-1.5 px-1 shadow-sm backdrop-blur-sm">
+                <div className="flex items-center w-full justify-between bg-white/20 border border-white/30 rounded-full py-1.5 px-3 xl:px-4 shadow-sm backdrop-blur-sm">
                   <motion.div
                     onMouseLeave={() => setHovered(null)}
                     className="flex items-center justify-between w-full gap-0.5 xl:gap-1 2xl:gap-4"
