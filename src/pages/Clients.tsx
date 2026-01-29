@@ -34,7 +34,7 @@ const Clients: React.FC = () => {
   ], []);
 
   return (
-    <main className="min-h-screen bg-black text-white overflow-hidden pt-[84px] lg:pt-[140px]">
+    <main className="min-h-screen bg-black text-white overflow-hidden pt-[84px] lg:pt-[128px]">
       <SEO
         title="Our Clients Since 2017 | GVS Controls"
         description="Elite post-2017 partners: Aumund Engineering, Loesche Energy, Metco Roofing, ARS Hydrojet, Meenakshi Hospital, Black Stone Technologies, Dukes Engineering."

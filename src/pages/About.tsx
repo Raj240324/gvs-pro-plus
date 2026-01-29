@@ -2,7 +2,8 @@
 import React, { useEffect, useMemo } from 'react';
 import { motion, useScroll, useTransform as transformScroll } from 'framer-motion';
 import { ArrowRight, Building2, Factory, Award, User, Briefcase, Users, Clock } from 'lucide-react';
-import Timeline3D, { TimelineEvent } from '@/components/ui/3d-interactive-timeline';
+import ModernJourney, { TimelineEvent } from '@/components/ui/ModernJourney';
+import SEO from '../components/SEO';
 import gvsFront from '../assets/about-image/gvs-front.jpeg';
 import gvsMain from '../assets/about-image/gvs-main.jpeg';
 import infrastructure from '../assets/about-image/infrastructure.jpeg';
@@ -11,10 +12,6 @@ import projectAbout from '../assets/about-image/project-about.jpeg';
 export default function AboutUnified() {
   const { scrollYProgress } = useScroll();
   const heroBgOpacity = transformScroll(scrollYProgress, [0, 0.4], [1, 0.85]);
-
-  useEffect(() => {
-    document.title = "About Us | GVS Controls – Innovative Electrical & Automation Solutions Since 2017";
-  }, []);
 
   const timelineEvents = useMemo<TimelineEvent[]>(() => [
     {
@@ -81,7 +78,11 @@ export default function AboutUnified() {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 relative pt-[84px] lg:pt-[140px]">
+      <SEO
+        title="About Us"
+        description="GVS Controls, founded in 2017, delivers innovative electrical & automation solutions. Trusted by industry leaders like SAIL and TISCO."
+      />
+      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 relative pt-[84px] lg:pt-[128px]">
         {/* HERO */}
         <motion.section
           className="relative min-h-[50vh] flex items-center py-16 md:py-20 bg-gradient-to-br from-indigo-900 via-teal-700 to-purple-800 overflow-hidden"
@@ -270,15 +271,9 @@ export default function AboutUnified() {
               Our Milestones Since 2017
             </h2>
           </div>
-          <Timeline3D 
+          <ModernJourney 
             events={timelineEvents}
-            backgroundColor="bg-gradient-to-b from-white via-cyan-50 to-indigo-50 dark:from-slate-800 dark:via-slate-800 dark:to-slate-900"
-            primaryColor="bg-teal-600"
-            secondaryColor="bg-indigo-500"
-            accentColor="bg-amber-500"
-            textColor="text-slate-900 dark:text-white"
-            showImages={true}
-            className="min-h-screen"
+            className="min-h-screen bg-gradient-to-b from-white via-cyan-50 to-indigo-50 dark:from-slate-800 dark:via-slate-800 dark:to-slate-900"
           />
         </section>
 

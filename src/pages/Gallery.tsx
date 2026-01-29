@@ -1,25 +1,25 @@
 import { useEffect, useState, useCallback } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import cop1 from '../assets/cop-1.png';
-import cop2 from '../assets/cop-2.png';
-import cop3 from '../assets/cop-3.png';
-import cop4 from '../assets/cop-4.png';
-import cop5 from '../assets/cop-5.png';
-import cop6 from '../assets/cop-6.png';
-import cop7 from '../assets/cop-7.png';
-import cop8 from '../assets/cop-8.png';
-import cop9 from '../assets/cop-9.png';
-import cop10 from '../assets/cop-10.png';
-import cop11 from '../assets/cop-11.png';
-import cop12 from '../assets/cop-12.png';
-import cop13 from '../assets/cop-13.png';
-import cop14 from '../assets/cop-14.png';
-import cop15 from '../assets/cop-15.png';
-import cop16 from '../assets/cop-16.png';
-import cop17 from '../assets/cop-17.png';
-import cop18 from '../assets/cop-18.png';
-import cop19 from '../assets/cop-19.png';
+import cop1 from '../assets/cop-1.webp';
+import cop2 from '../assets/cop-2.webp';
+import cop3 from '../assets/cop-3.webp';
+import cop4 from '../assets/cop-4.webp';
+import cop5 from '../assets/cop-5.webp';
+import cop6 from '../assets/cop-6.webp';
+import cop7 from '../assets/cop-7.webp';
+import cop8 from '../assets/cop-8.webp';
+import cop9 from '../assets/cop-9.webp';
+import cop10 from '../assets/cop-10.webp';
+import cop11 from '../assets/cop-11.webp';
+import cop12 from '../assets/cop-12.webp';
+import cop13 from '../assets/cop-13.webp';
+import cop14 from '../assets/cop-14.webp';
+import cop15 from '../assets/cop-15.webp';
+import cop16 from '../assets/cop-16.webp';
+import cop17 from '../assets/cop-17.webp';
+import cop18 from '../assets/cop-18.webp';
+import cop19 from '../assets/cop-19.webp';
 import React from 'react';
 import SEO from '../components/SEO';
 
@@ -155,15 +155,6 @@ const Gallery = () => {
 
   // Set document metadata and ESC/arrow key handler
   useEffect(() => {
-    document.title = 'PCC, MCC & PLC cum VFD Control Panels Gallery - GVS Controls';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute(
-        'content',
-        'Explore GVS Controls\' gallery showcasing innovative PCC, MCC, and PLC cum VFD control panels, manufactured for industrial automation and power management.'
-      );
-    }
-
     const handleKeyDown = (e: KeyboardEvent) => {
       if (selectedImage) {
         if (e.key === 'ArrowLeft') {
@@ -219,7 +210,7 @@ const Gallery = () => {
   }
 
   return (
-    <main className="bg-gray-950 text-white min-h-screen pt-[84px] lg:pt-[140px]">
+    <main className="bg-gray-950 text-white min-h-screen pt-[84px] lg:pt-[128px]">
       <SEO
         title="Control Panels Gallery"
         description="Explore GVS Controls' PCC, MCC, and PLC cum VFD control panels, manufactured for industrial automation and power management."

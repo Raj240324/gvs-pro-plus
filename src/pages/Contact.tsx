@@ -68,9 +68,7 @@ const Contact = () => {
     emailjs.init(userID);
   }, [toast]);
 
-  useEffect(() => {
-    document.title = 'Contact Us - GVS Controls';
-  }, []);
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -145,7 +143,7 @@ const Contact = () => {
     <ErrorBoundary>
       <SEO title="Contact" description="Reach out to GVS Controls..." canonical="/contact" />
 
-      <main className="overflow-hidden pt-[84px] lg:pt-[140px]">
+      <main className="overflow-hidden pt-[84px] lg:pt-[128px]">
         {/* Hero */}
         <section className="relative bg-gradient-to-br from-teal-600 via-indigo-600 to-purple-700 min-h-[50vh] flex items-center overflow-hidden">
           <Particles />

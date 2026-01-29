@@ -3,18 +3,10 @@ import { Link } from 'react-router-dom';
 import { ProjectStatusCard } from '../components/ui/ProjectStatusCard';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import SEO from '../components/SEO';
 
 const WhyUs = () => {
   useEffect(() => {
-    document.title = 'Why Us - GVS Controls';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute(
-        'content',
-        'Discover why GVS Controls is your ideal partner for engineering solutions.'
-      );
-    }
-
     // Register GSAP ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
@@ -142,7 +134,11 @@ const WhyUs = () => {
   ];
 
   return (
-    <main className="pt-[84px] lg:pt-[140px]">
+    <main className="pt-[84px] lg:pt-[128px]">
+      <SEO
+        title="Why Us - GVS Controls"
+        description="Discover why GVS Controls is your ideal partner for engineering solutions."
+      />
       <style>
         {`
           .hero-section {

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { CardSpotlight } from '../components/ui/card-spotlight';
 import { Factory, Zap, Wrench } from 'lucide-react';
 import React from 'react';
+import SEO from '../components/SEO';
 
 interface Product {
   id: string;
@@ -116,10 +117,6 @@ const ProductSpotlightCard = ({ product }: { product: Product }) => {
 };
 
 const ManufacturingSupply = () => {
-  useEffect(() => {
-    document.title = 'Manufacturing & Supply - GVS Controls';
-  }, []);
-
   const product: Product = {
     id: 'control-panels',
     name: 'Electrical Control Panels',
@@ -138,7 +135,11 @@ const ManufacturingSupply = () => {
   };
 
   return (
-    <main className="pt-[84px] lg:pt-[140px] bg-gradient-to-b from-slate-50 via-teal-50 to-indigo-50 min-h-screen">
+    <main className="pt-[84px] lg:pt-[128px] bg-gradient-to-b from-slate-50 via-teal-50 to-indigo-50 min-h-screen">
+      <SEO
+        title="Manufacturing & Supply - GVS Controls"
+        description="We manufacture Electrical Control Panels as per IE Standard Electrical Inspectorate Rules and Regulation (CEIG)."
+      />
       {/* Hero Section */}
       <section className="relative min-h-[50vh] flex items-center py-16 md:py-20 bg-gradient-to-br from-indigo-900 via-teal-800 to-purple-900 overflow-hidden">
         {/* Static background - Removed animation for performance */}

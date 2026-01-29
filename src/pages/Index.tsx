@@ -16,15 +16,6 @@ const Index = () => {
   const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
 
   useEffect(() => {
-    document.title = 'GVS Controls - 30+ Years of Promoter Experience in EPC Projects';
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) {
-      meta.setAttribute(
-        'content',
-        'GVS Controls delivers turnkey electrical, automation & control solutions for power, steel, cement, renewable energy, and material handling sectors. 30+ years of promoter experience. Serving Aumund, Loesche, and 50+ clients since 2017.'
-      );
-    }
-
     // Mobile detection
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
     checkMobile();

@@ -9,9 +9,9 @@ import {
   FaTools,
   FaSyncAlt,
 } from 'react-icons/fa';
-import cop9 from '../../assets/cop-9.png';
-import renovation from '../../assets/renovation.png';
-import erection from '../../assets/electrical-erection.png';
+import cop9 from '../../assets/cop-9.webp';
+import renovation from '../../assets/renovation.webp';
+import erection from '../../assets/electrical-erection.webp';
 
 const Highlights = () => {
   const controls = useAnimation();

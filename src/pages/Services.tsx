@@ -178,7 +178,7 @@ const Services: React.FC = () => {
   ];
 
   return (
-    <main className="bg-gray-50 pt-[84px] lg:pt-[140px]">
+    <main className="bg-gray-50 pt-[84px] lg:pt-[128px]">
       <SEO
         title="Our Services | GVS Controls"
         description="Expert consultancy, automation, manufacturing, and turnkey services for industrial electrical and control systems."
