@@ -288,6 +288,8 @@ const Header = () => {
                     src="/gvs-logo.png"
                     alt="GVS Controls Logo"
                     className="h-10 xl:h-12 w-auto transition-transform hover:scale-105"
+                    width="150"
+                    height="50"
                   />
                   <div className="hidden xl:flex flex-col ml-2">
                     <span className="text-[#ff0000] font-bold text-sm 2xl:text-lg leading-tight">GVS CONTROLS</span>
@@ -422,6 +424,8 @@ const Header = () => {
                     src="/gvs-logo.png"
                     alt="GVS Controls Logo"
                     className="h-8 w-auto mb-1.5 rounded-lg shadow-md bg-white/80"
+                    width="100"
+                    height="32"
                   />
                   <span className="text-[#ff0000] font-bold text-[16px] leading-tight">GVS Controls</span>
                   <span className="text-[#ffbf00] text-xs font-medium mb-1.5 leading-tight">

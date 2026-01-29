@@ -167,64 +167,64 @@ const Hero = () => {
               <TypewriterEffectSmoothDemo />
             </div>
 
-            <p
-              className="text-base sm:text-lg md:text-xl lg:text-2xl font-medium mb-3 italic mt-4 break-words px-2"
-              style={{ color: "#ffffff", textShadow: "0 2px 4px rgba(0, 0, 0, 0.5)" }}
-            >
-              <span style={{
-                color: "#FFE135",
-                textShadow: "0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 225, 53, 0.5)",
-                fontWeight: "600"
-              }}>Consultant</span>, <span style={{
-                color: "#FF4D4D",
-                textShadow: "0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 77, 77, 0.5)",
-                fontWeight: "600"
-              }}>Engineering</span>, <span style={{
-                color: "#39FF14",
-                textShadow: "0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(57, 255, 20, 0.5)",
-                fontWeight: "600"
-              }}>Manufacturing</span> <span style={{
-                color: "#ffffff",
-                textShadow: "0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 255, 255, 0.5)",
-                fontWeight: "600"
-              }}>(Supply & Services)</span>
-            </p>
+              <p
+                className="text-base sm:text-lg md:text-xl lg:text-2xl font-medium mb-3 italic mt-4 break-words px-2"
+                style={{ color: "#ffffff", textShadow: "0 2px 4px rgba(0, 0, 0, 0.9)" }}
+              >
+                <span style={{
+                  color: "#FFD700", // Gold instead of bright yellow
+                  textShadow: "0 2px 4px rgba(0, 0, 0, 0.9), 0 0 10px rgba(255, 215, 0, 0.6)",
+                  fontWeight: "700"
+                }}>Consultant</span>, <span style={{
+                  color: "#FF3333", // Darker red
+                  textShadow: "0 2px 4px rgba(0, 0, 0, 0.9), 0 0 10px rgba(255, 51, 51, 0.6)",
+                  fontWeight: "700"
+                }}>Engineering</span>, <span style={{
+                  color: "#00FF00", // Standard Green
+                  textShadow: "0 2px 4px rgba(0, 0, 0, 0.9), 0 0 10px rgba(0, 255, 0, 0.6)",
+                  fontWeight: "700"
+                }}>Manufacturing</span> <span style={{
+                  color: "#ffffff",
+                  textShadow: "0 2px 4px rgba(0, 0, 0, 0.9), 0 0 10px rgba(255, 255, 255, 0.6)",
+                  fontWeight: "600"
+                }}>(Supply & Services)</span>
+              </p>
 
-            <p className="text-lg sm:text-xl lg:text-2xl font-bold italic mb-6">
-              <span
-                style={{
-                  color: "#FF8C00",
-                  textShadow:
-                    "0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 140, 0, 0.5)",
-                  fontWeight: "700",
-                }}
-              >
-                Electrical,{" "}
-              </span>
+              <p className="text-lg sm:text-xl lg:text-2xl font-bold italic mb-6">
+                <span
+                  style={{
+                    color: "#FFA500", // Orange
+                    textShadow:
+                      "0 2px 4px rgba(0, 0, 0, 0.9), 0 0 10px rgba(255, 165, 0, 0.6)",
+                    fontWeight: "700",
+                  }}
+                >
+                  Electrical,{" "}
+                </span>
 
-              {/* ---- UPDATED INSTRUMENTATION SPAN ---- */}
-              <span
-                style={{
-                  color: "#FFD700",                     // bright gold
-                  textShadow:
-                    "0 2px 4px rgba(0,0,0,0.8), 0 0 12px rgba(255,215,0,0.7)", // stronger glow for readability
-                  fontWeight: "700",
-                }}
-              >
-                Instrumentation
-              </span>
-              {" "}&{" "}
-              <span
-                style={{
-                  color: "#00FFFF",
-                  textShadow:
-                    "0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 255, 255, 0.5)",
-                  fontWeight: "700",
-                }}
-              >
-                Automation
-              </span>
-            </p>
+                {/* ---- UPDATED INSTRUMENTATION SPAN ---- */}
+                <span
+                  style={{
+                    color: "#FFD700", // Gold
+                    textShadow:
+                      "0 2px 4px rgba(0,0,0,0.9), 0 0 12px rgba(255,215,0,0.6)", 
+                    fontWeight: "700",
+                  }}
+                >
+                  Instrumentation
+                </span>
+                {" "}&{" "}
+                <span
+                  style={{
+                    color: "#00FFFF", // Cyan
+                    textShadow:
+                      "0 2px 4px rgba(0, 0, 0, 0.9), 0 0 10px rgba(0, 255, 255, 0.6)",
+                    fontWeight: "700",
+                  }}
+                >
+                  Automation
+                </span>
+              </p>
 
             <motion.button
               onClick={() => navigate("/services")}

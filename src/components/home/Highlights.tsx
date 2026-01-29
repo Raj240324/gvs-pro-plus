@@ -166,6 +166,8 @@ const Highlights = () => {
                   alt={item.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   loading="lazy"
+                  width="800"
+                  height="600"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent opacity-95 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-30 mix-blend-overlay group-hover:opacity-50 transition-opacity duration-500`} />
