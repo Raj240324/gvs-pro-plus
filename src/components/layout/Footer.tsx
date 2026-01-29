@@ -79,7 +79,7 @@ const Footer = () => {
                 <img src="/gvs-logo.png" alt="GVS Controls Logo" className="h-14 w-14 object-contain rounded-lg shadow-md" />
                 <div>
                   <h3 className="font-bold text-lg text-[#c40000]">GVS CONTROLS</h3>
-                  <p className="text-xs text-[#b8860b] font-semibold italic">Our Vision To Your Solution</p>
+                  <p className="text-xs text-[#8a6508] font-semibold italic">Our Vision To Your Solution</p>
                 </div>
               </div>
               <p className="text-[#1a1a2e]/80 text-sm leading-relaxed mb-5">

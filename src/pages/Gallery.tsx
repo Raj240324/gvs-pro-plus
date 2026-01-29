@@ -54,12 +54,23 @@ const galleryImages: GalleryImage[] = [
 
 // Custom Card Component (Memoized)
 const CustomCard = React.memo(({ title, src, onClick }: { title: string; src: string; onClick: () => void }) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onClick();
+    }
+  };
+
   return (
     <motion.div
-      className="relative overflow-hidden rounded-xl bg-gray-900/50 backdrop-blur-md border border-cyan-500/30 shadow-lg transition-all duration-300 hover:shadow-cyan-500/20 cursor-pointer"
+      className="relative overflow-hidden rounded-xl bg-gray-900/50 backdrop-blur-md border border-cyan-500/30 shadow-lg transition-all duration-300 hover:shadow-cyan-500/20 cursor-pointer focus:outline-none focus:ring-2 focus:ring-cyan-400"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
+      aria-label={`View ${title}`}
       initial={{ opacity: 0, scale: 0.9 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, amount: 0.3 }}
@@ -70,6 +81,8 @@ const CustomCard = React.memo(({ title, src, onClick }: { title: string; src: st
         alt={title}
         className="object-cover w-full h-64 sm:h-72 md:h-80 transition-transform duration-500 hover:scale-105"
         loading="lazy"
+        width="400"
+        height="320"
         onError={(e) => {
           e.currentTarget.src = '/fallback-image.png';
         }}

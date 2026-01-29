@@ -83,5 +83,17 @@ export default defineConfig(({ command }) => ({
   server: { host: 'localhost', port: 5173 },
   plugins: [react(), CacheHeadersPlugin({ command })],
   resolve: { alias: { '@': path.resolve(__dirname, './src') } },
-  build: { assetsDir: 'assets' },
+  build: {
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'framer-motion': ['framer-motion'],
+          'ui-vendor': ['lucide-react', 'clsx', 'tailwind-merge'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+  },
 }));
