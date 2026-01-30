@@ -150,6 +150,7 @@ const Hero = () => {
         <div className="text-center max-w-5xl">
           <div className="relative z-10">
             <h1 className="mb-4">
+              <span className="sr-only">Industrial Electrical & Automation Solutions - </span>
               <span style={{ color: "#ff0000" }}>
                 <TextRoll
                   className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight break-words"
