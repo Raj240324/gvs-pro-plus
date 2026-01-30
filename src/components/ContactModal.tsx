@@ -5,7 +5,7 @@ import { Textarea } from '../components/ui/textarea';
 import { useToast } from '../hooks/use-toast';
 import { Send, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
-import emailjs from '@emailjs/browser';
+import { supabase } from '../lib/supabase';
 
 interface ContactModalProps {
   open: boolean;
@@ -25,6 +25,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
   const { toast } = useToast();
 
   useEffect(() => {
+    // Lock body scroll when modal is open
     if (open) {
       document.body.classList.add('no-scroll');
       document.documentElement.classList.add('no-scroll');
@@ -37,29 +38,6 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
       document.documentElement.classList.remove('no-scroll');
     };
   }, [open]);
-
-  useEffect(() => {
-    const userID = import.meta.env.VITE_EMAILJS_USER_ID;
-    if (!userID) {
-      toast({
-        title: "Configuration Error",
-        description: "EmailJS userID is missing. Please contact support.",
-        variant: "destructive",
-        className: "bg-red-500 text-white rounded-lg shadow-lg max-w-[90vw] mx-auto bottom-4",
-      });
-      return;
-    }
-    try {
-      emailjs.init({ publicKey: userID });
-    } catch (error) {
-      toast({
-        title: "Configuration Error",
-        description: "Failed to initialize EmailJS. Please try again later.",
-        variant: "destructive",
-        className: "bg-red-500 text-white rounded-lg shadow-lg max-w-[90vw] mx-auto bottom-4",
-      });
-    }
-  }, [toast]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -81,39 +59,13 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
 
     setIsSubmitting(true);
 
-    const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const customerTemplateID = import.meta.env.VITE_EMAILJS_CUSTOMER_TEMPLATE_ID;
-    const ownerTemplateID = import.meta.env.VITE_EMAILJS_OWNER_TEMPLATE_ID;
-
-    if (!serviceID || !customerTemplateID || !ownerTemplateID) {
-      setIsSubmitting(false);
-      toast({
-        title: "Configuration Error",
-        description: "EmailJS configuration is missing. Please check your .env file.",
-        variant: "destructive",
-        className: "bg-red-500 text-white rounded-lg shadow-lg max-w-[90vw] mx-auto bottom-4",
-      });
-      return;
-    }
-
-    const templateParams = {
-      from_name: formData.name,
-      from_email: formData.email,
-      phone: formData.phone || 'Not provided',
-      subject: formData.subject || 'Not provided',
-      message: formData.message,
-    };
-
     try {
-      const customerPromise = emailjs.send(serviceID, customerTemplateID, {
-        ...templateParams,
-        to_email: formData.email,
+      // Call Supabase Edge Function
+      const { error } = await supabase.functions.invoke('contact-us', {
+        body: formData,
       });
-      const ownerPromise = emailjs.send(serviceID, ownerTemplateID, {
-        ...templateParams,
-        to_email: 'naga240324@gmail.com',
-      });
-      await Promise.all([customerPromise, ownerPromise]);
+
+      if (error) throw error;
 
       setIsSubmitting(false);
       setIsSubmitted(true);
@@ -136,6 +88,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
         onOpenChange(false);
       }, 2000);
     } catch (error: any) {
+      console.error('Submission Error:', error);
       setIsSubmitting(false);
       toast({
         title: "Error",
@@ -218,8 +171,12 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
               </p>
             </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-3 mt-2 sm:mt-3 relative z-10 grow flex flex-col">
-              <div className="grid grid-cols-1 gap-2 sm:gap-3">
+              <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-3 mt-2 sm:mt-3 relative z-10 grow flex flex-col">
+                {/* Honeypot Field - Hidden */}
+                <div style={{ position: 'absolute', opacity: 0, zIndex: -1, width: 0, height: 0, overflow: 'hidden' }}>
+                    <input type="text" name="bot_honey" tabIndex={-1} autoComplete="off" onChange={handleChange} />
+                </div>
+                <div className="grid grid-cols-1 gap-2 sm:gap-3">
                 <div className="space-y-0.5 sm:space-y-1">
                   <label htmlFor="modal-name" className="block text-xs sm:text-xs font-medium text-gray-700 dark:text-gray-300">
                     Your Name <span className="text-red-500">*</span>

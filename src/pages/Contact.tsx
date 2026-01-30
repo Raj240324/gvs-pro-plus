@@ -6,7 +6,7 @@ import { Textarea } from '../components/ui/textarea';
 import { useContactModal } from '../hooks/use-contact-modal';
 import Button from '../components/ui/Button';
 import SEO from '../components/SEO';
-import emailjs from '@emailjs/browser';
+import { supabase } from '../lib/supabase';
 import { Input } from '../components/ui/input';
 
 // Error Boundary (unchanged)
@@ -36,7 +36,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 }
 
 interface FormData {
-  name: string; email: string; phone: string; subject: string; message: string;
+  name: string; email: string; phone: string; subject: string; message: string; bot_honey?: string;
 }
 
 interface ContactItem {
@@ -59,16 +59,11 @@ const Contact = () => {
   const contactModal = useContactModal();
 
   useEffect(() => {
-    const userID = import.meta.env.VITE_EMAILJS_USER_ID;
-    if (!userID) {
-      console.error('EmailJS userID is missing');
-      toast({ title: "Configuration Error", description: "EmailJS userID missing.", variant: "destructive" });
-      return;
+    // Only verify keys are present, no init needed
+    if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
+       console.error('Supabase keys missing');
     }
-    emailjs.init(userID);
-  }, [toast]);
-
-
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -81,29 +76,15 @@ const Contact = () => {
       return;
     }
 
-    const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const customerTemplateID = import.meta.env.VITE_EMAILJS_CUSTOMER_TEMPLATE_ID;
-    const ownerTemplateID = import.meta.env.VITE_EMAILJS_OWNER_TEMPLATE_ID;
-
-    if (!serviceID || !customerTemplateID || !ownerTemplateID) {
-      toast({ title: "Error", description: "Email configuration missing.", variant: "destructive" });
-      return;
-    }
-
     setIsSubmitting(true);
-    const templateParams = {
-      from_name: formData.name,
-      from_email: formData.email,
-      phone: formData.phone || 'Not provided',
-      subject: formData.subject || 'Not provided',
-      message: formData.message,
-    };
 
     try {
-      await Promise.all([
-        emailjs.send(serviceID, customerTemplateID, { ...templateParams, to_email: formData.email }),
-        emailjs.send(serviceID, ownerTemplateID, { ...templateParams, to_email: 'naga240324@gmail.com' })
-      ]);
+      const { error } = await supabase.functions.invoke('contact-us', {
+        body: formData,
+      });
+
+      if (error) throw error;
+
       setIsSubmitting(false);
       setIsSubmitted(true);
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
@@ -322,22 +303,28 @@ const Contact = () => {
                   We're excited to hear from you—let's get started!
                 </p>
                 <form onSubmit={handleSubmit} className="space-y-6 flex-1 flex flex-col justify-between">                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                  <div className="space-y-2">
-                    <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200">
-                      Name <span className="text-red-500">*</span>
-                    </label>
-                    <Input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required
-                      className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base"
-                      disabled={isSubmitting} />
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200">
-                      Email <span className="text-red-500">*</span>
-                    </label>
-                    <Input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required
-                      className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base"
-                      disabled={isSubmitting} />
-                  </div>
+                   {/* Honeypot Field for Bots - Visually Hidden */}
+                   <div style={{ position: 'absolute', opacity: 0, zIndex: -1, width: 0, height: 0, overflow: 'hidden' }}>
+                      <label htmlFor="website_url">Website</label>
+                      <input type="text" id="website_url" name="bot_honey" tabIndex={-1} autoComplete="off" onChange={handleChange} />
+                   </div>
+                   
+                   <div className="space-y-2">
+                     <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200">
+                       Name <span className="text-red-500">*</span>
+                     </label>
+                     <Input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required
+                       className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base"
+                       disabled={isSubmitting} />
+                   </div>
+                   <div className="space-y-2">
+                     <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200">
+                       Email <span className="text-red-500">*</span>
+                     </label>
+                     <Input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required
+                       className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base"
+                       disabled={isSubmitting} />
+                   </div>
                 </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     <div className="space-y-2">
