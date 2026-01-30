@@ -20,6 +20,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
     subject: '',
     message: '',
   });
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
@@ -39,18 +40,72 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
     };
   }, [open]);
 
+  const validateField = (name: string, value: string): string => {
+    switch (name) {
+      case 'name':
+        if (value.length < 2) return 'Name must be at least 2 characters';
+        if (/[0-9]/.test(value)) return 'Name should not contain numbers';
+        return '';
+      case 'email':
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Invalid email address';
+        return '';
+      case 'phone':
+        // Allow digits, spaces, +, -, (, )
+        if (value && !/^[\d\s\+\-\(\)]+$/.test(value)) return 'Invalid characters';
+        // Check for reasonable digit count (e.g. 10-15)
+        const digits = value.replace(/\D/g, '');
+        if (value && (digits.length < 10 || digits.length > 15)) return 'Must be 10-15 digits';
+        return '';
+      case 'message':
+        if (value.length < 10) return 'Message must be at least 10 characters';
+        return '';
+      default:
+        return '';
+    }
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+    
+    // For phone, prevent entering invalid chars
+    if (name === 'phone') {
+        if (!/^[\d\s\+\-\(\)]*$/.test(value)) return; 
+    }
+
     setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Real-time validation
+    const error = validateField(name, value);
+    setErrors(prev => ({ ...prev, [name]: error }));
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    // Validate all fields
+    const newErrors: { [key: string]: string } = {};
+    let isValid = true;
+    Object.keys(formData).forEach(key => {
+        const error = validateField(key, formData[key as keyof typeof formData] || '');
+        if (error) {
+            newErrors[key] = error;
+            isValid = false;
+        }
+    });
+
     if (!formData.name || !formData.email || !formData.message) {
+      isValid = false;
+      if (!formData.name) newErrors.name = 'Name is required';
+      if (!formData.email) newErrors.email = 'Email is required';
+      if (!formData.message) newErrors.message = 'Message is required';
+    }
+    
+    setErrors(newErrors);
+
+    if (!isValid) {
       toast({
         title: "Error",
-        description: "Please fill all required fields.",
+        description: "Please check the form for errors.",
         variant: "destructive",
         className: "bg-red-500 text-white rounded-lg shadow-lg max-w-[90vw] mx-auto bottom-4",
       });
@@ -76,6 +131,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
         subject: '',
         message: '',
       });
+      setErrors({});
 
       toast({
         title: "Success!",
@@ -189,8 +245,9 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
                     onChange={handleChange}
                     required
                     disabled={isSubmitting}
-                    className="text-xs sm:text-xs py-1.5 sm:py-1.5 h-9 sm:h-9 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
+                    className={`text-xs sm:text-xs py-1.5 sm:py-1.5 h-9 sm:h-9 bg-white/50 dark:bg-gray-700/50 border rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300 ${errors.name ? 'border-red-500' : 'border-gray-400 dark:border-gray-600'}`}
                   />
+                  {errors.name && <p className="text-red-500 text-[10px] sm:text-[10px] mt-0.5">{errors.name}</p>}
                 </div>
                 <div className="space-y-0.5 sm:space-y-1">
                   <label htmlFor="modal-email" className="block text-xs sm:text-xs font-medium text-gray-700 dark:text-gray-300">
@@ -204,8 +261,9 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
                     onChange={handleChange}
                     required
                     disabled={isSubmitting}
-                    className="text-xs sm:text-xs py-1.5 sm:py-1.5 h-9 sm:h-9 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
+                    className={`text-xs sm:text-xs py-1.5 sm:py-1.5 h-9 sm:h-9 bg-white/50 dark:bg-gray-700/50 border rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300 ${errors.email ? 'border-red-500' : 'border-gray-400 dark:border-gray-600'}`}
                   />
+                  {errors.email && <p className="text-red-500 text-[10px] sm:text-[10px] mt-0.5">{errors.email}</p>}
                 </div>
               </div>
 
@@ -221,8 +279,9 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
                     value={formData.phone}
                     onChange={handleChange}
                     disabled={isSubmitting}
-                    className="text-xs sm:text-xs py-1.5 sm:py-1.5 h-9 sm:h-9 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300"
+                    className={`text-xs sm:text-xs py-1.5 sm:py-1.5 h-9 sm:h-9 bg-white/50 dark:bg-gray-700/50 border rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300 ${errors.phone ? 'border-red-500' : 'border-gray-400 dark:border-gray-600'}`}
                   />
+                  {errors.phone && <p className="text-red-500 text-[10px] sm:text-[10px] mt-0.5">{errors.phone}</p>}
                 </div>
                 <div className="space-y-0.5 sm:space-y-1">
                   <label htmlFor="modal-subject" className="block text-xs sm:text-xs font-medium text-gray-700 dark:text-gray-300">
@@ -257,9 +316,10 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
                   onChange={handleChange}
                   rows={2}
                   required
-                  className="w-full text-xs sm:text-xs bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300 h-20 sm:h-[80px]"
+                  className={`w-full text-xs sm:text-xs bg-white/50 dark:bg-gray-700/50 border rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300 h-20 sm:h-[80px] ${errors.message ? 'border-red-500' : 'border-gray-400 dark:border-gray-600'}`}
                   disabled={isSubmitting}
                 />
+                {errors.message && <p className="text-red-500 text-[10px] sm:text-[10px] mt-0.5">{errors.message}</p>}
               </div>
 
               <div className="pt-1 shrink-0">

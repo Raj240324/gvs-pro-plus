@@ -53,6 +53,7 @@ interface ContactItem {
 
 const Contact = () => {
   const [formData, setFormData] = useState<FormData>({ name: '', email: '', phone: '', subject: '', message: '' });
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const { toast } = useToast();
@@ -65,14 +66,73 @@ const Contact = () => {
     }
   }, []);
 
+  const validateField = (name: string, value: string): string => {
+    switch (name) {
+      case 'name':
+        if (value.length < 2) return 'Name must be at least 2 characters';
+        if (/[0-9]/.test(value)) return 'Name should not contain numbers';
+        return '';
+      case 'email':
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Invalid email address';
+        return '';
+      case 'phone':
+        // Allow digits, spaces, +, -, (, )
+        if (value && !/^[\d\s\+\-\(\)]+$/.test(value)) return 'Invalid characters in phone number';
+        // Check for reasonable digit count (e.g. 10-15)
+        const digits = value.replace(/\D/g, '');
+        if (value && (digits.length < 10 || digits.length > 15)) return 'Phone number must be 10-15 digits';
+        return '';
+      case 'message':
+        if (value.length < 10) return 'Message must be at least 10 characters';
+        return '';
+      default:
+        return '';
+    }
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    
+    // For phone, prevent entering invalid chars (except control keys)
+    if (name === 'phone') {
+        // Allow only valid phone characters: numbers, spaces, +, -, (, )
+        if (!/^[\d\s\+\-\(\)]*$/.test(value)) return; 
+    }
+
+    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Real-time validation
+    const error = validateField(name, value);
+    setErrors(prev => ({ ...prev, [name]: error }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    // Validate all fields
+    const newErrors: { [key: string]: string } = {};
+    let isValid = true;
+    Object.keys(formData).forEach(key => {
+        if (key === 'bot_honey') return;
+        const error = validateField(key, formData[key as keyof FormData] || '');
+        if (error) {
+            newErrors[key] = error;
+            isValid = false;
+        }
+    });
+
+    // Required fields check (double check)
     if (!formData.name || !formData.email || !formData.message) {
-      toast({ title: "Error", description: "Please fill all required fields.", variant: "destructive" });
+       isValid = false;
+       if (!formData.name) newErrors.name = 'Name is required';
+       if (!formData.email) newErrors.email = 'Email is required';
+       if (!formData.message) newErrors.message = 'Message is required';
+    }
+
+    setErrors(newErrors);
+
+    if (!isValid) {
+      toast({ title: "Validation Error", description: "Please fix the errors in the form.", variant: "destructive" });
       return;
     }
 
@@ -88,6 +148,7 @@ const Contact = () => {
       setIsSubmitting(false);
       setIsSubmitted(true);
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      setErrors({});
       toast({ title: "Success!", description: "Message sent successfully!" });
       setTimeout(() => setIsSubmitted(false), 5000);
     } catch (error) {
@@ -314,24 +375,27 @@ const Contact = () => {
                        Name <span className="text-red-500">*</span>
                      </label>
                      <Input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required
-                       className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base"
+                       className={`w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base ${errors.name ? 'border-red-500' : 'border-gray-400 dark:border-gray-600'}`}
                        disabled={isSubmitting} />
+                     {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                    </div>
                    <div className="space-y-2">
                      <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200">
                        Email <span className="text-red-500">*</span>
                      </label>
                      <Input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required
-                       className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base"
+                       className={`w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base ${errors.email ? 'border-red-500' : 'border-gray-400 dark:border-gray-600'}`}
                        disabled={isSubmitting} />
+                     {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                    </div>
                 </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     <div className="space-y-2">
                       <label htmlFor="phone" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200">Phone</label>
                       <Input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange}
-                        className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base"
+                        className={`w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base ${errors.phone ? 'border-red-500' : 'border-gray-400 dark:border-gray-600'}`}
                         disabled={isSubmitting} />
+                      {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
                     </div>
                     <div className="space-y-2">
                       <label htmlFor="subject" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200">Subject</label>
@@ -352,8 +416,9 @@ const Contact = () => {
                       Message <span className="text-red-500">*</span>
                     </label>
                     <Textarea id="message" name="message" value={formData.message} onChange={handleChange} rows={4} required
-                      className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base"
+                      className={`w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base ${errors.message ? 'border-red-500' : 'border-gray-400 dark:border-gray-600'}`}
                       disabled={isSubmitting} />
+                    {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
                   </div>
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="mt-8">
                     <Button type="submit" disabled={isSubmitting} className="w-full py-3 px-8 bg-gradient-to-r from-teal-500 to-purple-600 text-white font-semibold rounded-full shadow-md hover:from-teal-600 hover:to-purple-700 transition-all duration-300">
