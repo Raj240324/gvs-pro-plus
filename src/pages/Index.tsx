@@ -116,10 +116,10 @@ const Index = () => {
             <span className="inline-block px-4 py-1 bg-white/20 dark:bg-black/20 text-white rounded-full text-sm font-semibold tracking-wide mb-4 animate-fade-in backdrop-blur-sm">
               About Us
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
               30+ Years of Promoter Experience in EPC Projects – <span className="bg-gradient-to-r from-yellow-300 to-orange-500 text-transparent bg-clip-text drop-shadow-lg">Founded 2017</span>
             </h2>
-            <p className="text-white/80 max-w-2xl mx-auto leading-relaxed animate-fade-in delay-200">
+            <p className="text-white/80 text-lg max-w-2xl mx-auto leading-relaxed animate-fade-in delay-200">
               M/s GVS Controls, founded in 2017, delivers innovative, cost‑effective engineering solutions, redefining customer satisfaction through advanced automation and man‑machine interfaces.
             </p>
           </div>
@@ -142,7 +142,7 @@ const Index = () => {
                     <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                   </div>
                   <h3 className="text-lg font-bold text-blue-700 dark:text-blue-200 mb-1">Our Foundation</h3>
-                  <span className="inline-block bg-blue-100/60 dark:bg-blue-900/40 text-blue-700 dark:text-blue-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">Est. 2017</span>
+                  <span className="inline-block bg-blue-100/60 dark:bg-blue-900/40 text-blue-700 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-semibold mb-2">Est. 2017</span>
                   <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Rooted in Innovation and problem‑solving.</p>
                 </div>
                 <div className="flip-card-back bg-gradient-to-br from-blue-500/90 to-blue-700/90 dark:from-blue-700/90 dark:to-blue-900/90 text-white rounded-2xl shadow-2xl border border-blue-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30"

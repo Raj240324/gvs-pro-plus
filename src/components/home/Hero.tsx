@@ -153,7 +153,7 @@ const Hero = () => {
               <span className="sr-only">Industrial Electrical & Automation Solutions - </span>
               <span style={{ color: "#ff0000" }}>
                 <TextRoll
-                  className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight break-words"
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight break-words"
                   transition={{ type: "spring", damping: 30, stiffness: 400 }}
                   duration={0.3}
                   getEnterDelay={(i) => i * 0.05}
@@ -164,12 +164,12 @@ const Hero = () => {
               </span>
             </h1>
 
-            <div className="text-base sm:text-lg md:text-xl lg:text-2xl">
+            <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl">
               <TypewriterEffectSmoothDemo />
             </div>
 
               <p
-                className="text-sm sm:text-base md:text-xl lg:text-2xl font-medium mb-3 italic mt-4 break-words px-2"
+                className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-medium mb-3 italic mt-6 break-words px-2"
                 style={{ color: "#ffffff", textShadow: "0 2px 4px rgba(0, 0, 0, 0.9)" }}
               >
                 <span style={{
@@ -191,7 +191,7 @@ const Hero = () => {
                 }}>(Supply & Services)</span>
               </p>
 
-              <p className="text-base sm:text-lg lg:text-2xl font-bold italic mb-6">
+              <p className="text-xl sm:text-2xl lg:text-3xl font-bold italic mb-8">
                 <span
                   style={{
                     color: "#FFA500", // Orange
