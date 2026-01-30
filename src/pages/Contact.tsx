@@ -278,14 +278,14 @@ const Contact = () => {
 
                     {/* Address */}
                     {item.content && (
-                      <p className="text-gray-600 dark:text-gray-300 mb-2 text-xs sm:text-sm md:text-base leading-relaxed whitespace-pre-line">
+                      <p className="text-gray-600 dark:text-gray-300 mb-2 text-sm sm:text-base leading-relaxed whitespace-pre-line">
                         {item.content}
                       </p>
                     )}
 
                     {/* Emails */}
                     {item.emails && (
-                      <div className="space-y-3 text-xs sm:text-sm">
+                      <div className="space-y-3 text-sm sm:text-base">
                         {item.emails.map((e, i: number) => (
                           <div key={i}>
                             <span className="block text-gray-500 dark:text-gray-400">{e.label}:</span>
@@ -308,7 +308,7 @@ const Contact = () => {
 
                     {/* Call Us + Working Hours */}
                     {item.phones && (
-                      <div className="space-y-3 text-xs sm:text-sm">
+                      <div className="space-y-3 text-sm sm:text-base">
                         {item.phones.map((p: string, i: number) => (
                           <div key={i}>
                             <span className="block text-gray-500 dark:text-gray-400">Mobile:</span>

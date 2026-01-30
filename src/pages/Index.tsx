@@ -1,100 +1,18 @@
 import FeaturedClients from '../components/home/FeaturedClients';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
 import { useContactModal } from '../hooks/use-contact-modal';
 import Hero from '../components/home/Hero';
 import FAQ from '../components/home/FAQ';
 import Button from '../components/ui/Button';
 import Highlights from '../components/home/Highlights';
 import SEO from '../components/SEO';
+import StatCounter from '../components/home/StatCounter';
+import InfoCard from '../components/home/InfoCard';
+import { motion } from 'framer-motion';
 
 const Index = () => {
   const contactModal = useContactModal();
-  const statsRef = useRef<HTMLDivElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
-  const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
-
-  useEffect(() => {
-    // Mobile detection
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-
-    // Counter animation with IntersectionObserver (Performant)
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const statsEl = entry.target as HTMLDivElement;
-            if (statsEl.dataset.animated !== 'true') {
-              statsEl.dataset.animated = 'true';
-              statsEl.querySelectorAll<HTMLElement>('.stat-counter').forEach((counter) => {
-                const target = parseInt(counter.dataset.target || '0', 10);
-                if (!target) return;
-
-                let cur = 0;
-                const dur = 2000;
-                let start: number | null = null;
-
-                const step = (ts: number) => {
-                  if (!start) start = ts;
-                  const prog = ts - start;
-                  cur = Math.min(target, Math.ceil((prog / dur) * target));
-                  counter.textContent = `${cur}`;
-                  if (cur < target) requestAnimationFrame(step);
-                  else counter.textContent = `${target}+`;
-                };
-                requestAnimationFrame(step);
-              });
-            }
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    if (statsRef.current) {
-      observer.observe(statsRef.current);
-    }
-
-    // Mobile flip-card auto-rotate
-    if (isMobile) {
-      const mobileObserver = new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const idx = parseInt(entry.target.getAttribute('data-card-index') || '0', 10);
-              setTimeout(() => {
-                setFlippedCards(p => new Set([...p, idx]));
-                setTimeout(() => setFlippedCards(p => {
-                  const n = new Set(p);
-                  n.delete(idx);
-                  return n;
-                }), 2000);
-              }, idx * 500 + 800);
-            }
-          });
-        },
-        { threshold: 0.5, rootMargin: '0px 0px -50px 0px' }
-      );
-
-      document.querySelectorAll('.flip-card').forEach((c, i) => {
-        c.setAttribute('data-card-index', i.toString());
-        mobileObserver.observe(c);
-      });
-
-      return () => {
-        mobileObserver.disconnect();
-        window.removeEventListener('resize', checkMobile);
-      };
-    }
-
-    return () => {
-      window.removeEventListener('resize', checkMobile);
-      observer.disconnect();
-    };
-  }, [isMobile]);
 
   return (
     <main>
@@ -104,8 +22,9 @@ const Index = () => {
       />
       <Hero />
 
-      {/* About / Flip Cards */}
+      {/* About / Info Cards Section (Restored & Modernized) */}
       <section className="section-padding bg-gradient-to-br from-gray-900 via-blue-900 to-teal-900 dark:from-gray-950 dark:via-blue-950 dark:to-teal-950 relative overflow-hidden">
+        {/* Animated Background Elements */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-green-500/20 rounded-full blur-3xl animate-pulse delay-1000" />
@@ -113,162 +32,89 @@ const Index = () => {
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
-            <span className="inline-block px-4 py-1 bg-white/20 dark:bg-black/20 text-white rounded-full text-sm font-semibold tracking-wide mb-4 animate-fade-in backdrop-blur-sm">
+            <motion.span 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="inline-block px-4 py-1 bg-white/20 dark:bg-black/20 text-white rounded-full text-sm font-semibold tracking-wide mb-4 backdrop-blur-sm"
+            >
               About Us
-            </span>
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-              30+ Years of Promoter Experience in EPC Projects – <span className="bg-gradient-to-r from-yellow-300 to-orange-500 text-transparent bg-clip-text drop-shadow-lg">Founded 2017</span>
-            </h2>
-            <p className="text-white/80 text-lg max-w-2xl mx-auto leading-relaxed animate-fade-in delay-200">
-              M/s GVS Controls, founded in 2017, delivers innovative, cost‑effective engineering solutions, redefining customer satisfaction through advanced automation and man‑machine interfaces.
-            </p>
+            </motion.span>
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-3xl md:text-5xl font-bold text-white mb-6"
+            >
+              30+ Years of Promoter's Experience – <span className="bg-gradient-to-r from-yellow-300 to-orange-500 text-transparent bg-clip-text drop-shadow-lg">Founded 2017</span>
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-white/80 text-lg max-w-2xl mx-auto leading-relaxed"
+            >
+              M/s GVS Controls delivers innovative, cost‑effective engineering solutions, redefining customer satisfaction through advanced automation and man‑machine interfaces.
+            </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-            {/* 1 – Foundation */}
-            <div className="flip-card group" style={{ perspective: '1000px' }}>
-              <div
-                className="flip-card-inner transition-transform duration-700 ease-in-out relative w-full h-full"
-                style={{
-                  transformStyle: 'preserve-3d',
-                  transform: isMobile && flippedCards.has(0) ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                }}
-                onMouseEnter={() => !isMobile && setFlippedCards(p => new Set([...p, 0]))}
-                onMouseLeave={() => !isMobile && setFlippedCards(p => { const n = new Set(p); n.delete(0); return n; })}
-              >
-                <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-blue-400/30 group-hover:shadow-blue-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20"
-                  style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
-                  <div className="w-14 h-14 flex items-center justify-center mb-4 rounded-full bg-gradient-to-br from-blue-300 to-blue-100 dark:from-blue-300 dark:to-blue-600 shadow-lg border-2 border-blue-300/50">
-                    <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                  </div>
-                  <h3 className="text-lg font-bold text-blue-700 dark:text-blue-200 mb-1">Our Foundation</h3>
-                  <span className="inline-block bg-blue-100/60 dark:bg-blue-900/40 text-blue-700 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-semibold mb-2">Est. 2017</span>
-                  <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Rooted in Innovation and problem‑solving.</p>
-                </div>
-                <div className="flip-card-back bg-gradient-to-br from-blue-500/90 to-blue-700/90 dark:from-blue-700/90 dark:to-blue-900/90 text-white rounded-2xl shadow-2xl border border-blue-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30"
-                  style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
-                  <p className="text-sm leading-relaxed text-center font-medium">
-                    Founded in 2017, M/s GVS Controls provides innovative, cost‑effective engineering solutions, emphasizing a problem‑solving culture to optimize man‑machine interfaces and redefine customer satisfaction.
-                  </p>
-                </div>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            <InfoCard 
+              title="Our Foundation"
+              badge="Est. 2017"
+              subtitle="Innovation & Problem Solving"
+              color="blue"
+              icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>}
+              delay={0.1}
+              description="Founded in 2017, GVS Controls provides innovative, cost‑effective engineering solutions, emphasizing a creative culture to optimize man‑machine interfaces."
+            />
+            
+            <InfoCard 
+              title="Founder's Experience"
+              badge="30+ Years"
+              subtitle="Deep EPC Expertise"
+              color="green"
+              icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
+              delay={0.2}
+              description="Before 2017, our promoter worked with Shriram EPC Ltd., L&T, and Black Stone Group — delivering projects for SAIL, TISCO, NTPC, and leading industries."
+            />
 
-            {/* 2 – Experience */}
-            <div className="flip-card group" style={{ perspective: '1000px' }}>
-              <div
-                className="flip-card-inner transition-transform duration-700 ease-in-out relative w-full h-full"
-                style={{
-                  transformStyle: 'preserve-3d',
-                  transform: isMobile && flippedCards.has(1) ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                }}
-                onMouseEnter={() => !isMobile && setFlippedCards(p => new Set([...p, 1]))}
-                onMouseLeave={() => !isMobile && setFlippedCards(p => { const n = new Set(p); n.delete(1); return n; })}
-              >
-                <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-green-400/30 group-hover:shadow-green-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20"
-                  style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
-                  <div className="w-14 h-14 flex items-center justify-center mb-4 rounded-full bg-gradient-to-br from-green-300 to-green-100 dark:from-green-300 dark:to-green-600 shadow-lg border-2 border-green-300/50">
-                    <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                  </div>
-                  <h3 className="text-lg font-bold text-green-700 dark:text-green-200 mb-1 whitespace-nowrap">Founder's Experience</h3>
-                  <span className="inline-block bg-green-100/60 dark:bg-green-900/40 text-green-700 dark:text-green-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">30+ Years</span>
-                  <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Deep EPC expertise before founding GVS.</p>
-                </div>
-                <div className="flip-card-back bg-gradient-to-br from-green-500/90 to-green-700/90 dark:from-green-700/90 dark:to-green-900/90 text-white rounded-2xl shadow-2xl border border-green-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30"
-                  style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
-                  <p className="text-sm leading-relaxed text-center font-medium">
-                    Before founding GVS Controls in 2017, our promoter worked with Shriram EPC Ltd., L&T, and Black Stone Group — delivering projects for SAIL, TISCO, NTPC, and leading industries.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <InfoCard 
+              title="Our Expertise"
+              badge="Instrumentation"
+              subtitle="Automation & Process Control"
+              color="red"
+              icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
+              delay={0.3}
+              description="We provide Total Automation, Control Solutions, and Innovative Instrumentation products, tailored to diverse process and machine applications."
+            />
 
-            {/* 3 – Expertise */}
-            <div className="flip-card group" style={{ perspective: '1000px' }}>
-              <div
-                className="flip-card-inner transition-transform duration-700 ease-in-out relative w-full h-full"
-                style={{
-                  transformStyle: 'preserve-3d',
-                  transform: isMobile && flippedCards.has(2) ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                }}
-                onMouseEnter={() => !isMobile && setFlippedCards(p => new Set([...p, 2]))}
-                onMouseLeave={() => !isMobile && setFlippedCards(p => { const n = new Set(p); n.delete(2); return n; })}
-              >
-                <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-red-400/30 group-hover:shadow-red-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20"
-                  style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
-                  <div className="w-14 h-14 flex items-center justify-center mb-4 rounded-full bg-gradient-to-br from-red-300 to-red-100 dark:from-red-300 dark:to-red-600 shadow-lg border-2 border-red-300/50">
-                    <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                  </div>
-                  <h3 className="text-lg font-bold text-red-700 dark:text-red-200 mb-1">Our Expertise</h3>
-                  <span className="inline-block bg-red-100/60 dark:bg-red-900/40 text-red-700 dark:text-red-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">Instrumentation</span>
-                  <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Instrumentation, Total automation & Process control.</p>
-                </div>
-                <div className="flip-card-back bg-gradient-to-br from-red-500/90 to-red-700/90 dark:from-red-700/90 dark:to-red-900/90 text-white rounded-2xl shadow-2xl border border-red-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30"
-                  style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
-                  <p className="text-sm leading-relaxed text-center font-medium">
-                    We provide Total Automation, Process control solutions, and Innovative Instrumentation products, delivering customer‑driven services and cost‑effective systems tailored to diverse process and machine applications.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <InfoCard 
+              title="Our Services"
+              badge="Turnkey"
+              subtitle="Consultancy & Manufacturing"
+              color="yellow"
+              icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>}
+              delay={0.4}
+              description="We offer Consultancy, Manufacturing of Control panels, Bus ducts, Erection, Testing, Commissioning, and Revamping of Electrical systems."
+            />
 
-            {/* 4 – Services */}
-            <div className="flip-card group" style={{ perspective: '1000px' }}>
-              <div
-                className="flip-card-inner transition-transform duration-700 ease-in-out relative w-full h-full"
-                style={{
-                  transformStyle: 'preserve-3d',
-                  transform: isMobile && flippedCards.has(3) ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                }}
-                onMouseEnter={() => !isMobile && setFlippedCards(p => new Set([...p, 3]))}
-                onMouseLeave={() => !isMobile && setFlippedCards(p => { const n = new Set(p); n.delete(3); return n; })}
-              >
-                <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-yellow-400/30 group-hover:shadow-yellow-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20"
-                  style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
-                  <div className="w-14 h-14 flex items-center justify-center mb-4 rounded-full bg-gradient-to-br from-yellow-300 to-yellow-100 dark:from-yellow-300 dark:to-yellow-600 shadow-lg border-2 border-yellow-300/50">
-                    <svg className="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>
-                  </div>
-                  <h3 className="text-lg font-bold text-yellow-700 dark:text-yellow-200 mb-1">Our Services</h3>
-                  <span className="inline-block bg-yellow-100/60 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">Turnkey</span>
-                  <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Consultancy, Manufacturing, Revamping.</p>
-                </div>
-                <div className="flip-card-back bg-gradient-to-br from-yellow-500/90 to-yellow-700/90 dark:from-yellow-700/90 dark:to-yellow-900/90 text-white rounded-2xl shadow-2xl border border-yellow-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30"
-                  style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
-                  <p className="text-sm leading-relaxed text-center font-medium">
-                    We offer Consultancy, Manufacturing of Control panels & Bus ducts, Erection, Testing, Commissioning, and Revamping of Electrical systems for safety and efficiency.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* 5 – Clients */}
-            <div className="flip-card group" style={{ perspective: '1000px' }}>
-              <div
-                className="flip-card-inner transition-transform duration-700 ease-in-out relative w-full h-full"
-                style={{
-                  transformStyle: 'preserve-3d',
-                  transform: isMobile && flippedCards.has(4) ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                }}
-                onMouseEnter={() => !isMobile && setFlippedCards(p => new Set([...p, 4]))}
-                onMouseLeave={() => !isMobile && setFlippedCards(p => { const n = new Set(p); n.delete(4); return n; })}
-              >
-                <div className="flip-card-front bg-white/40 dark:bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-purple-400/30 group-hover:shadow-purple-400/40 transition-all duration-500 flex flex-col items-center justify-center p-7 absolute w-full h-full z-20"
-                  style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
-                  <div className="w-14 h-14 flex items-center justify-center mb-4 rounded-full bg-gradient-to-br from-purple-300 to-purple-100 dark:from-purple-300 dark:to-purple-600 shadow-lg border-2 border-purple-300/50">
-                    <svg className="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                  </div>
-                  <h3 className="text-lg font-bold text-purple-700 dark:text-purple-200 mb-1">Our Clients</h3>
-                  <span className="inline-block bg-purple-100/60 dark:bg-purple-900/40 text-purple-700 dark:text-purple-200 px-3 py-1 rounded-full text-xs font-semibold mb-2">50+ Leaders</span>
-                  <p className="text-gray-700 dark:text-gray-200 text-sm text-center font-medium">Trusted across industries.</p>
-                </div>
-                <div className="flip-card-back bg-gradient-to-br from-teal-500/90 to-teal-700/90 dark:from-teal-700/90 dark:to-teal-900/90 text-white rounded-2xl shadow-2xl border border-purple-400/40 flex flex-col items-center justify-center p-7 absolute w-full h-full z-30"
-                  style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
-                  <p className="text-sm leading-relaxed text-center font-medium">
-                    <strong>GVS Clients:</strong> Aumund, Loesche, Metco, ARS, Meenakshi, Dukes, Black Stone. <strong>Founder's Prior Experience:</strong> SAIL, TISCO, RINL, NTPC, JSW, GMR, Sterlite, CPCL, MRL, Cochin Refinery, Sea Bird (NAVY).
-                  </p>
-                </div>
-              </div>
-            </div>
+            <InfoCard 
+              title="Our Clients"
+              badge="50+ Leaders"
+              subtitle="Trusted Across Industries"
+              color="purple"
+              icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>}
+              delay={0.5}
+              description={
+                <span>
+                  <strong>Clients:</strong> Aumund, Loesche, Metco, ARS, Meenakshi. <br/>
+                  <strong>Prior Exp:</strong> SAIL, TISCO, RINL, NTPC, JSW, CPCL.
+                </span>
+              }
+            />
           </div>
 
           <div className="text-center mt-12 animate-fade-in delay-400">
@@ -280,9 +126,43 @@ const Index = () => {
         </div>
       </section>
 
-      <div ref={statsRef}>
+      {/* Highlights / Stats Section */}
+      <div>
         <Highlights />
+        
+        {/* Stats Bar */}
+        <section className="py-12 bg-gradient-to-r from-gray-900 to-blue-900 text-white relative overflow-hidden">
+          <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]" />
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+              {[
+                  { target: 50, label: "Clients Served", icon: "🏢" },
+                  { target: 100, label: "Projects Delivered", icon: "🚀" },
+                  { target: 30, label: "Years Experience", icon: "⏳" },
+                  { target: 2017, label: "Founded", suffix: "", icon: "📅" }
+              ].map((stat, idx) => (
+                <motion.div 
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="p-4"
+                >
+                  <div className="text-4xl mb-2">{stat.icon}</div>
+                  <div className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 mb-2">
+                    <StatCounter to={stat.target} suffix={stat.suffix} />
+                  </div>
+                  <div className="text-sm md:text-base text-gray-300 font-medium tracking-wide uppercase">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
       </div>
+
       <FeaturedClients />
       <FAQ />
 

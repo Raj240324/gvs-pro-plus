@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useMemo } from 'react';
 import { motion, useScroll, useTransform as transformScroll } from 'framer-motion';
-import { ArrowRight, Building2, Factory, Award, User, Briefcase, Users, Clock } from 'lucide-react';
+import { ArrowRight, Building2, Factory, Award, User, Briefcase, Users, Clock, CheckCircle2 } from 'lucide-react';
 import ModernJourney, { TimelineEvent } from '@/components/ui/ModernJourney';
 import SEO from '../components/SEO';
 import gvsFront from '../assets/about-image/gvs-front.jpeg';
@@ -143,9 +143,24 @@ export default function AboutUnified() {
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-6">
                 Who We Are
               </h2>
-              <p className="text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
-                Started in 2017 as a Proprietary Company, GVS Controls was established with the objective of delivering highly innovative and Cost-Effective Engineering solutions. We work with single-minded dedication, and our inherent Problem-Solving culture ensures optimal interaction between Man and Machine. Our service spectrum is vast, but focused on a single objective — constantly redefining the term "Customer Satisfaction".
-              </p>
+              
+              <div className="relative p-6 sm:p-8 md:p-10 rounded-3xl bg-white dark:bg-slate-800 shadow-xl border border-slate-100 dark:border-slate-700 overflow-hidden text-left relative group">
+                {/* Decorative Gradient Line */}
+                <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-teal-400 via-indigo-500 to-purple-600" />
+                
+                <div className="relative z-10">
+                  <p className="text-lg sm:text-xl md:text-2xl font-medium text-slate-800 dark:text-slate-100 leading-relaxed mb-6">
+                    <span className="text-teal-600 dark:text-teal-400 font-bold">Since 2017,</span> GVS Controls has been dedicated to delivering highly innovative and Cost-Effective Engineering solutions.
+                  </p>
+                  <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                    We work with single-minded dedication, and our inherent <span className="font-semibold text-indigo-600 dark:text-indigo-400">Problem-Solving culture</span> ensures optimal interaction between Man and Machine. Our vast service spectrum is focused on a single, unwavering objective — constantly redefining the term <span className="italic font-semibold text-slate-900 dark:text-white">"Customer Satisfaction"</span>.
+                  </p>
+                </div>
+
+                {/* Background Decoration */}
+                <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-teal-50 dark:bg-teal-900/20 rounded-full blur-3xl opacity-50 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-indigo-50 dark:bg-indigo-900/20 rounded-full blur-3xl opacity-50 pointer-events-none" />
+              </div>
             </motion.div>
 
             {/* Stats */}
@@ -221,7 +236,7 @@ export default function AboutUnified() {
               className="bg-white/5 backdrop-blur-lg rounded-3xl p-8 border border-white/10 mb-12"
             >
               <h3 className="text-2xl font-bold text-white mb-6 text-center">
-                Projects Executed by Founder (Prior to GVS Controls)
+                Projects Executed by Promoter (Prior to GVS Controls)
               </h3>
               <div className="flex flex-wrap justify-center gap-3">
                 {priorProjects.map((project, i) => (

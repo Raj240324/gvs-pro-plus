@@ -157,7 +157,7 @@ const Highlights = () => {
               variants={cardVariants}
               whileHover="hover"
               onClick={() => handleCardClick(item.serviceId)}
-              className="group relative w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.34rem)] h-[450px] bg-slate-900 rounded-3xl overflow-hidden cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500"
+              className="group relative w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1.34rem)] h-auto min-h-[450px] bg-slate-900 rounded-3xl overflow-hidden cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500"
             >
               {/* Background Image */}
               <div className="absolute inset-0">

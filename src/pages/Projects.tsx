@@ -1,4 +1,4 @@
-"use client";
+
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Factory, CheckCircle, ArrowRight, Award, Briefcase, Building } from 'lucide-react';
@@ -162,7 +162,7 @@ const Projects: React.FC = () => {
       {/* Tab Navigation */}
       <section className="py-8 bg-white dark:bg-slate-900 sticky top-0 z-40 shadow-md">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             <button
               onClick={() => setActiveTab('gvs')}
               className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
@@ -373,8 +373,8 @@ const Projects: React.FC = () => {
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.7 }}
             viewport={{ once: true }}
+            transition={{ delay: 0.4, duration: 0.7 }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
           >

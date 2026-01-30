@@ -93,9 +93,9 @@ const Clients: React.FC = () => {
       {/* Client Cards - Zero lag, perfect responsiveness */}
       <section className="py-32 relative">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <div className="flex flex-wrap justify-center gap-8 lg:gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
             {post2017Clients.map((client, index) => (
-              <div key={index} className="w-full sm:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2.5rem)] flex justify-center">
+              <div key={index} className="w-full h-full flex justify-center">
                 <ClientCard client={client} index={index} />
               </div>
             ))}
@@ -159,9 +159,9 @@ const ClientCard: React.FC<{ client: Client; index: number }> = ({ client, index
         ease: "easeOut"
       }}
       whileHover={{ y: -20, scale: 1.03 }}
-      className="group relative will-change-transform"
+      className="group relative will-change-transform h-full w-full"
     >
-      <div className="relative bg-white/5 backdrop-blur-2xl rounded-3xl p-1 shadow-2xl border border-white/10 overflow-hidden h-full">
+      <div className="relative bg-white/5 backdrop-blur-2xl rounded-3xl p-1 shadow-2xl border border-white/10 overflow-hidden h-full min-h-[320px]">
         <div className="bg-black/40 rounded-3xl p-8 md:p-10 h-full relative overflow-hidden">
           {/* Breathing orb - now GPU friendly */}
           <motion.div

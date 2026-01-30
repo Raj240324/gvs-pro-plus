@@ -61,6 +61,7 @@ const FeaturedClients = () => {
           <motion.span 
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="inline-block px-3 sm:px-4 py-1.5 bg-amber-500/10 rounded-full text-xs sm:text-sm font-semibold tracking-wider text-amber-300 border border-amber-500/30 shadow-[0_0_15px_rgba(245,158,11,0.2)] mb-4"
           >
@@ -69,6 +70,7 @@ const FeaturedClients = () => {
           <motion.h2 
             initial={{ y: 30, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.9, delay: 0.2 }}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400 tracking-tight mb-4"
           >
@@ -77,15 +79,17 @@ const FeaturedClients = () => {
           <motion.p 
             initial={{ y: 40, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.9, delay: 0.4 }}
             className="text-sm sm:text-base md:text-lg text-slate-400 max-w-2xl mx-auto font-light leading-relaxed"
           >
             Our founder's 30+ years of expertise delivering critical solutions for India's largest industrial conglomerates.
           </motion.p>
         </motion.div>
+      </div>
 
-        {/* Infinite Scroll with Modern Industrial Cards */}
-        <div className="relative overflow-hidden py-10">
+      {/* Infinite Scroll with Modern Industrial Cards - Edge to Edge */}
+      <div className="relative w-full overflow-hidden py-10 bg-black/20 backdrop-blur-sm border-y border-white/5">
           <motion.div
             ref={scrollContainerRef}
             className="flex min-w-max space-x-6 sm:space-x-8"
@@ -133,11 +137,12 @@ const FeaturedClients = () => {
             ))}
           </motion.div>
           
-          {/* Fade edges */}
-          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
-        </div>
+        {/* Fade edges */}
+        <div className="absolute inset-y-0 left-0 w-12 sm:w-24 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-12 sm:w-24 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+      </div>
 
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Stats Section - Redesigned to match */}
         <motion.div
           style={{ scale: statsScale }}
@@ -152,6 +157,7 @@ const FeaturedClients = () => {
               key={index}
               initial={{ y: 50, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
               whileHover={{ y: -5 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
               className="relative p-8 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm group hover:bg-white/10 transition-colors duration-300"

@@ -88,30 +88,18 @@ export function AccordionFAQ() {
     const newState = openId === id ? null : id;
     setOpenId(newState);
     
-    // If opening, smooth scroll into view
-    if (newState) {
-      setTimeout(() => {
-        const element = document.getElementById(`faq-${id}`);
-        if (element) {
-          // 'nearest' scrolls just enough to bring into view, preventing jarring large movements
-          element.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        }
-      }, 300); // Wait for animation frame
-    }
+    // Removed auto-scroll to prevent jitter interacting with accordion animation
+    // if (newState) { ... }
   };
 
   return (
     <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-gray-900 via-indigo-950 to-purple-900 relative overflow-hidden">
-      {/* Dynamic Background Elements */}
+      {/* Dynamic Background Elements - Static optimized for mobile */}
       <div className="absolute inset-0 pointer-events-none">
-        <motion.div 
-          animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        <div 
           className="absolute -top-[10%] -left-[10%] w-[50vw] h-[50vw] bg-cyan-500/10 rounded-full blur-[100px]" 
         />
-        <motion.div 
-          animate={{ scale: [1, 1.3, 1], rotate: [0, -45, 0] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+        <div 
           className="absolute top-[20%] -right-[10%] w-[40vw] h-[40vw] bg-purple-500/10 rounded-full blur-[100px]" 
         />
       </div>
@@ -122,6 +110,7 @@ export function AccordionFAQ() {
           <motion.span 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             className="inline-block px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-semibold tracking-wide uppercase mb-4"
           >
             Common Queries
@@ -129,6 +118,7 @@ export function AccordionFAQ() {
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ delay: 0.1 }}
             className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6"
           >
@@ -137,6 +127,7 @@ export function AccordionFAQ() {
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ delay: 0.2 }}
             className="text-slate-400 text-lg max-w-2xl mx-auto"
           >
@@ -149,9 +140,7 @@ export function AccordionFAQ() {
           {faqs.map((item, index) => (
             <motion.div
               id={`faq-${item.id}`}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+              layout
               key={item.id}
               className={cn(
                 "group relative rounded-2xl border transition-all duration-300 overflow-hidden",
@@ -166,7 +155,7 @@ export function AccordionFAQ() {
               >
                 <div className="flex items-center gap-3 sm:gap-6">
                   <div className={cn(
-                    "relative flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12 rounded-xl transition-all duration-300",
+                    "relative flex-shrink-0 flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12 rounded-xl transition-all duration-300",
                     openId === item.id 
                       ? "bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/40" 
                       : "bg-white/10 group-hover:bg-white/15"
@@ -195,9 +184,9 @@ export function AccordionFAQ() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
                   >
-                    <div className="px-5 pb-5 pt-0 sm:px-6 sm:pb-6 sm:ml-[5.5rem] max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
+                    <div className="px-5 pb-5 pt-0 sm:px-6 sm:pb-6 sm:ml-[5.5rem] pr-2">
                       <div className="h-[1px] w-full bg-gradient-to-r from-cyan-500/30 to-transparent mb-4" />
                       <div className="text-slate-300 text-xs sm:text-base md:text-lg leading-relaxed space-y-2">
                         {item.answer.split('\n').map((line, i) => {
