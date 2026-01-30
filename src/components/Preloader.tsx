@@ -11,7 +11,7 @@ const Preloader = () => {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoaded(true), 3000); // 3-second delay
+    const timer = setTimeout(() => setLoaded(true), 500); // 0.5-second fallback delay
     return () => clearTimeout(timer);
   }, []);
 

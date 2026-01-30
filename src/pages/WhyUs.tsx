@@ -178,10 +178,10 @@ const WhyUs = () => {
             </p>
           </div>
 
-          <div className="w-full max-w-7xl mx-auto">
-            <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
+          <div className="flex flex-col items-center w-full">
+            <div className="flex flex-wrap justify-center gap-6 sm:gap-8 w-full max-w-7xl mx-auto">
               {advantages.map((advantage, index) => (
-                <div className="advantage-card w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.33%-1.5rem)]" key={index}>
+                <div className="advantage-card w-full sm:w-[calc(50%-2rem)] lg:w-[calc(33.33%-2rem)] max-w-md flex justify-center" key={index}>
                   <ProjectStatusCard
                     title={advantage.title}
                     progress={advantage.progress}

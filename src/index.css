@@ -68,7 +68,7 @@
   html {
     /* Removed scroll-smooth for Lenis */
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: scroll; /* Prevent layout shift */
     /* Enable smooth rendering */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -736,7 +736,6 @@
 
 .gvs-slogan-yellow {
   -webkit-text-stroke: 0.5px #4a0e78;
-  text-stroke: 0.5px #4a0e78;
 }
 
 .gradient-bg {

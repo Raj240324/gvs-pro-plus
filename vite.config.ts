@@ -94,6 +94,6 @@ export default defineConfig(({ command }) => ({
         },
       },
     },
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 1600,
   },
 }));

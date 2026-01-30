@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { PiCaretUpBold, PiCaretDownBold } from 'react-icons/pi';
+import { ChevronUp, ChevronDown } from 'lucide-react';
 
 const BackToTop = () => {
   const [isScrollingDown, setIsScrollingDown] = useState(true);
@@ -75,7 +75,7 @@ const BackToTop = () => {
       aria-label={showDownArrow ? "Scroll to bottom" : "Back to top"}
       title={showDownArrow ? "Scroll to bottom" : "Back to top"}
     >
-      {showDownArrow ? <PiCaretDownBold size={20} /> : <PiCaretUpBold size={20} />}
+      {showDownArrow ? <ChevronDown size={20} /> : <ChevronUp size={20} />}
     </button>
   );
 };

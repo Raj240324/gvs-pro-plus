@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { PiXBold, PiCaretLeftBold, PiCaretRightBold, PiMagnifyingGlassPlusFill } from 'react-icons/pi';
+import { X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SEO from '../components/SEO';
 
@@ -173,7 +173,7 @@ const Gallery = () => {
                 {/* Hover Overlay */}
                 <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                    <div className="bg-white/20 backdrop-blur-md p-4 rounded-full text-white shadow-xl transform scale-75 group-hover:scale-100 transition-transform duration-300">
-                      <PiMagnifyingGlassPlusFill size={28} />
+                      <ZoomIn size={28} />
                    </div>
                 </div>
 
@@ -198,21 +198,21 @@ const Gallery = () => {
                 onClick={closeLightbox}
                 className="absolute top-6 right-6 z-50 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
              >
-               <PiXBold size={32} />
+               <X size={32} />
              </button>
 
              <button 
                 onClick={(e) => { e.stopPropagation(); showPrev(); }}
                 className="absolute left-4 md:left-8 z-50 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors hidden sm:block"
              >
-               <PiCaretLeftBold size={32} />
+               <ChevronLeft size={32} />
              </button>
 
              <button 
                 onClick={(e) => { e.stopPropagation(); showNext(); }}
                 className="absolute right-4 md:right-8 z-50 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors hidden sm:block"
              >
-               <PiCaretRightBold size={32} />
+               <ChevronRight size={32} />
              </button>
 
             {/* Main Image */}
