@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import {
-  Settings,
-  Wrench,
-  ArrowRight,
-  Factory,
-  Cpu,
-  RefreshCw,
-  Boxes,
-} from 'lucide-react';
+  PiGearFill,
+  PiWrenchFill,
+  PiArrowRightBold,
+  PiFactoryFill,
+  PiCpuFill,
+  PiArrowsClockwiseFill,
+  PiCubeFill,
+} from 'react-icons/pi';
 import { Link, useLocation } from 'react-router-dom';
 import { TiltedCard } from '../components/ui/tilted-card';
 import { motion, useReducedMotion } from 'framer-motion';
@@ -66,7 +66,7 @@ const Services: React.FC = () => {
       id: 'consultancy',
       title: 'Consultancy',
       description: 'Expert Project Management and Engineering Consultancy for Turnkey Electrical and Automation projects.',
-      icon: <Settings size={28} className="text-teal-500" />,
+      icon: <PiGearFill className="text-teal-500 text-3xl" />,
       features: [
         'Project Management Consultancy (PMC)',
         'System and Field Study for Optimal Design in Turnkey Projects and Process Plants',
@@ -83,7 +83,7 @@ const Services: React.FC = () => {
       id: 'automation',
       title: 'Automation',
       description: 'End-to-end Automation and Process Control solutions with PLC/SCADA Engineering and drive integration.',
-      icon: <Cpu size={28} className="text-teal-500" />,
+      icon: <PiCpuFill className="text-teal-500 text-3xl" />,
       features: [
         'Total Automation and Process Control Solutions',
         'Customer-Driven Engineering for Process and Machine Applications',
@@ -97,7 +97,7 @@ const Services: React.FC = () => {
       id: 'renovation-revamping',
       title: 'Renovation & Revamping of Electrical Systems',
       description: 'Retrofit programs to enhance safety, reliability, and efficiency in operating plants.',
-      icon: <RefreshCw size={28} className="text-teal-500" />,
+      icon: <PiArrowsClockwiseFill className="text-teal-500 text-3xl" />,
       features: [
         'End-to-End Retrofit Programs for Safety and Efficiency Enhancement',
         'On-Site Surveys by Experienced Professionals to Assess Optimal Requirements',
@@ -111,7 +111,7 @@ const Services: React.FC = () => {
       id: 'services-and-supply',
       title: 'Services & Supply',
       description: 'Control design, system integration, site services, and supply of panels and instrumentation.',
-      icon: <Boxes size={28} className="text-teal-500" />,
+      icon: <PiCubeFill className="text-teal-500 text-3xl" />,
       features: [
         'Control Design Using Relay Logic and PLC for Process Plants and Machinery',
         'Revamp and Integration of Electrical Systems with Relay and PLC Controls',
@@ -129,7 +129,7 @@ const Services: React.FC = () => {
       id: 'product-manufacturing',
       title: 'Product Manufacturing & Supply',
       description: 'Electrical Control Panels designed to IE standards and CEIG requirements.',
-      icon: <Factory size={28} className="text-teal-500" />,
+      icon: <PiFactoryFill className="text-teal-500 text-3xl" />,
       features: [
         'Power Control Centers, Power Distribution Panels, Motor Control Centers, Process Control Panels',
         'PCC (415 V; Single/Double Bus Configuration)',
@@ -146,7 +146,7 @@ const Services: React.FC = () => {
       id: 'additional-services',
       title: 'Additional Services',
       description: 'Erection, Testing, Troubleshooting, and Commissioning of Industrial Electrical systems.',
-      icon: <Wrench size={28} className="text-teal-500" />,
+      icon: <PiWrenchFill className="text-teal-500 text-3xl" />,
       features: [
         'Erection, Testing, Troubleshooting, and Commissioning of Bus Ducts, PCC/MCC, and Control Panels',
         'EB & DG Synchronizing, AMF, and APFC Panels',
@@ -247,7 +247,7 @@ const Services: React.FC = () => {
                       className="inline-flex items-center text-cyan-400 hover:text-cyan-300 font-semibold text-base transition-all duration-200 group"
                     >
                       Learn More
-                      <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
+                      <PiArrowRightBold className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
                     </a>
                   </div>
                 </TiltedCard>
@@ -352,7 +352,7 @@ const Services: React.FC = () => {
               className="inline-flex items-center px-10 py-5 bg-white text-teal-700 font-bold text-lg rounded-full hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
             >
               Get in Touch
-              <ArrowRight className="ml-3 w-6 h-6 transition-transform group-hover:translate-x-1" />
+              <PiArrowRightBold className="ml-3 w-6 h-6 transition-transform group-hover:translate-x-1" />
             </Link>
           </motion.div>
         </div>

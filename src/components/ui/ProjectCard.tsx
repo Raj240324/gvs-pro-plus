@@ -1,7 +1,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
+import { PiArrowSquareOutFill } from 'react-icons/pi';
 
 interface ProjectCardProps {
   title: string;
@@ -76,7 +76,7 @@ const ProjectCard = ({ title, description, image, category, delay = 0 }: Project
           <div className="p-4 w-full">
             <div className="flex justify-between items-center">
               <span className="text-white text-sm">{category}</span>
-              <ExternalLink className="text-white h-5 w-5 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <PiArrowSquareOutFill className="text-white h-5 w-5 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           </div>
         </div>

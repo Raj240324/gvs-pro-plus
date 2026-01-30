@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import { useToast } from '../hooks/use-toast';
-import { Send, CheckCircle } from 'lucide-react';
+import { PiPaperPlaneTiltFill, PiCheckCircleFill } from 'react-icons/pi';
 import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabase';
 
@@ -219,7 +219,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
                 transition={{ type: "spring", stiffness: 200, damping: 10 }}
                 className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 flex items-center justify-center rounded-full bg-gradient-to-r from-teal-500 to-purple-600"
               >
-                <CheckCircle className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
+                <PiCheckCircleFill className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
               </motion.div>
               <h3 className="text-sm sm:text-lg md:text-xl font-bold text-gray-800 dark:text-white">Thank You!</h3>
               <p className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-300 mt-1">
@@ -352,7 +352,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
                     ) : (
                       <>
                         Send Message
-                        <Send className="ml-2 h-3 w-3 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" />
+                        <PiPaperPlaneTiltFill className="ml-2 h-3 w-3 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" />
                       </>
                     )}
                   </span>

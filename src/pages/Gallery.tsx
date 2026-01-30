@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
+import { PiXBold, PiCaretLeftBold, PiCaretRightBold, PiMagnifyingGlassPlusFill } from 'react-icons/pi';
 import { motion, AnimatePresence } from 'framer-motion';
 import SEO from '../components/SEO';
 
@@ -110,26 +110,39 @@ const Gallery = () => {
       />
 
       {/* Header */}
-      <section className="py-20 md:py-28 bg-gradient-to-b from-gray-50 via-slate-50 to-white relative overflow-hidden">
-        {/* Subtle Background Decoration */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-           <div className="absolute -top-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-blue-50/50 blur-3xl opacity-60" />
-           <div className="absolute top-[40%] -left-[10%] w-[40%] h-[40%] rounded-full bg-teal-50/50 blur-3xl opacity-60" />
+      <section className="py-20 md:py-28 bg-gradient-to-br from-indigo-600 via-teal-500 to-purple-600 relative overflow-hidden">
+        {/* Decorative Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-white/10 blur-3xl" />
+          <div className="absolute top-[40%] -left-[10%] w-[40%] h-[40%] rounded-full bg-purple-400/20 blur-3xl" />
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
+          {/* Floating Particles */}
+          <div className="absolute top-20 left-20 w-3 h-3 rounded-full bg-white/30 animate-pulse" />
+          <div className="absolute top-40 right-32 w-2 h-2 rounded-full bg-yellow-300/50 animate-ping" />
+          <div className="absolute bottom-32 left-[30%] w-4 h-4 rounded-full bg-teal-300/30 animate-pulse" />
         </div>
 
         <div className="container mx-auto px-4 text-center relative z-10">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="inline-block px-4 py-2 mb-6 text-sm font-semibold text-white/90 bg-white/10 backdrop-blur-sm rounded-full border border-white/20"
+          >
+            Our Portfolio
+          </motion.span>
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6 tracking-tight"
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight drop-shadow-lg"
           >
             Our Work Gallery
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto font-light leading-relaxed"
+            transition={{ delay: 0.2 }}
+            className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto font-light leading-relaxed"
           >
             A showcase of precision engineering, quality manufacturing, and innovative automation solutions delivered to our clients.
           </motion.p>
@@ -160,7 +173,7 @@ const Gallery = () => {
                 {/* Hover Overlay */}
                 <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                    <div className="bg-white/20 backdrop-blur-md p-4 rounded-full text-white shadow-xl transform scale-75 group-hover:scale-100 transition-transform duration-300">
-                      <ZoomIn size={28} />
+                      <PiMagnifyingGlassPlusFill size={28} />
                    </div>
                 </div>
 
@@ -185,21 +198,21 @@ const Gallery = () => {
                 onClick={closeLightbox}
                 className="absolute top-6 right-6 z-50 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
              >
-               <X size={32} />
+               <PiXBold size={32} />
              </button>
 
              <button 
                 onClick={(e) => { e.stopPropagation(); showPrev(); }}
                 className="absolute left-4 md:left-8 z-50 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors hidden sm:block"
              >
-               <ChevronLeft size={32} />
+               <PiCaretLeftBold size={32} />
              </button>
 
              <button 
                 onClick={(e) => { e.stopPropagation(); showNext(); }}
                 className="absolute right-4 md:right-8 z-50 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors hidden sm:block"
              >
-               <ChevronRight size={32} />
+               <PiCaretRightBold size={32} />
              </button>
 
             {/* Main Image */}

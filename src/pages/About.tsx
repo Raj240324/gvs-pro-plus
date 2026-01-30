@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useMemo } from 'react';
 import { motion, useScroll, useTransform as transformScroll } from 'framer-motion';
-import { ArrowRight, Building2, Factory, Award, User, Briefcase, Users, Clock } from 'lucide-react';
+import { PiArrowRightBold, PiBuildingOfficeFill, PiFactoryFill, PiTrophyFill, PiUserFill, PiBriefcaseFill, PiUsersFourFill, PiClockFill } from 'react-icons/pi';
 import ModernJourney, { TimelineEvent } from '@/components/ui/ModernJourney';
 import SEO from '../components/SEO';
 import gvsFront from '../assets/about-image/gvs-front.jpeg';
@@ -18,7 +18,7 @@ export default function AboutUnified() {
       id: '1',
       title: 'GVS Controls Founded (2017)',
       description: 'M/s GVS Controls was established as a Proprietary Firm with a mission to deliver innovative, cost-effective engineering solutions. Driven by a problem-solving culture and customer satisfaction, we optimize man-machine interaction across industries.',
-      icon: <Building2 className="text-white w-5 h-5" />,
+      icon: <PiBuildingOfficeFill className="text-white w-5 h-5" />,
       image: [gvsMain, gvsFront],
       category: 'Foundation',
       color: 'indigo',
@@ -28,7 +28,7 @@ export default function AboutUnified() {
       id: '2',
       title: 'IE & CEIG Compliant Manufacturing',
       description: 'Launched state-of-the-art facility for Manufacturing Electrical Control Panels compliant with Indian Electrical Standards and CEIG Regulations. Full Turnkey capability: Design, Supply, Erection, Testing & Commissioning.',
-      icon: <Factory className="text-white w-5 h-5" />,
+      icon: <PiFactoryFill className="text-white w-5 h-5" />,
       image: infrastructure,
       category: 'Infrastructure',
       color: 'emerald',
@@ -38,7 +38,7 @@ export default function AboutUnified() {
       id: '3',
       title: 'Major GVS Controls Projects',
       description: 'Executed turnkey E&I projects for Aumund, Loesche, Metco Roofing, ARS Hydrojet, and Meenakshi Medical College. Delivered PCC, MCC, PLC/VFD Panels across cement, power, and process plant sectors.',
-      icon: <Award className="text-white w-5 h-5" />,
+      icon: <PiTrophyFill className="text-white w-5 h-5" />,
       image: projectAbout,
       category: 'Achievement',
       color: 'amber',
@@ -138,10 +138,10 @@ export default function AboutUnified() {
               className="text-center mb-16"
             >
               <span className="inline-block px-4 py-1.5 rounded-full bg-teal-100 dark:bg-teal-900/50 text-teal-700 dark:text-teal-300 text-sm font-semibold mb-4">
-                OUR COMPANY
+                OUR STORY
               </span>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-6">
-                About M/s GVS Controls
+                Who We Are
               </h2>
               <p className="text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
                 Started in 2017 as a Proprietary Company, GVS Controls was established with the objective of delivering highly innovative and Cost-Effective Engineering solutions. We work with single-minded dedication, and our inherent Problem-Solving culture ensures optimal interaction between Man and Machine. Our service spectrum is vast, but focused on a single objective — constantly redefining the term "Customer Satisfaction".
@@ -151,10 +151,10 @@ export default function AboutUnified() {
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
               {[
-                { icon: Clock, label: 'Company Est.', value: '2017' },
-                { icon: User, label: 'Promoter Experience', value: '30+ Years' },
-                { icon: Briefcase, label: 'Industries Served', value: '10+' },
-                { icon: Users, label: 'Satisfied Clients', value: '50+' },
+                { icon: PiClockFill, label: 'Company Est.', value: '2017' },
+                { icon: PiUserFill, label: 'Promoter Experience', value: '30+ Years' },
+                { icon: PiBriefcaseFill, label: 'Industries Served', value: '10+' },
+                { icon: PiUsersFourFill, label: 'Satisfied Clients', value: '50+' },
               ].map((stat, i) => (
                 <motion.div
                   key={i}
@@ -205,7 +205,7 @@ export default function AboutUnified() {
                   transition={{ delay: i * 0.1, duration: 0.5 }}
                   className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20"
                 >
-                  <Briefcase className="w-10 h-10 text-amber-400 mb-4" />
+                  <PiBriefcaseFill className="w-10 h-10 text-amber-400 mb-4" />
                   <h3 className="text-xl font-bold text-white mb-2">{exp.company}</h3>
                   <p className="text-slate-300 text-sm">{exp.role}</p>
                 </motion.div>
@@ -296,7 +296,7 @@ export default function AboutUnified() {
               href="/contact"
               className="inline-flex items-center gap-3 px-8 py-4 bg-white text-teal-700 font-bold text-base md:text-lg rounded-full shadow-2xl hover:scale-105 hover:shadow-teal-500/50 transition-all"
             >
-              Free Consultation <ArrowRight className="w-5 h-5" />
+              Free Consultation <PiArrowRightBold className="w-5 h-5" />
             </a>
           </motion.div>
         </section>

@@ -1,7 +1,29 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { Mail, Phone, MapPin, Linkedin, Globe, Home, Info, Briefcase, Folder, Contact, Wrench, Users, Star, Image, ArrowRight, Clock, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
+// Premium Phosphor Icons (Duotone/Fill variants for premium look)
+import { 
+  PiHouseFill, 
+  PiInfoFill, 
+  PiBriefcaseFill, 
+  PiWrenchFill, 
+  PiFolderOpenFill, 
+  PiUsersFourFill, 
+  PiStarFill, 
+  PiImagesFill, 
+  PiPhoneFill, 
+  PiEnvelopeSimpleFill, 
+  PiMapPinFill, 
+  PiLinkedinLogoFill, 
+  PiGlobeFill, 
+  PiTrophyFill, 
+  PiClockFill,
+  PiArrowRightBold,
+  PiHandshakeFill,
+  PiLightningFill,
+  PiGearFill,
+  PiFactoryFill
+} from 'react-icons/pi';
 
 const Footer = () => {
   const location = useLocation();
@@ -11,15 +33,15 @@ const Footer = () => {
   }, [location.pathname]);
 
   const quickLinks = [
-    { to: '/', label: 'Home', Icon: Home },
-    { to: '/about', label: 'About Us', Icon: Info },
-    { to: '/services', label: 'Services', Icon: Briefcase },
-    { to: '/manufacturing-supply', label: 'Manufacturing & Supply', Icon: Wrench },
-    { to: '/projects', label: 'Projects', Icon: Folder },
-    { to: '/clients', label: 'Clients', Icon: Users },
-    { to: '/why-us', label: 'Why Us', Icon: Star },
-    { to: '/gallery', label: 'Gallery', Icon: Image },
-    { to: '/contact', label: 'Contact', Icon: Contact },
+    { to: '/', label: 'Home', Icon: PiHouseFill },
+    { to: '/about', label: 'About Us', Icon: PiInfoFill },
+    { to: '/services', label: 'Services', Icon: PiLightningFill },
+    { to: '/manufacturing-supply', label: 'Manufacturing & Supply', Icon: PiFactoryFill },
+    { to: '/projects', label: 'Projects', Icon: PiFolderOpenFill },
+    { to: '/clients', label: 'Clients', Icon: PiUsersFourFill },
+    { to: '/why-us', label: 'Why Us', Icon: PiStarFill },
+    { to: '/gallery', label: 'Gallery', Icon: PiImagesFill },
+    { to: '/contact', label: 'Contact', Icon: PiHandshakeFill },
   ];
 
   const serviceLinks = [
@@ -31,7 +53,7 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { href: 'https://www.linkedin.com/company/gvs-controls', Icon: Linkedin, label: 'LinkedIn' },
+    { href: 'https://www.linkedin.com/company/gvs-controls', Icon: PiLinkedinLogoFill, label: 'LinkedIn' },
   ];
 
   return (
@@ -47,7 +69,7 @@ const Footer = () => {
               {/* Stat 1 */}
               <div className="flex items-center gap-4 group">
                 <div className="p-3 bg-white shadow-sm rounded-2xl group-hover:scale-110 transition-transform duration-300">
-                  <Award className="w-8 h-8 text-teal-600" />
+                  <PiTrophyFill className="w-8 h-8 text-teal-600" />
                 </div>
                 <div>
                   <span className="block text-3xl font-black text-gray-900 leading-none">2017</span>
@@ -60,7 +82,7 @@ const Footer = () => {
               {/* Stat 2 */}
               <div className="flex items-center gap-4 group">
                  <div className="p-3 bg-white shadow-sm rounded-2xl group-hover:scale-110 transition-transform duration-300">
-                  <Clock className="w-8 h-8 text-blue-600" />
+                  <PiClockFill className="w-8 h-8 text-blue-600" />
                 </div>
                 <div>
                   <span className="block text-3xl font-black text-gray-900 leading-none">30+</span>
@@ -81,7 +103,7 @@ const Footer = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Request a Quote <ArrowRight className="w-5 h-5 ml-1" />
+                Request a Quote <PiArrowRightBold className="w-5 h-5 ml-1" />
               </motion.a>
             </div>
 
@@ -155,7 +177,7 @@ const Footer = () => {
                     to={to}
                     className="flex items-center gap-2 text-white/90 hover:text-[#ffbf00] text-sm transition-colors group"
                   >
-                    <Briefcase size={14} className="text-white/60 group-hover:text-[#ffbf00]" />
+                    <PiGearFill className="text-white/60 group-hover:text-[#ffbf00]" />
                     <span>{label}</span>
                   </NavLink>
                 ))}
@@ -169,27 +191,27 @@ const Footer = () => {
               </h4>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <MapPin size={18} className="text-[#ffbf00] flex-shrink-0 mt-0.5" />
+                  <PiMapPinFill className="text-[#ffbf00] flex-shrink-0 mt-0.5 text-lg" />
                   <p className="text-sm text-white/90 leading-relaxed">
                     Plot No.1476, Segundram Main Road, Gokulapuram, MaraimalaiNagar, Chengalpattu - 603209
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Phone size={18} className="text-[#ffbf00] flex-shrink-0 mt-0.5" />
+                  <PiPhoneFill className="text-[#ffbf00] flex-shrink-0 mt-0.5 text-lg" />
                   <div className="text-sm">
                     <a href="tel:+917338880027" className="block text-white/90 hover:text-[#ffbf00] transition-colors">+91 73388 80027</a>
                     <a href="tel:+919884001597" className="block text-white/90 hover:text-[#ffbf00] transition-colors">+91 98840 01597</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Mail size={18} className="text-[#ffbf00] flex-shrink-0 mt-0.5" />
+                  <PiEnvelopeSimpleFill className="text-[#ffbf00] flex-shrink-0 mt-0.5 text-lg" />
                   <div className="text-sm">
                     <a href="mailto:projects@gvscontrols.com" className="block text-white/90 hover:text-[#ffbf00] transition-colors">projects@gvscontrols.com</a>
                     <a href="mailto:gvscontrols@gmail.com" className="block text-white/90 hover:text-[#ffbf00] transition-colors">gvscontrols@gmail.com</a>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Globe size={18} className="text-[#ffbf00] flex-shrink-0" />
+                  <PiGlobeFill className="text-[#ffbf00] flex-shrink-0 text-lg" />
                   <a href="https://www.gvscontrols.com" target="_blank" rel="noopener noreferrer" className="text-sm text-white/90 hover:text-[#ffbf00] transition-colors">
                     www.gvscontrols.com
                   </a>

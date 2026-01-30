@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Factory, MapPin, ArrowRight } from 'lucide-react';
+import { PiFactoryFill, PiMapPinFill, PiArrowRightBold } from 'react-icons/pi';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 
@@ -132,7 +132,7 @@ const Clients: React.FC = () => {
               className="group relative inline-flex items-center px-12 py-6 md:px-16 md:py-8 bg-gradient-to-r from-emerald-500 to-blue-600 rounded-2xl font-bold text-xl md:text-2xl shadow-2xl overflow-hidden backdrop-blur-xl border border-white/20"
             >
               <span className="relative z-10 text-white">Get in Touch</span>
-              <ArrowRight className="ml-4 w-7 h-7 md:w-8 md:h-8 relative z-10 transition-transform group-hover:translate-x-3" />
+              <PiArrowRightBold className="ml-4 w-7 h-7 md:w-8 md:h-8 relative z-10 transition-transform group-hover:translate-x-3" />
               <motion.div
                 className="absolute inset-0 bg-white/20"
                 initial={{ x: "-100%" }}
@@ -174,7 +174,7 @@ const ClientCard: React.FC<{ client: Client; index: number }> = ({ client, index
             whileHover={{ scale: 1.2, rotate: 12 }}
             className="mb-8 w-16 h-16 md:w-20 md:h-20 mx-auto bg-gradient-to-br from-emerald-500 to-blue-600 rounded-2xl p-4 md:p-5 shadow-xl flex items-center justify-center"
           >
-            <Factory className="w-10 h-10 md:w-12 md:h-12 text-white" />
+            <PiFactoryFill className="w-10 h-10 md:w-12 md:h-12 text-white" />
           </motion.div>
 
           <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-6 text-center text-white leading-tight line-clamp-3">
@@ -182,7 +182,7 @@ const ClientCard: React.FC<{ client: Client; index: number }> = ({ client, index
           </h3>
 
           <div className="flex items-center justify-center gap-3 text-gray-300">
-            <MapPin className="w-5 h-5 text-emerald-400" />
+            <PiMapPinFill className="w-5 h-5 text-emerald-400" />
             <span className="text-base md:text-lg font-medium">{client.location}</span>
           </div>
 

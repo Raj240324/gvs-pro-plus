@@ -1,5 +1,5 @@
 import { useEffect, useState, Component, ErrorInfo, ReactNode } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle, Linkedin, Clock } from 'lucide-react';
+import { PiEnvelopeSimpleFill, PiPhoneFill, PiMapPinFill, PiPaperPlaneTiltFill, PiCheckCircleFill, PiLinkedinLogoFill, PiClockFill } from 'react-icons/pi';
 import { useToast } from "../hooks/use-toast";
 import { motion } from 'framer-motion';
 import { Textarea } from '../components/ui/textarea';
@@ -226,21 +226,21 @@ const Contact = () => {
 
               {[
                 {
-                  icon: <MapPin size={24} className="sm:w-8 sm:h-8" />,
+                  icon: <PiMapPinFill className="w-6 h-6 sm:w-8 sm:h-8" />,
                   title: 'Office & Works',
                   content: 'Plot No.1476, Segundram Main Road,\nGokulapuram-MaraimalaiNagar,\nChengalpattu-(District),\nPin:603209',
                   link: 'https://www.google.com/maps/place/12%C2%B046\'13.5%22N+80%C2%B002\'10.0%22E/@12.7704061,80.0335333,17z/data=!3m1!4b1!4m4!3m3!8m2!3d12.7704061!4d80.0361082?entry=ttu&g_ep=EgoyMDI1MTEwNC4xIKXMDSoASAFQAw%3D%3D',
                   linkText: 'View on Map',
                 },
                 {
-                  icon: <MapPin size={24} className="sm:w-8 sm:h-8" />,
+                  icon: <PiMapPinFill className="w-6 h-6 sm:w-8 sm:h-8" />,
                   title: 'Reg. Office',
                   content: 'No.46/1, 5th Cross Street,\nBagavathy Nagar Govindarajapuram,\nNandhivaram,\nGuduvanchery – 603202,\nChengalpattu-(Dist)',
                   link: 'https://maps.google.com/?q=Govindarajapuram+Nandhivaram+Guduvanchery',
                   linkText: 'View on Map',
                 },
                 {
-                  icon: <Mail size={24} className="sm:w-8 sm:h-8" />,
+                  icon: <PiEnvelopeSimpleFill className="w-6 h-6 sm:w-8 sm:h-8" />,
                   title: 'Email Us',
                   emails: [
                     { label: 'Projects', email: 'projects@gvscontrols.com' },
@@ -249,7 +249,7 @@ const Contact = () => {
                   ],
                 },
                 {
-                  icon: <Phone size={24} className="sm:w-8 sm:h-8" />,
+                  icon: <PiPhoneFill className="w-6 h-6 sm:w-8 sm:h-8" />,
                   title: 'Call Us',
                   phones: ['+91 7338880027', '+91 9884001597'],
                   hours: '9:30 AM to 5:30 PM',
@@ -319,7 +319,7 @@ const Contact = () => {
                         ))}
                         <div className="pt-4 mt-4 border-t border-gray-300 dark:border-gray-600">
                           <div className="flex items-center justify-center gap-2">
-                            <Clock className="w-4 h-4 text-teal-600" />
+                            <PiClockFill className="w-4 h-4 text-teal-600" />
                             <span className="font-semibold text-gray-700 dark:text-gray-300">{item.hours}</span>
                           </div>
                           <p className="text-xs text-gray-500 dark:text-gray-400">{item.days}</p>
@@ -370,7 +370,7 @@ const Contact = () => {
                   whileTap={{ scale: 0.95 }}
                   className="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl shadow-lg hover:shadow-green-500/30 transition-all duration-300"
                 >
-                  <Phone className="w-5 h-5" />
+                  <PiPhoneFill className="w-5 h-5" />
                   <div className="text-left">
                     <span className="block text-xs opacity-80">Call Now</span>
                     <span className="font-bold text-sm">+91 73388 80027</span>
@@ -402,7 +402,7 @@ const Contact = () => {
                   whileTap={{ scale: 0.95 }}
                   className="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl shadow-lg hover:shadow-blue-500/30 transition-all duration-300"
                 >
-                  <Mail className="w-5 h-5" />
+                  <PiEnvelopeSimpleFill className="w-5 h-5" />
                   <div className="text-left">
                     <span className="block text-xs opacity-80">Email Us</span>
                     <span className="font-bold text-sm">projects@gvs...</span>
@@ -486,7 +486,7 @@ const Contact = () => {
                   </div>
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="mt-8">
                     <Button type="submit" disabled={isSubmitting} className="w-full py-3 px-8 bg-gradient-to-r from-teal-500 to-purple-600 text-white font-semibold rounded-full shadow-md hover:from-teal-600 hover:to-purple-700 transition-all duration-300">
-                      {isSubmitting ? 'Sending...' : isSubmitted ? 'Sent!' : 'Send Message'} {isSubmitted && <CheckCircle className="inline ml-2" />}
+                      {isSubmitting ? 'Sending...' : isSubmitted ? 'Sent!' : 'Send Message'} {isSubmitted && <PiCheckCircleFill className="inline ml-2" />}
                     </Button>
                   </motion.div>
                 </form>
@@ -520,7 +520,7 @@ const Contact = () => {
                 {/* Working Hours - now here */}
                 <div className="bg-white/40 dark:bg-black/30 backdrop-blur-sm rounded-lg p-6 text-center border border-white/40">
                   <div className="flex items-center justify-center gap-3 mb-2">
-                    <Clock className="w-7 h-7 text-teal-600 dark:text-teal-400" />
+                    <PiClockFill className="w-7 h-7 text-teal-600 dark:text-teal-400" />
                     <span className="text-xl font-bold text-gray-800 dark:text-white">
                       9:30 AM to 5:30 PM
                     </span>
@@ -545,7 +545,7 @@ const Contact = () => {
                 <motion.a href="https://www.linkedin.com/feed/update/urn:li:activity:7386648123668021248/" target="_blank" rel="noopener noreferrer"
                   className="w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md text-white border border-white/20 transition-all duration-300"
                   whileHover={{ scale: 1.15, rotate: 5, boxShadow: "0 0 25px rgba(255, 255, 255, 0.4)" }}>
-                  <Linkedin className="w-6 h-6 sm:w-7 sm:h-7" />
+                  <PiLinkedinLogoFill className="w-6 h-6 sm:w-7 sm:h-7" />
                 </motion.a>
               </div>
             </motion.div>

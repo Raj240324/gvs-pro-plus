@@ -2,7 +2,7 @@
 import { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { CardSpotlight } from '../components/ui/card-spotlight';
-import { Factory, Zap, Wrench } from 'lucide-react';
+import { PiFactoryFill, PiLightningFill, PiWrenchFill } from 'react-icons/pi';
 import React from 'react';
 import SEO from '../components/SEO';
 
@@ -60,7 +60,7 @@ const ProductSection = ({ product }: { product: Product }) => {
                     className="group flex items-start gap-3 p-4 sm:p-5 rounded-xl bg-white/90 shadow-md hover:shadow-xl hover:bg-white transition-all duration-200 border border-gray-100"
                   >
                     <div className="p-2 rounded-lg bg-gradient-to-br from-teal-400 to-indigo-500 group-hover:scale-110 transition-transform duration-200 flex-shrink-0">
-                      <Zap className="w-5 h-5 text-white" />
+                      <PiLightningFill className="w-5 h-5 text-white" />
                     </div>
                     <span className="text-gray-800 font-medium text-sm md:text-base group-hover:text-teal-700 transition-colors duration-200 leading-relaxed">
                       {item}
@@ -130,7 +130,7 @@ const ManufacturingSupply = () => {
       'Local Push Button Station, Junction Boxes, Lighting Panels ML singular, LDB, SLDB, and Utility DB\'s',
       'VFD Control Panels & Special Purpose and Other Custom Built Panels',
     ],
-    icon: <Factory className="w-16 h-16 text-white" />,
+    icon: <PiFactoryFill className="w-16 h-16 text-white" />,
     color: [[0, 128, 128], [59, 130, 246]],
   };
 
@@ -184,7 +184,7 @@ const ManufacturingSupply = () => {
               className="inline-flex items-center px-6 sm:px-10 md:px-12 py-3 sm:py-4 md:py-5 bg-white text-teal-700 font-bold text-base sm:text-lg md:text-xl rounded-full shadow-2xl hover:shadow-teal-500/60 transition-all duration-200"
             >
               Get Started Today
-              <Wrench className="ml-2 sm:ml-3 md:ml-4 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />
+              <PiWrenchFill className="ml-2 sm:ml-3 md:ml-4 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />
             </Link>
           </div>
         </div>

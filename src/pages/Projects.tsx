@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Factory, CheckCircle, ArrowRight, Award, Briefcase, Building } from 'lucide-react';
+import { PiFactoryFill, PiCheckCircleFill, PiArrowRightBold, PiTrophyFill, PiBriefcaseFill, PiBuildingOfficeFill } from 'react-icons/pi';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 
@@ -171,7 +171,7 @@ const Projects: React.FC = () => {
                   : 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700'
               }`}
             >
-              <Building className="inline-block w-5 h-5 mr-2" />
+              <PiBuildingOfficeFill className="inline-block w-5 h-5 mr-2" />
               GVS Controls (2017-Present)
             </button>
             <button
@@ -182,7 +182,7 @@ const Projects: React.FC = () => {
                   : 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-700'
               }`}
             >
-              <Briefcase className="inline-block w-5 h-5 mr-2" />
+              <PiBriefcaseFill className="inline-block w-5 h-5 mr-2" />
               Founder's Prior Experience
             </button>
           </div>
@@ -221,7 +221,7 @@ const Projects: React.FC = () => {
               >
                 <motion.div variants={clientHeader} className="flex items-center gap-3 sm:gap-4 mb-8 lg:mb-10">
                   <div className="p-2.5 sm:p-3 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 shadow-lg flex-shrink-0">
-                    <Factory className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+                    <PiFactoryFill className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                   </div>
                   <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 dark:text-white leading-tight">
                     {group.client}
@@ -239,7 +239,7 @@ const Projects: React.FC = () => {
                     >
                       <div className="flex items-start gap-4 sm:gap-5">
                         <div className="mt-0.5 flex-shrink-0">
-                          <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-teal-600 group-hover:text-cyan-600 transition-colors duration-300" />
+                          <PiCheckCircleFill className="w-5 h-5 sm:w-6 sm:h-6 text-teal-600 group-hover:text-cyan-600 transition-colors duration-300" />
                         </div>
                         <div className="flex-1">
                           <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-white mb-2 group-hover:text-teal-700 dark:group-hover:text-teal-400 transition-colors duration-300">
@@ -291,7 +291,7 @@ const Projects: React.FC = () => {
                   transition={{ delay: i * 0.1, duration: 0.5 }}
                   className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-2xl p-6 border border-amber-200 dark:border-amber-800"
                 >
-                  <Briefcase className="w-10 h-10 text-amber-600 dark:text-amber-400 mb-4" />
+                  <PiBriefcaseFill className="w-10 h-10 text-amber-600 dark:text-amber-400 mb-4" />
                   <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">{company.name}</h3>
                   <p className="text-gray-600 dark:text-gray-300 text-sm">{company.description}</p>
                 </motion.div>
@@ -311,7 +311,7 @@ const Projects: React.FC = () => {
                 >
                   <div className="flex items-start gap-4">
                     <div className="p-3 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 shadow-lg flex-shrink-0">
-                      <Award className="w-6 h-6 text-white" />
+                      <PiTrophyFill className="w-6 h-6 text-white" />
                     </div>
                     <div className="flex-1">
                       <h3 className="text-xl md:text-2xl font-bold text-gray-800 dark:text-white mb-3">
@@ -383,7 +383,7 @@ const Projects: React.FC = () => {
               className="inline-flex items-center px-6 py-3 sm:px-8 sm:py-4 bg-white text-teal-700 font-bold text-base sm:text-lg rounded-full shadow-xl hover:shadow-2xl transition-all duration-300"
             >
               Get Started
-              <ArrowRight className="ml-2 w-4 h-4 sm:ml-3 sm:w-5 sm:h-5" />
+              <PiArrowRightBold className="ml-2 w-4 h-4 sm:ml-3 sm:w-5 sm:h-5" />
             </Link>
           </motion.div>
         </div>

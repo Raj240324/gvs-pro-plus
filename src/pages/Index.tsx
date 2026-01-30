@@ -1,6 +1,6 @@
 import FeaturedClients from '../components/home/FeaturedClients';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { PiArrowRightBold } from 'react-icons/pi';
 import { useEffect, useRef, useState } from 'react';
 import { useContactModal } from '../hooks/use-contact-modal';
 import Hero from '../components/home/Hero';
@@ -274,7 +274,7 @@ const Index = () => {
           <div className="text-center mt-12 animate-fade-in delay-400">
             <Link to="/about" className="inline-flex items-center text-white font-medium hover:text-green-400 transition-colors group">
               Discover Our Full Story
-              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-2 duration-300" />
+              <PiArrowRightBold className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-2 duration-300" />
             </Link>
           </div>
         </div>
