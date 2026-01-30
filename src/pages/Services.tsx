@@ -40,29 +40,13 @@ const Services: React.FC = () => {
   useEffect(() => {
     updateHeaderHeight();
     const handleResize = () => updateHeaderHeight();
-    const handleScroll = () => updateHeaderHeight();
 
     window.addEventListener('resize', handleResize);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    let observer: IntersectionObserver | null = null;
-    if (!prefersReducedMotion) {
-      const animatedElements = document.querySelectorAll('.aos-fade-up, .aos-scale-in, .aos-slide-in');
-      const observerOptions: IntersectionObserverInit = { threshold: 0.15, rootMargin: '0px 0px -50px 0px' };
-      observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add('aos-animate');
-        });
-      }, observerOptions);
-      animatedElements.forEach(el => observer!.observe(el));
-    }
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('scroll', handleScroll);
-      if (observer) observer.disconnect();
     };
-  }, [updateHeaderHeight, prefersReducedMotion]);
+  }, [updateHeaderHeight]);
 
   useEffect(() => {
     if (location.hash) {
@@ -81,7 +65,7 @@ const Services: React.FC = () => {
     {
       id: 'consultancy',
       title: 'Consultancy',
-      description: 'Expert project management and engineering consultancy for turnkey electrical and automation projects.',
+      description: 'Expert Project Management and Engineering Consultancy for Turnkey Electrical and Automation projects.',
       icon: <Settings size={28} className="text-teal-500" />,
       features: [
         'Project Management Consultancy (PMC)',
@@ -98,7 +82,7 @@ const Services: React.FC = () => {
     {
       id: 'automation',
       title: 'Automation',
-      description: 'End-to-end automation and process control solutions with PLC/SCADA engineering and drive integration.',
+      description: 'End-to-end Automation and Process Control solutions with PLC/SCADA Engineering and drive integration.',
       icon: <Cpu size={28} className="text-teal-500" />,
       features: [
         'Total Automation and Process Control Solutions',
@@ -144,7 +128,7 @@ const Services: React.FC = () => {
     {
       id: 'product-manufacturing',
       title: 'Product Manufacturing & Supply',
-      description: 'Electrical control panels designed to IE standards and CEIG requirements.',
+      description: 'Electrical Control Panels designed to IE standards and CEIG requirements.',
       icon: <Factory size={28} className="text-teal-500" />,
       features: [
         'Power Control Centers, Power Distribution Panels, Motor Control Centers, Process Control Panels',
@@ -161,7 +145,7 @@ const Services: React.FC = () => {
     {
       id: 'additional-services',
       title: 'Additional Services',
-      description: 'Erection, testing, troubleshooting, and commissioning of industrial electrical systems.',
+      description: 'Erection, Testing, Troubleshooting, and Commissioning of Industrial Electrical systems.',
       icon: <Wrench size={28} className="text-teal-500" />,
       features: [
         'Erection, Testing, Troubleshooting, and Commissioning of Bus Ducts, PCC/MCC, and Control Panels',
@@ -181,7 +165,7 @@ const Services: React.FC = () => {
     <main className="bg-gray-50 pt-[84px] lg:pt-[128px]">
       <SEO
         title="Our Services | GVS Controls"
-        description="Expert consultancy, automation, manufacturing, and turnkey services for industrial electrical and control systems."
+        description="Expert Consultancy, Automation, Manufacturing, and Turnkey Services for Industrial Electrical and Control systems."
         canonical={typeof window !== 'undefined' ? window.location.origin + '/services' : undefined}
       />
 
@@ -227,7 +211,7 @@ const Services: React.FC = () => {
         )}
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16 aos-fade-up">
+          <div className="text-center mb-16" data-aos="fade-up">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Service Offerings</h2>
             <p className="text-gray-300 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
               Explore our comprehensive suite of solutions engineered to optimize your industrial operations.
@@ -236,7 +220,7 @@ const Services: React.FC = () => {
 
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((card, index) => (
-              <li key={card.id} className="aos-slide-in" style={{ '--index': index } as React.CSSProperties}>
+              <li key={card.id} data-aos="fade-up" data-aos-delay={index * 100} style={{ '--index': index } as React.CSSProperties}>
                 <TiltedCard
                   containerHeight="100%"
                   containerWidth="100%"
@@ -293,7 +277,7 @@ const Services: React.FC = () => {
           style={{ scrollMarginTop: `${headerHeight + 32}px` }}
         >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="aos-fade-up">
+            <div data-aos="fade-up">
               <div className="flex items-center mb-10">
                 {React.cloneElement(service.icon as React.ReactElement, {
                   className: 'text-teal-600',

@@ -27,7 +27,7 @@ export default function AboutUnified() {
     {
       id: '2',
       title: 'IE & CEIG Compliant Manufacturing',
-      description: 'Launched state-of-the-art facility for manufacturing electrical control panels compliant with Indian Electrical Standards and CEIG Regulations. Full turnkey capability: Design, Supply, Erection, Testing & Commissioning.',
+      description: 'Launched state-of-the-art facility for Manufacturing Electrical Control Panels compliant with Indian Electrical Standards and CEIG Regulations. Full Turnkey capability: Design, Supply, Erection, Testing & Commissioning.',
       icon: <Factory className="text-white w-5 h-5" />,
       image: infrastructure,
       category: 'Infrastructure',
@@ -80,7 +80,7 @@ export default function AboutUnified() {
     <>
       <SEO
         title="About Us"
-        description="GVS Controls, founded in 2017, delivers innovative electrical & automation solutions. Trusted by industry leaders like SAIL and TISCO."
+        description="GVS Controls, founded in 2017, delivers innovative Electrical & Automation solutions. Trusted by Industry Leaders like SAIL and TISCO."
       />
       <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 relative pt-[84px] lg:pt-[128px]">
         {/* HERO */}
@@ -144,7 +144,7 @@ export default function AboutUnified() {
                 About M/s GVS Controls
               </h2>
               <p className="text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
-                Started in 2017 as a Proprietary Company, GVS Controls was established with the objective of delivering highly innovative and cost-effective engineering solutions. We work with single-minded dedication, and our inherent problem-solving culture ensures optimal interaction between man and machine. Our service spectrum is vast, but focused on a single objective — constantly redefining the term "Customer Satisfaction".
+                Started in 2017 as a Proprietary Company, GVS Controls was established with the objective of delivering highly innovative and Cost-Effective Engineering solutions. We work with single-minded dedication, and our inherent Problem-Solving culture ensures optimal interaction between Man and Machine. Our service spectrum is vast, but focused on a single objective — constantly redefining the term "Customer Satisfaction".
               </p>
             </motion.div>
 

@@ -44,14 +44,14 @@ const TermsOfService = () => {
               <strong>Last Updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</strong>
             </p>
             <p className="mb-6">
-              Welcome to <strong>www.gvscontrols.com</strong> (the "Website"), operated by <strong>M/s GVS Controls</strong> ("Company", "we", "us", or "our"), a proprietary firm established in 2017 with 30+ years of Promoter Experience in EPC Projects. Our vision—"Our Vision To Your Solution"—reflects our commitment to delivering innovative, cost-effective engineering solutions. These Terms of Service ("Terms") govern your access to and use of the Website and any services, information, or content provided by GVS Controls, including but not limited to electrical control panel manufacturing, PLC automation, consultancy, engineering, erection, testing & commissioning, renovation & revamping, and turnkey project solutions. By accessing or using the Website, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you do not agree to these Terms, please refrain from using the Website.
+              Welcome to <strong>www.gvscontrols.com</strong> (the "Website"), operated by <strong>M/s GVS Controls</strong> ("Company", "we", "us", or "our"), a proprietary firm established in 2017 with 30+ years of Promoter Experience in EPC Projects. Our vision—"Our Vision To Your Solution"—reflects our commitment to delivering innovative, cost-effective Engineering solutions. These Terms of Service ("Terms") govern your access to and use of the Website and any services, information, or content provided by GVS Controls, including but not limited to Electrical Control Panel Manufacturing, PLC Automation, Consultancy, Engineering, Erection, Testing & Commissioning, Renovation & Revamping, and Turnkey Project solutions. By accessing or using the Website, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you do not agree to these Terms, please refrain from using the Website.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>1. Definitions</h2>
             <p className="mb-4">
               <strong>"User"</strong> refers to any individual or entity accessing or using the Website.<br />
               <strong>"Content"</strong> means all information, text, images, graphics, logos, documents, technical specifications, project portfolios, and other materials available on the Website.<br />
-              <strong>"Services"</strong> refers to all services offered by GVS Controls, including but not limited to: expert consultancy, electrical control panel manufacturing (IE & CEIG compliant), PLC automation, engineering services, erection, testing & commissioning, renovation & revamping, services & supply, and turnkey EPC project solutions across industries such as power plants, renewable energy, material handling, cement, automotive, and process plants.<br />
+              <strong>"Services"</strong> refers to all Services offered by GVS Controls, including but not limited to: Expert Consultancy, Electrical Control Panel Manufacturing (IE & CEIG compliant), PLC Automation, Engineering services, Erection, Testing & Commissioning, Renovation & Revamping, Services & Supply, and Turnkey EPC Project solutions across industries such as Power plants, Renewable energy, Material handling, Cement, Automotive, and Process plants.<br />
               <strong>"Intellectual Property"</strong> means all patents, trademarks, service marks, trade names, copyrights, trade secrets, technical know-how, proprietary designs, and other intellectual property rights owned or licensed by GVS Controls.<br />
               <strong>"EPC Projects"</strong> refers to Engineering, Procurement, and Construction projects undertaken by GVS Controls or its promoters.
             </p>
@@ -84,7 +84,15 @@ const TermsOfService = () => {
               Any unauthorized use of the Content may violate copyright laws, trademark laws, the laws of privacy and publicity, and communications regulations and statutes. GVS Controls reserves all rights not expressly granted in and to the Website and the Content.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
-            <h2>4. Services and Contracts</h2>
+            <h2>4. Confidentiality</h2>
+            <p className="mb-4">
+              <strong>Our Commitment:</strong> We treat all project inquiries, technical specifications, and business data you submit via our Contact Forms or email as strictly confidential ("Confidential Information"). We will not disclose your Confidential Information to third parties without your prior consent, except as required for the purpose of generating quotes, executing projects, or complying with legal obligations.
+            </p>
+            <p className="mb-4">
+              <strong>Your Obligation:</strong> You agree to keep confidential any proprietary technical proposals, pricing, or design documents ("GVS Proprietary Information") shared with you by GVS Controls during the consultation or project execution phase.
+            </p>
+            <hr className="my-6 border-[#2a9d8f]/20" />
+            <h2>5. Services and Contracts</h2>
             <p className="mb-4">
               The information provided on the Website regarding our Services, including technical specifications, project portfolios, and service descriptions, is for general informational purposes only and does not constitute a binding offer, warranty, or guarantee. Any engagement for Services shall be subject to a separate written agreement between you and GVS Controls, which will set forth the specific terms and conditions, pricing, delivery schedules, quality standards (including IE & CEIG compliance requirements), and other applicable terms for such engagement.
             </p>
@@ -92,10 +100,10 @@ const TermsOfService = () => {
               All Services provided by GVS Controls shall comply with applicable Indian laws, regulations, and industry standards, including but not limited to the Indian Electricity Act, 2003, and the rules and regulations of the Chief Electrical Inspectorate (CEIG). We reserve the right to modify, suspend, or discontinue any aspect of our Services at any time, including the availability of any feature, database, or content. We may also impose limits on certain features and services or restrict your access to parts or all of the Services without notice or liability.
             </p>
             <p className="mb-4">
-              <strong>Quality Assurance:</strong> Our electrical control panels and automation systems are manufactured in compliance with IE (Indian Electricity) Standards and CEIG (Chief Electrical Inspectorate) regulations. All products undergo rigorous testing and quality checks before delivery. However, specific warranties and guarantees will be detailed in individual service agreements.
+              <strong>Quality Assurance:</strong> Our Electrical Control Panels and Automation systems are manufactured in compliance with IE (Indian Electricity) Standards and CEIG (Chief Electrical Inspectorate) regulations. All products undergo rigorous testing and quality checks before delivery. However, specific warranties and guarantees will be detailed in individual service agreements.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
-            <h2>5. Privacy and Data Protection</h2>
+            <h2>6. Privacy and Data Protection</h2>
             <p className="mb-4">
               Your privacy is important to us. Any personal information you provide through the Website will be handled in accordance with our <a href="/privacy-policy" className="underline hover:no-underline">Privacy Policy</a> and applicable Indian data protection laws, including the Information Technology Act, 2000 and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011. By using the Website, you consent to the collection, use, and disclosure of your information as described in the Privacy Policy.
             </p>
@@ -103,7 +111,7 @@ const TermsOfService = () => {
               We implement appropriate technical and organizational measures to protect your personal data against unauthorized or unlawful processing, accidental loss, destruction, or damage. However, no method of transmission over the Internet or electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your personal information, we cannot guarantee its absolute security.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
-            <h2>6. Limitation of Liability</h2>
+            <h2>7. Limitation of Liability</h2>
             <p className="mb-4">
               The Website and all Content are provided on an "as is" and "as available" basis without warranties of any kind, either express or implied. To the fullest extent permitted by law, GVS Controls disclaims all warranties, including but not limited to merchantability, fitness for a particular purpose, and non-infringement.
             </p>
@@ -114,7 +122,7 @@ const TermsOfService = () => {
               Some jurisdictions do not allow the exclusion or limitation of liability for consequential or incidental damages, so the above limitation may not apply to you.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
-            <h2>7. Third-Party Links</h2>
+            <h2>8. Third-Party Links</h2>
             <p className="mb-4">
               The Website may contain links to third-party websites or resources. These links are provided for your convenience only. GVS Controls does not endorse and is not responsible for the content, products, or services on or available from those websites or resources. Access to any third-party websites is at your own risk.
             </p>
@@ -122,7 +130,7 @@ const TermsOfService = () => {
               You acknowledge and agree that GVS Controls shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance on any such content, goods, or services available on or through any such websites or resources.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
-            <h2>8. Termination</h2>
+            <h2>9. Termination</h2>
             <p className="mb-4">
               We reserve the right, in our sole discretion, to suspend or terminate your access to the Website at any time and for any reason, including but not limited to violation of these Terms. Upon termination, all rights granted to you under these Terms will immediately cease.
             </p>
@@ -130,7 +138,7 @@ const TermsOfService = () => {
               The provisions of these Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity, and limitations of liability.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
-            <h2>9. Governing Law and Dispute Resolution</h2>
+            <h2>10. Governing Law and Dispute Resolution</h2>
             <p className="mb-4">
               These Terms shall be governed by and construed in accordance with the laws of India, specifically the laws of the State of Tamil Nadu, without regard to its conflict of law principles. Any disputes arising out of or relating to these Terms, your use of the Website, or any Services provided by GVS Controls shall be subject to the exclusive jurisdiction of the courts located in Chengalpattu District, Tamil Nadu, India.
             </p>
@@ -141,7 +149,7 @@ const TermsOfService = () => {
               You agree that any cause of action arising out of or related to the Website must commence within one (1) year after the cause of action accrues. Otherwise, such cause of action is permanently barred.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
-            <h2>10. Changes to These Terms</h2>
+            <h2>11. Changes to These Terms</h2>
             <p className="mb-4">
               We may revise and update these Terms from time to time at our sole discretion. All changes are effective immediately when posted. Your continued use of the Website following the posting of revised Terms means that you accept and agree to the changes.
             </p>
@@ -149,7 +157,7 @@ const TermsOfService = () => {
               We encourage you to check this page periodically for any changes. The date of the last modification will be indicated at the top of the page.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
-            <h2>11. Contact Information</h2>
+            <h2>12. Contact Information</h2>
             <p className="mb-4">
               If you have any questions, concerns, or requests regarding these Terms or our Services, please contact us at:
             </p>
@@ -172,22 +180,22 @@ const TermsOfService = () => {
               </address>
             </div>
             <hr className="my-6 border-[#2a9d8f]/20" />
-            <h2>12. Indemnification</h2>
+            <h2>13. Indemnification</h2>
             <p className="mb-4">
               You agree to indemnify, defend, and hold harmless GVS Controls, its affiliates, officers, directors, employees, and agents from and against any and all claims, damages, obligations, losses, liabilities, costs, or expenses (including but not limited to attorney's fees) arising from your use of the Website, your violation of these Terms, or your violation of any rights of another.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
-            <h2>13. Force Majeure</h2>
+            <h2>14. Force Majeure</h2>
             <p className="mb-4">
               GVS Controls shall not be liable for any failure or delay in performance of its obligations under these Terms due to causes beyond its reasonable control, including but not limited to acts of God, war, strikes, labor disputes, embargoes, government orders, or any other force majeure event.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
-            <h2>14. Severability</h2>
+            <h2>15. Severability</h2>
             <p className="mb-4">
               If any provision of these Terms is found to be invalid or unenforceable by a court of competent jurisdiction, such provision shall be severed and the remaining provisions shall remain in full force and effect.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
-            <h2>15. Entire Agreement</h2>
+            <h2>16. Entire Agreement</h2>
             <p className="mb-4">
               These Terms constitute the entire agreement between you and GVS Controls regarding your use of the Website and supersede all prior agreements and understandings, whether written or oral, relating to such subject matter.
             </p>

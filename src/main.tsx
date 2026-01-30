@@ -5,6 +5,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import React, { Suspense, lazy } from 'react';
 import App from './App';
 import LoadingSpinner from './components/LoadingSpinner';
+import GlobalErrorBoundary from './components/GlobalErrorBoundary';
 
 // Lazy Load Pages
 const Index = lazy(() => import('./pages/Index'));
@@ -51,6 +52,8 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')!).render(
   <HelmetProvider>
-    <RouterProvider router={router} />
+    <GlobalErrorBoundary>
+      <RouterProvider router={router} />
+    </GlobalErrorBoundary>
   </HelmetProvider>
 );

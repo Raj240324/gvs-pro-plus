@@ -152,7 +152,7 @@ const Hero = () => {
             <h1 className="mb-4">
               <span style={{ color: "#ff0000" }}>
                 <TextRoll
-                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight break-words"
+                  className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight break-words"
                   transition={{ type: "spring", damping: 30, stiffness: 400 }}
                   duration={0.3}
                   getEnterDelay={(i) => i * 0.05}
@@ -168,7 +168,7 @@ const Hero = () => {
             </div>
 
               <p
-                className="text-base sm:text-lg md:text-xl lg:text-2xl font-medium mb-3 italic mt-4 break-words px-2"
+                className="text-sm sm:text-base md:text-xl lg:text-2xl font-medium mb-3 italic mt-4 break-words px-2"
                 style={{ color: "#ffffff", textShadow: "0 2px 4px rgba(0, 0, 0, 0.9)" }}
               >
                 <span style={{
@@ -190,7 +190,7 @@ const Hero = () => {
                 }}>(Supply & Services)</span>
               </p>
 
-              <p className="text-lg sm:text-xl lg:text-2xl font-bold italic mb-6">
+              <p className="text-base sm:text-lg lg:text-2xl font-bold italic mb-6">
                 <span
                   style={{
                     color: "#FFA500", // Orange

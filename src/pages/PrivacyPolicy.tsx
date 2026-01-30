@@ -44,7 +44,7 @@ const PrivacyPolicy = () => {
               <strong>Last Updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</strong>
             </p>
             <p className="mb-6">
-              At <strong>M/s GVS Controls</strong> ("GVS Controls", "we", "us", or "our"), a leading provider of electrical and automation solutions established in 2017 with 30+ years of Promoter Experience in EPC Projects, we are committed to protecting your privacy. Our vision—"Our Vision To Your Solution"—drives our problem-solving culture that ensures optimal interaction between the Man-machine interface. Our services span expert consultancy, electrical control panel manufacturing, PLC automation, engineering, erection, testing & commissioning, renovation & revamping, and turnkey project solutions across industries including power plants, renewable energy, material handling, cement, automotive, and process plants. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, <span className="font-semibold">www.gvscontrols.com</span>, engage with our services, or interact with our solutions.
+              At <strong>M/s GVS Controls</strong> ("GVS Controls", "we", "us", or "our"), a leading provider of Electrical and Automation solutions established in 2017 with 30+ years of Promoter Experience in EPC Projects, we are committed to protecting your privacy. Our vision—"Our Vision To Your Solution"—drives our problem-solving culture that ensures optimal interaction between the Man-machine interface. Our Services span Expert Consultancy, Electrical Control Panel Manufacturing, PLC Automation, Engineering, Erection, Testing & Commissioning, Renovation & Revamping, and Turnkey Project solutions across industries including Power plants, Renewable energy, Material handling, Cement, Automotive, and Process plants. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, <span className="font-semibold">www.gvscontrols.com</span>, engage with our Services, or interact with our solutions.
             </p>
             <hr className="my-6 border-[#2a9d8f]/20" />
             <h2>1. Information We Collect</h2>
@@ -88,7 +88,7 @@ const PrivacyPolicy = () => {
               <div>
                 <h3 className="text-lg font-semibold text-[#2a9d8f]">Service Delivery</h3>
                 <ul className="list-disc pl-5">
-                  <li>Process and fulfill your requests for our services (consultancy, manufacturing, automation, EPC projects)</li>
+                  <li>Process and fulfill your requests for our Services (Consultancy, Manufacturing, Automation, EPC Projects)</li>
                   <li>Provide technical support, customer service, and project management</li>
                   <li>Manage and maintain client accounts and project documentation</li>
                   <li>Send service-related communications, project updates, and technical information</li>
@@ -140,7 +140,8 @@ const PrivacyPolicy = () => {
                   <li>Data analysis and analytics</li>
                   <li>Customer service and support</li>
                   <li>Payment processing and financial services</li>
-                  <li>Email service providers (e.g., EmailJS for contact forms)</li>
+                  <li>Cloud infrastructure and backend services (e.g., Supabase)</li>
+                  <li>Web analytics services (e.g., Google Analytics 4)</li>
                   <li>Cloud storage and backup services</li>
                 </ul>
               </div>

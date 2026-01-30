@@ -124,7 +124,7 @@ const Projects: React.FC = () => {
     <main className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50 pt-[84px] lg:pt-[128px]">
       <SEO
         title="Projects | GVS Controls"
-        description="Landmark electrical & automation projects by GVS Controls (2017-present) and our founder's 30+ years of prior EPC experience."
+        description="Landmark Electrical & Automation projects by GVS Controls (2017-present) and our founder's 30+ years of prior EPC experience."
         canonical={typeof window !== 'undefined' ? window.location.origin + '/projects' : undefined}
       />
 
@@ -206,7 +206,7 @@ const Projects: React.FC = () => {
                 GVS Controls Projects
               </h2>
               <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                Turnkey electrical & automation solutions executed under the GVS Controls banner since our founding in 2017.
+                Turnkey Electrical & Automation solutions executed under the GVS Controls banner since our founding in 2017.
               </p>
             </motion.div>
 

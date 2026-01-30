@@ -21,57 +21,46 @@ const Index = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
-    // Throttle scroll handler for better performance
-    let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
-    const handleScroll = () => {
-      if (scrollTimeout) return; // Skip if already scheduled
+    // Counter animation with IntersectionObserver (Performant)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const statsEl = entry.target as HTMLDivElement;
+            if (statsEl.dataset.animated !== 'true') {
+              statsEl.dataset.animated = 'true';
+              statsEl.querySelectorAll<HTMLElement>('.stat-counter').forEach((counter) => {
+                const target = parseInt(counter.dataset.target || '0', 10);
+                if (!target) return;
 
-      scrollTimeout = setTimeout(() => {
-        const winH = window.innerHeight;
+                let cur = 0;
+                const dur = 2000;
+                let start: number | null = null;
 
-        // AOS-style fade-in on scroll (throttled)
-        document.querySelectorAll('.aos-fade-up, .aos-fade-in, .aos-fade-right, .aos-fade-left')
-          .forEach(el => {
-            if (el.getBoundingClientRect().top <= winH * 0.8) el.classList.add('aos-animate');
-          });
-
-        // Counter animation
-        const statsEl = statsRef.current;
-        if (statsEl && statsEl.dataset.animated !== 'true') {
-          const rect = statsEl.getBoundingClientRect();
-          if (rect.top <= winH * 0.9) {
-            statsEl.dataset.animated = 'true';
-            statsEl.querySelectorAll<HTMLElement>('.stat-counter').forEach(counter => {
-              const target = parseInt(counter.dataset.target || '0', 10);
-              if (!target) return;
-
-              let cur = 0;
-              const dur = 2000;
-              let start: number | null = null;
-
-              const step = (ts: number) => {
-                if (!start) start = ts;
-                const prog = ts - start;
-                cur = Math.min(target, Math.ceil((prog / dur) * target));
-                counter.textContent = `${cur}`;
-                if (cur < target) requestAnimationFrame(step);
-                else counter.textContent = `${target}+`;
-              };
-              requestAnimationFrame(step);
-            });
+                const step = (ts: number) => {
+                  if (!start) start = ts;
+                  const prog = ts - start;
+                  cur = Math.min(target, Math.ceil((prog / dur) * target));
+                  counter.textContent = `${cur}`;
+                  if (cur < target) requestAnimationFrame(step);
+                  else counter.textContent = `${target}+`;
+                };
+                requestAnimationFrame(step);
+              });
+            }
           }
-        }
+        });
+      },
+      { threshold: 0.1 }
+    );
 
-        scrollTimeout = null;
-      }, 16); // ~60fps throttle
-    };
-
-    setTimeout(handleScroll, 100);
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
 
     // Mobile flip-card auto-rotate
     if (isMobile) {
-      const observer = new IntersectionObserver(
+      const mobileObserver = new IntersectionObserver(
         entries => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -92,21 +81,18 @@ const Index = () => {
 
       document.querySelectorAll('.flip-card').forEach((c, i) => {
         c.setAttribute('data-card-index', i.toString());
-        observer.observe(c);
+        mobileObserver.observe(c);
       });
 
       return () => {
-        observer.disconnect();
-        window.removeEventListener('scroll', handleScroll);
+        mobileObserver.disconnect();
         window.removeEventListener('resize', checkMobile);
-        if (scrollTimeout) clearTimeout(scrollTimeout);
       };
     }
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', checkMobile);
-      if (scrollTimeout) clearTimeout(scrollTimeout);
+      observer.disconnect();
     };
   }, [isMobile]);
 

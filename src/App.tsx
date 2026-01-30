@@ -10,6 +10,7 @@ import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import BackToTop from "./components/BackToTop";
 import Preloader from "./components/Preloader";
+import CookieConsentBanner from "./components/CookieConsentBanner";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Lenis from 'lenis';
@@ -65,14 +66,15 @@ const App = () => {
     } as any);
 
     // Sync AOS on scroll (optional, but helps with some setups)
-    // lenis.on('scroll', AOS.refresh); // Too heavy, let's rely on native scroll events
+    // lenis.on('scroll', AOS.refresh); 
 
+    let rafId: number;
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -80,6 +82,7 @@ const App = () => {
 
     return () => {
       clearTimeout(timer);
+      cancelAnimationFrame(rafId);
       lenis.destroy();
     };
   }, []);
@@ -99,7 +102,9 @@ const App = () => {
                 <Outlet />
               </main>
               <Footer />
+
               <BackToTop />
+              <CookieConsentBanner />
             </>
           )}
         </TooltipProvider>

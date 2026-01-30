@@ -23,7 +23,7 @@ const SEO = ({
 }: SEOProps) => {
   const siteTitle = 'GVS CONTROLS - Electrical, Automation & Consultancy';
   const fullTitle = `${title} | ${siteTitle}`;
-  const defaultKeywords = 'electrical engineering, PLC automation, control panels, EPC projects, power plants, steel plants, cement plants, renewable energy, consultancy, GVS Controls, Chennai, industrial automation, control systems, IE compliant, CEIG panels';
+  const defaultKeywords = 'Electrical Engineering, PLC Automation, Control Panels, EPC Projects, Power Plants, Steel Plants, Cement Plants, Renewable Energy, Consultancy, GVS Controls, Chennai, Industrial Automation, Control Systems, IE Compliant, CEIG Panels';
   
   return (
     <Helmet>

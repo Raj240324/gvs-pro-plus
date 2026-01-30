@@ -118,9 +118,9 @@ const AnimatedMenuButton = ({ open, onClick }: { open: boolean; onClick: () => v
 };
 
 const TopContactBar = () => (
-  <div className="hidden lg:flex h-11 bg-white/80 dark:bg-slate-900/90 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800 relative z-50 items-center justify-between px-6 lg:px-12 transition-colors duration-300">
+  <div className="hidden lg:grid grid-cols-[1fr_auto_1fr] h-11 bg-white/80 dark:bg-slate-900/90 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800 relative z-50 items-center px-6 lg:px-12 transition-colors duration-300">
     {/* Left: Socials */}
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4 justify-self-start">
       <div className="flex items-center gap-3">
         <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Follow Us</span>
         <motion.a
@@ -137,7 +137,7 @@ const TopContactBar = () => (
     </div>
 
     {/* Center: Expertise Ticker */}
-    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden xl:flex items-center justify-center pointer-events-none">
+    <div className="hidden xl:flex items-center justify-center pointer-events-none justify-self-center">
       <div className="px-4 py-1 rounded-full bg-slate-100/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 flex items-center gap-2 shadow-sm whitespace-nowrap pointer-events-auto">
         <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
         <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 tracking-wide uppercase">
@@ -151,7 +151,7 @@ const TopContactBar = () => (
     </div>
 
     {/* Right: Contact Hub */}
-    <div className="flex items-center gap-6">
+    <div className="flex items-center gap-6 justify-self-end">
       <motion.a 
         href="mailto:projects@gvscontrols.com" 
         className="flex items-center gap-2 group"
@@ -194,21 +194,51 @@ const Header = () => {
 
 
 
-  const handleScroll = useCallback(
-    debounce(() => {
-      const currentScrollY = window.scrollY;
-      setScrolled(currentScrollY > 50);
-      setIsVisible(currentScrollY < 50 || currentScrollY < prevScrollY.current);
-      prevScrollY.current = currentScrollY;
-    }, 50),
-    []
-  );
-
   useEffect(() => {
-    prevScrollY.current = window.scrollY;
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const updateScrollDir = () => {
+      const scrollY = window.scrollY;
+
+      // 1. Update background style (scrolled state)
+      setScrolled(scrollY > 20); // Lower threshold for faster feedback
+
+      // 2. Smart Visibility Logic
+      // If at the very top, always show
+      if (scrollY < 20) {
+        setIsVisible(true);
+      } else {
+        // Otherwise, determine direction
+        const isScrollingUp = scrollY < lastScrollY;
+        const scrollDifference = Math.abs(scrollY - lastScrollY);
+
+        // Only toggle visibility if the scroll difference is significant enough to be intentional
+        // or if we are scrolling up (immediate feedback usually desired)
+        if (scrollDifference > 5) {
+          if (isScrollingUp) {
+            setIsVisible(true);
+          } else {
+             // Scrolling down
+            setIsVisible(false);
+          }
+        }
+      }
+
+      lastScrollY = scrollY > 0 ? scrollY : 0;
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScrollDir);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -242,8 +272,8 @@ const Header = () => {
   };
 
   const headerVariants = {
-    visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 500, damping: 40, mass: 0.5 } },
-    hidden: { y: -100, opacity: 0, transition: { type: "spring", stiffness: 500, damping: 40, mass: 0.5 } },
+    visible: { y: 0, opacity: 1, transition: { type: "tween", ease: "easeOut", duration: 0.3 } },
+    hidden: { y: -100, opacity: 0, transition: { type: "tween", ease: "easeIn", duration: 0.3 } },
   };
 
   const mobileMenuVariants = {
@@ -322,13 +352,13 @@ const Header = () => {
                       >
                         {hovered === idx && (
                           <motion.div
-                            layoutId="hovered"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
                             className="absolute inset-0 h-full w-full rounded-full bg-gradient-to-r from-[#ff6b6b]/40 via-[#ffd93d]/40 to-[#ff8e53]/40"
                             transition={{
-                              type: "spring",
-                              stiffness: 200,
-                              damping: 25,
-                              mass: 0.5
+                              duration: 0.2,
+                              ease: "easeInOut"
                             }}
                           >
                             <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-gradient-to-r from-[#ff6b6b] to-[#ff8e53] rounded-t-full">
@@ -348,8 +378,8 @@ const Header = () => {
 
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 lg:hidden pointer-events-none">
               <div className="text-center pointer-events-auto">
-                <span className="block text-[#ff0000] font-bold text-base sm:text-lg leading-tight">GVS CONTROLS</span>
-                <span className="block text-[#ffbf00] font-medium italic text-xs sm:text-sm leading-tight">(Our Vision To Your Solution)</span>
+                <span className="block text-[#ff0000] font-bold text-lg sm:text-2xl md:text-3xl leading-tight whitespace-nowrap">GVS CONTROLS</span>
+                <span className="block text-[#ffbf00] font-medium italic text-xs sm:text-sm md:text-base leading-tight whitespace-nowrap">(Our Vision To Your Solution)</span>
               </div>
             </div>
 

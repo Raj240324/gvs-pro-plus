@@ -2,7 +2,7 @@
 
 import { cn } from "../../lib/utils";
 import { motion, stagger, useAnimate, useInView } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const TypewriterEffect = ({
   words,
@@ -26,21 +26,27 @@ export const TypewriterEffect = ({
 
   const [scope, animate] = useAnimate();
   const isInView = useInView(scope);
+  const [showCursor, setShowCursor] = useState(true);
+
   useEffect(() => {
     if (isInView) {
-      animate(
-        "span",
-        {
-          display: "inline-block",
-          opacity: 1,
-          width: "fit-content",
-        },
-        {
-          duration: 0.3,
-          delay: stagger(0.1),
-          ease: "easeInOut",
-        }
-      );
+      const runAnimation = async () => {
+        await animate(
+          "span",
+          {
+            display: "inline-block",
+            opacity: 1,
+            width: "fit-content",
+          },
+          {
+            duration: 0.3,
+            delay: stagger(0.1),
+            ease: "easeInOut",
+          }
+        );
+        setShowCursor(false);
+      };
+      runAnimation();
     }
   }, [isInView, animate]);
 
@@ -75,19 +81,21 @@ export const TypewriterEffect = ({
       )}
     >
       {renderWords()}
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{
-          duration: 0.8,
-          repeat: Infinity,
-          repeatType: "reverse",
-        }}
-        className={cn(
-          "inline-block rounded-sm w-1.5 h-6 sm:w-2 sm:h-8 md:h-10 lg:h-12 bg-blue-500",
-          cursorClassName
-        )}
-      />
+      {showCursor && (
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            duration: 0.8,
+            repeat: Infinity,
+            repeatType: "reverse",
+          }}
+          className={cn(
+            "inline-block rounded-sm w-1.5 h-6 sm:w-2 sm:h-8 md:h-10 lg:h-12 bg-blue-500",
+            cursorClassName
+          )}
+        />
+      )}
     </div>
   );
 };
@@ -114,18 +122,23 @@ export const TypewriterEffectSmooth = ({
 
   const [scope, animate] = useAnimate();
   const isInView = useInView(scope);
+  const [showCursor, setShowCursor] = useState(true);
 
   useEffect(() => {
     if (isInView) {
-      animate(
-        "span",
-        { opacity: 1, display: "inline-block" },
-        {
-          duration: 0.2,
-          delay: stagger(0.05),
-          ease: "easeInOut",
-        }
-      );
+      const runAnimation = async () => {
+        await animate(
+          "span",
+          { opacity: 1, display: "inline-block" },
+          {
+            duration: 0.2,
+            delay: stagger(0.05),
+            ease: "easeInOut",
+          }
+        );
+        setShowCursor(false);
+      };
+      runAnimation();
     }
   }, [isInView, animate]);
 
@@ -171,19 +184,21 @@ export const TypewriterEffectSmooth = ({
           {renderWords()}
         </div>
       </motion.div>
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{
-          duration: 0.8,
-          repeat: Infinity,
-          repeatType: "reverse",
-        }}
-        className={cn(
-          "block rounded-sm w-1.5 h-6 sm:w-2 sm:h-8 md:h-10 lg:h-12 bg-blue-500",
-          cursorClassName
-        )}
-      />
+      {showCursor && (
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            duration: 0.8,
+            repeat: Infinity,
+            repeatType: "reverse",
+          }}
+          className={cn(
+            "block rounded-sm w-1.5 h-6 sm:w-2 sm:h-8 md:h-10 lg:h-12 bg-blue-500",
+            cursorClassName
+          )}
+        />
+      )}
     </div>
   );
 };

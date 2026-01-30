@@ -83,7 +83,7 @@ const Footer = () => {
                 </div>
               </div>
               <p className="text-[#1a1a2e]/80 text-sm leading-relaxed mb-5">
-                Delivering innovative, cost-effective engineering solutions. Our problem-solving culture ensures optimal man-machine interaction, focused on one objective — Customer Satisfaction.
+                Delivering innovative, Cost-Effective Engineering solutions. Our Problem-Solving culture ensures optimal Man-Machine interaction, focused on one objective — Customer Satisfaction.
               </p>
               <div className="flex items-center gap-3">
                 <span className="text-xs font-semibold text-[#1a1a2e]/60 uppercase tracking-wide">Follow Us</span>

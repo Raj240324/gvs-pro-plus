@@ -93,9 +93,11 @@ const Clients: React.FC = () => {
       {/* Client Cards - Zero lag, perfect responsiveness */}
       <section className="py-32 relative">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+          <div className="flex flex-wrap justify-center gap-8 lg:gap-10">
             {post2017Clients.map((client, index) => (
-              <ClientCard key={index} client={client} index={index} />
+              <div key={index} className="w-full sm:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2.5rem)] flex justify-center">
+                <ClientCard client={client} index={index} />
+              </div>
             ))}
           </div>
         </div>
@@ -112,7 +114,7 @@ const Clients: React.FC = () => {
             className="text-4xl sm:text-5xl md:text-6xl font-black mb-12 leading-tight"
           >
             <span className="bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
-              READY TO JOIN THE ELITE?
+              READY TO START YOUR PROJECT?
             </span>
           </motion.h2>
 
@@ -129,7 +131,7 @@ const Clients: React.FC = () => {
               to="/contact"
               className="group relative inline-flex items-center px-12 py-6 md:px-16 md:py-8 bg-gradient-to-r from-emerald-500 to-blue-600 rounded-2xl font-bold text-xl md:text-2xl shadow-2xl overflow-hidden backdrop-blur-xl border border-white/20"
             >
-              <span className="relative z-10 text-white">Partner with Us</span>
+              <span className="relative z-10 text-white">Get in Touch</span>
               <ArrowRight className="ml-4 w-7 h-7 md:w-8 md:h-8 relative z-10 transition-transform group-hover:translate-x-3" />
               <motion.div
                 className="absolute inset-0 bg-white/20"
