@@ -41,29 +41,54 @@ const Footer = () => {
         backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v22H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%23000' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
       }} />
 
-      {/* Top CTA Banner */}
-      <div className="relative z-10 bg-[#1a1a2e] py-5">
+      {/* Top CTA Banner - Big Stats Version */}
+      <div className="relative z-10 bg-zinc-50 py-12 border-b border-zinc-100">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
-              <div className="flex items-center gap-2 text-white">
-                <Award className="w-5 h-5 text-[#b2ff8b]" />
-                <span className="text-sm font-medium">Established 2017</span>
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+            
+            {/* Stats Group */}
+            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
+              {/* Stat 1 */}
+              <div className="flex items-center gap-4 group">
+                <div className="p-3 bg-white shadow-sm rounded-2xl group-hover:scale-110 transition-transform duration-300">
+                  <Award className="w-8 h-8 text-teal-600" />
+                </div>
+                <div>
+                  <span className="block text-3xl font-black text-gray-900 leading-none">2017</span>
+                  <span className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Year Established</span>
+                </div>
               </div>
-              <div className="hidden md:block w-px h-5 bg-white/20" />
-              <div className="flex items-center gap-2 text-white">
-                <Clock className="w-5 h-5 text-[#4ecdc4]" />
-                <span className="text-sm font-medium">30+ Years Promoter Experience</span>
+
+              <div className="hidden md:block w-px h-12 bg-gray-200/80" />
+
+              {/* Stat 2 */}
+              <div className="flex items-center gap-4 group">
+                 <div className="p-3 bg-white shadow-sm rounded-2xl group-hover:scale-110 transition-transform duration-300">
+                  <Clock className="w-8 h-8 text-blue-600" />
+                </div>
+                <div>
+                  <span className="block text-3xl font-black text-gray-900 leading-none">30+</span>
+                  <span className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Years Experience</span>
+                </div>
               </div>
             </div>
-            <motion.a
-              href="/contact"
-              className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[#b2ff8b] to-[#4ecdc4] text-[#1a1a2e] font-bold rounded-full shadow-lg hover:shadow-xl transition-all text-sm"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Request a Quote <ArrowRight className="w-4 h-4" />
-            </motion.a>
+
+            {/* CTA Action */}
+            <div className="flex flex-col md:flex-row items-center gap-6">
+              <div className="text-center md:text-right hidden md:block">
+                 <span className="block text-gray-900 font-bold text-lg">Ready to start your project?</span>
+                 <span className="block text-gray-500 text-sm">Get a custom quote within 24 hours.</span>
+              </div>
+              <motion.a
+                href="/contact"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-teal-600 to-blue-600 text-white font-bold rounded-xl shadow-lg shadow-teal-900/10 hover:shadow-teal-900/20 hover:-translate-y-1 transition-all text-base"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Request a Quote <ArrowRight className="w-5 h-5 ml-1" />
+              </motion.a>
+            </div>
+
           </div>
         </div>
       </div>
