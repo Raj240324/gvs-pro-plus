@@ -35,11 +35,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative bg-gradient-to-r from-[#b2ff8b]/95 via-[#4ecdc4]/95 to-[#2a9d8f]/95 text-[#1a1a2e] overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5" style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h2v22H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%23000' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
-      }} />
+    <footer className="relative bg-gradient-to-br from-indigo-600 via-teal-500 to-purple-600 text-white overflow-hidden">
 
       {/* Top CTA Banner - Big Stats Version */}
       <div className="relative z-10 bg-zinc-50 py-12 border-b border-zinc-100">
@@ -103,20 +99,20 @@ const Footer = () => {
               <div className="flex items-center gap-3 mb-5">
                 <img src="/gvs-logo.png" alt="GVS Controls Logo" className="h-14 w-14 object-contain rounded-lg shadow-md" width="56" height="56" />
                 <div>
-                  <h3 className="font-bold text-lg text-[#c40000]">GVS CONTROLS</h3>
-                  <p className="text-xs text-[#8a6508] font-semibold italic">Our Vision To Your Solution</p>
+                  <h3 className="font-bold text-lg text-[#ff0000]">GVS CONTROLS</h3>
+                  <p className="text-xs text-[#ffbf00] font-semibold italic">Our Vision To Your Solution</p>
                 </div>
               </div>
-              <p className="text-[#1a1a2e]/80 text-sm leading-relaxed mb-5">
+              <p className="text-white/90 text-sm leading-relaxed mb-5">
                 Delivering innovative, Cost-Effective Engineering solutions. Our Problem-Solving culture ensures optimal Man-Machine interaction, focused on one objective — Customer Satisfaction.
               </p>
               <div className="flex items-center gap-3">
-                <span className="text-xs font-semibold text-[#1a1a2e]/60 uppercase tracking-wide">Follow Us</span>
+                <span className="text-xs font-semibold text-white/70 uppercase tracking-wide">Follow Us</span>
                 {socialLinks.map(({ href, Icon, label }) => (
                   <motion.a
                     key={label}
                     href={href}
-                    className="w-9 h-9 rounded-full bg-[#1a1a2e] flex items-center justify-center text-white hover:bg-[#0077b5] transition-colors"
+                    className="w-9 h-9 rounded-full bg-[#4a0e78] flex items-center justify-center text-white hover:bg-[#0077b5] transition-colors"
                     aria-label={label}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -130,7 +126,7 @@ const Footer = () => {
 
             {/* Column 2: Quick Links */}
             <div>
-              <h4 className="font-bold text-base mb-5 text-[#1a1a2e] uppercase tracking-wide border-b-2 border-[#1a1a2e]/20 pb-2">
+              <h4 className="font-bold text-base mb-5 text-white uppercase tracking-wide border-b-2 border-white/30 pb-2">
                 Quick Links
               </h4>
               <nav className="grid grid-cols-1 gap-2.5">
@@ -138,9 +134,9 @@ const Footer = () => {
                   <NavLink
                     key={label}
                     to={to}
-                    className="flex items-center gap-2 text-[#1a1a2e]/80 hover:text-[#c40000] text-sm transition-colors group"
+                    className="flex items-center gap-2 text-white/90 hover:text-[#ffbf00] text-sm transition-colors group"
                   >
-                    <Icon size={14} className="text-[#1a1a2e]/50 group-hover:text-[#c40000]" />
+                    <Icon size={14} className="text-white/60 group-hover:text-[#ffbf00]" />
                     <span>{label}</span>
                   </NavLink>
                 ))}
@@ -149,7 +145,7 @@ const Footer = () => {
 
             {/* Column 3: Our Services */}
             <div>
-              <h4 className="font-bold text-base mb-5 text-[#1a1a2e] uppercase tracking-wide border-b-2 border-[#1a1a2e]/20 pb-2">
+              <h4 className="font-bold text-base mb-5 text-white uppercase tracking-wide border-b-2 border-white/30 pb-2">
                 Our Services
               </h4>
               <nav className="grid grid-cols-1 gap-2.5">
@@ -157,9 +153,9 @@ const Footer = () => {
                   <NavLink
                     key={label}
                     to={to}
-                    className="flex items-center gap-2 text-[#1a1a2e]/80 hover:text-[#c40000] text-sm transition-colors group"
+                    className="flex items-center gap-2 text-white/90 hover:text-[#ffbf00] text-sm transition-colors group"
                   >
-                    <Briefcase size={14} className="text-[#1a1a2e]/50 group-hover:text-[#c40000]" />
+                    <Briefcase size={14} className="text-white/60 group-hover:text-[#ffbf00]" />
                     <span>{label}</span>
                   </NavLink>
                 ))}
@@ -168,33 +164,33 @@ const Footer = () => {
 
             {/* Column 4: Contact Us */}
             <div>
-              <h4 className="font-bold text-base mb-5 text-[#1a1a2e] uppercase tracking-wide border-b-2 border-[#1a1a2e]/20 pb-2">
+              <h4 className="font-bold text-base mb-5 text-white uppercase tracking-wide border-b-2 border-white/30 pb-2">
                 Contact Us
               </h4>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <MapPin size={18} className="text-[#c40000] flex-shrink-0 mt-0.5" />
-                  <p className="text-sm text-[#1a1a2e]/80 leading-relaxed">
+                  <MapPin size={18} className="text-[#ffbf00] flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-white/90 leading-relaxed">
                     Plot No.1476, Segundram Main Road, Gokulapuram, MaraimalaiNagar, Chengalpattu - 603209
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Phone size={18} className="text-[#c40000] flex-shrink-0 mt-0.5" />
+                  <Phone size={18} className="text-[#ffbf00] flex-shrink-0 mt-0.5" />
                   <div className="text-sm">
-                    <a href="tel:+917338880027" className="block text-[#1a1a2e]/80 hover:text-[#c40000] transition-colors">+91 73388 80027</a>
-                    <a href="tel:+919884001597" className="block text-[#1a1a2e]/80 hover:text-[#c40000] transition-colors">+91 98840 01597</a>
+                    <a href="tel:+917338880027" className="block text-white/90 hover:text-[#ffbf00] transition-colors">+91 73388 80027</a>
+                    <a href="tel:+919884001597" className="block text-white/90 hover:text-[#ffbf00] transition-colors">+91 98840 01597</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Mail size={18} className="text-[#c40000] flex-shrink-0 mt-0.5" />
+                  <Mail size={18} className="text-[#ffbf00] flex-shrink-0 mt-0.5" />
                   <div className="text-sm">
-                    <a href="mailto:projects@gvscontrols.com" className="block text-[#1a1a2e]/80 hover:text-[#c40000] transition-colors">projects@gvscontrols.com</a>
-                    <a href="mailto:gvscontrols@gmail.com" className="block text-[#1a1a2e]/80 hover:text-[#c40000] transition-colors">gvscontrols@gmail.com</a>
+                    <a href="mailto:projects@gvscontrols.com" className="block text-white/90 hover:text-[#ffbf00] transition-colors">projects@gvscontrols.com</a>
+                    <a href="mailto:gvscontrols@gmail.com" className="block text-white/90 hover:text-[#ffbf00] transition-colors">gvscontrols@gmail.com</a>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Globe size={18} className="text-[#c40000] flex-shrink-0" />
-                  <a href="https://www.gvscontrols.com" target="_blank" rel="noopener noreferrer" className="text-sm text-[#1a1a2e]/80 hover:text-[#c40000] transition-colors">
+                  <Globe size={18} className="text-[#ffbf00] flex-shrink-0" />
+                  <a href="https://www.gvscontrols.com" target="_blank" rel="noopener noreferrer" className="text-sm text-white/90 hover:text-[#ffbf00] transition-colors">
                     www.gvscontrols.com
                   </a>
                 </div>
@@ -205,7 +201,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar - Copyright & Legal */}
-      <div className="relative z-10 bg-[#1a1a2e] py-5">
+      <div className="relative z-10 bg-indigo-900/50 backdrop-blur-sm py-5 border-t border-white/10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             {/* Copyright */}

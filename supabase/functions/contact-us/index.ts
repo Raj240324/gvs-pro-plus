@@ -88,91 +88,245 @@ serve(async (req) => {
       throw new Error('Missing RESEND_API_KEY')
     }
 
-    const emailSubject = `New Inquiry: ${subject || 'General'}`
+    // Professional Email Template with GVS Branding
+    const emailSubject = `New Inquiry: ${subject || 'General'}`;
+    // Use staging URL until production domain is active
+    const baseUrl = 'https://gvs-pro-plus.vercel.app';
+    const logoUrl = `${baseUrl}/gvs-logo.png`;
     
-    // Helper to generate professional HTML email
-    const createEmailTemplate = (isOwner: boolean) => `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-          body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f4f4f4; -webkit-font-smoothing: antialiased; }
-          .container { max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid #eaeaea; }
-          .header { background: linear-gradient(135deg, #0d9488 0%, #7c3aed 100%); padding: 40px 20px; text-align: center; }
-          .header h1 { color: #ffffff; margin: 0; font-size: 28px; font-weight: 700; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-          .subtitle { color: rgba(255,255,255,0.9); font-size: 14px; margin-top: 5px; font-weight: 500; }
-          .content { padding: 40px 30px; background-color: #ffffff; }
-          .section-title { color: #0d9488; font-size: 18px; font-weight: 700; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
-          .footer { background: #f9fafb; color: #6b7280; padding: 30px; text-align: center; font-size: 12px; border-top: 1px solid #eaeaea; }
-          .info-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 10px; }
-          .info-table tr {  }
-          .info-table td { padding: 12px 0; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
-          .info-table td:last-child { border-bottom: none; }
-          .label { font-weight: 600; width: 120px; color: #4b5563; font-size: 14px; }
-          .value { color: #111827; font-size: 14px; }
-          .message-box { background-color: #f8fafc; border-left: 4px solid #7c3aed; padding: 20px; margin: 20px 0; border-radius: 4px; font-style: italic; color: #4b5563; }
-          .button { display: inline-block; background: linear-gradient(to right, #0d9488, #7c3aed); color: #ffffff; padding: 12px 30px; text-decoration: none; border-radius: 50px; font-weight: 600; margin-top: 25px; font-size: 14px; box-shadow: 0 4px 6px rgba(13, 148, 136, 0.2); }
-          .links { margin-top: 20px; }
-          .links a { color: #0d9488; text-decoration: none; margin: 0 10px; font-weight: 500; }
-        </style>
-      </head>
-      <body>
-        <div class="container">
-          <div class="header">
-             <h1>GVS CONTROLS</h1>
-             <div class="subtitle">Electrical • Automation • Turnkey Solutions</div>
-          </div>
-          <div class="content">
-            ${isOwner ? `
-              <div class="section-title">New Website Lead</div>
-              <p style="margin-bottom: 20px;">You have received a new inquiry from the website contact form.</p>
-              
-              <table class="info-table">
-                <tr><td class="label">Name</td><td class="value"><strong>${name}</strong></td></tr>
-                <tr><td class="label">Email</td><td class="value"><a href="mailto:${email}" style="color: #0d9488; text-decoration: none;">${email}</a></td></tr>
-                <tr><td class="label">Phone</td><td class="value">${phone || '<span style="color:#9ca3af">Not Find</span>'}</td></tr>
-                <tr><td class="label">Subject</td><td class="value">${subject || 'General Inquiry'}</td></tr>
-              </table>
+const createEmailTemplate = (isOwner: boolean) => `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GVS Controls</title>
 
-              <div style="margin-top: 30px;">
-                <div class="label" style="margin-bottom: 10px;">Message:</div>
-                <div class="message-box">"${message}"</div>
-              </div>
-              
-              <center>
-                <a href="mailto:${email}" class="button">Reply to Lead</a>
-              </center>
-            ` : `
-              <div class="section-title">We Received Your Message</div>
-              <p>Dear <strong>${name}</strong>,</p>
-              <p>Thank you for reaching out to <strong>GVS Controls</strong>. We have successfully received your inquiry regarding <strong>"${subject || 'General Inquiry'}"</strong>.</p>
-              <p>Our team is currently reviewing your request and will get back to you within <strong>24 business hours</strong>.</p>
-              
-              <div style="margin-top: 25px; margin-bottom: 5px; font-weight: 600; color: #4b5563;">Your Message Copy:</div>
-              <div class="message-box">"${message}"</div>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7fb;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    color: #1f2937;
+  }
 
-              <center>
-                <a href="https://gvs-pro-plus.vercel.app" class="button">Visit Our Website</a>
-              </center>
-            `}
-          </div>
-          <div class="footer">
-            <p style="font-weight: 600; color: #374151; font-size: 14px; margin-bottom: 5px;">GVS Controls</p>
-            <p>Plot No.1476, Segundram Main Road, Gokulapuram-MaraimalaiNagar<br>Chengalpattu, Tamil Nadu - 603209</p>
-            <p>Phone: +91 7338880027 | Email: projects@gvscontrols.com</p>
-            <div class="links">
-              <a href="https://gvs-pro-plus.vercel.app">Website</a> • 
-              <a href="https://gvs-pro-plus.vercel.app/services">Services</a> • 
-              <a href="https://gvs-pro-plus.vercel.app/contact">Contact</a>
-            </div>
-            <p style="margin-top: 20px; color: #9ca3af;">&copy; ${new Date().getFullYear()} GVS Controls. All rights reserved.</p>
-          </div>
+  .wrapper {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 24px 12px;
+  }
+
+  .container {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #1f4fd8 0%, #2ec4b6 100%);
+    padding: 28px 24px;
+    text-align: center;
+  }
+
+  .logo {
+    width: 68px;
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  .brand {
+    font-size: 22px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 1px;
+  }
+
+  .brand span {
+    color: #ffdddd;
+  }
+
+  .tagline {
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+    margin-top: 4px;
+  }
+
+  /* CONTENT */
+  .content {
+    padding: 28px 24px;
+  }
+
+  .title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .text {
+    font-size: 14px;
+    color: #4b5563;
+    line-height: 1.7;
+  }
+
+  /* INFO TABLE */
+  .info-box {
+    margin-top: 20px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .row {
+    display: flex;
+    padding: 12px 14px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .row:last-child {
+    border-bottom: none;
+  }
+
+  .label {
+    width: 110px;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #6b7280;
+    font-weight: 600;
+  }
+
+  .value {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+    color: #111827;
+  }
+
+  .value a {
+    color: #1f4fd8;
+    text-decoration: none;
+  }
+
+  /* MESSAGE */
+  .message-box {
+    margin-top: 20px;
+    padding: 16px;
+    background: #f9fafb;
+    border-left: 4px solid #2ec4b6;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  /* CTA */
+  .cta {
+    margin-top: 28px;
+    text-align: center;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 14px 34px;
+    background: #c40000;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 30px;
+    text-decoration: none;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: #1f2937;
+    padding: 22px;
+    text-align: center;
+    color: #9ca3af;
+    font-size: 12px;
+  }
+
+  .footer strong {
+    color: #ffffff;
+  }
+
+  .footer a {
+    color: #2ec4b6;
+    text-decoration: none;
+    margin: 0 6px;
+  }
+</style>
+</head>
+
+<body>
+<div class="wrapper">
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+      <img src="${logoUrl}" class="logo" alt="GVS Controls Logo" />
+      <div class="brand">GVS <span>CONTROLS</span></div>
+      <div class="tagline">Electrical • Instrumentation • Automation</div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      ${
+        isOwner
+        ? `
+        <div class="title">New Website Inquiry</div>
+        <p class="text">A new contact request has been received through the GVS Controls website.</p>
+
+        <div class="info-box">
+          <div class="row"><div class="label">Name</div><div class="value">${name}</div></div>
+          <div class="row"><div class="label">Email</div><div class="value"><a href="mailto:${email}">${email}</a></div></div>
+          <div class="row"><div class="label">Phone</div><div class="value">${phone || "Not provided"}</div></div>
+          <div class="row"><div class="label">Subject</div><div class="value">${subject || "General Inquiry"}</div></div>
         </div>
-      </body>
-      </html>
-    `;
+
+        <div class="message-box">${message}</div>
+
+        <div class="cta">
+          <a class="btn" href="mailto:${email}?subject=Re: ${subject || "Your Inquiry"}">Reply to Customer</a>
+        </div>
+        `
+        : `
+        <div class="title">Thank You for Contacting GVS Controls</div>
+        <p class="text">
+          Dear ${name},<br><br>
+          We have received your inquiry. Our technical team will review your message and respond within <strong>24 business hours</strong>.
+        </p>
+
+        <div class="message-box">${message}</div>
+
+        <p class="text" style="margin-top:20px;">
+          For urgent matters, you may reach us directly.
+        </p>
+
+        <div class="cta">
+          <a class="btn" href="${baseUrl}/services">View Our Services</a>
+        </div>
+        `
+      }
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <strong>GVS CONTROLS</strong><br />
+      Electrical, Instrumentation & Automation Solutions<br><br>
+      📞 <a href="tel:+917338880027">+91 73388 80027</a> |
+      ✉️ <a href="mailto:projects@gvscontrols.com">projects@gvscontrols.com</a><br><br>
+      © ${new Date().getFullYear()} GVS Controls
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
+`;
+
 
     // Send to Owner
     const res = await fetch('https://api.resend.com/emails', {

@@ -9,6 +9,7 @@ import ReactGA from "react-ga4";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import BackToTop from "./components/BackToTop";
+import FloatingWhatsApp from "./components/FloatingWhatsApp";
 import Preloader from "./components/Preloader";
 import CookieConsentBanner from "./components/CookieConsentBanner";
 import AOS from 'aos';
@@ -104,6 +105,7 @@ const App = () => {
               <Footer />
 
               <BackToTop />
+              <FloatingWhatsApp />
               <CookieConsentBanner />
             </>
           )}
