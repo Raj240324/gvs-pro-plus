@@ -12,9 +12,7 @@ import BackToTop from "./components/BackToTop";
 import FloatingWhatsApp from "./components/FloatingWhatsApp";
 import Preloader from "./components/Preloader";
 import CookieConsentBanner from "./components/CookieConsentBanner";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import Lenis from 'lenis';
+import SmoothScroll from "./components/SmoothScroll";
 
 const queryClient = new QueryClient();
 
@@ -40,51 +38,14 @@ const App = () => {
   }, [location]);
 
   // Handle preloader, AOS init, and Lenis smooth scroll
+  // Handle preloader
   useEffect(() => {
-    // Initialize AOS with performance optimizations
-    AOS.init({
-      duration: 600, // Faster for less interference
-      once: true,
-      mirror: false,
-      easing: 'ease-out-cubic',
-      disable: false,
-      startEvent: 'DOMContentLoaded',
-      offset: 120,
-    });
-
-    // Initialize Lenis with optimized "Apple-like" smooth scroll settings
-    const lenis = new Lenis({
-      duration: 1.2, // Smooth but responsive
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential ease-out
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
-      autoResize: true,
-    } as any);
-
-    // Sync AOS on scroll (optional, but helps with some setups)
-    // lenis.on('scroll', AOS.refresh); 
-
-    let rafId: number;
-    function raf(time: number) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    }
-
-    rafId = requestAnimationFrame(raf);
-
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 1000);
 
     return () => {
       clearTimeout(timer);
-      cancelAnimationFrame(rafId);
-      lenis.destroy();
     };
   }, []);
 
@@ -98,6 +59,7 @@ const App = () => {
             <Preloader />
           ) : (
             <>
+              <SmoothScroll />
               <Header />
               <main id="main-content" tabIndex={-1} className="focus:outline-none">
                 <Outlet />

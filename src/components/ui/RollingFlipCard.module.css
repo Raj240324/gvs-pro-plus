@@ -5,6 +5,13 @@
   perspective: 900px;
 }
 
+@media (max-width: 640px) {
+  .container {
+    aspect-ratio: 2/1; /* Much shorter/wider for mobile list view */
+    max-height: 200px; /* Cap height to prevent it getting too big */
+  }
+}
+
 /* The Card Wrapper */
 .card {
   height: 100%;

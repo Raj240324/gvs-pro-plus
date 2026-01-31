@@ -1,5 +1,6 @@
 import { useEffect, useState, Component, ErrorInfo, ReactNode } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle, Linkedin, Clock } from 'lucide-react';
+import SendButton from '../components/ui/SendButton';
+import { Mail, Phone, MapPin, Send, Linkedin, Clock } from 'lucide-react';
 import { useToast } from "../hooks/use-toast";
 import { motion } from 'framer-motion';
 import { Textarea } from '../components/ui/textarea';
@@ -484,11 +485,15 @@ const Contact = () => {
                       disabled={isSubmitting} />
                     {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
                   </div>
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="mt-8">
-                    <Button type="submit" disabled={isSubmitting} className="w-full py-3 px-8 bg-gradient-to-r from-teal-500 to-purple-600 text-white font-semibold rounded-full shadow-md hover:from-teal-600 hover:to-purple-700 transition-all duration-300">
-                      {isSubmitting ? 'Sending...' : isSubmitted ? 'Sent!' : 'Send Message'} {isSubmitted && <CheckCircle className="inline ml-2" />}
-                    </Button>
-                  </motion.div>
+                  <div className="mt-8">
+                    <SendButton 
+                      type="submit" 
+                      isSubmitting={isSubmitting}
+                      isSubmitted={isSubmitted}
+                      className="w-full py-4 text-lg"
+                      text="Send Message"
+                    />
+                  </div>
                 </form>
               </motion.div>
 

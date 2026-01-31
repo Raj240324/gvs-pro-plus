@@ -83,8 +83,7 @@
 
   /* Optimize all animated elements */
   [class*="motion"],
-  [class*="animate"],
-  [data-aos] {
+  [class*="animate"] {
     will-change: transform, opacity;
     transform: translateZ(0);
     backface-visibility: hidden;
@@ -301,48 +300,7 @@
   grid-template-rows: masonry;
 }
 
-/* AOS-like animations */
-.aos-fade-up {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
 
-.aos-fade-up.aos-animate {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.aos-fade-in {
-  opacity: 0;
-  transition: opacity 0.8s ease-out;
-}
-
-.aos-fade-in.aos-animate {
-  opacity: 1;
-}
-
-.aos-fade-right {
-  opacity: 0;
-  transform: translateX(-20px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.aos-fade-right.aos-animate {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.aos-fade-left {
-  opacity: 0;
-  transform: translateX(20px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.aos-fade-left.aos-animate {
-  opacity: 1;
-  transform: translateX(0);
-}
 
 /* Staggered animation delays */
 .delay-100 {
@@ -600,66 +558,7 @@
 }
 
 /* Add AOS-like animation styles */
-.aos-fade-up {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.5s ease-out;
-}
 
-.aos-fade-right {
-  opacity: 0;
-  transform: translateX(-20px);
-  transition: all 0.5s ease-out;
-}
-
-.aos-fade-left {
-  opacity: 0;
-  transform: translateX(20px);
-  transition: all 0.5s ease-out;
-}
-
-.aos-animate {
-  opacity: 1;
-  transform: translate(0, 0);
-}
-
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.animate-active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-[data-animation="fade-in-down"] {
-  transform: translateY(-20px);
-}
-
-[data-animation="fade-in-scale"] {
-  transform: scale(0.95);
-}
-
-.animate-active[data-animation="fade-in-down"] {
-  transform: translateY(0);
-}
-
-.animate-active[data-animation="fade-in-scale"] {
-  transform: scale(1);
-}
-
-.aos-animate {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.aos-fade-up {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
 
 /* globals.css */
 @layer utilities {

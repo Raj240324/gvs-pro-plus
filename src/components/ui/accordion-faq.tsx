@@ -88,8 +88,11 @@ export function AccordionFAQ() {
     const newState = openId === id ? null : id;
     setOpenId(newState);
     
-    // Removed auto-scroll to prevent jitter interacting with accordion animation
-    // if (newState) { ... }
+    // Trigger layout update for Lenis to prevent jitter
+    // We delay slightly to allow Framer Motion to start/finish, but triggering immediately and repeatedly is safest for smooth resize
+    setTimeout(() => {
+        window.dispatchEvent(new Event('resize'));
+    }, 300); // 300ms matches the animation duration roughly
   };
 
   return (

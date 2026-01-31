@@ -211,16 +211,29 @@ const Services: React.FC = () => {
         )}
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16" data-aos="fade-up">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Service Offerings</h2>
             <p className="text-gray-300 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
               Explore our comprehensive suite of solutions engineered to optimize your industrial operations.
             </p>
-          </div>
+          </motion.div>
 
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((card, index) => (
-              <li key={card.id} data-aos="fade-up" data-aos-delay={index * 100} style={{ '--index': index } as React.CSSProperties}>
+              <motion.li 
+                key={card.id} 
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                style={{ '--index': index } as React.CSSProperties}
+              >
                 <TiltedCard
                   containerHeight="100%"
                   containerWidth="100%"
@@ -251,7 +264,7 @@ const Services: React.FC = () => {
                     </a>
                   </div>
                 </TiltedCard>
-              </li>
+              </motion.li>
             ))}
           </ul>
         </div>
@@ -277,7 +290,12 @@ const Services: React.FC = () => {
           style={{ scrollMarginTop: `${headerHeight + 32}px` }}
         >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div data-aos="fade-up">
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
               <div className="flex items-center mb-10">
                 {React.cloneElement(service.icon as React.ReactElement, {
                   className: 'text-teal-600',
@@ -315,7 +333,7 @@ const Services: React.FC = () => {
                   </motion.li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           </div>
         </section>
       ))}
