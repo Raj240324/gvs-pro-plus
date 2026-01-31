@@ -229,6 +229,7 @@ export default function AboutUnified() {
                     </p>
                   </>
                 }
+                className="w-full max-w-[300px] mx-auto !aspect-[4/3]"
               />
               <FlipCard
                 frontContent={
@@ -248,6 +249,7 @@ export default function AboutUnified() {
                     </p>
                   </>
                 }
+                className="w-full max-w-[300px] mx-auto !aspect-[4/3]"
               />
               <FlipCard
                 frontContent={
@@ -267,6 +269,7 @@ export default function AboutUnified() {
                     </p>
                   </>
                 }
+                className="w-full max-w-[300px] mx-auto !aspect-[4/3]"
               />
               <FlipCard
                 frontContent={
@@ -286,6 +289,7 @@ export default function AboutUnified() {
                     </p>
                   </>
                 }
+                className="w-full max-w-[300px] mx-auto !aspect-[4/3]"
               />
                <FlipCard
                 frontContent={
@@ -305,6 +309,7 @@ export default function AboutUnified() {
                     </p>
                   </>
                 }
+                className="w-full max-w-[300px] mx-auto !aspect-[4/3]"
               />
             </div>
           </div>
@@ -364,7 +369,7 @@ export default function AboutUnified() {
                 {priorProjects.map((project, i) => (
                   <span
                     key={i}
-                    className="px-4 py-2 bg-gradient-to-r from-teal-500/20 to-indigo-500/20 rounded-full text-white text-sm font-medium border border-white/20"
+                    className="px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-teal-500/20 to-indigo-500/20 rounded-full text-white text-xs md:text-sm leading-tight text-center font-medium border border-white/20"
                   >
                     {project}
                   </span>

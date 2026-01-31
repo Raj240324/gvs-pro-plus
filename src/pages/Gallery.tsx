@@ -152,7 +152,7 @@ const Gallery = () => {
       {/* Uniform Grid - Centered Bottom */}
       <section className="py-16 bg-white min-h-screen">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-6">
+          <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
             {galleryImages.map((image, index) => (
               <motion.div
                 key={image.id}
@@ -160,13 +160,13 @@ const Gallery = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
-                className="group cursor-pointer relative rounded-xl overflow-hidden bg-gray-100 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.33%-16px)] aspect-[3/4]"
+                className="break-inside-avoid group cursor-pointer relative rounded-xl overflow-hidden bg-gray-100 w-full mb-4"
                 onClick={() => openLightbox(index)}
               >
                 <img
                   src={image.src}
                   alt={image.alt}
-                  className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-110"
                   loading="lazy"
                 />
                 
@@ -203,14 +203,14 @@ const Gallery = () => {
 
              <button 
                 onClick={(e) => { e.stopPropagation(); showPrev(); }}
-                className="absolute left-4 md:left-8 z-50 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors hidden sm:block"
+                className="absolute left-4 md:left-8 z-50 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
              >
                <ChevronLeft size={32} />
              </button>
 
              <button 
                 onClick={(e) => { e.stopPropagation(); showNext(); }}
-                className="absolute right-4 md:right-8 z-50 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors hidden sm:block"
+                className="absolute right-4 md:right-8 z-50 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
              >
                <ChevronRight size={32} />
              </button>
