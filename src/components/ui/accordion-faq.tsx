@@ -88,11 +88,8 @@ export function AccordionFAQ() {
     const newState = openId === id ? null : id;
     setOpenId(newState);
     
-    // Trigger layout update for Lenis to prevent jitter
-    // We delay slightly to allow Framer Motion to start/finish, but triggering immediately and repeatedly is safest for smooth resize
-    setTimeout(() => {
-        window.dispatchEvent(new Event('resize'));
-    }, 300); // 300ms matches the animation duration roughly
+    // Notify Lenis of layout change immediately
+    window.dispatchEvent(new Event('resize'));
   };
 
   return (
@@ -143,10 +140,10 @@ export function AccordionFAQ() {
           {faqs.map((item, index) => (
             <motion.div
               id={`faq-${item.id}`}
-              layout
               key={item.id}
+              initial={false}
               className={cn(
-                "group relative rounded-2xl border transition-all duration-300 overflow-hidden",
+                "group relative rounded-2xl border transition-all duration-300",
                 openId === item.id 
                   ? "bg-white/10 border-cyan-500/50 shadow-lg shadow-cyan-900/20" 
                   : "bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/[0.07]"
@@ -181,13 +178,20 @@ export function AccordionFAQ() {
                 )} />
               </button>
 
-              <AnimatePresence>
+              <AnimatePresence initial={false}>
                 {openId === item.id && (
                   <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    key="content"
+                    initial="collapsed"
+                    animate="open"
+                    exit="collapsed"
+                    variants={{
+                      open: { opacity: 1, height: "auto" },
+                      collapsed: { opacity: 0, height: 0 }
+                    }}
+                    transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
+                    className="overflow-hidden"
+                    onAnimationComplete={() => window.dispatchEvent(new Event('resize'))}
                   >
                     <div className="px-5 pb-5 pt-0 sm:px-6 sm:pb-6 sm:ml-[5.5rem] pr-2">
                       <div className="h-[1px] w-full bg-gradient-to-r from-cyan-500/30 to-transparent mb-4" />
