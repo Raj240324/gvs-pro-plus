@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useMemo } from 'react';
 import { motion, useScroll, useTransform as transformScroll } from 'framer-motion';
-import { ArrowRight, Building2, Factory, Award, User, Briefcase, Users, Clock, CheckCircle2 } from 'lucide-react';
+import FlipCard from '@/components/ui/FlipCard';
 import ModernJourney, { TimelineEvent } from '@/components/ui/ModernJourney';
+import { ArrowRight, Award, Briefcase, Building2, CheckCircle2, Clock, Factory, Handshake, Settings, ShieldCheck, User, Users } from 'lucide-react';
 import SEO from '../components/SEO';
 import gvsFront from '../assets/about-image/gvs-front.jpeg';
 import gvsMain from '../assets/about-image/gvs-main.jpeg';
@@ -184,6 +185,127 @@ export default function AboutUnified() {
                   <div className="text-sm text-slate-500 dark:text-slate-400">{stat.label}</div>
                 </motion.div>
               ))}
+            </div>
+          </div>
+</section>
+
+        {/* CORE VALUES (Flip Cards) */}
+        <section className="py-20 bg-slate-50 dark:bg-slate-900/50">
+          <div className="max-w-7xl mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-12"
+            >
+              <span className="inline-block px-4 py-1.5 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 text-sm font-semibold mb-4">
+                OUR VALUES
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">
+                What Drives Us
+              </h2>
+              <p className="text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+                The core principles that guide our every interaction and project.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+              <FlipCard
+                frontContent={
+                  <>
+                    <div className="p-4 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 mb-4">
+                      <Settings className="w-8 h-8" />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 dark:text-white">Innovation</h3>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm">Pioneering Solutions</p>
+                  </>
+                }
+                backContent={
+                  <>
+                    <h4 className="text-lg font-semibold text-blue-700 dark:text-blue-300 mb-2">Future Ready</h4>
+                    <p className="text-slate-600 dark:text-slate-300 text-sm">
+                      Commonstrantly exploring new technologies to deliver state-of-the-art engineering solutions.
+                    </p>
+                  </>
+                }
+              />
+              <FlipCard
+                frontContent={
+                  <>
+                    <div className="p-4 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 mb-4">
+                      <ShieldCheck className="w-8 h-8" />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 dark:text-white">Quality</h3>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm">Standard Compliant</p>
+                  </>
+                }
+                backContent={
+                  <>
+                    <h4 className="text-lg font-semibold text-emerald-700 dark:text-emerald-300 mb-2">Certified Excellence</h4>
+                    <p className="text-slate-600 dark:text-slate-300 text-sm">
+                      Adhering strictly to IE & CEIG regulations to ensure the highest safety and quality standards.
+                    </p>
+                  </>
+                }
+              />
+              <FlipCard
+                frontContent={
+                  <>
+                    <div className="p-4 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 mb-4">
+                      <Handshake className="w-8 h-8" />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 dark:text-white">Integrity</h3>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm">Honest Partnerships</p>
+                  </>
+                }
+                backContent={
+                  <>
+                    <h4 className="text-lg font-semibold text-amber-700 dark:text-amber-300 mb-2">Trust First</h4>
+                    <p className="text-slate-600 dark:text-slate-300 text-sm">
+                      Building lasting relationships through transparency, honesty, and ethical business practices.
+                    </p>
+                  </>
+                }
+              />
+              <FlipCard
+                frontContent={
+                  <>
+                    <div className="p-4 rounded-full bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 mb-4">
+                      <Users className="w-8 h-8" />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 dark:text-white">Customer Focus</h3>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm">Client Satisfaction</p>
+                  </>
+                }
+                backContent={
+                  <>
+                    <h4 className="text-lg font-semibold text-rose-700 dark:text-rose-300 mb-2">You Matter</h4>
+                    <p className="text-slate-600 dark:text-slate-300 text-sm">
+                      Dedicated to understanding and exceeding client expectations in every project we undertake.
+                    </p>
+                  </>
+                }
+              />
+               <FlipCard
+                frontContent={
+                  <>
+                    <div className="p-4 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 mb-4">
+                      <Award className="w-8 h-8" />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-800 dark:text-white">Excellence</h3>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm">Pursuit of Best</p>
+                  </>
+                }
+                backContent={
+                  <>
+                    <h4 className="text-lg font-semibold text-purple-700 dark:text-purple-300 mb-2">Top Tier</h4>
+                    <p className="text-slate-600 dark:text-slate-300 text-sm">
+                       Leveraging 30+ years of expertise to deliver premium engineering and automation results.
+                    </p>
+                  </>
+                }
+              />
             </div>
           </div>
         </section>

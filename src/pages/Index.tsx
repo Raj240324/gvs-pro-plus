@@ -9,6 +9,7 @@ import Highlights from '../components/home/Highlights';
 import SEO from '../components/SEO';
 import StatCounter from '../components/home/StatCounter';
 import InfoCard from '../components/home/InfoCard';
+import RollingFlipCard from '../components/ui/RollingFlipCard';
 import { motion } from 'framer-motion';
 
 const Index = () => {
@@ -60,59 +61,115 @@ const Index = () => {
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-            <InfoCard 
-              title="Our Foundation"
-              badge="Est. 2017"
-              subtitle="Innovation & Problem Solving"
-              color="blue"
-              icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>}
-              delay={0.1}
-              description="Founded in 2017, GVS Controls provides innovative, cost‑effective engineering solutions, emphasizing a creative culture to optimize man‑machine interfaces."
-            />
-            
-            <InfoCard 
-              title="Founder's Experience"
-              badge="30+ Years"
-              subtitle="Deep EPC Expertise"
-              color="green"
-              icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
-              delay={0.2}
-              description="Before 2017, our promoter worked with Shriram EPC Ltd., L&T, and Black Stone Group — delivering projects for SAIL, TISCO, NTPC, and leading industries."
-            />
-
-            <InfoCard 
-              title="Our Expertise"
-              badge="Instrumentation"
-              subtitle="Automation & Process Control"
-              color="red"
-              icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
-              delay={0.3}
-              description="We provide Total Automation, Control Solutions, and Innovative Instrumentation products, tailored to diverse process and machine applications."
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            {/* Card 1: Our Foundation */}
+            <RollingFlipCard
+              frontClassName="bg-gradient-to-br from-blue-500 to-blue-700"
+              frontContent={
+                <>
+                  <div className="p-4 rounded-full bg-white/20 text-white mb-4 backdrop-blur-sm">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-white">Our Foundation</h3>
+                  <p className="text-sm font-semibold text-blue-100">Est. 2017</p>
+                </>
+              }
+              backContent={
+                <>
+                  <h4 className="text-lg font-bold text-white mb-2">Innovation & Problem Solving</h4>
+                  <p className="text-center text-sm md:text-xs lg:text-sm text-indigo-100">
+                    Founded in 2017, GVS Controls provides innovative, cost‑effective engineering solutions with a creative culture.
+                  </p>
+                </>
+              }
             />
 
-            <InfoCard 
-              title="Our Services"
-              badge="Turnkey"
-              subtitle="Consultancy & Manufacturing"
-              color="yellow"
-              icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>}
-              delay={0.4}
-              description="We offer Consultancy, Manufacturing of Control panels, Bus ducts, Erection, Testing, Commissioning, and Revamping of Electrical systems."
+            {/* Card 2: Founder's Experience */}
+            <RollingFlipCard
+              frontClassName="bg-gradient-to-br from-emerald-500 to-emerald-700"
+              frontContent={
+                <>
+                  <div className="p-4 rounded-full bg-white/20 text-white mb-4 backdrop-blur-sm">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-white">Founder's Experience</h3>
+                  <p className="text-sm font-semibold text-emerald-100">30+ Years</p>
+                </>
+              }
+              backContent={
+                <>
+                  <h4 className="text-lg font-bold text-white mb-2">Deep EPC Expertise</h4>
+                  <p className="text-center text-sm md:text-xs lg:text-sm text-indigo-100">
+                    Previous experience with Shriram EPC Ltd., L&T, and Black Stone Group for clients like SAIL and NTPC.
+                  </p>
+                </>
+              }
             />
 
-            <InfoCard 
-              title="Our Clients"
-              badge="50+ Leaders"
-              subtitle="Trusted Across Industries"
-              color="purple"
-              icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>}
-              delay={0.5}
-              description={
-                <span>
-                  <strong>Clients:</strong> Aumund, Loesche, Metco, ARS, Meenakshi. <br/>
-                  <strong>Prior Exp:</strong> SAIL, TISCO, RINL, NTPC, JSW, CPCL.
-                </span>
+            {/* Card 3: Our Expertise */}
+            <RollingFlipCard
+              frontClassName="bg-gradient-to-br from-rose-500 to-rose-700"
+              frontContent={
+                <>
+                  <div className="p-4 rounded-full bg-white/20 text-white mb-4 backdrop-blur-sm">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-white">Our Expertise</h3>
+                  <p className="text-sm font-semibold text-rose-100">Instrumentation</p>
+                </>
+              }
+              backContent={
+                <>
+                  <h4 className="text-lg font-bold text-white mb-2">Automation & Control</h4>
+                  <p className="text-center text-sm md:text-xs lg:text-sm text-indigo-100">
+                    Total Automation, Control Solutions, and Innovative Instrumentation products for diverse applications.
+                  </p>
+                </>
+              }
+            />
+
+            {/* Card 4: Our Services */}
+            <RollingFlipCard
+              frontClassName="bg-gradient-to-br from-amber-500 to-orange-600"
+              frontContent={
+                <>
+                  <div className="p-4 rounded-full bg-white/20 text-white mb-4 backdrop-blur-sm">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-white">Our Services</h3>
+                  <p className="text-sm font-semibold text-amber-100">Turnkey</p>
+                </>
+              }
+              backContent={
+                <>
+                  <h4 className="text-lg font-bold text-white mb-2">Consultancy & Mfg.</h4>
+                  <p className="text-center text-sm md:text-xs lg:text-sm text-indigo-100">
+                    Consultancy, Panel Mfg, Erection, Testing, Commissioning, and Electrical System Revamping.
+                  </p>
+                </>
+              }
+            />
+
+            {/* Card 5: Our Clients */}
+            <RollingFlipCard
+              frontClassName="bg-gradient-to-br from-violet-600 to-purple-700"
+              frontContent={
+                <>
+                  <div className="p-4 rounded-full bg-white/20 text-white mb-4 backdrop-blur-sm">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-white">Our Clients</h3>
+                  <p className="text-sm font-semibold text-purple-100">50+ Leaders</p>
+                </>
+              }
+              backContent={
+                <>
+                  <h4 className="text-lg font-bold text-white mb-2">Trusted Globally</h4>
+                  <div className="text-center text-sm md:text-xs lg:text-sm text-indigo-100">
+                    <p><strong>Clients:</strong> Aumund, Loesche, Metco.</p>
+                    <p><strong>Ref:</strong> SAIL, TISCO, JSW.</p>
+                  </div>
+                </>
               }
             />
           </div>

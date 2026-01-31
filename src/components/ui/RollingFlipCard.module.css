@@ -1,0 +1,51 @@
+/* Component Container */
+.container {
+  width: 100%;
+  aspect-ratio: 4/5;
+  perspective: 900px;
+}
+
+/* The Card Wrapper */
+.card {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  transition: transform 1500ms;
+  transform-style: preserve-3d;
+  border-radius: 1.5rem;
+}
+
+/* Hover Effect: Rolling Flip */
+.container:hover > .card {
+  cursor: pointer;
+  transform: rotateY(180deg) rotateZ(180deg);
+}
+
+/* Front and Back Faces Common Styles */
+.front, .back {
+  height: 100%;
+  width: 100%;
+  border-radius: 1.5rem;
+  position: absolute;
+  backface-visibility: hidden;
+  overflow: hidden;
+  /* Removed padding/flex here to let the inner React structure handle layout if needed, 
+     but keeping the base shape intact. 
+     Actually, let's keep basic flex centering for safety, but allow overrides via React classes. */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* Front Face */
+.front {
+  z-index: 2;
+  transform: rotateY(0deg);
+}
+
+/* Back Face */
+.back {
+  transform: rotateY(180deg) rotateZ(180deg);
+  z-index: 1;
+}
