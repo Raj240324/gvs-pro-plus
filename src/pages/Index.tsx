@@ -16,7 +16,11 @@ const Index = () => {
   const contactModal = useContactModal();
 
   return (
-    <main>
+<main
+  style={{
+    contain: "layout paint style",
+  }}
+>
       <SEO
         title="GVS Controls - Electrical, Instrumentation, Automation & Consultancy | Industrial Solutions"
         description="Turnkey electrical, automation & control solutions for power, steel, cement, renewable energy, and material handling. 30+ years of promoter experience. Serving Aumund, Loesche, and 50+ industry leaders since 2017."
@@ -26,18 +30,21 @@ const Index = () => {
       {/* About / Info Cards Section (Restored & Modernized) */}
       <section className="section-padding bg-gradient-to-br from-gray-900 via-blue-900 to-teal-900 dark:from-gray-950 dark:via-blue-950 dark:to-teal-950 relative overflow-hidden">
         {/* Animated Background Elements */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+<div
+  className="absolute inset-0 pointer-events-none overflow-hidden"
+  style={{
+    willChange: "transform",
+    transform: "translateZ(0)",
+  }}
+>
           <motion.div 
             animate={{ 
               scale: [1, 1.2, 1],
               x: [0, 20, 0],
               opacity: [0.3, 0.5, 0.3] 
             }}
-            transition={{ 
-              duration: 8, 
-              repeat: Infinity, 
-              ease: "easeInOut" 
-            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+
             className="absolute top-0 left-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl will-change-transform" 
           />
           <motion.div 
@@ -61,7 +68,7 @@ const Index = () => {
             <motion.span 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+viewport={{ once: true, margin: "-80px" }}
               className="inline-block px-4 py-1 bg-white/20 dark:bg-black/20 text-white rounded-full text-sm font-semibold tracking-wide mb-4 backdrop-blur-sm"
             >
               About Us
@@ -229,7 +236,11 @@ const Index = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1 }}
-                  className="p-4"
+className="p-4"
+style={{
+  willChange: "transform",
+  transform: "translateZ(0)",
+}}
                 >
                   <div className="text-4xl mb-2">{stat.icon}</div>
                   <div className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 mb-2">

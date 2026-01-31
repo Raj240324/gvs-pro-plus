@@ -1,4 +1,5 @@
 "use client";
+
 import { TypewriterEffectSmooth } from "../../components/ui/typewriter-effect";
 
 export default function TypewriterEffectSmoothDemo() {
@@ -26,11 +27,18 @@ export default function TypewriterEffectSmoothDemo() {
   ];
 
   return (
-    <div className="flex flex-col items-center justify-center max-w-full">
+    <div
+      className="flex flex-col items-center justify-center max-w-full min-h-[3.5rem]"
+      style={{
+        willChange: "opacity, transform",
+        transform: "translateZ(0)",
+        backfaceVisibility: "hidden",
+      }}
+    >
       <TypewriterEffectSmooth
         words={words}
         className="text-lg sm:text-2xl md:text-3xl lg:text-5xl font-semibold italic mb-2 sm:mb-4 leading-tight whitespace-nowrap"
-        cursorClassName="bg-[#ffbf00] w-1.5 sm:w-2 h-full"
+        cursorClassName="bg-[#ffbf00] w-1.5 sm:w-2 h-[1em]"
       />
     </div>
   );

@@ -51,7 +51,7 @@ const Hero = () => {
       transition: {
         scale: { duration: 0 }, // Instant scale
         opacity: { duration: 0 }, // Instant opacity
-        y: { type: "spring", stiffness: 140, damping: 12, duration: 0.3 }, // Smooth vertical movement
+y: { duration: 0.28, ease: "easeOut" }
       },
     }),
     exit: { scale: 0, opacity: 0, x: 0, y: 0, transition: { duration: 0.15 } },
@@ -98,21 +98,20 @@ const Hero = () => {
     <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-teal-400 to-purple-500 dark:from-indigo-900 dark:via-teal-800 dark:to-purple-900 pt-32 sm:pt-36 lg:pt-48 pb-16 overflow-hidden">
       {/* Background Animation */}
       <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          className="absolute w-full h-full bg-gradient-to-r from-teal-500/10 to-blue-500/10"
-          animate={{ x: [0, 100, 0], y: [0, 50, 0] }}
-          transition={{
-            repeat: Infinity,
-            duration: 20,
-            ease: "linear",
-            type: "tween"
-          }}
-          style={{
-            willChange: "transform",
-            transform: "translateZ(0)",
-            backfaceVisibility: "hidden"
-          }}
-        />
+       <motion.div
+  className="absolute w-full h-full bg-gradient-to-r from-teal-500/10 to-blue-500/10"
+  animate={{ x: [0, 100, 0] }}
+  transition={{
+    repeat: Infinity,
+    duration: 30,
+    ease: "linear"
+  }}
+  style={{
+    willChange: "transform",
+    transform: "translate3d(0,0,0)"
+  }}
+/>
+
       </div>
 
       {/* Decorative Parallelograms */}
@@ -154,8 +153,8 @@ const Hero = () => {
               <span style={{ color: "#ff0000" }}>
                 <TextRoll
                   className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight break-words"
-                  transition={{ type: "spring", damping: 30, stiffness: 400 }}
-                  duration={0.3}
+  transition={{ type: "tween", ease: "easeOut" }}
+  duration={0.35}
                   getEnterDelay={(i) => i * 0.05}
                   getExitDelay={(i) => i * 0.05 + 0.1}
                 >
@@ -230,8 +229,9 @@ const Hero = () => {
             <motion.button
               onClick={() => navigate("/services")}
               className="mt-4 px-6 py-3 rounded-lg bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white font-semibold shadow-md hover:from-[#4a0e78] hover:to-[#ff6f61] transition-all duration-300 text-base sm:text-lg"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.04, transition: { duration: 0.15 } }}
+whileTap={{ scale: 0.96, transition: { duration: 0.1 } }}
+
               style={{
                 willChange: "transform",
                 transform: "translateZ(0)",
@@ -284,8 +284,9 @@ const Hero = () => {
                 onClick={button.action}
                 aria-label={button.text}
                 className="group relative flex items-center justify-center w-14 h-14 rounded-full glassmorphism transition-transform duration-300 hover:scale-110 focus:outline-none"
-                whileHover={{ scale: 1.18 }}
-                whileTap={{ scale: 0.92 }}
+               whileHover={{ scale: 1.12, transition: { duration: 0.15 } }}
+whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
+
               >
                 <Icon size={24} />
                 <span className="sr-only">{button.text}</span>
