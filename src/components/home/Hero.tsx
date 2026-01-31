@@ -153,7 +153,7 @@ const Hero = () => {
               <span className="sr-only">Industrial Electrical & Automation Solutions - </span>
               <span style={{ color: "#ff0000" }}>
                 <TextRoll
-                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight break-words"
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight break-words"
                   transition={{ type: "spring", damping: 30, stiffness: 400 }}
                   duration={0.3}
                   getEnterDelay={(i) => i * 0.05}

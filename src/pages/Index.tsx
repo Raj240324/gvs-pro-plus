@@ -26,9 +26,34 @@ const Index = () => {
       {/* About / Info Cards Section (Restored & Modernized) */}
       <section className="section-padding bg-gradient-to-br from-gray-900 via-blue-900 to-teal-900 dark:from-gray-950 dark:via-blue-950 dark:to-teal-950 relative overflow-hidden">
         {/* Animated Background Elements */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-green-500/20 rounded-full blur-3xl animate-pulse delay-1000" />
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.2, 1],
+              x: [0, 20, 0],
+              opacity: [0.3, 0.5, 0.3] 
+            }}
+            transition={{ 
+              duration: 8, 
+              repeat: Infinity, 
+              ease: "easeInOut" 
+            }}
+            className="absolute top-0 left-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl will-change-transform" 
+          />
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.3, 1],
+              x: [0, -30, 0],
+              opacity: [0.2, 0.4, 0.2] 
+            }}
+            transition={{ 
+              duration: 10, 
+              repeat: Infinity, 
+              ease: "easeInOut",
+              delay: 1 
+            }}
+            className="absolute bottom-0 right-0 w-96 h-96 bg-green-500/20 rounded-full blur-3xl will-change-transform" 
+          />
         </div>
 
         <div className="container mx-auto px-4 relative z-10">

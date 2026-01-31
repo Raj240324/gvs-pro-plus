@@ -194,65 +194,47 @@ const Header = () => {
 
 
 
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-    let ticking = false;
+useEffect(() => {
+  let lastScrollY = 0;
+  let rafId: number;
 
-    const updateScrollDir = () => {
-      const scrollY = window.scrollY;
+  const update = () => {
+    const scrollY = window.scrollY;
 
-      // 1. Update background style (scrolled state)
-      setScrolled(scrollY > 20); // Lower threshold for faster feedback
+    setScrolled(scrollY > 20);
 
-      // 2. Smart Visibility Logic
-      // If at the very top, always show
-      if (scrollY < 20) {
-        setIsVisible(true);
-      } else {
-        // Otherwise, determine direction
-        const isScrollingUp = scrollY < lastScrollY;
-        const scrollDifference = Math.abs(scrollY - lastScrollY);
-
-        // Only toggle visibility if the scroll difference is significant enough to be intentional
-        // or if we are scrolling up (immediate feedback usually desired)
-        if (scrollDifference > 5) {
-          if (isScrollingUp) {
-            setIsVisible(true);
-          } else {
-             // Scrolling down
-            setIsVisible(false);
-          }
-        }
-      }
-
-      lastScrollY = scrollY > 0 ? scrollY : 0;
-      ticking = false;
-    };
-
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateScrollDir);
-        ticking = true;
-      }
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.classList.add("no-scroll");
-      document.documentElement.classList.add("no-scroll");
+    if (scrollY < 20) {
+      setIsVisible(true);
     } else {
-      document.body.classList.remove("no-scroll");
-      document.documentElement.classList.remove("no-scroll");
+      const isScrollingUp = scrollY < lastScrollY;
+      if (Math.abs(scrollY - lastScrollY) > 4) {
+        setIsVisible(isScrollingUp);
+      }
     }
-    return () => {
-      document.body.classList.remove("no-scroll");
-      document.documentElement.classList.remove("no-scroll");
-    };
-  }, [mobileMenuOpen]);
+
+    lastScrollY = scrollY;
+    rafId = requestAnimationFrame(update);
+  };
+
+  rafId = requestAnimationFrame(update);
+  return () => cancelAnimationFrame(rafId);
+}, []);
+
+useEffect(() => {
+  if (mobileMenuOpen) {
+    document.body.classList.add("no-scroll");
+    document.documentElement.classList.add("no-scroll");
+    window.dispatchEvent(new Event("resize")); // 🔑 Lenis sync
+  } else {
+    document.body.classList.remove("no-scroll");
+    document.documentElement.classList.remove("no-scroll");
+  }
+  return () => {
+    document.body.classList.remove("no-scroll");
+    document.documentElement.classList.remove("no-scroll");
+  };
+}, [mobileMenuOpen]);
+
 
   const navLinks = [
     { name: "Home", path: "/" },
@@ -277,9 +259,10 @@ const Header = () => {
   };
 
   const mobileMenuVariants = {
-    closed: { opacity: 0, x: "100%", transition: { type: "spring", stiffness: 400, damping: 40 } },
-    open: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 400, damping: 40 } },
-  };
+  closed: { opacity: 0, x: "100%", transition: { duration: 0.35, ease: "easeInOut" } },
+  open: { opacity: 1, x: 0, transition: { duration: 0.35, ease: "easeOut" } },
+};
+
 
   const navItemVariants = {
     closed: { opacity: 0, y: 20 },
@@ -291,9 +274,10 @@ const Header = () => {
   };
 
   const backdropVariants = {
-    closed: { opacity: 0 },
-    open: { opacity: 0.7 },
-  };
+  closed: { opacity: 0, transition: { duration: 0.2 } },
+  open: { opacity: 0.7, transition: { duration: 0.2 } },
+};
+
 
   return (
     <>

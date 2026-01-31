@@ -196,7 +196,7 @@ const Contact = () => {
                 <motion.span variants={fadeInUp} className="inline-block px-4 py-1 sm:px-6 sm:py-2 mb-6 sm:mb-8 text-xs sm:text-base font-semibold text-white bg-white/10 backdrop-blur-lg rounded-full border border-white/20 shadow-lg hover:bg-white/20 transition-all duration-300">
                   Get in Touch
                 </motion.span>
-                <motion.h1 variants={fadeInUp} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white via-teal-200 to-purple-200 drop-shadow-md">
+                <motion.h1 variants={fadeInUp} className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold mb-4 sm:mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white via-teal-200 to-purple-200 drop-shadow-md">
                   Contact GVS Controls
                 </motion.h1>
                 <motion.p variants={fadeInUp} className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl mx-auto">
@@ -548,7 +548,7 @@ const Contact = () => {
               </h2>
               <div className="flex justify-center space-x-6 sm:space-x-8">
                 <motion.a href="https://www.linkedin.com/feed/update/urn:li:activity:7386648123668021248/" target="_blank" rel="noopener noreferrer"
-                  className="w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md text-white border border-white/20 transition-all duration-300"
+                  className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md text-white border border-white/20 transition-all duration-300"
                   whileHover={{ scale: 1.15, rotate: 5, boxShadow: "0 0 25px rgba(255, 255, 255, 0.4)" }}>
                   <Linkedin className="w-6 h-6 sm:w-7 sm:h-7" />
                 </motion.a>

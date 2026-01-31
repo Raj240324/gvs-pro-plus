@@ -134,7 +134,7 @@ const Gallery = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight drop-shadow-lg"
+            className="text-3xl md:text-5xl font-extrabold text-white mb-6 tracking-tight drop-shadow-lg"
           >
             Our Work Gallery
           </motion.h1>

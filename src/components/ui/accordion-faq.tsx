@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { 
   Briefcase, 
   Factory, 
@@ -84,30 +84,20 @@ const faqs: FAQItem[] = [
 export function AccordionFAQ() {
   const [openId, setOpenId] = useState<string | null>(null);
 
-  const handleToggle = (id: string) => {
-    const newState = openId === id ? null : id;
-    setOpenId(newState);
-    
-    // Notify Lenis of layout change immediately
-    window.dispatchEvent(new Event('resize'));
-  };
-
   return (
     <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-gray-900 via-indigo-950 to-purple-900 relative overflow-hidden">
-      {/* Dynamic Background Elements - Static optimized for mobile */}
+      
+      {/* Background elements – unchanged */}
       <div className="absolute inset-0 pointer-events-none">
-        <div 
-          className="absolute -top-[10%] -left-[10%] w-[50vw] h-[50vw] bg-cyan-500/10 rounded-full blur-[100px]" 
-        />
-        <div 
-          className="absolute top-[20%] -right-[10%] w-[40vw] h-[40vw] bg-purple-500/10 rounded-full blur-[100px]" 
-        />
+        <div className="absolute -top-[10%] -left-[10%] w-[50vw] h-[50vw] bg-cyan-500/10 rounded-full blur-[100px]" />
+        <div className="absolute top-[20%] -right-[10%] w-[40vw] h-[40vw] bg-purple-500/10 rounded-full blur-[100px]" />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-5xl">
-        {/* Header */}
+
+        {/* Header – unchanged */}
         <div className="text-center mb-16">
-          <motion.span 
+          <motion.span
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -115,16 +105,21 @@ export function AccordionFAQ() {
           >
             Common Queries
           </motion.span>
-          <motion.h2 
+
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
             className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6"
           >
-            Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">Questions</span>
+            Frequently Asked{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
+              Questions
+            </span>
           </motion.h2>
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -135,94 +130,65 @@ export function AccordionFAQ() {
           </motion.p>
         </div>
 
-        {/* FAQ Grid */}
+        {/* FAQ */}
         <div className="grid gap-4 sm:gap-6">
-          {faqs.map((item, index) => (
-            <motion.div
-              id={`faq-${item.id}`}
-              key={item.id}
-              initial={false}
-              className={cn(
-                "group relative rounded-2xl border transition-all duration-300",
-                openId === item.id 
-                  ? "bg-white/10 border-cyan-500/50 shadow-lg shadow-cyan-900/20" 
-                  : "bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/[0.07]"
-              )}
-            >
-              <button
-                onClick={() => handleToggle(item.id)}
-                className="w-full flex items-center justify-between p-4 sm:p-6 text-left focus:outline-none"
-              >
-                <div className="flex items-center gap-3 sm:gap-6">
-                  <div className={cn(
-                    "relative flex-shrink-0 flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12 rounded-xl transition-all duration-300",
-                    openId === item.id 
-                      ? "bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/40" 
-                      : "bg-white/10 group-hover:bg-white/15"
-                  )}>
-                    <item.icon className={cn(
-                      "w-4 h-4 sm:w-6 sm:h-6 transition-colors duration-300",
-                      openId === item.id ? "text-white" : "text-cyan-400 group-hover:text-cyan-300"
-                    )} />
-                  </div>
-                  <span className={cn(
-                    "text-sm sm:text-lg md:text-xl font-bold transition-colors duration-300 pr-4",
-                    openId === item.id ? "text-white" : "text-slate-200 group-hover:text-white"
-                  )}>
-                    {item.question}
-                  </span>
-                </div>
-                <ChevronDown className={cn(
-                  "w-5 h-5 text-slate-400 transition-transform duration-300 flex-shrink-0",
-                  openId === item.id ? "rotate-180 text-cyan-400" : "group-hover:text-cyan-400"
-                )} />
-              </button>
+          {faqs.map((item) => {
+            const isOpen = openId === item.id;
 
-              <AnimatePresence initial={false}>
-                {openId === item.id && (
-                  <motion.div
-                    key="content"
-                    initial="collapsed"
-                    animate="open"
-                    exit="collapsed"
-                    variants={{
-                      open: { opacity: 1, height: "auto" },
-                      collapsed: { opacity: 0, height: 0 }
-                    }}
-                    transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
-                    className="overflow-hidden"
-                    onAnimationComplete={() => window.dispatchEvent(new Event('resize'))}
-                  >
-                    <div className="px-5 pb-5 pt-0 sm:px-6 sm:pb-6 sm:ml-[5.5rem] pr-2">
-                      <div className="h-[1px] w-full bg-gradient-to-r from-cyan-500/30 to-transparent mb-4" />
-                      <div className="text-slate-300 text-xs sm:text-base md:text-lg leading-relaxed space-y-2">
-                        {item.answer.split('\n').map((line, i) => {
-                           const isList = line.trim().startsWith('-');
-                           const hasLabel = line.includes(':') && !isList; // distinct label for contact info
-                           
-                           return (
-                             <div key={i} className={cn("block", isList && "flex items-start gap-3")}>
-                                {isList && <div className="shrink-0 w-1.5 h-1.5 rounded-full bg-cyan-400 mt-1.5 sm:mt-2.5" />}
-                                <span className="flex-1 text-slate-300">
-                                  {hasLabel ? (
-                                    <>
-                                      <span className="text-cyan-400 font-bold block sm:inline mr-2">{line.split(':')[0]}:</span>
-                                      <span>{line.split(':').slice(1).join(':')}</span>
-                                    </>
-                                  ) : (
-                                    line.replace(/^-\s*/, '')
-                                  )}
-                                </span>
-                             </div>
-                           );
-                        })}
-                      </div>
-                    </div>
-                  </motion.div>
+            return (
+              <div
+                key={item.id}
+                className={cn(
+                  "group relative rounded-2xl border transition-all duration-300",
+                  isOpen
+                    ? "bg-white/10 border-cyan-500/50 shadow-lg shadow-cyan-900/20"
+                    : "bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/[0.07]"
                 )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
+              >
+                <button
+                  onClick={() => setOpenId(isOpen ? null : item.id)}
+                  className="w-full flex items-center justify-between p-4 sm:p-6 text-left"
+                >
+                  <div className="flex items-center gap-3 sm:gap-6">
+                    <div
+                      className={cn(
+                        "flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12 rounded-xl transition-all",
+                        isOpen
+                          ? "bg-gradient-to-br from-cyan-500 to-blue-600"
+                          : "bg-white/10"
+                      )}
+                    >
+                      <item.icon className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
+                    </div>
+                    <span className="text-sm sm:text-lg md:text-xl font-bold text-slate-200">
+                      {item.question}
+                    </span>
+                  </div>
+                  <ChevronDown
+                    className={cn(
+                      "w-5 h-5 transition-transform",
+                      isOpen && "rotate-180 text-cyan-400"
+                    )}
+                  />
+                </button>
+
+                {/* CSS-only accordion (NO height animation) */}
+                <div
+                  className={cn(
+                    "grid transition-[grid-template-rows] duration-300 ease-out",
+                    isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                  )}
+                >
+                  <div className="overflow-hidden">
+                    <div className="px-5 pb-5 sm:px-6 sm:ml-[5.5rem] text-slate-300 text-sm sm:text-base md:text-lg leading-relaxed whitespace-pre-line">
+                      {item.answer}
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

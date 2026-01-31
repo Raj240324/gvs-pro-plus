@@ -144,7 +144,7 @@ const Projects: React.FC = () => {
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.9 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 sm:mb-6 leading-tight px-4"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold text-white mb-4 sm:mb-6 leading-tight px-4"
           >
             Our Project Portfolio
           </motion.h1>

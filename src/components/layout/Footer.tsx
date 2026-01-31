@@ -37,58 +37,6 @@ const Footer = () => {
   return (
     <footer className="relative bg-gradient-to-br from-indigo-600 via-teal-500 to-purple-600 text-white overflow-hidden">
 
-      {/* Top CTA Banner - Big Stats Version */}
-      <div className="relative z-10 bg-zinc-50 py-12 border-b border-zinc-100">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
-            
-            {/* Stats Group */}
-            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
-              {/* Stat 1 */}
-              <div className="flex items-center gap-4 group">
-                <div className="p-3 bg-white shadow-sm rounded-2xl group-hover:scale-110 transition-transform duration-300">
-                  <Award className="w-8 h-8 text-teal-600" />
-                </div>
-                <div>
-                  <span className="block text-3xl font-black text-gray-900 leading-none">2017</span>
-                  <span className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Year Established</span>
-                </div>
-              </div>
-
-              <div className="hidden md:block w-px h-12 bg-gray-200/80" />
-
-              {/* Stat 2 */}
-              <div className="flex items-center gap-4 group">
-                 <div className="p-3 bg-white shadow-sm rounded-2xl group-hover:scale-110 transition-transform duration-300">
-                  <Clock className="w-8 h-8 text-blue-600" />
-                </div>
-                <div>
-                  <span className="block text-3xl font-black text-gray-900 leading-none">30+</span>
-                  <span className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Years Experience</span>
-                </div>
-              </div>
-            </div>
-
-            {/* CTA Action */}
-            <div className="flex flex-col md:flex-row items-center gap-6">
-              <div className="text-center md:text-right hidden md:block">
-                 <span className="block text-gray-900 font-bold text-lg">Ready to start your project?</span>
-                 <span className="block text-gray-500 text-sm">Get a custom quote within 24 hours.</span>
-              </div>
-              <motion.a
-                href="/contact"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-teal-600 to-blue-600 text-white font-bold rounded-xl shadow-lg shadow-teal-900/10 hover:shadow-teal-900/20 hover:-translate-y-1 transition-all text-base"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Request a Quote <ArrowRight className="w-5 h-5 ml-1" />
-              </motion.a>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
       {/* Main Footer Content */}
       <div className="relative z-10 py-14">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
