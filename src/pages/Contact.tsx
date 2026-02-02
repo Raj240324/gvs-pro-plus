@@ -154,7 +154,7 @@ const Contact = () => {
               <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-teal-400 rounded-full blur-[100px] mix-blend-overlay" />
            </div>
 
-           <div className="container mx-auto px-4 text-center relative z-10">
+           <div className="container mx-auto px-4 mt-6 text-center relative z-10">
               <motion.div variants={staggerContainer} initial="hidden" animate="visible">
                 <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/90 text-xs font-medium mb-4">
                    <div className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
