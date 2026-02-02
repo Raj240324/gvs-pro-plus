@@ -1,6 +1,6 @@
 import { useEffect, useState, Component, ErrorInfo, ReactNode } from 'react';
 import SendButton from '../components/ui/SendButton';
-import { Mail, Phone, MapPin, Send, Linkedin, Clock, ArrowRight, MessageSquare, Globe, Building2 } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Linkedin, Clock, ArrowRight, MessageSquare, Globe, Building2, ChevronDown } from 'lucide-react';
 import { useToast } from "../hooks/use-toast";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Textarea } from '../components/ui/textarea';
@@ -9,6 +9,7 @@ import Button from '../components/ui/Button';
 import SEO from '../components/SEO';
 import { supabase } from '../lib/supabase';
 import { Input } from '../components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 
 // --- Error Boundary ---
 interface ErrorBoundaryProps { children: ReactNode; }
@@ -147,7 +148,7 @@ const Contact = () => {
       <main className="bg-slate-50 dark:bg-black pt-[84px] lg:pt-[128px] min-h-screen">
         
         {/* --- Hero Section (Preserved Background & Smaller Text) --- */}
-        <section className="relative overflow-hidden min-h-[40vh] flex items-center justify-center bg-gradient-to-br from-teal-600 via-indigo-600 to-purple-700 pb-32">
+        <section className="relative overflow-hidden min-h-[40vh] flex items-center justify-center bg-gradient-to-br from-teal-600 via-indigo-600 to-purple-700 pb-32 rounded-b-[3rem] shadow-2xl z-10">
            {/* Abstract Shapes (Subtle) */}
            <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
               <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white rounded-full blur-[120px] mix-blend-overlay animate-pulse-slow" />
@@ -288,29 +289,50 @@ const Contact = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                        <div className="space-y-1.5">
                           <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 ml-1">Name</label>
-                          <Input name="name" value={formData.name} onChange={handleChange} placeholder="John Doe" 
-                            className="h-10 text-sm bg-slate-50 dark:bg-slate-800 border-transparent focus:bg-white dark:focus:bg-slate-950 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-lg transition-all font-medium text-slate-900 dark:text-white" />
+                          <Input name="name" value={formData.name} onChange={handleChange} placeholder="Arun Kumar" 
+                            className="h-12 px-4 text-sm bg-slate-50 dark:bg-slate-800 border-transparent focus:bg-white dark:focus:bg-slate-950 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl transition-all font-medium text-slate-900 dark:text-white" />
                           {errors.name && <p className="text-red-500 text-[10px] ml-1">{errors.name}</p>}
                        </div>
                        <div className="space-y-1.5">
+                          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 ml-1">Email</label>
+                          <Input name="email" value={formData.email} onChange={handleChange} placeholder="arun.kumar@company.com" 
+                            className="h-12 px-4 text-sm bg-slate-50 dark:bg-slate-800 border-transparent focus:bg-white dark:focus:bg-slate-950 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl transition-all font-medium text-slate-900 dark:text-white" />
+                          {errors.email && <p className="text-red-500 text-[10px] ml-1">{errors.email}</p>}
+                       </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                       <div className="space-y-1.5">
                           <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 ml-1">Phone</label>
-                          <Input name="phone" value={formData.phone} onChange={handleChange} placeholder="+91..." 
-                            className="h-10 text-sm bg-slate-50 dark:bg-slate-800 border-transparent focus:bg-white dark:focus:bg-slate-950 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-lg transition-all font-medium text-slate-900 dark:text-white" />
+                          <Input name="phone" value={formData.phone} onChange={handleChange} placeholder="+91 98765 43210" 
+                            className="h-12 px-4 text-sm bg-slate-50 dark:bg-slate-800 border-transparent focus:bg-white dark:focus:bg-slate-950 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl transition-all font-medium text-slate-900 dark:text-white" />
                           {errors.phone && <p className="text-red-500 text-[10px] ml-1">{errors.phone}</p>}
+                       </div>
+                       <div className="space-y-1.5">
+                          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 ml-1">Subject</label>
+                            <Select 
+                              value={formData.subject} 
+                              onValueChange={(value) => setFormData(prev => ({ ...prev, subject: value }))} 
+                              disabled={isSubmitting}
+                            >
+                              <SelectTrigger className="w-full h-12 px-4 text-sm bg-slate-50 dark:bg-slate-800 border-transparent focus:bg-white dark:focus:bg-slate-950 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl transition-all font-medium text-slate-900 dark:text-white">
+                                <SelectValue placeholder="Select a subject" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50 rounded-xl shadow-2xl z-50">
+                                <SelectItem value="General Inquiry">General Inquiry</SelectItem>
+                                <SelectItem value="Project Consultation">Project Consultation</SelectItem>
+                                <SelectItem value="Product Information">Product Information</SelectItem>
+                                <SelectItem value="Service Request">Service Request</SelectItem>
+                                <SelectItem value="Other">Other</SelectItem>
+                              </SelectContent>
+                            </Select>
                        </div>
                     </div>
 
                     <div className="space-y-1.5">
-                       <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 ml-1">Email</label>
-                       <Input name="email" value={formData.email} onChange={handleChange} placeholder="john@company.com" 
-                          className="h-10 text-sm bg-slate-50 dark:bg-slate-800 border-transparent focus:bg-white dark:focus:bg-slate-950 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-lg transition-all font-medium text-slate-900 dark:text-white" />
-                       {errors.email && <p className="text-red-500 text-[10px] ml-1">{errors.email}</p>}
-                    </div>
-
-                    <div className="space-y-1.5">
-                       <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 ml-1">Requirements</label>
-                       <Textarea name="message" value={formData.message} onChange={handleChange} placeholder="Tell us about your project..." rows={4}
-                          className="text-sm bg-slate-50 dark:bg-slate-800 border-transparent focus:bg-white dark:focus:bg-slate-950 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-lg transition-all font-medium text-slate-900 dark:text-white resize-none p-3" />
+                       <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 ml-1">Message</label>
+                       <Textarea name="message" value={formData.message} onChange={handleChange} placeholder="How can we help you?" rows={4}
+                          className="text-sm bg-slate-50 dark:bg-slate-800 border-transparent focus:bg-white dark:focus:bg-slate-950 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl transition-all font-medium text-slate-900 dark:text-white resize-none p-4 min-h-[120px]" />
                        {errors.message && <p className="text-red-500 text-[10px] ml-1">{errors.message}</p>}
                     </div>
 

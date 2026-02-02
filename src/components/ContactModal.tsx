@@ -3,8 +3,9 @@ import SendButton from './ui/SendButton';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../components/ui/dialog';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { useToast } from '../hooks/use-toast';
-import { Send, CheckCircle } from 'lucide-react';
+import { Send, CheckCircle, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabase';
 
@@ -160,178 +161,136 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         showCloseButton={false}
-        className="w-[95vw] max-w-[400px] sm:max-w-[500px] md:max-w-[700px] lg:max-w-[800px] p-4 sm:p-5 bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg border border-white/20 dark:border-white/10 shadow-lg rounded-xl z-[2500] sm:mt-0 h-auto max-h-[95vh] overflow-y-auto"
+        className="w-[95vw] max-w-[400px] sm:max-w-[500px] md:max-w-[600px] p-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl border border-white/20 dark:border-white/10 shadow-2xl rounded-[2rem] z-[2500]"
       >
-        <div className="relative flex flex-col h-full">
+        <div className="relative flex flex-col h-full p-8 md:p-10">
           {/* Custom Close Button */}
           <button
             onClick={() => onOpenChange(false)}
-            className="absolute top-1 right-1 sm:top-3 sm:right-3 p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors z-20"
+            className="absolute top-6 right-6 p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
             aria-label="Close modal"
           >
-            <svg
-              className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
 
-          {/* Background Effects */}
-          <div className="absolute inset-0 rounded-xl overflow-hidden -z-10 opacity-30">
-            <div className="absolute inset-0 bg-gradient-to-br from-teal-200/10 via-indigo-200/10 to-purple-200/10 animate-gradient-shift"></div>
-            {Array.from({ length: 15 }).map((_, i) => (
-              <div
-                key={i}
-                className="absolute rounded-full bg-gradient-to-r from-teal-400/20 to-purple-400/20"
-                style={{
-                  width: `${Math.random() * 15 + 5}px`,
-                  height: `${Math.random() * 15 + 5}px`,
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animation: `float-particle ${Math.random() * 5 + 10}s infinite ease-in-out ${Math.random() * 5}s`,
-                }}
-              />
-            ))}
-          </div>
-
-          <DialogHeader className="relative z-10 shrink-0 mt-1 sm:mt-0">
-            <DialogTitle className="text-lg sm:text-xl md:text-2xl font-bold text-center bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
-              Connect With Us
+          <DialogHeader className="mb-8">
+            <DialogTitle className="text-3xl font-bold text-center text-slate-900 dark:text-white tracking-tight">
+              Get in Touch
             </DialogTitle>
-            <DialogDescription className="text-xs sm:text-xs text-gray-600 dark:text-gray-300 text-center">
-              Share your thoughts, and we’ll respond promptly.
+            <DialogDescription className="text-base text-slate-500 dark:text-slate-400 text-center mt-2">
+              Reach out for expert solutions and technical support.
             </DialogDescription>
           </DialogHeader>
 
           {isSubmitted ? (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="flex flex-col items-center justify-center py-4 sm:py-6 text-center relative z-10 grow"
-              style={{ position: 'relative' }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="flex flex-col items-center justify-center py-12 text-center"
             >
-              <motion.div
-                initial={{ scale: 0.8 }}
-                animate={{ scale: 1 }}
-                transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 flex items-center justify-center rounded-full bg-gradient-to-r from-teal-500 to-purple-600"
-              >
-                <CheckCircle className="h-5 w-5 sm:h-8 sm:w-8 text-white" />
-              </motion.div>
-              <h3 className="text-sm sm:text-lg md:text-xl font-bold text-gray-800 dark:text-white">Thank You!</h3>
-              <p className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-300 mt-1">
-                Your message has been sent successfully.
-              </p>
+              <div className="w-20 h-20 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-6 text-blue-600 dark:text-blue-400">
+                <CheckCircle className="w-10 h-10" />
+              </div>
+              <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Message Sent!</h3>
+              <p className="text-slate-500 dark:text-slate-400">We'll get back to you shortly.</p>
             </motion.div>
           ) : (
-              <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-3 mt-2 sm:mt-3 relative z-10 grow flex flex-col">
-                {/* Honeypot Field - Hidden */}
-                <div style={{ position: 'absolute', opacity: 0, zIndex: -1, width: 0, height: 0, overflow: 'hidden' }}>
-                    <input type="text" name="bot_honey" tabIndex={-1} autoComplete="off" onChange={handleChange} />
-                </div>
-                <div className="grid grid-cols-1 gap-2 sm:gap-3">
-                <div className="space-y-0.5 sm:space-y-1">
-                  <label htmlFor="modal-name" className="block text-xs sm:text-xs font-medium text-gray-700 dark:text-gray-300">
-                    Your Name <span className="text-red-500">*</span>
-                  </label>
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div style={{ position: 'absolute', opacity: 0, zIndex: -1, width: 0, height: 0, overflow: 'hidden' }}>
+                  <input type="text" name="bot_honey" tabIndex={-1} autoComplete="off" onChange={handleChange} />
+              </div>
+
+              <div className="grid grid-cols-2 gap-5">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 dark:text-slate-200">Name</label>
                   <Input
                     type="text"
-                    id="modal-name"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
                     required
+                    placeholder="Arun Kumar"
                     disabled={isSubmitting}
-                    className={`text-xs sm:text-xs py-1.5 sm:py-1.5 h-9 sm:h-9 bg-white/50 dark:bg-gray-700/50 border rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300 ${errors.name ? 'border-red-500' : 'border-gray-400 dark:border-gray-600'}`}
+                    className={`h-12 px-4 bg-slate-50 dark:bg-slate-800/50 border-0 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:bg-white dark:focus:bg-slate-800 transition-all duration-300 ${errors.name ? 'ring-2 ring-red-500/20 bg-red-50' : ''}`}
                   />
-                  {errors.name && <p className="text-red-500 text-[10px] sm:text-[10px] mt-0.5">{errors.name}</p>}
+                  {errors.name && <p className="text-xs text-red-500 font-medium ml-1">{errors.name}</p>}
                 </div>
-                <div className="space-y-0.5 sm:space-y-1">
-                  <label htmlFor="modal-email" className="block text-xs sm:text-xs font-medium text-gray-700 dark:text-gray-300">
-                    Email Address <span className="text-red-500">*</span>
-                  </label>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 dark:text-slate-200">Email</label>
                   <Input
                     type="email"
-                    id="modal-email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
                     required
+                    placeholder="arun.kumar@company.com"
                     disabled={isSubmitting}
-                    className={`text-xs sm:text-xs py-1.5 sm:py-1.5 h-9 sm:h-9 bg-white/50 dark:bg-gray-700/50 border rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300 ${errors.email ? 'border-red-500' : 'border-gray-400 dark:border-gray-600'}`}
+                    className={`h-12 px-4 bg-slate-50 dark:bg-slate-800/50 border-0 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:bg-white dark:focus:bg-slate-800 transition-all duration-300 ${errors.email ? 'ring-2 ring-red-500/20 bg-red-50' : ''}`}
                   />
-                  {errors.email && <p className="text-red-500 text-[10px] sm:text-[10px] mt-0.5">{errors.email}</p>}
+                  {errors.email && <p className="text-xs text-red-500 font-medium ml-1">{errors.email}</p>}
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 gap-2 sm:gap-3">
-                <div className="space-y-0.5 sm:space-y-1">
-                  <label htmlFor="modal-phone" className="block text-xs sm:text-xs font-medium text-gray-700 dark:text-gray-300">
-                    Phone Number
-                  </label>
+              <div className="grid grid-cols-2 gap-5">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 dark:text-slate-200">Phone</label>
                   <Input
                     type="tel"
-                    id="modal-phone"
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
+                    placeholder="+91 98765 43210"
                     disabled={isSubmitting}
-                    className={`text-xs sm:text-xs py-1.5 sm:py-1.5 h-9 sm:h-9 bg-white/50 dark:bg-gray-700/50 border rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300 ${errors.phone ? 'border-red-500' : 'border-gray-400 dark:border-gray-600'}`}
+                    className="h-12 px-4 bg-slate-50 dark:bg-slate-800/50 border-0 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:bg-white dark:focus:bg-slate-800 transition-all duration-300"
                   />
-                  {errors.phone && <p className="text-red-500 text-[10px] sm:text-[10px] mt-0.5">{errors.phone}</p>}
                 </div>
-                <div className="space-y-0.5 sm:space-y-1">
-                  <label htmlFor="modal-subject" className="block text-xs sm:text-xs font-medium text-gray-700 dark:text-gray-300">
-                    Subject
-                  </label>
-                  <select
-                    id="modal-subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    className="w-full px-2 py-1.5 sm:px-3 sm:py-1.5 h-9 sm:h-9 text-xs sm:text-xs bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300 text-gray-700 dark:text-gray-300"
-                    disabled={isSubmitting}
-                  >
-                    <option value="">Select a subject</option>
-                    <option value="General Inquiry">General Inquiry</option>
-                    <option value="Project Consultation">Project Consultation</option>
-                    <option value="Product Information">Product Information</option>
-                    <option value="Service Request">Service Request</option>
-                    <option value="Other">Other</option>
-                  </select>
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 dark:text-slate-200">Subject</label>
+                    <Select 
+                      value={formData.subject} 
+                      onValueChange={(value) => setFormData(prev => ({ ...prev, subject: value }))} 
+                      disabled={isSubmitting}
+                    >
+                      <SelectTrigger className="w-full h-12 px-4 bg-slate-50 dark:bg-slate-800/50 border-0 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:bg-white dark:focus:bg-slate-800 transition-all duration-300 text-slate-700 dark:text-slate-200 font-medium">
+                        <SelectValue placeholder="Select a subject" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50 rounded-xl shadow-2xl z-[3000]">
+                        <SelectItem value="General Inquiry">General Inquiry</SelectItem>
+                        <SelectItem value="Project Consultation">Project Consultation</SelectItem>
+                        <SelectItem value="Product Information">Product Information</SelectItem>
+                        <SelectItem value="Service Request">Service Request</SelectItem>
+                        <SelectItem value="Other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
                 </div>
               </div>
 
-              <div className="space-y-0.5 sm:space-y-1 flex-grow">
-                <label htmlFor="modal-message" className="block text-xs sm:text-xs font-medium text-gray-700 dark:text-gray-300">
-                  Your Message <span className="text-red-500">*</span>
-                </label>
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-slate-700 dark:text-slate-200">Message</label>
                 <Textarea
-                  id="modal-message"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  rows={2}
                   required
-                  className={`w-full text-xs sm:text-xs bg-white/50 dark:bg-gray-700/50 border rounded-md focus:ring-1 focus:ring-teal-500 focus:border-transparent transition-all duration-300 h-20 sm:h-[80px] ${errors.message ? 'border-red-500' : 'border-gray-400 dark:border-gray-600'}`}
+                  placeholder="How can we help you?"
+                  rows={4}
                   disabled={isSubmitting}
+                  className={`min-h-[120px] p-4 bg-slate-50 dark:bg-slate-800/50 border-0 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:bg-white dark:focus:bg-slate-800 transition-all duration-300 resize-none ${errors.message ? 'ring-2 ring-red-500/20 bg-red-50' : ''}`}
                 />
-                {errors.message && <p className="text-red-500 text-[10px] sm:text-[10px] mt-0.5">{errors.message}</p>}
+                {errors.message && <p className="text-xs text-red-500 font-medium ml-1">{errors.message}</p>}
               </div>
 
-              <div className="pt-1 shrink-0">
-                  <SendButton 
-                    type="submit" 
-                    disabled={isSubmitting} 
-                    isSubmitting={isSubmitting}
-                    isSubmitted={isSubmitted}
-                    className="w-full text-lg" 
-                    text="Send Message" 
-                  />
+              <div className="pt-4">
+                <SendButton 
+                  type="submit" 
+                  disabled={isSubmitting} 
+                  isSubmitting={isSubmitting}
+                  isSubmitted={isSubmitted}
+                  className="w-full text-lg shadow-xl shadow-blue-900/10 hover:shadow-blue-900/20" 
+                  text="Send Message" 
+                />
               </div>
             </form>
           )}

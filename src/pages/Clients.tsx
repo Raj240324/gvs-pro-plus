@@ -48,7 +48,7 @@ const Clients: React.FC = () => {
           Removed 'sticky' and massive height to fix jitter. 
           Standard relative positioning with GPU-accelerated transforms. 
       */}
-      <section className="relative min-h-[60vh] flex flex-col items-center justify-center p-4">
+      <section className="relative min-h-[60vh] flex flex-col items-center justify-center p-4 rounded-b-[3rem] shadow-2xl z-10">
          {/* Animated Background Mesh */}
          <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-emerald-500/10 rounded-[100%] blur-[120px]" />

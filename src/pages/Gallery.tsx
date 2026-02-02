@@ -125,7 +125,7 @@ const Gallery = () => {
       />
 
       {/* --- HERO --- */}
-      <section className="relative min-h-[50vh] flex flex-col items-center justify-center text-center px-4 pb-12 overflow-hidden">
+      <section className="relative min-h-[50vh] flex flex-col items-center justify-center text-center px-4 pb-12 overflow-hidden rounded-b-[3rem] shadow-2xl z-10">
          <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
              <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[100px]" />
              <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-[100px]" />

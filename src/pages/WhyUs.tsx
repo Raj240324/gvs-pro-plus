@@ -68,7 +68,7 @@ const WhyUs = () => {
       />
 
       {/* --- HERO SECTION: Balanced and Professional --- */}
-      <section className="relative min-h-[50vh] flex flex-col items-center justify-center text-center px-4 pb-16">
+      <section className="relative min-h-[50vh] flex flex-col items-center justify-center text-center px-4 pb-16 rounded-b-[3rem] shadow-2xl z-10">
          {/* Background Elements */}
          <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-30">
              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-emerald-500/10 rounded-[100%] blur-[100px]" />

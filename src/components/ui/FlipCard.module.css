@@ -1,8 +1,14 @@
 /* Component Container */
 .container {
   width: 100%;
-  aspect-ratio: 4/5; /* Keep a nice rectangular aspect ratio */
+  aspect-ratio: 2/1; /* Landscape for mobile */
   perspective: 1000px;
+}
+
+@media (min-width: 640px) {
+  .container {
+    aspect-ratio: 4/5; /* Portrait for larger screens */
+  }
 }
 
 /* The Card Wrapper */
