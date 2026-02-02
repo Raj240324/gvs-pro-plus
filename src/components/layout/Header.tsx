@@ -308,16 +308,13 @@ const Header = () => {
   };
 
   const navItemVariants = {
-    closed: { opacity: 0, y: 10, filter: "blur(4px)" },
+    closed: { opacity: 0, y: 10 },
     open: (i: number) => ({
       opacity: 1,
       y: 0,
-      filter: "blur(0px)",
       transition: { 
-        delay: 0.1 + i * 0.04, 
-        type: "spring", 
-        stiffness: 260, 
-        damping: 20 
+        y: { type: "spring", stiffness: 260, damping: 20, delay: 0.1 + i * 0.04 },
+        opacity: { duration: 0.2, delay: 0.1 + i * 0.04 }
       },
     }),
   };

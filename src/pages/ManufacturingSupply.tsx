@@ -79,13 +79,13 @@ const ProductSpotlightCard = ({ product }: { product: Product }) => {
                <div className="p-8 md:p-16 relative z-10 flex flex-col justify-center border-r border-white/5 w-full md:w-1/2">
                   <div className="mb-6">
                      <span className="text-amber-500 font-mono text-sm tracking-widest uppercase mb-2 block">// Core Expertise</span>
-                     <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+                     <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white leading-tight">
                         {product.name}
                      </h2>
                   </div>
                   
                   {/* Description Rendered as Div to allow nested paragraphs */}
-                  <div className="text-slate-400 text-lg leading-relaxed mb-8">
+                  <div className="text-slate-400 text-sm sm:text-base md:text-lg leading-relaxed mb-8">
                      {product.description}
                   </div>
                   
@@ -255,9 +255,9 @@ const ManufacturingSupply = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, ease: "circOut" }}
-              className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-8 tracking-tight leading-none"
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white mb-8 tracking-tighter leading-[0.9] flex flex-col items-center"
             >
-              MANUFACTURING <br />
+              <span className="block">MANUFACTURING</span>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-500 to-amber-600 drop-shadow-2xl">
                 & SUPPLY
               </span>
@@ -267,7 +267,7 @@ const ManufacturingSupply = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed border-l-2 border-amber-500/50 pl-6 text-left md:text-center md:border-l-0 md:pl-0 font-mono"
+              className="text-sm sm:text-base md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed border-l-2 border-amber-500/50 pl-6 text-left md:text-center md:border-l-0 md:pl-0 font-mono"
             >
               // We manufacture Electrical Control Panels as per <span className="text-white">IE Standard Electrical Inspectorate Rules and Regulation (CEIG)</span>.
             </motion.p>
@@ -284,10 +284,10 @@ const ManufacturingSupply = () => {
          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-16 text-center">
               <span className="text-amber-500 font-mono text-sm tracking-widest uppercase mb-2 block">// Methodology</span>
-              <h2 className="text-3xl md:text-5xl font-black text-white mb-6 uppercase tracking-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-black text-white mb-6 uppercase tracking-tight">
                  Site Execution <span className="text-slate-700">Protocol</span>
               </h2>
-              <p className="text-slate-400 max-w-2xl mx-auto text-lg">
+              <p className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base md:text-lg">
                 Our pragmatic site services ensure seamless integration from survey to commissioning.
               </p>
             </div>
@@ -336,10 +336,10 @@ const ManufacturingSupply = () => {
          />
          
          <div className="container mx-auto px-4 relative z-10 flex flex-col items-center text-center">
-            <h2 className="text-4xl md:text-6xl font-black text-slate-950 mb-6 uppercase tracking-tight">
+            <h2 className="text-2xl sm:text-4xl md:text-6xl font-black text-slate-950 mb-6 uppercase tracking-tight">
                Total Automation.
             </h2>
-             <p className="text-xl md:text-2xl text-slate-900 font-medium mb-10 max-w-2xl">
+             <p className="text-base sm:text-lg md:text-2xl text-slate-900 font-medium mb-10 max-w-2xl">
                Providing innovative solutions and electrical panels as per IE & CEIG standards.
             </p>
             <button 

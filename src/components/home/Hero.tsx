@@ -95,7 +95,7 @@ y: { duration: 0.28, ease: "easeOut" }
     ];
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-teal-400 to-purple-500 dark:from-indigo-900 dark:via-teal-800 dark:to-purple-900 pt-32 sm:pt-36 lg:pt-48 pb-16 overflow-hidden rounded-b-[3rem] shadow-2xl z-10">
+    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-teal-400 to-purple-500 dark:from-indigo-900 dark:via-teal-800 dark:to-purple-900 pt-32 sm:pt-36 lg:pt-48 pb-16 overflow-hidden shadow-2xl z-10">
       {/* Background Animation */}
       <div className="absolute inset-0 overflow-hidden">
        <motion.div

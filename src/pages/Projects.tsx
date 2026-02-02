@@ -120,7 +120,7 @@ const Projects: React.FC = () => {
       />
 
       {/* --- HERO SECTION (Premium Engineering Texture) --- */}
-      <div className="bg-white dark:bg-slate-900">
+      <div className="bg-slate-50 dark:bg-slate-900">
          <section className="relative min-h-[50vh] flex flex-col items-center justify-center pt-32 lg:pt-48 pb-20 overflow-hidden bg-gradient-to-br from-teal-600 via-cyan-600 to-blue-700 rounded-b-[3rem] shadow-2xl z-10">
             <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
             <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
