@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Factory, CheckCircle, ArrowRight, Award, Briefcase, Building } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useContactModal } from '../hooks/use-contact-modal';
 import SEO from '../components/SEO';
 
 interface Project {
@@ -91,6 +92,7 @@ const companiesWorkedAt = [
 const Projects: React.FC = () => {
   const [headerHeight, setHeaderHeight] = useState(0);
   const [activeTab, setActiveTab] = useState<'gvs' | 'founder'>('gvs');
+  const contactModal = useContactModal();
 
   useEffect(() => {
     const update = () => {
@@ -378,13 +380,13 @@ const Projects: React.FC = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
           >
-            <Link
-              to="/contact"
+            <button
+              onClick={() => contactModal.onOpen()}
               className="inline-flex items-center px-6 py-3 sm:px-8 sm:py-4 bg-white text-teal-700 font-bold text-base sm:text-lg rounded-full shadow-xl hover:shadow-2xl transition-all duration-300"
             >
               Get Started
               <ArrowRight className="ml-2 w-4 h-4 sm:ml-3 sm:w-5 sm:h-5" />
-            </Link>
+            </button>
           </motion.div>
         </div>
       </section>

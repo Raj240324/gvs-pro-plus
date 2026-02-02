@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform as transformScroll } from 'framer-motio
 import FlipCard from '@/components/ui/FlipCard';
 import ModernJourney, { TimelineEvent } from '@/components/ui/ModernJourney';
 import { ArrowRight, Award, Briefcase, Building2, CheckCircle2, Clock, Factory, Handshake, Settings, ShieldCheck, User, Users } from 'lucide-react';
+import { useContactModal } from '../hooks/use-contact-modal';
 import SEO from '../components/SEO';
 import gvsFront from '../assets/about-image/gvs-front.jpeg';
 import gvsMain from '../assets/about-image/gvs-main.jpeg';
@@ -12,6 +13,7 @@ import projectAbout from '../assets/about-image/project-about.jpeg';
 
 export default function AboutUnified() {
   const { scrollYProgress } = useScroll();
+  const contactModal = useContactModal();
   const heroBgOpacity = transformScroll(scrollYProgress, [0, 0.4], [1, 0.85]);
 
   const timelineEvents = useMemo<TimelineEvent[]>(() => [
@@ -429,12 +431,12 @@ export default function AboutUnified() {
             <p className="text-lg md:text-xl text-teal-50 mb-10 font-light">
               Get a tailored proposal within 48 hours.
             </p>
-            <a
-              href="/contact"
+            <button
+              onClick={() => contactModal.onOpen()}
               className="inline-flex items-center gap-3 px-8 py-4 bg-white text-teal-700 font-bold text-base md:text-lg rounded-full shadow-2xl hover:scale-105 hover:shadow-teal-500/50 transition-all"
             >
               Free Consultation <ArrowRight className="w-5 h-5" />
-            </a>
+            </button>
           </motion.div>
         </section>
 

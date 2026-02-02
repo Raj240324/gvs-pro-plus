@@ -1,8 +1,9 @@
 "use client";
-import { useEffect, useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { Factory, MapPin, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useContactModal } from '../hooks/use-contact-modal';
 import SEO from '../components/SEO';
 
 interface Client {
@@ -10,194 +11,159 @@ interface Client {
   location: string;
 }
 
+const clients: Client[] = [
+  { name: 'M/s Aumund Engineering Private Limited', location: 'Chennai' },
+  { name: 'M/s Loesche Energy (P) Ltd.', location: 'Delhi & Chennai' },
+  { name: 'M/s Metco Roofing Private Limited', location: 'Chennai' },
+  { name: 'M/s ARS Hydrojet Services (P) Ltd.', location: 'Chennai' },
+  { name: 'M/s Meenakshi Medical College and Hospital', location: 'Kanchipuram' },
+  { name: 'M/s Black Stone Group Technologies Private Limited', location: 'Chennai' },
+  { name: 'M/s Dukes Engineering India (P) Ltd.', location: 'Chennai Region' },
+];
+
 const Clients: React.FC = () => {
-  const [headerHeight, setHeaderHeight] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const contactModal = useContactModal();
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
 
-  useEffect(() => {
-    const update = () => {
-      const header = document.querySelector('header');
-      if (header) setHeaderHeight(header.offsetHeight);
-    };
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  }, []);
-
-  const post2017Clients = useMemo<Client[]>(() => [
-    { name: 'M/s Aumund Engineering Private Limited', location: 'Chennai' },
-    { name: 'M/s Loesche Energy (P) Ltd.', location: 'Chennai' },
-    { name: 'M/s Metco Roofing Private Limited', location: 'Chennai' },
-    { name: 'M/s ARS Hydrojet Services (P) Ltd.', location: 'Chennai' },
-    { name: 'M/s Meenakshi Medical College and Hospital', location: 'Kanchipuram' },
-    { name: 'M/s Black Stone Group Technologies Private Limited', location: 'Chennai' },
-    { name: 'M/s Dukes Engineering India (P) Ltd.', location: 'Chennai Region' },
-  ], []);
+  // Optimized Parallax: Smoother damping, less distance
+  const yHero = useTransform(scrollYProgress, [0, 0.4], [0, 150]);
+  const opacityHero = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+  
+  // High-performance spring physics for non-jittery updates
+  const smoothY = useSpring(yHero, { stiffness: 100, damping: 20, mass: 0.5 });
 
   return (
-    <main className="min-h-screen bg-black text-white overflow-hidden pt-[84px] lg:pt-[128px]">
+    <main ref={containerRef} className="bg-black text-white min-h-screen pt-[84px] lg:pt-[128px] overflow-x-hidden">
       <SEO
-        title="Our Clients Since 2017 | GVS Controls"
-        description="Elite post-2017 partners: Aumund Engineering, Loesche Energy, Metco Roofing, ARS Hydrojet, Meenakshi Hospital, Black Stone Technologies, Dukes Engineering."
+        title="Our Clients | GVS Controls"
+        description="Trusted by industry leaders like Aumund, Loesche, and more."
         canonical={typeof window !== 'undefined' ? window.location.origin + '/clients' : undefined}
       />
 
-      {/* Hero - Same epic style, now buttery smooth */}
-      <section className="relative min-h-[50vh] flex items-center py-16 md:py-20 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <motion.div
-            animate={{ x: [0, 100, 0], y: [0, -100, 0] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="absolute top-20 left-20 w-96 h-96 bg-blue-600/30 rounded-full blur-3xl will-change-transform"
-          />
-          <motion.div
-            animate={{ x: [0, -150, 0], y: [0, 150, 0] }}
-            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-            className="absolute bottom-32 right-32 w-80 h-80 bg-emerald-500/20 rounded-full blur-3xl will-change-transform"
-          />
-        </div>
+      {/* --- HERO SECTION ---
+          Removed 'sticky' and massive height to fix jitter. 
+          Standard relative positioning with GPU-accelerated transforms. 
+      */}
+      <section className="relative min-h-[60vh] flex flex-col items-center justify-center p-4">
+         {/* Animated Background Mesh */}
+         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-emerald-500/10 rounded-[100%] blur-[120px]" />
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px]" />
+         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <motion.div
-            initial={{ y: -50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1, type: "spring", stiffness: 100 }}
-            className="inline-block px-6 py-2 rounded-full bg-white/5 backdrop-blur-2xl border border-white/10 mb-6 text-xs sm:text-sm"
-          >
-            <span className="bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent font-bold tracking-widest uppercase">
-              Trusted Partners Since 2017
-            </span>
-          </motion.div>
+         <motion.div 
+           style={{ y: smoothY, opacity: opacityHero }}
+           className="relative z-10 text-center max-w-4xl mx-auto will-change-transform"
+         >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} 
+              className="inline-flex items-center gap-2 mb-8 px-5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-emerald-400 font-medium text-sm tracking-widest uppercase"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"/>
+              Trusted Partners
+            </motion.div>
 
-          <motion.h1
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1.2, type: "spring", stiffness: 80 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-6 leading-tight"
-          >
-            <span className="bg-gradient-to-r from-emerald-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            <motion.h1 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/40"
+            >
               Our Valued Clients
-            </span>
-          </motion.h1>
+            </motion.h1>
 
-          <motion.p
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="text-sm sm:text-base md:text-lg text-gray-400 max-w-3xl mx-auto font-light leading-relaxed"
-          >
-            Industry leaders across Power, Steel, Cement & Engineering sectors who trust GVS Controls for excellence.
-          </motion.p>
-        </div>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="text-lg md:text-xl text-slate-400 font-light max-w-2xl mx-auto leading-relaxed"
+            >
+              Driving innovation across Steel, Power, and Cement industries since 2017.
+            </motion.p>
+         </motion.div>
       </section>
 
-      {/* Client Cards - Zero lag, perfect responsiveness */}
-      <section className="py-32 relative">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-            {post2017Clients.map((client, index) => (
-              <div key={index} className="w-full h-full flex justify-center">
-                <ClientCard client={client} index={index} />
-              </div>
+
+      {/* --- GRID SECTION --- */}
+      <section className="relative z-20 pb-32 px-4 sm:px-6 lg:px-8">
+        <div className="container max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {clients.map((client, index) => (
+              <GlassCard key={index} client={client} index={index} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA - Same luxury feel */}
-      <section className="py-32 relative">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.h2
-            initial={{ scale: 0.9, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, type: "spring", stiffness: 90 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-black mb-8 leading-tight"
-          >
-            <span className="bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
-              READY TO START YOUR PROJECT?
-            </span>
-          </motion.h2>
 
-          <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-block"
-          >
-            <Link
-              to="/contact"
-              className="group relative inline-flex items-center px-8 py-4 md:px-10 md:py-5 bg-gradient-to-r from-emerald-500 to-blue-600 rounded-2xl font-bold text-lg md:text-xl shadow-2xl overflow-hidden backdrop-blur-xl border border-white/20"
+      {/* --- CTA SECTION --- */}
+      <section className="relative z-20 py-24 border-t border-white/5 bg-gradient-to-b from-black to-slate-900/50">
+        <div className="container mx-auto px-4 text-center">
+            <motion.div 
+               initial={{ opacity: 0, y: 40 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               viewport={{ once: true, margin: "-100px" }}
+               transition={{ duration: 0.8 }}
+               className="max-w-4xl mx-auto"
             >
-              <span className="relative z-10 text-white">Get in Touch</span>
-              <ArrowRight className="ml-3 w-5 h-5 md:w-6 md:h-6 relative z-10 transition-transform group-hover:translate-x-2" />
-              <motion.div
-                className="absolute inset-0 bg-white/20"
-                initial={{ x: "-100%" }}
-                whileHover={{ x: 0 }}
-                transition={{ duration: 0.4 }}
-              />
-            </Link>
-          </motion.div>
+                <h2 className="text-4xl md:text-6xl font-black text-white mb-8 tracking-tight">
+                  Ready to Start?
+                </h2>
+                <button 
+                  onClick={() => contactModal.onOpen()}
+                  className="group relative inline-flex items-center gap-3 bg-white text-black px-10 py-5 rounded-full font-bold text-lg overflow-hidden transition-transform duration-300 hover:scale-[1.02]"
+                >
+                  <span className="relative z-10">Get in Touch</span>
+                  <ArrowRight className="w-5 h-5 relative z-10 transition-transform group-hover:translate-x-1" />
+                  <div className="absolute inset-0 bg-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-0" />
+                </button>
+            </motion.div>
         </div>
       </section>
+
     </main>
   );
 };
 
-const ClientCard: React.FC<{ client: Client; index: number }> = ({ client, index }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 80 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{
-        duration: 0.8,
-        delay: index * 0.1,
-        ease: "easeOut"
-      }}
-      whileHover={{ y: -20, scale: 1.03 }}
-      className="group relative will-change-transform h-full w-full"
-    >
-      <div className="relative bg-white/5 backdrop-blur-2xl rounded-3xl p-1 shadow-2xl border border-white/10 overflow-hidden h-full min-h-[280px]">
-        <div className="bg-black/40 rounded-3xl p-6 md:p-8 h-full relative overflow-hidden">
-          {/* Breathing orb - now GPU friendly */}
-          <motion.div
-            animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.5, 0.3] }}
-            transition={{ duration: 8, repeat: Infinity }}
-            className="absolute -top-20 -right-20 w-64 h-64 bg-gradient-to-br from-emerald-500/40 to-blue-600/40 rounded-full blur-3xl will-change-transform"
-          />
+// Optimized Card Component - Using CSS transition for hover instead of heavy motion values
+const GlassCard = ({ client, index }: { client: Client; index: number }) => {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+            className="group relative h-[280px] w-full"
+        >
+            <div className="h-full w-full bg-white/5 backdrop-blur-xl rounded-[24px] border border-white/10 p-8 flex flex-col justify-between transition-all duration-500 hover:bg-white/10 hover:border-white/20 hover:shadow-[0_20px_40px_-20px_rgba(16,185,129,0.2)]">
+                {/* Gradient Blob for Hover */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/20 rounded-full blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
-          <motion.div
-            whileHover={{ scale: 1.2, rotate: 12 }}
-            className="mb-8 w-16 h-16 md:w-20 md:h-20 mx-auto bg-gradient-to-br from-emerald-500 to-blue-600 rounded-2xl p-4 md:p-5 shadow-xl flex items-center justify-center"
-          >
-            <Factory className="w-10 h-10 md:w-12 md:h-12 text-white" />
-          </motion.div>
+                <div className="flex justify-between items-start">
+                    <div className="p-3 bg-emerald-500/20 text-emerald-400 rounded-2xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+                        <Factory className="w-8 h-8" />
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-slate-500 -rotate-45 opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300" />
+                </div>
 
-          <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-6 text-center text-white leading-tight line-clamp-3">
-            {client.name}
-          </h3>
-
-          <div className="flex items-center justify-center gap-3 text-gray-300">
-            <MapPin className="w-5 h-5 text-emerald-400" />
-            <span className="text-base md:text-lg font-medium">{client.location}</span>
-          </div>
-
-          {/* Hover glow - lightweight */}
-          <motion.div
-            className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-            style={{
-              background: "linear-gradient(45deg, transparent 30%, rgba(16, 185, 129, 0.3) 50%, transparent 70%)",
-              filter: "blur(20px)",
-            }}
-          />
-        </div>
-      </div>
-    </motion.div>
-  );
+                <div>
+                    <h3 className="text-xl md:text-2xl font-bold text-white leading-snug mb-3 group-hover:text-emerald-300 transition-colors">
+                        {client.name}
+                    </h3>
+                    <div className="flex items-center gap-2 text-slate-400 text-sm">
+                        <MapPin className="w-4 h-4" />
+                        <span>{client.location}</span>
+                    </div>
+                </div>
+            </div>
+        </motion.div>
+    );
 };
 
 export default Clients;

@@ -12,6 +12,7 @@ import {
 import { Link, useLocation } from 'react-router-dom';
 import { TiltedCard } from '../components/ui/tilted-card';
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
+import { useContactModal } from '../hooks/use-contact-modal';
 import SEO from '../components/SEO';
 
 // --- Premium Animation Variants ---
@@ -48,6 +49,7 @@ interface Service {
 const Services: React.FC = () => {
   const [headerHeight, setHeaderHeight] = useState(0);
   const location = useLocation();
+  const contactModal = useContactModal();
   const { scrollY } = useScroll();
   
   // Parallax & Fade effects for Hero
@@ -281,12 +283,12 @@ const Services: React.FC = () => {
             <p className="text-xl text-slate-400 mb-10 max-w-2xl mx-auto">
               Partner with GVS Controls for reliable, world-class industrial automation and electrical solutions.
             </p>
-            <Link
-              to="/contact"
+            <button
+              onClick={() => contactModal.onOpen()}
               className="inline-flex items-center gap-2 px-8 py-4 bg-white text-slate-900 rounded-full font-bold text-lg hover:bg-teal-50 hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)]"
             >
               Get Started Now <ArrowRight size={20} />
-            </Link>
+            </button>
           </motion.div>
         </div>
       </section>
@@ -364,6 +366,7 @@ const ServiceCardItem = ({ service }: { service: Service }) => {
 
 // 2. Feature Section with Scroll Reveal
 const FeatureSection = ({ service, index, headerHeight }: { service: Service, index: number, headerHeight: number }) => {
+  const contactModal = useContactModal();
   return (
     <section 
       id={service.id}
@@ -389,9 +392,9 @@ const FeatureSection = ({ service, index, headerHeight }: { service: Service, in
                 {service.description}
               </p>
               <div className="pt-4">
-                 <a href="/contact" className="px-6 py-3 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                 <button onClick={() => contactModal.onOpen()} className="px-6 py-3 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                     Request Proposal
-                 </a>
+                 </button>
               </div>
            </div>
 

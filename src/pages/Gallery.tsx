@@ -1,6 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
-import { X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+"use client";
+import { useState, useEffect, useRef } from 'react';
+import { X, ChevronLeft, ChevronRight, ImageIcon } from 'lucide-react';
+import { motion, AnimatePresence, useScroll, useTransform, useSpring, PanInfo } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { useContactModal } from '../hooks/use-contact-modal';
 import SEO from '../components/SEO';
 
 // Images
@@ -28,213 +31,292 @@ interface GalleryImage {
   id: string;
   src: string;
   alt: string;
-  category?: string;
 }
 
 const galleryImages: GalleryImage[] = [
-  { id: '1', src: cop1, alt: 'PCC Panel Manufacturing', category: 'Power Control' },
-  { id: '2', src: cop2, alt: 'MCC Panel Manufacturing', category: 'Motor Control' },
-  { id: '3', src: cop3, alt: 'PLC cum VFD Control Panel', category: 'Automation' },
-  { id: '4', src: cop4, alt: 'PCC Panel Assembly', category: 'Power Control' },
-  { id: '5', src: cop5, alt: 'MCC Panel Fabrication', category: 'Motor Control' },
-  { id: '6', src: cop6, alt: 'VFD Control Panel', category: 'Automation' },
-  { id: '7', src: cop7, alt: 'Advanced Wiring Systems', category: 'Engineering' },
-  { id: '8', src: cop8, alt: 'Heavy-Duty Motor Control', category: 'Motor Control' },
-  { id: '9', src: cop9, alt: 'Precision Automation Systems', category: 'Automation' },
-  { id: '10', src: cop10, alt: 'Energy Management Panels', category: 'Power Control' },
-  { id: '11', src: cop11, alt: 'Industrial Automation Units', category: 'Automation' },
-  { id: '12', src: cop12, alt: 'Power Plant VFD Systems', category: 'Power Control' },
-  { id: '13', src: cop13, alt: 'Process Industry Panels', category: 'General' },
-  { id: '14', src: cop14, alt: 'Material Handling Control', category: 'Motor Control' },
-  { id: '15', src: cop15, alt: 'Renewable Energy Systems', category: 'Green Energy' },
-  { id: '16', src: cop16, alt: 'APFC Power Factor Panels', category: 'Power Control' },
-  { id: '17', src: cop17, alt: 'AMF Control Panels', category: 'Power Control' },
-  { id: '18', src: cop18, alt: 'Relay Logic Control', category: 'Automation' },
-  { id: '19', src: cop19, alt: 'Synchronizing Panels', category: 'Power Control' }
+  { id: '1', src: cop1, alt: 'Gallery Image' },
+  { id: '2', src: cop2, alt: 'Gallery Image' },
+  { id: '3', src: cop3, alt: 'Gallery Image' },
+  { id: '4', src: cop4, alt: 'Gallery Image' },
+  { id: '5', src: cop5, alt: 'Gallery Image' },
+  { id: '6', src: cop6, alt: 'Gallery Image' },
+  { id: '7', src: cop7, alt: 'Gallery Image' },
+  { id: '8', src: cop8, alt: 'Gallery Image' },
+  { id: '9', src: cop9, alt: 'Gallery Image' },
+  { id: '10', src: cop10, alt: 'Gallery Image' },
+  { id: '11', src: cop11, alt: 'Gallery Image' },
+  { id: '12', src: cop12, alt: 'Gallery Image' },
+  { id: '13', src: cop13, alt: 'Gallery Image' },
+  { id: '14', src: cop14, alt: 'Gallery Image' },
+  { id: '15', src: cop15, alt: 'Gallery Image' },
+  { id: '16', src: cop16, alt: 'Gallery Image' },
+  { id: '17', src: cop17, alt: 'Gallery Image' },
+  { id: '18', src: cop18, alt: 'Gallery Image' },
+  { id: '19', src: cop19, alt: 'Gallery Image' }
 ];
 
 const Gallery = () => {
-  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [direction, setDirection] = useState(0); // For slide animations
+  const containerRef = useRef<HTMLDivElement>(null);
+  const contactModal = useContactModal();
+  
+  const { scrollYProgress } = useScroll({ target: containerRef });
+  const yHero = useTransform(scrollYProgress, [0, 0.5], [0, 150]);
+  const opacityHero = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+  const smoothY = useSpring(yHero, { stiffness: 100, damping: 20 });
 
-  // Keyboard Navigation
+  useEffect(() => {
+    if (selectedId) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
+  }, [selectedId]);
+
+  // Navigate functions
+  const navigate = (newDirection: number) => {
+    if (!selectedId) return;
+    const currentIndex = galleryImages.findIndex(img => img.id === selectedId);
+    let newIndex = currentIndex + newDirection;
+    
+    // Cyclic navigation
+    if (newIndex < 0) newIndex = galleryImages.length - 1;
+    if (newIndex >= galleryImages.length) newIndex = 0;
+    
+    setDirection(newDirection);
+    setSelectedId(galleryImages[newIndex].id);
+  };
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (!selectedImage) return;
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowLeft') showPrev();
-      if (e.key === 'ArrowRight') showNext();
+      if (!selectedId) return;
+      if (e.key === 'Escape') setSelectedId(null);
+      if (e.key === 'ArrowLeft') navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedImage, currentIndex]);
+  }, [selectedId]);
 
-  // Scroll Lock Effect
-  useEffect(() => {
-    if (selectedImage) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
+  const selectedImage = galleryImages.find(img => img.id === selectedId);
+
+  // Drag logic for swipe & close
+  const onDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    const swipeThreshold = 50;
+    const dismissThreshold = 150;
+
+    // Vertical Drag -> Close
+    if (Math.abs(info.offset.y) > dismissThreshold || Math.abs(info.velocity.y) > 500) {
+      setSelectedId(null);
+      return;
     }
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [selectedImage]);
 
-  const openLightbox = (index: number) => {
-    setSelectedImage(galleryImages[index]);
-    setCurrentIndex(index);
-  };
-
-  const closeLightbox = () => {
-    setSelectedImage(null);
-  };
-
-  const showPrev = () => {
-    const newIndex = currentIndex === 0 ? galleryImages.length - 1 : currentIndex - 1;
-    setCurrentIndex(newIndex);
-    setSelectedImage(galleryImages[newIndex]);
-  };
-
-  const showNext = () => {
-    const newIndex = currentIndex === galleryImages.length - 1 ? 0 : currentIndex + 1;
-    setCurrentIndex(newIndex);
-    setSelectedImage(galleryImages[newIndex]);
+    // Horizontal Drag -> Navigate
+    // Only if vertical movement was minimal (to differentiate from close gesture)
+    if (Math.abs(info.offset.y) < 100 && Math.abs(info.offset.x) > swipeThreshold) {
+      if (info.offset.x > 0) navigate(-1); // Swipe Right -> Prev
+      else navigate(1); // Swipe Left -> Next
+    }
   };
 
   return (
-    <main className="min-h-screen bg-white pt-[84px] lg:pt-[128px]">
+    <main ref={containerRef} className="bg-black text-white min-h-screen pt-[84px] lg:pt-[128px]">
       <SEO
-        title="Gallery | GVS Controls"
-        description="Explore our portfolio of industrial control panels, automation systems, and engineering excellence."
+        title="PCC, MCC & PLC cum VFD Control Panels Gallery | GVS Controls"
+        description="Explore our premium gallery of PCC, MCC, PLC cum VFD Control Panels, and APFC Systems. Precision engineered for Power, Steel, and Cement industries."
       />
 
-      {/* Header */}
-      <section className="py-20 md:py-28 bg-gradient-to-br from-indigo-600 via-teal-500 to-purple-600 relative overflow-hidden">
-        {/* Decorative Background Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-white/10 blur-3xl" />
-          <div className="absolute top-[40%] -left-[10%] w-[40%] h-[40%] rounded-full bg-purple-400/20 blur-3xl" />
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
-          {/* Floating Particles */}
-          <div className="absolute top-20 left-20 w-3 h-3 rounded-full bg-white/30 animate-pulse" />
-          <div className="absolute top-40 right-32 w-2 h-2 rounded-full bg-yellow-300/50 animate-ping" />
-          <div className="absolute bottom-32 left-[30%] w-4 h-4 rounded-full bg-teal-300/30 animate-pulse" />
-        </div>
+      {/* --- HERO --- */}
+      <section className="relative min-h-[50vh] flex flex-col items-center justify-center text-center px-4 pb-12 overflow-hidden">
+         <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
+             <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[100px]" />
+             <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-[100px]" />
+         </div>
 
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-block px-4 py-2 mb-6 text-sm font-semibold text-white/90 bg-white/10 backdrop-blur-sm rounded-full border border-white/20"
-          >
-            Our Portfolio
-          </motion.span>
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl md:text-5xl font-extrabold text-white mb-6 tracking-tight drop-shadow-lg"
-          >
-            Our Work Gallery
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto font-light leading-relaxed"
-          >
-            A showcase of precision engineering, quality manufacturing, and innovative automation solutions delivered to our clients.
-          </motion.p>
-        </div>
+         <motion.div style={{ y: smoothY, opacity: opacityHero }} className="relative z-10 max-w-5xl mx-auto">
+            <motion.div
+               initial={{ opacity: 0, scale: 0.9 }}
+               animate={{ opacity: 1, scale: 1 }}
+               transition={{ duration: 0.6 }}
+               className="inline-flex items-center gap-2 px-3 py-1 mb-6 mt-6 rounded-full bg-white/5 border border-white/10 text-indigo-300 text-xs font-semibold uppercase tracking-wider"
+            >
+               <ImageIcon className="w-3 h-3" />
+               <span>Portfolio Showcase</span>
+            </motion.div>
+
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-tight"
+            >
+              PCC, MCC & PLC CUM <br/> 
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">VFD CONTROL PANELS GALLERY</span>
+            </motion.h1>
+
+            <motion.p
+               initial={{ opacity: 0, y: 10 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ duration: 0.8, delay: 0.2 }}
+               className="text-lg md:text-xl text-slate-400 font-light max-w-4xl mx-auto leading-relaxed"
+            >
+               A comprehensive showcase of our manufactured <span className="text-white font-medium">Power Control Centers (PCC)</span>, <span className="text-white font-medium">Motor Control Centers (MCC)</span>, and advanced <span className="text-white font-medium">PLC cum VFD Automation Panels</span>. Engineered for reliability in the most demanding industrial environments.
+            </motion.p>
+         </motion.div>
       </section>
 
-      {/* Uniform Grid - Centered Bottom */}
-      <section className="py-16 bg-white min-h-screen">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-            {galleryImages.map((image, index) => (
+      {/* --- GRID --- */}
+      <section className="relative z-10 px-4 sm:px-6 lg:px-8 pb-32">
+        <div className="container mx-auto">
+          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+            {galleryImages.map((image) => (
               <motion.div
                 key={image.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                className="break-inside-avoid group cursor-pointer relative rounded-xl overflow-hidden bg-gray-100 w-full mb-4"
-                onClick={() => openLightbox(index)}
+                layoutId={`card-${image.id}`}
+                className="break-inside-avoid relative overflow-hidden rounded-2xl cursor-zoom-in group"
+                onClick={() => setSelectedId(image.id)}
+                whileHover={{ scale: 1.02 }}
+                transition={{ ease: "easeInOut", duration: 0.4 }}
               >
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-110"
-                  loading="lazy"
-                />
-                
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                   <div className="bg-white/20 backdrop-blur-md p-4 rounded-full text-white shadow-xl transform scale-75 group-hover:scale-100 transition-transform duration-300">
-                      <ZoomIn size={28} />
-                   </div>
-                </div>
-
-                {/* Caption Overlay - Removed per user request */}
+                 <motion.img
+                   layoutId={`image-${image.id}`}
+                   src={image.src}
+                   alt=""
+                   className="w-full h-auto object-cover rounded-2xl bg-slate-900"
+                   loading="lazy"
+                 />
+                 <div className="absolute inset-0 bg-white/0 hover:bg-white/5 transition-colors duration-300" />
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Lightbox Overlay */}
+      {/* --- LIGHTBOX (Apple-like) --- */}
       <AnimatePresence>
-        {selectedImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[9999] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4"
-          >
-             {/* Controls */}
-             <button 
-                onClick={closeLightbox}
-                className="absolute top-6 right-6 z-50 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
-             >
-               <X size={32} />
-             </button>
+        {selectedId && selectedImage && (
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center">
+             {/* Backdrop */}
+             <motion.div
+                initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+                animate={{ opacity: 1, backdropFilter: "blur(40px)" }}
+                exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+                transition={{ duration: 0.4 }}
+                className="absolute inset-0 bg-black/95"
+                onClick={() => setSelectedId(null)}
+             />
 
-             <button 
-                onClick={(e) => { e.stopPropagation(); showPrev(); }}
-                className="absolute left-4 md:left-8 z-50 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
+             {/* Close Button - Moved to Safe Area */}
+             <motion.button 
+                initial={{ opacity: 0, y: -20 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                exit={{ opacity: 0, y: -20 }}
+                onClick={() => setSelectedId(null)}
+                className="absolute top-4 right-4 z-[60] p-3 text-white/50 hover:text-white bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-md transition-all sm:top-8 sm:right-8"
              >
-               <ChevronLeft size={32} />
-             </button>
+               <X size={24} />
+             </motion.button>
 
-             <button 
-                onClick={(e) => { e.stopPropagation(); showNext(); }}
-                className="absolute right-4 md:right-8 z-50 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
+             {/* Image Container */}
+             <motion.div
+                layoutId={`card-${selectedImage.id}`}
+                className="relative z-50 w-full h-full flex items-center justify-center p-4 sm:p-8 pointer-events-none"
              >
-               <ChevronRight size={32} />
-             </button>
+                <motion.img
+                   layoutId={`image-${selectedImage.id}`}
+                   key={selectedImage.id} // Re-mount on change for slide effect
+                   src={selectedImage.src}
+                   alt=""
+                   className="max-w-full max-h-[85vh] object-contain shadow-2xl rounded-lg pointer-events-auto cursor-grab active:cursor-grabbing"
+                   
+                   // Combined gestures
+                   drag
+                   dragElastic={0.7}
+                   onDragEnd={onDragEnd}
+                   
+                   // Slide animation when changing images
+                   initial={{ x: direction * 50, opacity: 0 }}
+                   animate={{ x: 0, opacity: 1 }}
+                   exit={{ opacity: 0 }} // Don't slide out on close, handled by layoutId
+                   transition={{ 
+                      x: { type: "spring", stiffness: 300, damping: 30 },
+                      opacity: { duration: 0.2 }
+                   }}
+                />
+             </motion.div>
 
-            {/* Main Image */}
-            <motion.div
-              key={selectedImage.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="relative max-w-7xl max-h-[85vh] w-full flex flex-col items-center"
-              onClick={(e) => e.stopPropagation()}
+             {/* Mobile/Desktop Navigation Hints */}
+             <motion.div 
+               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+               className="absolute z-50 pointer-events-none flex justify-between items-center inset-x-6 bottom-12 sm:inset-x-4 sm:top-1/2 sm:bottom-auto sm:-translate-y-1/2"
             >
-              <img
-                src={selectedImage.src}
-                alt={selectedImage.alt}
-                className="max-h-[80vh] w-auto max-w-full object-contain rounded-sm shadow-2xl"
-              />
-              {/* Text details removed per user request */}
+              <button 
+                 onClick={(e) => { e.stopPropagation(); navigate(-1); }}
+                 className="p-4 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-md pointer-events-auto transition-all transform hover:scale-110 active:scale-95 border border-white/5 shadow-lg"
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button 
+                 onClick={(e) => { e.stopPropagation(); navigate(1); }}
+                 className="p-4 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-md pointer-events-auto transition-all transform hover:scale-110 active:scale-95 border border-white/5 shadow-lg"
+              >
+                <ChevronRight size={24} />
+              </button>
             </motion.div>
-          </motion.div>
+
+          </div>
         )}
       </AnimatePresence>
+      {/* --- CTA SECTION --- */}
+      <section className="relative py-32 border-t border-white/5 bg-gradient-to-b from-black to-indigo-950/20 overflow-hidden">
+         {/* Background Glow */}
+         <div className="absolute inset-0 z-0 pointer-events-none">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-indigo-500/10 blur-[100px] rounded-full" />
+         </div>
+
+         <div className="container mx-auto px-4 text-center relative z-10">
+            <motion.div
+               initial={{ opacity: 0, scale: 0.95 }}
+               whileInView={{ opacity: 1, scale: 1 }}
+               viewport={{ once: true }}
+               transition={{ duration: 0.8 }}
+               className="max-w-3xl mx-auto"
+            >
+               <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-8">
+                  See something you like? <br/>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Let's build yours.</span>
+               </h2>
+               
+               <p className="text-lg text-slate-400 mb-10 font-light leading-relaxed max-w-2xl mx-auto">
+                  Every panel in this gallery was custom-engineered to meet specific client needs. 
+                  Share your requirements with us, and we'll design a solution that fits perfectly.
+               </p>
+
+               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+                  <button 
+                     onClick={() => contactModal.onOpen()}
+                     className="group relative px-8 py-4 bg-white text-black font-bold rounded-full overflow-hidden hover:scale-105 transition-transform duration-300 w-full sm:w-auto min-w-[200px]"
+                  >
+                     <span className="relative z-10 flex items-center justify-center gap-2">
+                        Get Custom Quote 
+                        <ChevronRight className="w-4 h-4" />
+                     </span>
+                     <div className="absolute inset-0 bg-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                     <span className="absolute inset-0 z-10 flex items-center justify-center gap-2 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        Get Custom Quote 
+                        <ChevronRight className="w-4 h-4" />
+                     </span>
+                  </button>
+
+                  <Link 
+                     to="/manufacturing-supply" 
+                     className="px-8 py-4 rounded-full border border-white/10 bg-white/5 text-white font-semibold hover:bg-white/10 transition-colors w-full sm:w-auto min-w-[200px]"
+                  >
+                     View Manufacturing
+                  </Link>
+               </div>
+            </motion.div>
+         </div>
+      </section>
+
     </main>
   );
 };

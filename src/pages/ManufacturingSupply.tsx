@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Factory, Zap, Wrench, CheckCircle2, ArrowRight, Settings, ShieldCheck, Cog } from 'lucide-react';
 import { TiltedCard } from '../components/ui/tilted-card';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useContactModal } from '../hooks/use-contact-modal';
 import SEO from '../components/SEO';
 
 // --- Types ---
@@ -180,6 +181,7 @@ const ProductSection = ({ product }: { product: Product }) => {
 
 const ManufacturingSupply = () => {
   const { scrollY } = useScroll();
+  const contactModal = useContactModal();
   
   // Industrial Parallax
   const heroY = useTransform(scrollY, [0, 500], [0, 150]);
@@ -340,13 +342,13 @@ const ManufacturingSupply = () => {
              <p className="text-xl md:text-2xl text-slate-900 font-medium mb-10 max-w-2xl">
                Providing innovative solutions and electrical panels as per IE & CEIG standards.
             </p>
-            <Link 
-               to="/contact"
+            <button 
+               onClick={() => contactModal.onOpen()}
                className="group relative inline-flex items-center gap-3 px-10 py-5 bg-slate-950 text-white font-bold text-lg hover:bg-slate-900 transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,0.2)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)] hover:translate-x-[2px] hover:translate-y-[2px]"
             >
                <span>Get Started Today</span>
                <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-            </Link>
+            </button>
          </div>
       </section>
 

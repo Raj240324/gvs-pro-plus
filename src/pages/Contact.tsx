@@ -1,8 +1,8 @@
 import { useEffect, useState, Component, ErrorInfo, ReactNode } from 'react';
 import SendButton from '../components/ui/SendButton';
-import { Mail, Phone, MapPin, Send, Linkedin, Clock } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Linkedin, Clock, ArrowRight, MessageSquare, Globe, Building2 } from 'lucide-react';
 import { useToast } from "../hooks/use-toast";
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Textarea } from '../components/ui/textarea';
 import { useContactModal } from '../hooks/use-contact-modal';
 import Button from '../components/ui/Button';
@@ -10,7 +10,7 @@ import SEO from '../components/SEO';
 import { supabase } from '../lib/supabase';
 import { Input } from '../components/ui/input';
 
-// Error Boundary (unchanged)
+// --- Error Boundary ---
 interface ErrorBoundaryProps { children: ReactNode; }
 interface ErrorBoundaryState { hasError: boolean; }
 
@@ -21,12 +21,12 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
-          <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+          <div className="text-center p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full">
             <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Something went wrong</h1>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">Please try refreshing the page or contact support.</p>
-            <Button onClick={() => window.location.reload()} className="bg-teal-500 text-white hover:bg-teal-600">
-              Refresh Page
+            <p className="text-gray-600 dark:text-gray-300 mb-6">We're sorry, but the contact page encountered an error.</p>
+            <Button onClick={() => window.location.reload()} className="w-full bg-slate-900 text-white hover:bg-slate-800">
+              Reload Page
             </Button>
           </div>
         </div>
@@ -40,17 +40,10 @@ interface FormData {
   name: string; email: string; phone: string; subject: string; message: string; bot_honey?: string;
 }
 
-interface ContactItem {
-  icon: JSX.Element;
-  title: string;
-  content?: string;
-  link?: string;
-  linkText?: string;
-  emails?: { label: string; email: string; url?: string }[];
-  phones?: string[];
-  hours?: string;
-  days?: string;
-}
+// --- Animation Variants ---
+const fadeInUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } } };
+const staggerContainer = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.1 } } };
+const bentoScale = { hidden: { opacity: 0, scale: 0.98 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: "easeOut" } } };
 
 const Contact = () => {
   const [formData, setFormData] = useState<FormData>({ name: '', email: '', phone: '', subject: '', message: '' });
@@ -61,7 +54,6 @@ const Contact = () => {
   const contactModal = useContactModal();
 
   useEffect(() => {
-    // Only verify keys are present, no init needed
     if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
        console.error('Supabase keys missing');
     }
@@ -77,9 +69,7 @@ const Contact = () => {
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Invalid email address';
         return '';
       case 'phone':
-        // Allow digits, spaces, +, -, (, )
         if (value && !/^[\d\s\+\-\(\)]+$/.test(value)) return 'Invalid characters in phone number';
-        // Check for reasonable digit count (e.g. 10-15)
         const digits = value.replace(/\D/g, '');
         if (value && (digits.length < 10 || digits.length > 15)) return 'Phone number must be 10-15 digits';
         return '';
@@ -93,36 +83,22 @@ const Contact = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    
-    // For phone, prevent entering invalid chars (except control keys)
-    if (name === 'phone') {
-        // Allow only valid phone characters: numbers, spaces, +, -, (, )
-        if (!/^[\d\s\+\-\(\)]*$/.test(value)) return; 
-    }
-
+    if (name === 'phone' && !/^[\d\s\+\-\(\)]*$/.test(value)) return; 
     setFormData(prev => ({ ...prev, [name]: value }));
-    
-    // Real-time validation
     const error = validateField(name, value);
     setErrors(prev => ({ ...prev, [name]: error }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    // Validate all fields
     const newErrors: { [key: string]: string } = {};
     let isValid = true;
     Object.keys(formData).forEach(key => {
         if (key === 'bot_honey') return;
         const error = validateField(key, formData[key as keyof FormData] || '');
-        if (error) {
-            newErrors[key] = error;
-            isValid = false;
-        }
+        if (error) { newErrors[key] = error; isValid = false; }
     });
 
-    // Required fields check (double check)
     if (!formData.name || !formData.email || !formData.message) {
        isValid = false;
        if (!formData.name) newErrors.name = 'Name is required';
@@ -131,431 +107,247 @@ const Contact = () => {
     }
 
     setErrors(newErrors);
-
     if (!isValid) {
-      toast({ title: "Validation Error", description: "Please fix the errors in the form.", variant: "destructive" });
+      toast({ title: "Check your form", description: "Please fix the highlighted errors.", variant: "destructive" });
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase.functions.invoke('contact-us', {
-        body: formData,
-      });
-
+      const { error } = await supabase.functions.invoke('contact-us', { body: formData });
       if (error) throw error;
 
       setIsSubmitting(false);
       setIsSubmitted(true);
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
       setErrors({});
-      toast({ title: "Success!", description: "Message sent successfully!" });
+      toast({ title: "Received!", description: "We'll be in touch shortly.", className: "bg-teal-500 text-white border-0" });
       setTimeout(() => setIsSubmitted(false), 5000);
     } catch (error) {
       setIsSubmitting(false);
-      toast({ title: "Error", description: "Failed to send message.", variant: "destructive" });
+      toast({ title: "Error", description: "Could not send message. Please try again.", variant: "destructive" });
       console.error(error);
     }
   };
 
-  const fadeInUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
-  const staggerContainer = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
-
-  const Particles = () => (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {Array.from({ length: 30 }).map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute rounded-full bg-gradient-to-r from-teal-400/30 to-purple-500/30 blur-sm"
-          initial={{ scale: 0, opacity: 0.8 }}
-          animate={{ scale: [0, 1.5, 0], opacity: [0.8, 0.3, 0] }}
-          transition={{ duration: Math.random() * 5 + 5, repeat: Infinity, delay: Math.random() * 3 }}
-          style={{
-            width: `${Math.random() * 20 + 10}px`,
-            height: `${Math.random() * 20 + 10}px`,
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-        />
-      ))}
-    </div>
-  );
+  // Original Content Data
+  const officeAddress = "Plot No.1476, Segundram Main Road,\nGokulapuram-MaraimalaiNagar,\nChengalpattu-(District),\nPin:603209";
+  const regAddress = "No.46/1, 5th Cross Street,\nBagavathy Nagar Govindarajapuram,\nNandhivaram,\nGuduvanchery – 603202,\nChengalpattu-(Dist)";
+  const phoneNumbers = ["+91 7338880027", "+91 9884001597"];
+  const emails = [
+    { label: "Projects", val: "projects@gvscontrols.com" },
+    { label: "General", val: "gvscontrols@gmail.com" }
+  ];
 
   return (
     <ErrorBoundary>
-      <SEO title="Contact" description="Reach out to GVS Controls..." canonical="/contact" />
+      <SEO title="Contact" description="Get expert consultation for Electrical Panels, PLC Automation & Turnkey EPC Solutions." canonical="/contact" />
 
-      <main className="overflow-hidden pt-[84px] lg:pt-[128px]">
-        {/* Hero */}
-        <section className="relative bg-gradient-to-br from-teal-600 via-indigo-600 to-purple-700 min-h-[50vh] flex items-center overflow-hidden">
-          <Particles />
-          <div className="relative z-10 py-16 md:py-20 w-full">
-            <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="max-w-4xl mx-auto text-center">
-                <motion.span variants={fadeInUp} className="inline-block px-4 py-1 sm:px-6 sm:py-2 mb-6 sm:mb-8 text-xs sm:text-base font-semibold text-white bg-white/10 backdrop-blur-lg rounded-full border border-white/20 shadow-lg hover:bg-white/20 transition-all duration-300">
-                  Get in Touch
-                </motion.span>
-                <motion.h1 variants={fadeInUp} className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold mb-4 sm:mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white via-teal-200 to-purple-200 drop-shadow-md">
-                  Contact GVS Controls
-                </motion.h1>
-                <motion.p variants={fadeInUp} className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl mx-auto">
-                  Get expert consultation for Electrical Panels, PLC Automation & Turnkey EPC Solutions. Custom quote within 24 hours.
-                </motion.p>
-                <motion.div variants={fadeInUp} className="mt-6 sm:mt-8 md:mt-10">
-                  <Button variant="gradient" size="lg" onClick={contactModal.onOpen}
-                    className="bg-gradient-to-r from-teal-500 to-indigo-500 text-white hover:from-teal-600 hover:to-indigo-600 shadow-lg hover:shadow-xl transition-all duration-300 px-6 py-2 sm:px-8 sm:py-3 rounded-full border-none">
-                    Request a Quote
-                  </Button>
+      <main className="bg-slate-50 dark:bg-black pt-[84px] lg:pt-[128px] min-h-screen">
+        
+        {/* --- Hero Section (Preserved Background & Smaller Text) --- */}
+        <section className="relative overflow-hidden min-h-[40vh] flex items-center justify-center bg-gradient-to-br from-teal-600 via-indigo-600 to-purple-700 pb-32">
+           {/* Abstract Shapes (Subtle) */}
+           <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+              <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white rounded-full blur-[120px] mix-blend-overlay animate-pulse-slow" />
+              <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-teal-400 rounded-full blur-[100px] mix-blend-overlay" />
+           </div>
+
+           <div className="container mx-auto px-4 text-center relative z-10">
+              <motion.div variants={staggerContainer} initial="hidden" animate="visible">
+                <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/90 text-xs font-medium mb-4">
+                   <div className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
+                   Available for New Inquiries
                 </motion.div>
-              </div>
-            </motion.div>
-          </div>
+                
+                <motion.h1 variants={fadeInUp} className="text-3xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight mb-4">
+                   Let’s Engineer <br />
+                   <span className="text-teal-200">Your Vision.</span>
+                </motion.h1>
+                
+                <motion.p variants={fadeInUp} className="text-base md:text-lg text-indigo-100 max-w-2xl mx-auto leading-relaxed">
+                   Connect with GVS Controls for world-class automation and electrical solutions. 
+                   We typically respond within 2 hours.
+                </motion.p>
+              </motion.div>
+           </div>
         </section>
 
-        {/* 4 Perfect Cards */}
-        <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              variants={staggerContainer}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10 mb-12 sm:mb-16"
-            >
 
-
-              {[
-                {
-                  icon: <MapPin size={24} className="sm:w-8 sm:h-8" />,
-                  title: 'Office & Works',
-                  content: 'Plot No.1476, Segundram Main Road,\nGokulapuram-MaraimalaiNagar,\nChengalpattu-(District),\nPin:603209',
-                  link: 'https://www.google.com/maps/place/12%C2%B046\'13.5%22N+80%C2%B002\'10.0%22E/@12.7704061,80.0335333,17z/data=!3m1!4b1!4m4!3m3!8m2!3d12.7704061!4d80.0361082?entry=ttu&g_ep=EgoyMDI1MTEwNC4xIKXMDSoASAFQAw%3D%3D',
-                  linkText: 'View on Map',
-                },
-                {
-                  icon: <MapPin size={24} className="sm:w-8 sm:h-8" />,
-                  title: 'Reg. Office',
-                  content: 'No.46/1, 5th Cross Street,\nBagavathy Nagar Govindarajapuram,\nNandhivaram,\nGuduvanchery – 603202,\nChengalpattu-(Dist)',
-                  link: 'https://maps.google.com/?q=Govindarajapuram+Nandhivaram+Guduvanchery',
-                  linkText: 'View on Map',
-                },
-                {
-                  icon: <Mail size={24} className="sm:w-8 sm:h-8" />,
-                  title: 'Email Us',
-                  emails: [
-                    { label: 'Projects', email: 'projects@gvscontrols.com' },
-                    { label: 'General', email: 'gvscontrols@gmail.com' },
-                    { label: 'Website', email: 'www.gvscontrols.com', url: 'https://www.gvscontrols.com' },
-                  ],
-                },
-                {
-                  icon: <Phone size={24} className="sm:w-8 sm:h-8" />,
-                  title: 'Call Us',
-                  phones: ['+91 7338880027', '+91 9884001597'],
-                  hours: '9:30 AM to 5:30 PM',
-                  days: 'Monday to Saturday',
-                },
-              ].map((item: ContactItem, index: number) => (
-                <motion.div
-                  key={index}
-                  variants={fadeInUp}
-                  className="relative group bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-200/50 dark:border-gray-700/50 overflow-hidden"
-                  whileHover={{ scale: 1.03 }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-teal-500/10 to-purple-500/10 transform scale-0 group-hover:scale-100 transition-transform duration-500 origin-center rounded-xl"></div>
-                  <div className="relative z-10 text-center">
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 sm:mb-6 rounded-full bg-gradient-to-r from-teal-500 to-purple-600 p-0.5 transform group-hover:scale-110 transition-all duration-300">
-                      <div className="w-full h-full rounded-full bg-white dark:bg-gray-900 flex items-center justify-center">
-                        <span className="text-teal-600 group-hover:text-purple-600 transition-colors duration-300">
-                          {item.icon}
-                        </span>
-                      </div>
-                    </div>
-
-                    <h3 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white mb-3 sm:mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-teal-500 group-hover:to-purple-600 transition-all duration-300">
-                      {item.title}
-                    </h3>
-
-                    {/* Address */}
-                    {item.content && (
-                      <p className="text-gray-600 dark:text-gray-300 mb-2 text-sm sm:text-base leading-relaxed whitespace-pre-line">
-                        {item.content}
-                      </p>
-                    )}
-
-                    {/* Emails */}
-                    {item.emails && (
-                      <div className="space-y-3 text-sm sm:text-base">
-                        {item.emails.map((e, i: number) => (
-                          <div key={i}>
-                            <span className="block text-gray-500 dark:text-gray-400">{e.label}:</span>
-                            {e.url ? (
-                              <a href={e.url} target="_blank" rel="noopener noreferrer" className="font-medium text-teal-600 hover:text-purple-600 break-all">
-                                {e.email}
-                              </a>
-                            ) : (
-                              <a href={`mailto:${e.email}`} className="font-medium text-teal-600 hover:text-purple-600 break-all">
-                                {e.email}
-                              </a>
-                            )}
-                          </div>
-                        ))}
-                        <a href="mailto:projects@gvscontrols.com" className="inline-block mt-4 text-teal-600 font-semibold hover:text-purple-600">
-                          Send an Email →
-                        </a>
-                      </div>
-                    )}
-
-                    {/* Call Us + Working Hours */}
-                    {item.phones && (
-                      <div className="space-y-3 text-sm sm:text-base">
-                        {item.phones.map((p: string, i: number) => (
-                          <div key={i}>
-                            <span className="block text-gray-500 dark:text-gray-400">Mobile:</span>
-                            <a href={`tel:${p.replace(/[^0-9+]/g, '')}`} className="font-medium text-teal-600 hover:text-purple-600">
-                              {p}
-                            </a>
-                          </div>
-                        ))}
-                        <div className="pt-4 mt-4 border-t border-gray-300 dark:border-gray-600">
-                          <div className="flex items-center justify-center gap-2">
-                            <Clock className="w-4 h-4 text-teal-600" />
-                            <span className="font-semibold text-gray-700 dark:text-gray-300">{item.hours}</span>
-                          </div>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">{item.days}</p>
+        {/* --- Content Area --- */}
+        <div className="container mx-auto px-4 -mt-16 md:-mt-20 relative z-20 pb-20">
+           
+           {/* Bento Grid Layout (Restored Content) */}
+           <motion.div 
+             variants={staggerContainer}
+             initial="hidden"
+             whileInView="visible"
+             viewport={{ once: true, margin: "-100px" }}
+             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6"
+           >
+              {/* Card 1: Office & Works */}
+              <motion.div variants={bentoScale} className="col-span-1 md:col-span-2 bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 flex flex-col justify-between min-h-[280px] group hover:shadow-2xl transition-all">
+                 <div className="flex items-start justify-between">
+                    <div>
+                        <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-indigo-600 dark:text-indigo-400 mb-4 group-hover:scale-110 transition-transform">
+                           <MapPin size={20} />
                         </div>
-                        <a href="tel:+917338880027" className="inline-block mt-4 text-teal-600 font-semibold hover:text-purple-600">
-                          Call Now →
-                        </a>
-                      </div>
-                    )}
-
-                    {/* View on Map */}
-                    {item.linkText && (
-                      <a
-                        href={item.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center w-full mt-6 text-teal-600 font-semibold hover:text-purple-600 transition-colors duration-300 relative group/link text-sm sm:text-base"
-                      >
-                        <span>{item.linkText}</span>
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-purple-600 group-hover/link:w-full transition-all duration-300"></span>
-                      </a>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-
-            {/* Quick Contact Section - Instant Reach Options */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mb-10 sm:mb-12"
-            >
-              <div className="text-center mb-6">
-                <h3 className="text-lg sm:text-xl font-bold text-gray-800 dark:text-white mb-2">
-                  Need Quick Response?
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  Connect with us instantly through your preferred channel
-                </p>
-              </div>
-              <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
-                {/* Call Now */}
-                <motion.a
-                  href="tel:+917338880027"
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl shadow-lg hover:shadow-green-500/30 transition-all duration-300"
-                >
-                  <Phone className="w-5 h-5" />
-                  <div className="text-left">
-                    <span className="block text-xs opacity-80">Call Now</span>
-                    <span className="font-bold text-sm">+91 73388 80027</span>
-                  </div>
-                </motion.a>
-
-                {/* WhatsApp */}
-                <motion.a
-                  href="https://wa.me/917338880027?text=Hi%2C%20I%27m%20interested%20in%20GVS%20Controls%20services."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white rounded-xl shadow-lg hover:shadow-[#25D366]/30 transition-all duration-300"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                  </svg>
-                  <div className="text-left">
-                    <span className="block text-xs opacity-80">WhatsApp</span>
-                    <span className="font-bold text-sm">Chat Now</span>
-                  </div>
-                </motion.a>
-
-                {/* Email */}
-                <motion.a
-                  href="mailto:projects@gvscontrols.com"
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl shadow-lg hover:shadow-blue-500/30 transition-all duration-300"
-                >
-                  <Mail className="w-5 h-5" />
-                  <div className="text-left">
-                    <span className="block text-xs opacity-80">Email Us</span>
-                    <span className="font-bold text-sm">projects@gvs...</span>
-                  </div>
-                </motion.a>
-              </div>
-            </motion.div>
-
-            {/* Form + Map + Social - Your Original */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12">
-              {/* Contact Form - now flex col to match height exactly */}
-              <motion.div
-                initial={{ opacity: 0, x: -40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7 }}
-                className="bg-gradient-to-br from-teal-200 to-purple-200 dark:from-teal-800 dark:to-purple-800 backdrop-blur-md rounded-xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 flex flex-col"
-              >
-                <h2 className="text-2xl sm:text-3xl font-extrabold mb-4 bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
-                  Send Us a Message
-                </h2>
-                <p className="text-gray-600 dark:text-gray-300 mb-8 text-sm sm:text-base">
-                  We're excited to hear from you—let's get started!
-                </p>
-                <form onSubmit={handleSubmit} className="space-y-6 flex-1 flex flex-col justify-between">                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                   {/* Honeypot Field for Bots - Visually Hidden */}
-                   <div style={{ position: 'absolute', opacity: 0, zIndex: -1, width: 0, height: 0, overflow: 'hidden' }}>
-                      <label htmlFor="website_url">Website</label>
-                      <input type="text" id="website_url" name="bot_honey" tabIndex={-1} autoComplete="off" onChange={handleChange} />
-                   </div>
-                   
-                   <div className="space-y-2">
-                     <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200">
-                       Name <span className="text-red-500">*</span>
-                     </label>
-                     <Input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required
-                       className={`w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base ${errors.name ? 'border-red-500' : 'border-gray-400 dark:border-gray-600'}`}
-                       disabled={isSubmitting} />
-                     {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
-                   </div>
-                   <div className="space-y-2">
-                     <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200">
-                       Email <span className="text-red-500">*</span>
-                     </label>
-                     <Input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required
-                       className={`w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base ${errors.email ? 'border-red-500' : 'border-gray-400 dark:border-gray-600'}`}
-                       disabled={isSubmitting} />
-                     {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
-                   </div>
-                </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                    <div className="space-y-2">
-                      <label htmlFor="phone" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200">Phone</label>
-                      <Input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange}
-                        className={`w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base ${errors.phone ? 'border-red-500' : 'border-gray-400 dark:border-gray-600'}`}
-                        disabled={isSubmitting} />
-                      {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Office & Works</h3>
+                        <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium whitespace-pre-line">
+                           {officeAddress}
+                        </p>
                     </div>
-                    <div className="space-y-2">
-                      <label htmlFor="subject" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200">Subject</label>
-                      <select id="subject" name="subject" value={formData.subject} onChange={handleChange}
-                        className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border border-gray-400 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-gray-700 dark:text-gray-300 text-sm sm:text-base"
-                        disabled={isSubmitting}>
-                        <option value="">Select a subject</option>
-                        <option>General Inquiry</option>
-                        <option>Project Consultation</option>
-                        <option>Product Information</option>
-                        <option>Service Request</option>
-                        <option>Other</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="message" className="block text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200">
-                      Message <span className="text-red-500">*</span>
-                    </label>
-                    <Textarea id="message" name="message" value={formData.message} onChange={handleChange} rows={4} required
-                      className={`w-full px-3 py-2 sm:px-4 sm:py-3 bg-white/50 dark:bg-gray-700/50 border rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-300 hover:shadow-md text-sm sm:text-base ${errors.message ? 'border-red-500' : 'border-gray-400 dark:border-gray-600'}`}
-                      disabled={isSubmitting} />
-                    {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
-                  </div>
-                  <div className="mt-8">
-                    <SendButton 
-                      type="submit" 
-                      isSubmitting={isSubmitting}
-                      isSubmitted={isSubmitted}
-                      className="w-full py-4 text-lg"
-                      text="Send Message"
-                    />
-                  </div>
-                </form>
+                 </div>
+                 <a href="https://www.google.com/maps/place/12%C2%B046'13.5%22N+80%C2%B002'10.0%22E/@12.7704061,80.0335333,17z" target="_blank" className="inline-flex items-center text-indigo-600 dark:text-indigo-400 text-sm font-semibold mt-4 group/link">
+                    View on Map <ArrowRight className="w-3.5 h-3.5 ml-2 transition-transform group-hover/link:translate-x-1" />
+                 </a>
               </motion.div>
 
-              {/* Map + Working Hours - same exact container style */}
-              <motion.div
-                initial={{ opacity: 0, x: 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7 }}
-                className="bg-gradient-to-br from-teal-200 to-purple-200 dark:from-teal-800 dark:to-purple-800 backdrop-blur-md rounded-xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 flex flex-col"
-              >
-                <h2 className="text-2xl sm:text-3xl font-extrabold mb-4 bg-gradient-to-r from-teal-600 to-purple-600 bg-clip-text text-transparent">
-                  Our Location
-                </h2>
+              {/* Card 2: Reg Office */}
+              <motion.div variants={bentoScale} className="col-span-1 md:col-span-2 lg:col-span-2 bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 flex flex-col justify-between min-h-[280px] group hover:shadow-2xl transition-all">
+                 <div className="flex items-start justify-between">
+                    <div>
+                        <div className="w-10 h-10 bg-teal-50 dark:bg-teal-900/30 rounded-xl flex items-center justify-center text-teal-600 dark:text-teal-400 mb-4 group-hover:scale-110 transition-transform">
+                           <Building2 size={20} />
+                        </div>
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Reg. Office</h3>
+                        <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium whitespace-pre-line">
+                           {regAddress}
+                        </p>
+                    </div>
+                 </div>
+                 <a href="https://maps.google.com/?q=Govindarajapuram+Nandhivaram+Guduvanchery" target="_blank" className="inline-flex items-center text-teal-600 dark:text-teal-400 text-sm font-semibold mt-4 group/link">
+                    View on Map <ArrowRight className="w-3.5 h-3.5 ml-2 transition-transform group-hover/link:translate-x-1" />
+                 </a>
+              </motion.div>
 
-                <div className="flex-1 rounded-xl overflow-hidden shadow-inner mb-6">
-                  <iframe
-                    src="https://www.google.com/maps?q=12.7704061,80.0361082&z=17&output=embed"
+              {/* Card 3: Contact Numbers */}
+              <motion.div variants={bentoScale} className="col-span-1 lg:col-span-2 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-2xl p-6 shadow-xl text-white flex flex-col justify-between min-h-[240px]">
+                 <div>
+                    <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><Phone size={18} /> Call Us</h3>
+                    <div className="space-y-2">
+                        {phoneNumbers.map((phone, i) => (
+                           <div key={i} className="text-xl md:text-2xl font-bold tracking-tight">{phone}</div>
+                        ))}
+                    </div>
+                    <p className="text-teal-50 text-xs mt-2 opacity-90">9:30 AM to 5:30 PM (Mon-Sat)</p>
+                 </div>
+                 <div className="grid grid-cols-2 gap-3 mt-4">
+                   <a href={`tel:${phoneNumbers[0].replace(/[^0-9+]/g, '')}`} className="flex items-center justify-center py-2.5 bg-white text-teal-700 text-sm rounded-lg font-bold hover:bg-teal-50 transition-colors">
+                      Call Now
+                   </a>
+                   <a href="https://wa.me/917338880027" target="_blank" className="flex items-center justify-center py-2.5 bg-teal-700/50 backdrop-blur-md text-white border border-teal-400/30 text-sm rounded-lg font-semibold hover:bg-teal-700 transition-colors">
+                      WhatsApp
+                   </a>
+                 </div>
+              </motion.div>
+
+               {/* Card 4: Emails */}
+               <motion.div variants={bentoScale} className="col-span-1 lg:col-span-2 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-6 shadow-xl text-white flex flex-col justify-between min-h-[240px]">
+                 <div>
+                    <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><Mail size={18} /> Email Us</h3>
+                    <div className="space-y-3">
+                       {emails.map((item, i) => (
+                          <div key={i}>
+                             <div className="text-xs text-blue-200 uppercase tracking-wider mb-0.5">{item.label}</div>
+                             <a href={`mailto:${item.val}`} className="text-base md:text-lg font-medium hover:underline decoration-blue-300 underline-offset-4">{item.val}</a>
+                          </div>
+                       ))}
+                    </div>
+                 </div>
+                 <a href="https://www.gvscontrols.com" target="_blank" className="flex items-center gap-2 text-blue-200 hover:text-white text-sm mt-4 transition-colors">
+                    <Globe size={14} /> www.gvscontrols.com
+                 </a>
+              </motion.div>
+
+           </motion.div>
+
+           {/* Row 2: Form & Map Split */}
+           <motion.div 
+             variants={fadeInUp}
+             initial="hidden" 
+             whileInView="visible"
+             viewport={{ once: true }}
+             className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+           >
+              
+              {/* Interactive Form */}
+              <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800">
+                 <div className="mb-8">
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Send a Message</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">Fill out the form below and we'll get back to you shortly.</p>
+                 </div>
+
+                 <form onSubmit={handleSubmit} className="space-y-5">
+                    {/* Honeypot */}
+                    <div className="hidden opacity-0 w-0 h-0 overflow-hidden">
+                       <input type="text" name="bot_honey" tabIndex={-1} autoComplete="off" onChange={handleChange} />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                       <div className="space-y-1.5">
+                          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 ml-1">Name</label>
+                          <Input name="name" value={formData.name} onChange={handleChange} placeholder="John Doe" 
+                            className="h-10 text-sm bg-slate-50 dark:bg-slate-800 border-transparent focus:bg-white dark:focus:bg-slate-950 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-lg transition-all font-medium text-slate-900 dark:text-white" />
+                          {errors.name && <p className="text-red-500 text-[10px] ml-1">{errors.name}</p>}
+                       </div>
+                       <div className="space-y-1.5">
+                          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 ml-1">Phone</label>
+                          <Input name="phone" value={formData.phone} onChange={handleChange} placeholder="+91..." 
+                            className="h-10 text-sm bg-slate-50 dark:bg-slate-800 border-transparent focus:bg-white dark:focus:bg-slate-950 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-lg transition-all font-medium text-slate-900 dark:text-white" />
+                          {errors.phone && <p className="text-red-500 text-[10px] ml-1">{errors.phone}</p>}
+                       </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                       <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 ml-1">Email</label>
+                       <Input name="email" value={formData.email} onChange={handleChange} placeholder="john@company.com" 
+                          className="h-10 text-sm bg-slate-50 dark:bg-slate-800 border-transparent focus:bg-white dark:focus:bg-slate-950 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-lg transition-all font-medium text-slate-900 dark:text-white" />
+                       {errors.email && <p className="text-red-500 text-[10px] ml-1">{errors.email}</p>}
+                    </div>
+
+                    <div className="space-y-1.5">
+                       <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 ml-1">Requirements</label>
+                       <Textarea name="message" value={formData.message} onChange={handleChange} placeholder="Tell us about your project..." rows={4}
+                          className="text-sm bg-slate-50 dark:bg-slate-800 border-transparent focus:bg-white dark:focus:bg-slate-950 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-lg transition-all font-medium text-slate-900 dark:text-white resize-none p-3" />
+                       {errors.message && <p className="text-red-500 text-[10px] ml-1">{errors.message}</p>}
+                    </div>
+
+                    <div className="pt-2">
+                       <SendButton 
+                          type="submit" 
+                          isSubmitting={isSubmitting}
+                          isSubmitted={isSubmitted}
+                          className="w-full h-12 text-base font-bold rounded-lg shadow-lg shadow-indigo-500/20"
+                          text="Send Request"
+                       />
+                    </div>
+                 </form>
+              </div>
+
+              {/* Map Column */}
+              <div className="bg-slate-200 dark:bg-slate-800 rounded-2xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-700 h-full min-h-[400px] relative group">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3890.313100667616!2d80.03353331481997!3d12.770406090991582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5251147040843f%3A0x6d9006930514210e!2s12%C2%B046&#39;13.5%22N%2080%C2%B002&#39;10.0%22E!5e0!3m2!1sen!2sin!4v1677654321098!5m2!1sen!2sin"
                     width="100%"
                     height="100%"
-                    style={{ border: 0, minHeight: '360px' }}
+                    style={{ border: 0 }}
                     allowFullScreen
                     loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
+                    className="grayscale-[50%] group-hover:grayscale-0 transition-all duration-700 block"
                     title="GVS Controls Location"
-                  />
+                />
+                <div className="absolute top-4 right-4">
+                     <a href="https://www.linkedin.com/feed/update/urn:li:activity:7386648123668021248/" target="_blank" className="w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110">
+                        <Linkedin size={18} />
+                     </a>
                 </div>
-
-                {/* Working Hours - now here */}
-                <div className="bg-white/40 dark:bg-black/30 backdrop-blur-sm rounded-lg p-6 text-center border border-white/40">
-                  <div className="flex items-center justify-center gap-3 mb-2">
-                    <Clock className="w-7 h-7 text-teal-600 dark:text-teal-400" />
-                    <span className="text-xl font-bold text-gray-800 dark:text-white">
-                      9:30 AM to 5:30 PM
-                    </span>
-                  </div>
-                  <p className="text-gray-700 dark:text-gray-300">
-                    Monday to Saturday
-                  </p>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Social */}
-        <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-teal-700 via-indigo-800 to-purple-900">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-6 sm:mb-8 bg-clip-text bg-gradient-to-r from-teal-200 to-purple-200 text-transparent">
-                Connect With Us
-              </h2>
-              <div className="flex justify-center space-x-6 sm:space-x-8">
-                <motion.a href="https://www.linkedin.com/feed/update/urn:li:activity:7386648123668021248/" target="_blank" rel="noopener noreferrer"
-                  className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md text-white border border-white/20 transition-all duration-300"
-                  whileHover={{ scale: 1.15, rotate: 5, boxShadow: "0 0 25px rgba(255, 255, 255, 0.4)" }}>
-                  <Linkedin className="w-6 h-6 sm:w-7 sm:h-7" />
-                </motion.a>
               </div>
-            </motion.div>
-          </div>
-        </section>
+
+           </motion.div>
+
+        </div>
       </main>
     </ErrorBoundary>
   );
