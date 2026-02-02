@@ -63,8 +63,8 @@ const WhyUs = () => {
   return (
     <main ref={containerRef} className="bg-slate-950 text-white min-h-screen pt-[84px] lg:pt-[128px]">
       <SEO
-        title="Why Choose GVS | Engineering Excellence"
-        description="30+ Years of Experience. IE/CEIG Compliant. Cost-Effective Solutions."
+        title="Strategic Engineering & Industrial Partner"
+        description="GVS Controls: Innovative and Cost-Effective solutions. 30+ years of legacy with Shriram EPC and L&T. Specialized in Power, Steel, and Cement sectoral consultancy and automation."
       />
 
       {/* --- HERO SECTION: Balanced and Professional --- */}
@@ -85,7 +85,7 @@ const WhyUs = () => {
                className="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full bg-slate-800/50 border border-slate-700/50 text-emerald-400 text-xs font-semibold uppercase tracking-wider backdrop-blur-sm"
             >
                <Award className="w-3 h-3" />
-               <span>Engineering Excellence since 2017</span>
+               <span>Proven Reliability since 2017</span>
             </motion.div>
 
             <motion.h1

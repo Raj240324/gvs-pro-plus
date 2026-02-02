@@ -128,9 +128,9 @@ const Highlights = () => {
             Capabilities
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white mb-6">
-            Engineering{' '}
+            Industry{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-              Excellence
+              Expertise
             </span>
           </h2>
           <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 leading-relaxed">

@@ -118,8 +118,8 @@ const Gallery = () => {
   return (
     <main className="bg-black text-white min-h-screen pt-[84px] lg:pt-[128px]">
       <SEO
-        title="PCC, MCC & PLC cum VFD Control Panels Gallery | GVS Controls"
-        description="Explore our premium gallery of PCC, MCC, PLC cum VFD Control Panels, and APFC Systems."
+        title="PCC, MCC & PLC CUM VFD Control Panel Gallery"
+        description="View our extensive gallery of Power Control Centers (PCC), Motor Control Centers (MCC), and PLC cum VFD Automation Panels manufactured to IE/CEIG standards."
       />
 
       {/* --- HERO --- */}

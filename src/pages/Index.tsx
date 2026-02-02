@@ -22,8 +22,9 @@ const Index = () => {
   }}
 >
       <SEO
-        title="GVS Controls - Electrical, Instrumentation, Automation & Consultancy | Industrial Solutions"
-        description="Turnkey electrical, automation & control solutions for power, steel, cement, renewable energy, and material handling. 30+ years of promoter experience. Serving Aumund, Loesche, and 50+ industry leaders since 2017."
+        title="Industrial Automation, Electrical & Turnkey EPC Solutions"
+        description="GVS Controls: Innovative and Cost-Effective Engineering for Power, Steel, and Cement. Serving industry leaders like SAIL, TISCO, NTPC, and UltraTech. Expert in PCC, MCC, and PLC SCADA."
+        canonical={typeof window !== 'undefined' ? window.location.origin : undefined}
       />
       <Hero />
 

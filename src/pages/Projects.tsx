@@ -114,8 +114,8 @@ const Projects: React.FC = () => {
   return (
     <main className="min-h-screen bg-slate-50 dark:bg-black selection:bg-teal-500/30">
       <SEO
-        title="Projects | GVS Controls"
-        description="Our portfolio of turnkey engineering solutions and the founder's 30-year legacy of industrial excellence."
+        title="Turnkey Industrial Projects & EPC Portfolio"
+        description="Turnkey E&I solutions for NTPC, JSW, Dalmia Cement, and Titan Cement Egypt. Specialized in Bulk Material Handling, Cooling Towers, and Renewable Energy sectors."
         canonical={typeof window !== 'undefined' ? window.location.origin + '/projects' : undefined}
       />
 

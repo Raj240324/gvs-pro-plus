@@ -182,8 +182,8 @@ const Services: React.FC = () => {
   return (
     <main className="bg-slate-50 dark:bg-slate-950 pt-[84px] lg:pt-[128px] overflow-hidden">
       <SEO
-        title="Our Services | GVS Controls"
-        description="Expert Consultancy, Automation, Manufacturing, and Turnkey Services for Industrial Electrical and Control systems."
+        title="Industrial Automation & Electrical Engineering Services"
+        description="Expert Consultancy, PLC SCADA Engineering, Panel Manufacturing, and Turnkey EPC Services. Specialized in Revamping industrial electrical and control systems."
         canonical={typeof window !== 'undefined' ? window.location.origin + '/services' : undefined}
       />
 

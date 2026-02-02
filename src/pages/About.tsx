@@ -92,7 +92,11 @@ export default function AboutUnified() {
 
   return (
     <>
-      <SEO title="About Us" description="Building the future of automation since 2017. 30+ years of promoter experience driving innovation in Electrical Panels & Automation." />
+      <SEO 
+        title="About GVS Controls | 30+ Years of EPC Project Legacy" 
+        description="Founded in 2017 with 30+ years of legacy from Shriram EPC and L&T. Specialized in Power, Steel, and Process plants. Collaborating with EIL, MECON, and Fichtner consultants." 
+        canonical={typeof window !== 'undefined' ? window.location.origin + '/about' : undefined} 
+      />
       
       <main className="bg-white dark:bg-black relative overflow-hidden">
         
@@ -123,9 +127,9 @@ export default function AboutUnified() {
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                 className="text-5xl md:text-7xl font-bold mb-8 tracking-tight text-white leading-tight"
               >
-                Engineering <br />
+                Technical <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-indigo-500">
-                  Excellence.
+                  Proficiency.
                 </span>
               </motion.h1>
               <motion.p

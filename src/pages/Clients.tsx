@@ -39,8 +39,8 @@ const Clients: React.FC = () => {
   return (
     <main ref={containerRef} className="bg-black text-white min-h-screen pt-[84px] lg:pt-[128px] overflow-x-hidden">
       <SEO
-        title="Our Clients | GVS Controls"
-        description="Trusted by industry leaders like Aumund, Loesche, and more."
+        title="Trusted Industrial Partners & Clients"
+        description="GVS Controls is trusted by industry leaders including Aumund, Loesche, and 50+ partners across the global Power and Material Handling sectors."
         canonical={typeof window !== 'undefined' ? window.location.origin + '/clients' : undefined}
       />
 

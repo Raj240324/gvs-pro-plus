@@ -217,9 +217,10 @@ const ManufacturingSupply = () => {
 
   return (
     <main className="bg-slate-950 min-h-screen pt-[84px] lg:pt-[128px] overflow-hidden font-sans">
-      <SEO
-        title="Manufacturing & Supply - GVS Controls"
-        description="We manufacture Electrical Control Panels as per IE Standard Electrical Inspectorate Rules and Regulation (CEIG)."
+      <SEO 
+        title="PCC, MCC, VFD & PLC Control Panel Manufacturing" 
+        description="Leading manufacturer of PCC, MCC, APFC, and AMF Panels compliant with IE/CEIG standards. Specialized in 415V Panels, LT Bus Ducts, and custom-built Automation Systems." 
+        canonical={typeof window !== 'undefined' ? window.location.origin + '/manufacturing' : undefined}
       />
 
       {/* --- HERO SECTION: The Blueprint --- */}

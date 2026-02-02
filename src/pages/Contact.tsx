@@ -149,7 +149,11 @@ const Contact = () => {
 
   return (
     <ErrorBoundary>
-      <SEO title="Contact" description="Get expert consultation for Electrical Panels, PLC Automation & Turnkey EPC Solutions." canonical="/contact" />
+      <SEO 
+        title="Contact GVS Controls | Industrial Automation Quote Chennai" 
+        description="Visit us at Gokulapuram, Maraimalai Nagar, Chengalpattu Dist. Expert consultation for PCC, MCC, and PLC SCADA Turnkey Projects. Serving clients globally from Chennai." 
+        canonical="/contact" 
+      />
 
       <main className="bg-slate-50 dark:bg-black pt-[84px] lg:pt-[128px] min-h-screen">
         

@@ -23,7 +23,7 @@ const SEO = ({
 }: SEOProps) => {
   const siteTitle = 'GVS CONTROLS - Electrical, Automation & Consultancy';
   const fullTitle = `${title} | ${siteTitle}`;
-  const defaultKeywords = 'Electrical Engineering, PLC Automation, Control Panels, EPC Projects, Power Plants, Steel Plants, Cement Plants, Renewable Energy, Consultancy, GVS Controls, Chennai, Industrial Automation, Control Systems, IE Compliant, CEIG Panels, Control Panel Manufacturers Chennai, Industrial Automation Service Tamil Nadu, PLC SCADA Programming India, HT LT Panels, Turnkey Electrical Contractors, Siemens Automation, Allen Bradley PLC, Electrical Consultants';
+  const defaultKeywords = 'Electrical Engineering, PLC SCADA Automation, PCC MCC VFD Control Panels, Industrial Control Panels Chennai, Turnkey EPC Projects India, Power Plant Electricals, Steel Plant Automation, Cement Plant Engineering, MLDB LDB SLDB Panels, LT Bus Ducts, APFC AMF Panels, Siemens PLC Programming, Allen Bradley Control Systems, Electrical Consultants Chennai, GVS Controls, Industrial Revamping, Electrical Installation Commissioning, Bulk Material Handling Systems, Shriram EPC Projects, L&T Electrical Solutions, Engineers India Ltd EIL Consultant, IE Standard CEIG Panels, Maraimalai Nagar Industrial';
   
   return (
     <Helmet>
