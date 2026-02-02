@@ -144,7 +144,7 @@ const Gallery = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-tight"
+              className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 leading-tight"
             >
               PCC, MCC & PLC CUM <br/> 
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">VFD CONTROL PANELS GALLERY</span>
