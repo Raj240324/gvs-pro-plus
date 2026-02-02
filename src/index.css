@@ -102,11 +102,16 @@
     width: 100%;
   }
 
-  /* Optimize specific animated elements only - Globals removed to prevent excessive memory usage */
+  /* Optimize specific animated elements only */
   .transform-gpu {
-    transform: translateZ(0);
+    transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     perspective: 1000px;
+    will-change: transform, opacity;
+  }
+
+  .smooth-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
 
@@ -774,5 +779,14 @@
   overflow: hidden !important;
   height: 100vh !important;
   touch-action: none;
+  /* Prevent layout shift on desktop when scrollbar disappears */
+  padding-right: var(--scrollbar-width, 0px);
+}
+
+/* Optimized blur for performance */
+.backdrop-blur-xl {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  transform: translateZ(0); /* Force GPU */
 }
 

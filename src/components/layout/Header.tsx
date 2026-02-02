@@ -194,46 +194,68 @@ const Header = () => {
 
 
 
-useEffect(() => {
-  let lastScrollY = 0;
-  let rafId: number;
+  useEffect(() => {
+    let lastScrollY = 0;
+    let rafId: number;
+    let ticking = false;
 
-  const update = () => {
-    const scrollY = window.scrollY;
+    const update = () => {
+      const scrollY = window.scrollY;
 
-    setScrolled(scrollY > 20);
+      // Only update if scroll position changed significantly
+      if (Math.abs(scrollY - lastScrollY) > 5) {
+        setScrolled(scrollY > 20);
 
-    if (scrollY < 20) {
-      setIsVisible(true);
-    } else {
-      const isScrollingUp = scrollY < lastScrollY;
-      if (Math.abs(scrollY - lastScrollY) > 4) {
-        setIsVisible(isScrollingUp);
+        if (scrollY < 20) {
+          setIsVisible(true);
+        } else {
+          const isScrollingUp = scrollY < lastScrollY;
+          setIsVisible(isScrollingUp);
+        }
+        lastScrollY = scrollY;
       }
+      
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        rafId = requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      // Calculate scrollbar width
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      document.documentElement.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
+      
+      document.body.classList.add("no-scroll");
+      document.documentElement.classList.add("no-scroll");
+      window.dispatchEvent(new Event("resize")); // 🔑 Lenis sync
+    } else {
+      document.body.classList.remove("no-scroll");
+      document.documentElement.classList.remove("no-scroll");
+      // Optional: Reset variable after animation
+      setTimeout(() => {
+        if (!mobileMenuOpen) {
+          document.documentElement.style.setProperty('--scrollbar-width', '0px');
+        }
+      }, 300);
     }
-
-    lastScrollY = scrollY;
-    rafId = requestAnimationFrame(update);
-  };
-
-  rafId = requestAnimationFrame(update);
-  return () => cancelAnimationFrame(rafId);
-}, []);
-
-useEffect(() => {
-  if (mobileMenuOpen) {
-    document.body.classList.add("no-scroll");
-    document.documentElement.classList.add("no-scroll");
-    window.dispatchEvent(new Event("resize")); // 🔑 Lenis sync
-  } else {
-    document.body.classList.remove("no-scroll");
-    document.documentElement.classList.remove("no-scroll");
-  }
-  return () => {
-    document.body.classList.remove("no-scroll");
-    document.documentElement.classList.remove("no-scroll");
-  };
-}, [mobileMenuOpen]);
+    return () => {
+      document.body.classList.remove("no-scroll");
+      document.documentElement.classList.remove("no-scroll");
+    };
+  }, [mobileMenuOpen]);
 
 
   const navLinks = [
@@ -249,8 +271,14 @@ useEffect(() => {
   ];
 
   const handleNavClick = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setMobileMenuOpen(false);
+    // If it's the mobile menu, close it first with a slight delay for better feel
+    if (mobileMenuOpen) {
+      setMobileMenuOpen(false);
+      // Let the navigation happen, but wait slightly for the menu to start closing
+      // to avoid visual jitter during layout recalculation
+    }
+    // Note: Page components usually handle their own scrolling to top on mount
+    // or through a Global ScrollToTop component. 
   };
 
   const headerVariants = {
@@ -259,17 +287,40 @@ useEffect(() => {
   };
 
   const mobileMenuVariants = {
-  closed: { opacity: 0, x: "100%", transition: { duration: 0.35, ease: "easeInOut" } },
-  open: { opacity: 1, x: 0, transition: { duration: 0.35, ease: "easeOut" } },
-};
-
+    closed: { 
+      opacity: 0, 
+      scale: 0.95,
+      y: -20,
+      transition: { 
+        duration: 0.2, 
+        ease: [0.4, 0, 1, 1] 
+      } 
+    },
+    open: { 
+      opacity: 1, 
+      scale: 1,
+      y: 0,
+      transition: { 
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+        mass: 0.8
+      } 
+    },
+  };
 
   const navItemVariants = {
-    closed: { opacity: 0, y: 20 },
+    closed: { opacity: 0, y: 10, filter: "blur(4px)" },
     open: (i: number) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: i * 0.1, type: "spring", stiffness: 300, damping: 25 },
+      filter: "blur(0px)",
+      transition: { 
+        delay: 0.1 + i * 0.04, 
+        type: "spring", 
+        stiffness: 260, 
+        damping: 20 
+      },
     }),
   };
 
@@ -409,11 +460,11 @@ useEffect(() => {
             />
             
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-              className="lg:hidden fixed inset-4 z-[2000] flex flex-col bg-white/95 dark:bg-slate-900/95 rounded-[2rem] shadow-2xl overflow-hidden ring-1 ring-black/5 dark:ring-white/10 backdrop-blur-sm"
+              variants={mobileMenuVariants}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              className="lg:hidden fixed inset-4 z-[2000] flex flex-col bg-white/95 dark:bg-slate-900/95 rounded-[2rem] shadow-2xl overflow-hidden ring-1 ring-black/5 dark:ring-white/10 backdrop-blur-xl"
               style={{ willChange: "transform, opacity" }}
             >
               {/* Close Button Area */}
@@ -436,9 +487,8 @@ useEffect(() => {
                   {navLinks.map((link, index) => (
                     <motion.div
                       key={link.name}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.05 + index * 0.03, duration: 0.25, ease: "easeOut" }}
+                      variants={navItemVariants}
+                      custom={index}
                     >
                       <NavLink
                         to={link.path}

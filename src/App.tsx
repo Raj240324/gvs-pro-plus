@@ -13,6 +13,7 @@ import FloatingWhatsApp from "./components/FloatingWhatsApp";
 import Preloader from "./components/Preloader";
 import CookieConsentBanner from "./components/CookieConsentBanner";
 import SmoothScroll from "./components/SmoothScroll";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -59,6 +60,7 @@ const App = () => {
             <Preloader />
           ) : (
             <>
+              <ScrollToTop />
               <SmoothScroll />
               <Header />
               <main id="main-content" tabIndex={-1} className="focus:outline-none">
