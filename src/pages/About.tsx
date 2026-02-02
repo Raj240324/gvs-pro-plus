@@ -383,7 +383,7 @@ export default function AboutUnified() {
               transition={{ duration: 0.8 }}
               className="text-center"
             >
-              <h3 className="text-xl font-semibold text-white mb-4">Engineering Consultants Collaborated With</h3>
+              <h3 className="text-xl font-semibold text-white mb-4">Engineering Consultants Promoted With</h3>
               <div className="flex flex-wrap justify-center gap-3">
                 {consultantsWorkedWith.map((consultant, i) => (
                   <span
