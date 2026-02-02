@@ -402,17 +402,19 @@ useEffect(() => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="lg:hidden fixed inset-0 bg-white/60 dark:bg-black/60 backdrop-blur-3xl z-[1999]"
+              transition={{ duration: 0.25 }}
+              className="lg:hidden fixed inset-0 bg-black/50 dark:bg-black/70 backdrop-blur-md z-[1999]"
               onClick={() => setMobileMenuOpen(false)}
+              style={{ willChange: "opacity" }}
             />
             
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }} 
-              className="lg:hidden fixed inset-4 z-[2000] flex flex-col bg-white/80 dark:bg-slate-900/80 rounded-[2rem] shadow-2xl overflow-hidden ring-1 ring-black/5 dark:ring-white/10"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+              className="lg:hidden fixed inset-4 z-[2000] flex flex-col bg-white/95 dark:bg-slate-900/95 rounded-[2rem] shadow-2xl overflow-hidden ring-1 ring-black/5 dark:ring-white/10 backdrop-blur-sm"
+              style={{ willChange: "transform, opacity" }}
             >
               {/* Close Button Area */}
               <div className="flex items-center justify-between px-6 py-4 shrink-0">
@@ -434,9 +436,9 @@ useEffect(() => {
                   {navLinks.map((link, index) => (
                     <motion.div
                       key={link.name}
-                      initial={{ opacity: 0, x: -20 }}
+                      initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.1 + index * 0.05, duration: 0.4, ease: "easeOut" }}
+                      transition={{ delay: 0.05 + index * 0.03, duration: 0.25, ease: "easeOut" }}
                     >
                       <NavLink
                         to={link.path}
