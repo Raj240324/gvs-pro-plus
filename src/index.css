@@ -778,7 +778,6 @@
 .no-scroll {
   overflow: hidden !important;
   height: 100vh !important;
-  touch-action: none;
   /* Prevent layout shift on desktop when scrollbar disappears */
   padding-right: var(--scrollbar-width, 0px);
 }

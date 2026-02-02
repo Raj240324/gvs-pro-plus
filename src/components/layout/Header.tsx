@@ -270,15 +270,13 @@ const Header = () => {
     { name: "Contact", path: "/contact", icon: Phone },
   ];
 
+  // Close mobile menu when the path changes
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
+
   const handleNavClick = () => {
-    // If it's the mobile menu, close it first with a slight delay for better feel
-    if (mobileMenuOpen) {
-      setMobileMenuOpen(false);
-      // Let the navigation happen, but wait slightly for the menu to start closing
-      // to avoid visual jitter during layout recalculation
-    }
-    // Note: Page components usually handle their own scrolling to top on mount
-    // or through a Global ScrollToTop component. 
+    setMobileMenuOpen(false);
   };
 
   const headerVariants = {
@@ -374,7 +372,6 @@ const Header = () => {
                         key={link.name}
                         to={link.path}
                         end
-                        onClick={handleNavClick}
                         onMouseEnter={() => setHovered(idx)}
                         className={({ isActive }) =>
                           cn(
@@ -495,15 +492,15 @@ const Header = () => {
                         onClick={handleNavClick}
                         className={({ isActive }) =>
                           cn(
-                            "flex items-center gap-4 text-xl font-bold tracking-tight transition-colors duration-300",
+                            "flex items-center gap-4 text-xl font-bold tracking-tight transition-all duration-200 active:scale-95 touch-manipulation",
                             isActive
                               ? "text-[#ff6f61]"
                               : "text-[#4a0e78] hover:text-[#ff6f61] dark:text-white dark:hover:text-[#ff6f61]"
                           )
                         }
                       >
-                        <link.icon size={22} strokeWidth={2} />
-                        {link.name}
+                        <link.icon className="pointer-events-none" size={22} strokeWidth={2} />
+                        <span className="pointer-events-none">{link.name}</span>
                       </NavLink>
                     </motion.div>
                   ))}
