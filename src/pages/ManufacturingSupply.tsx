@@ -9,7 +9,7 @@ import SEO from '../components/SEO';
 interface Product {
   id: string;
   name: string;
-  description: string;
+  description: React.ReactNode;
   items: string[];
   icon: React.ReactNode;
   color: [number, number, number][];
@@ -82,9 +82,11 @@ const ProductSpotlightCard = ({ product }: { product: Product }) => {
                         {product.name}
                      </h2>
                   </div>
-                  <p className="text-slate-400 text-lg leading-relaxed mb-8">
+                  
+                  {/* Description Rendered as Div to allow nested paragraphs */}
+                  <div className="text-slate-400 text-lg leading-relaxed mb-8">
                      {product.description}
-                  </p>
+                  </div>
                   
                   <div className="space-y-4 font-mono text-sm text-slate-300">
                      <div className="flex items-center gap-4 py-3 border-b border-white/10">
@@ -107,8 +109,8 @@ const ProductSpotlightCard = ({ product }: { product: Product }) => {
                   
                   <div className="relative z-10 grid grid-cols-2 gap-4 w-full">
                      {[
-                        { val: "2017", label: "Established" },
-                        { val: "30+", label: "Years Experience" },
+                        { val: "2017", label: "GVS Est." },
+                        { val: "30+", label: "Promoter Exp." },
                         { val: "Client", label: "Focused" },
                         { val: "Cost", label: "Effective" },
                      ].map((stat, i) => (
@@ -186,7 +188,18 @@ const ManufacturingSupply = () => {
   const product: Product = {
     id: 'control-panels',
     name: 'Electrical Control Panels',
-    description: 'Started in 2017 as a Proprietary Company, we manufacture Electrical Control Panels as per IE Standard Electrical Inspectorate Rules and Regulation (CEIG). We provide Innovative Engineering Solutions ensuring optimal Man-Machine interface.',
+    description: (
+      <div className="space-y-6">
+        <p>
+          <strong className="text-brand-white">GVS Controls</strong> started in <span className="text-amber-500">2017</span> as a Proprietary Company with a single-minded dedication to customer satisfaction. We provide Innovative Engineering Solutions ensuring optimal Man-Machine interface.
+        </p>
+        <div className="border-l-2 border-amber-500/30 pl-4 py-1">
+          <p className="text-slate-300 italic">
+            Backed by <strong className="text-white">Promoters</strong> with <strong className="text-amber-400">30+ Years of Experience</strong> in EPC Projects, working with industry giants like L&T and Shriram EPC for clients like SAIL, TISCO, & RINL.
+          </p>
+        </div>
+      </div>
+    ),
     items: [
       'Electrical 415 V Panel with Single (or) Double Bus System',
       'Power Control Centers, Power Distribution Panels, Motor Control Centers & Process Control Panels',
@@ -225,7 +238,7 @@ const ManufacturingSupply = () => {
         <div className="container mx-auto px-4 relative z-10 text-center">
           <motion.div style={{ y: heroY, opacity: heroOpacity }} className="max-w-5xl mx-auto">
             
-            {/* Badge - Technical Look */}
+            {/* Badge - Technical Look - Updated to focus on GVS */}
             <motion.div
                initial={{ opacity: 0, y: -20 }}
                animate={{ opacity: 1, y: 0 }}
@@ -233,7 +246,7 @@ const ManufacturingSupply = () => {
                className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs font-mono tracking-widest uppercase rounded-sm backdrop-blur-md"
             >
               <Cog size={14} className="animate-spin-slow" />
-              <span>Est. 2017 • Promoters with 30+ Years Experience</span>
+              <span>GVS Controls • Est. 2017</span>
             </motion.div>
 
             <motion.h1
