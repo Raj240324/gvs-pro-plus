@@ -68,7 +68,7 @@
   html {
     /* Lenis Recommended Settings */
     height: auto;
-    overflow: hidden; /* Lenis handles overflow */
+    /* overflow: hidden; REMOVED to fix mobile scroll locking */
     /* Enable smooth rendering */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
