@@ -9,7 +9,13 @@ import Button from '../components/ui/Button';
 import SEO from '../components/SEO';
 import { supabase } from '../lib/supabase';
 import { Input } from '../components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from '../components/ui/select';
 
 // --- Error Boundary ---
 interface ErrorBoundaryProps { children: ReactNode; }
