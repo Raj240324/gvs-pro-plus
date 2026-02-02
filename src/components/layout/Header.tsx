@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { Phone, Mail, Linkedin } from "lucide-react";
+import { Phone, Mail, Linkedin, Home, Info, Briefcase, Factory, FolderKanban, Users, Star, Image as ImageIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "../../components/ui/Button";
 import ContactModal from "../../components/ContactModal";
@@ -237,15 +237,15 @@ useEffect(() => {
 
 
   const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "About Us", path: "/about" },
-    { name: "Services", path: "/services" },
-    { name: "Manufacturing & Supply", path: "/manufacturing-supply" },
-    { name: "Projects", path: "/projects" },
-    { name: "Clients", path: "/clients" },
-    { name: "Why Us", path: "/why-us" },
-    { name: "Gallery", path: "/gallery" },
-    { name: "Contact", path: "/contact" },
+    { name: "Home", path: "/", icon: Home },
+    { name: "About Us", path: "/about", icon: Info },
+    { name: "Services", path: "/services", icon: Briefcase },
+    { name: "Manufacturing & Supply", path: "/manufacturing-supply", icon: Factory },
+    { name: "Projects", path: "/projects", icon: FolderKanban },
+    { name: "Clients", path: "/clients", icon: Users },
+    { name: "Why Us", path: "/why-us", icon: Star },
+    { name: "Gallery", path: "/gallery", icon: ImageIcon },
+    { name: "Contact", path: "/contact", icon: Phone },
   ];
 
   const handleNavClick = () => {
@@ -399,140 +399,103 @@ useEffect(() => {
         {mobileMenuOpen && (
           <>
             <motion.div
-              variants={backdropVariants}
-              initial="closed"
-              animate="open"
-              exit="closed"
-              className="lg:hidden fixed inset-0 bg-black/70 z-[1999]"
-              onClick={() => {
-                setMobileMenuOpen(false);
-              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="lg:hidden fixed inset-0 bg-white/60 dark:bg-black/60 backdrop-blur-3xl z-[1999]"
+              onClick={() => setMobileMenuOpen(false)}
             />
+            
             <motion.div
-              variants={mobileMenuVariants}
-              initial="closed"
-              animate="open"
-              exit="closed"
-              className="lg:hidden fixed top-0 right-0 w-[90vw] max-w-[360px] h-[100dvh] z-[2000]"
-              style={{
-                paddingTop: "env(safe-area-inset-top)",
-                paddingBottom: "env(safe-area-inset-bottom)",
-                paddingLeft: "env(safe-area-inset-left)",
-                paddingRight: "env(safe-area-inset-right)",
-              }}
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }} 
+              className="lg:hidden fixed inset-4 z-[2000] flex flex-col bg-white/80 dark:bg-slate-900/80 rounded-[2rem] shadow-2xl overflow-hidden ring-1 ring-black/5 dark:ring-white/10"
             >
-              <div className="relative flex flex-col w-full h-full bg-gradient-to-br from-white/95 via-[#f8fafc]/95 to-[#e9ecef]/95 shadow-2xl rounded-l-3xl border border-[#4ecdc4]/30 backdrop-blur-2xl overflow-hidden">
-                <motion.button
-                  onClick={() => setMobileMenuOpen(false)}
-                  aria-label="Close menu"
-                  className="absolute top-3 right-3 z-50 p-1.5 rounded-full bg-white shadow border border-[#4ecdc4]/30 focus:outline-none focus:ring-2 focus:ring-[#ff6f61]"
-                  initial={{ opacity: 0, scale: 0.7, rotate: -90 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  exit={{ opacity: 0, scale: 0.7, rotate: 90 }}
-                  transition={{ delay: 0.1, type: "spring", stiffness: 300 }}
-                >
-                  <XIcon size={22} />
-                </motion.button>
-                <div className="flex flex-col items-center pt-4 pb-2 px-4 shrink-0">
-                  <img
-                    src="/gvs-logo.png"
-                    alt="GVS Controls Logo"
-                    className="h-8 w-auto mb-1.5 rounded-lg shadow-md bg-white/80"
-                    width="100"
-                    height="32"
-                  />
-                  <span className="text-[#ff0000] font-bold text-[16px] leading-tight">GVS Controls</span>
-                  <span className="text-[#ffbf00] text-xs font-medium mb-1.5 leading-tight">
-                    (Our Vision To Your Solution)
-                  </span>
-                </div>
-                <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-4">
-                  <nav className="flex flex-col gap-1 mt-2 mb-3">
-                    {navLinks.map((link, index) => (
-                      <motion.div
-                        key={link.name}
-                        custom={index}
-                        variants={navItemVariants}
-                        initial="closed"
-                        animate="open"
-                        exit="closed"
-                        whileTap={{ scale: 0.95 }}
-                        style={{ willChange: "transform, opacity" }}
+              {/* Close Button Area */}
+              <div className="flex items-center justify-between px-6 py-4 shrink-0">
+                 <div className="flex flex-col">
+                    <span className="text-[#ff0000] font-bold text-xl tracking-tight leading-tight">GVS CONTROLS</span>
+                    <span className="text-[#ffbf00] text-[10px] font-medium italic leading-tight">(Our Vision To Your Solution)</span>
+                 </div>
+                 <button
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                 >
+                    <XIcon size={24} />
+                 </button>
+              </div>
+
+              {/* Navigation Links */}
+              <div className="flex-1 flex flex-col justify-center px-8 relative">
+                <nav className="flex flex-col gap-3">
+                  {navLinks.map((link, index) => (
+                    <motion.div
+                      key={link.name}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 + index * 0.05, duration: 0.4, ease: "easeOut" }}
+                    >
+                      <NavLink
+                        to={link.path}
+                        onClick={handleNavClick}
+                        className={({ isActive }) =>
+                          cn(
+                            "flex items-center gap-4 text-xl font-bold tracking-tight transition-colors duration-300",
+                            isActive
+                              ? "text-[#ff6f61]"
+                              : "text-[#4a0e78] hover:text-[#ff6f61] dark:text-white dark:hover:text-[#ff6f61]"
+                          )
+                        }
                       >
-                        <NavLink
-                          to={link.path}
-                          end
-                          onClick={handleNavClick}
-                          className={({ isActive }) =>
-                            cn(
-                              "block text-[15px] font-semibold px-3 py-2 rounded-lg transition-all duration-300 text-left shadow-sm hover:scale-[1.02] border-b border-[#4ecdc4]/10",
-                              isActive
-                                ? "bg-gradient-to-r from-[#ff6f61]/40 to-[#ffd700]/40 text-[#ff6f61] shadow-md"
-                                : "text-[#4a0e78] hover:bg-[#4ecdc4]/20 hover:text-[#ff6f61] hover:shadow"
-                            )
-                          }
-                        >
-                          {link.name}
-                        </NavLink>
-                      </motion.div>
-                    ))}
-                  </nav>
-                  <div className="flex flex-col gap-1 text-[#4a0e78] text-[13px] font-medium mb-3">
-                    <a
-                      href="tel:+917338880027"
-                      className="flex items-center gap-1.5 hover:text-[#ff6f61] transition-colors py-1.5"
-                    >
-                      <Phone size={14} />
-                      +91 7338880027
-                    </a>
-                    <a
-                      href="tel:+919884001597"
-                      className="flex items-center gap-1.5 hover:text-[#ff6f61] transition-colors py-1.5"
-                    >
-                      <Phone size={14} />
-                      +91 9884001597
-                    </a>
-                    <a
-                      href="mailto:projects@gvscontrols.com"
-                      className="flex items-center gap-1.5 hover:text-[#ff6f61] transition-colors py-1.5"
-                    >
-                      <Mail size={14} />
-                      projects@gvscontrols.com
-                    </a>
-                    <a
-                      href="mailto:gvscontrols@gmail.com"
-                      className="flex items-center gap-1.5 hover:text-[#ff6f61] transition-colors py-1.5"
-                    >
-                      <Mail size={14} />
-                      gvscontrols@gmail.com
-                    </a>
-                  </div>
-                  <div className="flex justify-center gap-4 mb-3">
-                    <a
-                      href="https://www.linkedin.com/company/gvs-controls"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#4a0e78] hover:text-[#ff6f61] transition-colors"
-                      aria-label="LinkedIn"
-                    >
-                      <Linkedin size={16} />
-                    </a>
-                  </div>
-                </div>
-                <div className="px-4 pt-2 pb-4 border-t border-[#4ecdc4]/20 bg-white/60 backdrop-blur-xl sticky bottom-0 z-10">
+                        <link.icon size={22} strokeWidth={2} />
+                        {link.name}
+                      </NavLink>
+                    </motion.div>
+                  ))}
+                </nav>
+              </div>
+
+              {/* Footer / Contact Actions */}
+              <motion.div 
+                 initial={{ opacity: 0, y: 20 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ delay: 0.5, duration: 0.4 }}
+                 className="p-6 bg-slate-50/50 dark:bg-slate-900/50 backdrop-blur-md border-t border-slate-200/50 dark:border-slate-800/50"
+              >
                   <Button
                     variant="gradient"
-                    className="w-full bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white hover:from-[#ff6f61] hover:to-[#4a0e78] hover:bg-gradient-to-l transition-all duration-300 rounded-lg py-2 text-[15px] font-semibold shadow-lg no-pseudo-border z-[10000]"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-4 text-lg font-semibold shadow-lg shadow-blue-500/20 mb-6"
                     onClick={(e) => {
                       e.stopPropagation();
                       setMobileMenuOpen(false);
                       setTimeout(() => contactModal.onOpen(), 300);
                     }}
                   >
-                    Contact Us
+                    Get in Touch
                   </Button>
-                </div>
-              </div>
+
+                  <div className="flex flex-wrap gap-4 justify-between items-center text-sm font-medium text-slate-600 dark:text-slate-400">
+                     <div className="flex flex-col gap-2">
+                        <a href="tel:+917338880027" className="flex items-center gap-2 hover:text-blue-600 transition-colors">
+                           <Phone size={16} /> +91 7338880027
+                        </a>
+                        <a href="mailto:projects@gvscontrols.com" className="flex items-center gap-2 hover:text-blue-600 transition-colors">
+                           <Mail size={16} /> projects@gvscontrols.com
+                        </a>
+                     </div>
+                     <a
+                       href="https://www.linkedin.com/company/gvs-controls"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 hover:scale-110 transition-transform"
+                     >
+                       <Linkedin size={20} />
+                     </a>
+                  </div>
+              </motion.div>
             </motion.div>
           </>
         )}
