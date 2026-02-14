@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { useToast } from '../hooks/use-toast';
 import { Send, CheckCircle, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { supabase } from '../lib/supabase';
+
 
 interface ContactModalProps {
   open: boolean;
@@ -117,12 +117,17 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
     setIsSubmitting(true);
 
     try {
-      // Call Supabase Edge Function
-      const { error } = await supabase.functions.invoke('contact-us', {
-        body: formData,
+      // Call Vercel API Route
+      const response = await fetch('/api/contact-us', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
       });
 
-      if (error) throw error;
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to send message');
+      }
 
       setIsSubmitting(false);
       setIsSubmitted(true);

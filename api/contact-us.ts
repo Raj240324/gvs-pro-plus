@@ -1,107 +1,61 @@
-// @ts-nocheck
-// @ts-nocheck
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 
+// --- CORS ---
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
   'https://gvs-pro-plus.vercel.app',
   'https://www.gvscontrols.com',
-  'https://gvscontrols.com'
+  'https://gvscontrols.com',
 ];
 
-serve(async (req) => {
-  const origin = req.headers.get('origin')
-  const isAllowed = origin && allowedOrigins.includes(origin)
-  
-  const corsHeaders = {
+function getCorsHeaders(origin: string | undefined) {
+  const isAllowed = origin && allowedOrigins.includes(origin);
+  return {
     'Access-Control-Allow-Origin': isAllowed ? origin : 'https://gvs-pro-plus.vercel.app',
-    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+    'Access-Control-Allow-Headers': 'content-type',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  };
+}
+
+// --- Simple In-Memory Rate Limiter ---
+const rateLimitMap = new Map<string, number>();
+const RATE_LIMIT_WINDOW_MS = 2 * 60 * 1000; // 2 minutes
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const lastRequest = rateLimitMap.get(ip);
+  if (lastRequest && now - lastRequest < RATE_LIMIT_WINDOW_MS) {
+    return true;
   }
-
-  // Handle CORS preflight requests
-  if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders })
-  }
-
-  try {
-    const { name, email, phone, subject, message, bot_honey } = await req.json()
-
-    // 1. Honeypot Check (Anti-Bot)
-    if (bot_honey) {
-      console.warn('Bot detected by honeypot:', { name, email, bot_honey })
-      // Return fake success to confuse the bot
-      return new Response(JSON.stringify({ success: true }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 })
-    }
-
-    // 2. Input Validation (Security)
-    if (!name || !email || !message) {
-      throw new Error('Missing required fields')
-    }
-    if (name.length > 100 || subject?.length > 200 || message.length > 5000) {
-      throw new Error('Input too long')
-    }
-
-    // 1. Insert into Supabase Database
-    const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-    )
-
-    // 3. Rate Limiting (IP-Based)
-    // Get client IP from headers (Cloudflare/Vercel standard headers)
-    const clientIp = req.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
-
-    // Check for recent submissions from this IP (e.g., last 2 minutes)
-    if (clientIp !== 'unknown') {
-      const { data: recentRequests, error: rateLimitError } = await supabaseClient
-        .from('contact_requests')
-        .select('created_at')
-        .eq('client_ip', clientIp)
-        .gte('created_at', new Date(Date.now() - 2 * 60 * 1000).toISOString()) // 2 minutes ago
-
-      if (rateLimitError) {
-          console.error('Rate limit check error:', rateLimitError);
-      } else if (recentRequests && recentRequests.length >= 1) { // Max 1 request per 2 mins
-          console.warn('Rate limit exceeded for IP:', clientIp);
-          return new Response(
-            JSON.stringify({ error: 'Too many requests. Please try again later.' }),
-            { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 429 }
-          )
+  rateLimitMap.set(ip, now);
+  // Cleanup old entries periodically
+  if (rateLimitMap.size > 1000) {
+    for (const [key, timestamp] of rateLimitMap) {
+      if (now - timestamp > RATE_LIMIT_WINDOW_MS) {
+        rateLimitMap.delete(key);
       }
     }
+  }
+  return false;
+}
 
-    // 4. Insert into Supabase Database
-    const { error: dbError } = await supabaseClient
-      .from('contact_requests')
-      .insert([
-        { name, email, phone, subject, message, client_ip: clientIp },
-      ])
+// --- Email Template ---
+function createEmailTemplate(
+  isOwner: boolean,
+  data: { name: string; email: string; phone?: string; subject?: string; message: string }
+): string {
+  const baseUrl = 'https://gvs-pro-plus.vercel.app';
+  const logoUrl = `${baseUrl}/gvs-logo.png`;
+  const { name, email, phone, subject, message } = data;
 
-    if (dbError) throw dbError
-
-    // 5. Send Email via Resend
-    const resendApiKey = Deno.env.get('RESEND_API_KEY')
-    if (!resendApiKey) {
-      throw new Error('Missing RESEND_API_KEY')
-    }
-
-    // Professional Email Template with GVS Branding
-    const emailSubject = `New Inquiry: ${subject || 'General'}`;
-    // Use staging URL until production domain is active
-    const baseUrl = 'https://gvs-pro-plus.vercel.app';
-    const logoUrl = `${baseUrl}/gvs-logo.png`;
-    
-const createEmailTemplate = (isOwner: boolean) => `
+  return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>GVS Controls</title>
-
 <style>
   body {
     margin: 0;
@@ -110,85 +64,68 @@ const createEmailTemplate = (isOwner: boolean) => `
     font-family: "Segoe UI", Roboto, Arial, sans-serif;
     color: #1f2937;
   }
-
   .wrapper {
     max-width: 640px;
     margin: 0 auto;
     padding: 24px 12px;
   }
-
   .container {
     background: #ffffff;
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid #e5e7eb;
   }
-
-  /* HEADER */
   .header {
     background: linear-gradient(135deg, #1f4fd8 0%, #2ec4b6 100%);
     padding: 28px 24px;
     text-align: center;
   }
-
   .logo {
     width: 68px;
     height: auto;
     margin-bottom: 10px;
   }
-
   .brand {
     font-size: 22px;
     font-weight: 800;
     color: #ffffff;
     letter-spacing: 1px;
   }
-
   .brand span {
     color: #ffdddd;
   }
-
   .tagline {
     font-size: 13px;
     color: rgba(255,255,255,0.85);
     margin-top: 4px;
   }
-
-  /* CONTENT */
   .content {
     padding: 28px 24px;
   }
-
   .title {
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 12px;
   }
-
   .text {
     font-size: 14px;
     color: #4b5563;
     line-height: 1.7;
   }
-
-  /* INFO TABLE */
   .info-box {
     margin-top: 20px;
     border: 1px solid #e5e7eb;
     border-radius: 8px;
     overflow: hidden;
   }
-
   .row {
     display: flex;
     padding: 12px 14px;
     border-bottom: 1px solid #e5e7eb;
   }
-
   .row:last-child {
     border-bottom: none;
   }
-
   .label {
     width: 110px;
     font-size: 12px;
@@ -196,20 +133,16 @@ const createEmailTemplate = (isOwner: boolean) => `
     color: #6b7280;
     font-weight: 600;
   }
-
   .value {
     flex: 1;
     font-size: 14px;
     font-weight: 500;
     color: #111827;
   }
-
   .value a {
     color: #1f4fd8;
     text-decoration: none;
   }
-
-  /* MESSAGE */
   .message-box {
     margin-top: 20px;
     padding: 16px;
@@ -219,13 +152,10 @@ const createEmailTemplate = (isOwner: boolean) => `
     font-size: 14px;
     line-height: 1.8;
   }
-
-  /* CTA */
   .cta {
     margin-top: 28px;
     text-align: center;
   }
-
   .btn {
     display: inline-block;
     padding: 14px 34px;
@@ -236,8 +166,6 @@ const createEmailTemplate = (isOwner: boolean) => `
     border-radius: 30px;
     text-decoration: none;
   }
-
-  /* FOOTER */
   .footer {
     background: #1f2937;
     padding: 22px;
@@ -245,11 +173,9 @@ const createEmailTemplate = (isOwner: boolean) => `
     color: #9ca3af;
     font-size: 12px;
   }
-
   .footer strong {
     color: #ffffff;
   }
-
   .footer a {
     color: #2ec4b6;
     text-decoration: none;
@@ -257,11 +183,9 @@ const createEmailTemplate = (isOwner: boolean) => `
   }
 </style>
 </head>
-
 <body>
 <div class="wrapper">
   <div class="container">
-
     <!-- HEADER -->
     <div class="header">
       <img src="${logoUrl}" class="logo" alt="GVS Controls Logo" />
@@ -271,7 +195,6 @@ const createEmailTemplate = (isOwner: boolean) => `
 
     <!-- CONTENT -->
     <div class="content">
-
       ${
         isOwner
         ? `
@@ -309,7 +232,6 @@ const createEmailTemplate = (isOwner: boolean) => `
         </div>
         `
       }
-
     </div>
 
     <!-- FOOTER -->
@@ -320,75 +242,120 @@ const createEmailTemplate = (isOwner: boolean) => `
       ✉️ <a href="mailto:projects@gvscontrols.com">projects@gvscontrols.com</a><br><br>
       © ${new Date().getFullYear()} GVS Controls
     </div>
-
   </div>
 </div>
 </body>
 </html>
 `;
+}
 
+// --- Main Handler ---
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  const corsHeaders = getCorsHeaders(req.headers.origin as string);
+
+  // Set CORS headers
+  Object.entries(corsHeaders).forEach(([key, value]) => {
+    res.setHeader(key, value);
+  });
+
+  // Handle CORS preflight
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  // Only accept POST
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  try {
+    const { name, email, phone, subject, message, bot_honey } = req.body;
+
+    // 1. Honeypot Check
+    if (bot_honey) {
+      console.warn('Bot detected by honeypot:', { name, email });
+      return res.status(200).json({ success: true }); // Fake success
+    }
+
+    // 2. Input Validation
+    if (!name || !email || !message) {
+      return res.status(400).json({ error: 'Missing required fields: name, email, message' });
+    }
+    if (name.length > 100 || (subject && subject.length > 200) || message.length > 5000) {
+      return res.status(400).json({ error: 'Input too long' });
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(400).json({ error: 'Invalid email address' });
+    }
+
+    // 3. Rate Limiting
+    const clientIp =
+      (req.headers['x-forwarded-for'] as string)?.split(',')[0].trim() ||
+      req.socket?.remoteAddress ||
+      'unknown';
+
+    if (clientIp !== 'unknown' && isRateLimited(clientIp)) {
+      console.warn('Rate limit exceeded for IP:', clientIp);
+      return res.status(429).json({ error: 'Too many requests. Please try again later.' });
+    }
+
+    // 4. Send Emails via Resend
+    const resendApiKey = process.env.RESEND_API_KEY;
+    if (!resendApiKey) {
+      console.error('Missing RESEND_API_KEY environment variable');
+      return res.status(500).json({ error: 'Server configuration error' });
+    }
+
+    const formData = { name, email, phone, subject, message };
+    const emailSubject = `New Inquiry: ${subject || 'General'}`;
 
     // Send to Owner
-    const res = await fetch('https://api.resend.com/emails', {
+    const ownerRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${resendApiKey}`,
+        Authorization: `Bearer ${resendApiKey}`,
       },
       body: JSON.stringify({
         from: 'Contact Form <onboarding@resend.dev>',
         to: ['nagarajan.webdev@gmail.com'],
         subject: emailSubject,
-        html: createEmailTemplate(true),
+        html: createEmailTemplate(true, formData),
       }),
-    })
+    });
 
-    if (!res.ok) {
-      const errorText = await res.text()
-      console.error('Resend Error (Owner):', errorText)
-      throw new Error(`Failed to send email to owner: ${errorText}`)
+    if (!ownerRes.ok) {
+      const errorText = await ownerRes.text();
+      console.error('Resend Error (Owner):', errorText);
+      throw new Error(`Failed to send email to owner: ${errorText}`);
     }
 
-    // Send Auto-reply to Customer
-    // Wrapped in try/catch so it doesn't fail the whole request if customer email is invalid or unverified
+    // Send Auto-reply to Customer (non-fatal)
     try {
-        const replyRes = await fetch('https://api.resend.com/emails', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${resendApiKey}`,
-            },
-            body: JSON.stringify({
-                from: 'GVS Controls <onboarding@resend.dev>', 
-                to: [email],
-                subject: 'We received your message - GVS Controls',
-                html: createEmailTemplate(false),
-            }),
-        })
-        
-        if (!replyRes.ok) {
-            console.warn('Auto-reply failed (non-fatal):', await replyRes.text())
-        }
+      const replyRes = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${resendApiKey}`,
+        },
+        body: JSON.stringify({
+          from: 'GVS Controls <onboarding@resend.dev>',
+          to: [email],
+          subject: 'We received your message - GVS Controls',
+          html: createEmailTemplate(false, formData),
+        }),
+      });
+
+      if (!replyRes.ok) {
+        console.warn('Auto-reply failed (non-fatal):', await replyRes.text());
+      }
     } catch (replyError) {
-        console.warn('Auto-reply exception (non-fatal):', replyError)
+      console.warn('Auto-reply exception (non-fatal):', replyError);
     }
 
-    return new Response(
-      JSON.stringify({ success: true }),
-      {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200,
-      },
-    )
-
-  } catch (error) {
-    console.error('Error:', error)
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 400,
-      },
-    )
+    return res.status(200).json({ success: true });
+  } catch (error: any) {
+    console.error('Contact form error:', error);
+    return res.status(500).json({ error: error.message || 'Internal server error' });
   }
-})
+}

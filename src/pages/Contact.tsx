@@ -1,13 +1,13 @@
-import { useEffect, useState, Component, ErrorInfo, ReactNode } from 'react';
+import { useState, Component, ErrorInfo, ReactNode } from 'react';
 import SendButton from '../components/ui/SendButton';
 import { Mail, Phone, MapPin, Send, Linkedin, Clock, ArrowRight, MessageSquare, Globe, Building2, ChevronDown } from 'lucide-react';
 import { useToast } from "../hooks/use-toast";
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Textarea } from '../components/ui/textarea';
 import { useContactModal } from '../hooks/use-contact-modal';
 import Button from '../components/ui/Button';
 import SEO from '../components/SEO';
-import { supabase } from '../lib/supabase';
+
 import { Input } from '../components/ui/input';
 import { 
   Select, 
@@ -60,11 +60,7 @@ const Contact = () => {
   const { toast } = useToast();
   const contactModal = useContactModal();
 
-  useEffect(() => {
-    if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
-       console.error('Supabase keys missing');
-    }
-  }, []);
+
 
   const validateField = (name: string, value: string): string => {
     switch (name) {
@@ -122,8 +118,15 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase.functions.invoke('contact-us', { body: formData });
-      if (error) throw error;
+      const response = await fetch('/api/contact-us', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to send message');
+      }
 
       setIsSubmitting(false);
       setIsSubmitted(true);

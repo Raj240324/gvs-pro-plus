@@ -140,7 +140,7 @@ const PrivacyPolicy = () => {
                   <li>Data analysis and analytics</li>
                   <li>Customer service and support</li>
                   <li>Payment processing and financial services</li>
-                  <li>Cloud infrastructure and backend services (e.g., Supabase)</li>
+                  <li>Cloud infrastructure and backend services (e.g., Vercel)</li>
                   <li>Web analytics services (e.g., Google Analytics 4)</li>
                   <li>Cloud storage and backup services</li>
                 </ul>
