@@ -24,7 +24,7 @@ interface ErrorBoundaryState { hasError: boolean; }
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) { super(props); this.state = { hasError: false }; }
   static getDerivedStateFromError(): ErrorBoundaryState { return { hasError: true }; }
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) { console.error('ErrorBoundary caught an error:', error, errorInfo); }
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) { if (import.meta.env.DEV) console.error('ErrorBoundary caught an error:', error, errorInfo); }
   render() {
     if (this.state.hasError) {
       return (
@@ -137,7 +137,6 @@ const Contact = () => {
     } catch (error) {
       setIsSubmitting(false);
       toast({ title: "Error", description: "Could not send message. Please try again.", variant: "destructive" });
-      console.error(error);
     }
   };
 

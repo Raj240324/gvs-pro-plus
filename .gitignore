@@ -37,3 +37,5 @@ dist-ssr/
 # (Make sure these lines are NOT present:)
 # src/assets/
 # public/catalogue/
+.vercel
+.env*.local

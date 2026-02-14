@@ -151,7 +151,6 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
         onOpenChange(false);
       }, 2000);
     } catch (error: any) {
-      console.error('Submission Error:', error);
       setIsSubmitting(false);
       toast({
         title: "Error",

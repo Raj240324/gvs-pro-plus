@@ -41,8 +41,7 @@ const CookieConsentBanner = () => {
       }}
       expires={150}
       onAccept={() => {
-        // Optional: Trigger GA load here if not already loaded
-        console.log("Cookies accepted");
+        // Cookies accepted — GA already loaded via App.tsx
       }}
     >
       <div className="text-sm md:text-base text-gray-200 pr-4">
