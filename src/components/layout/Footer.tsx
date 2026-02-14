@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { Mail, Phone, MapPin, Linkedin, Globe, ChevronDown, Facebook, Twitter, Instagram } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, ChevronDown, Home, Users, Image, FolderKanban, Handshake, Award, Wrench, Factory, BrainCircuit, Lightbulb, Zap, HardHat, type LucideIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 
@@ -8,6 +8,7 @@ interface FooterLink {
   to?: string;
   href?: string;
   label: string;
+  icon?: LucideIcon;
 }
 
 // Section Interface
@@ -56,14 +57,21 @@ const FooterSection = ({ title, links, children }: FooterSectionProps) => {
             className="overflow-hidden"
           >
             <div className="pb-6 md:pb-0 md:pt-4 flex flex-col gap-2.5">
-              {children ? children : links?.map((link) => (
-                link.to ? (
+              {children ? children : links?.map((link) => {
+                const Icon = link.icon;
+                const content = (
+                  <span className="flex items-center gap-2.5 group/link">
+                    {Icon && <Icon size={14} className="text-white/50 group-hover/link:text-white transition-colors flex-shrink-0" />}
+                    <span>{link.label}</span>
+                  </span>
+                );
+                return link.to ? (
                   <NavLink
                     key={link.label}
                     to={link.to}
-                    className="text-sm text-gray-200 hover:text-white hover:underline transition-colors w-fit font-medium tracking-wide"
+                    className="text-sm text-gray-200 hover:text-white transition-colors w-fit font-medium tracking-wide"
                   >
-                    {link.label}
+                    {content}
                   </NavLink>
                 ) : (
                   <a
@@ -71,12 +79,12 @@ const FooterSection = ({ title, links, children }: FooterSectionProps) => {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-gray-200 hover:text-white hover:underline transition-colors w-fit font-medium tracking-wide"
+                    className="text-sm text-gray-200 hover:text-white transition-colors w-fit font-medium tracking-wide"
                   >
-                    {link.label}
+                    {content}
                   </a>
-                )
-              ))}
+                );
+              })}
             </div>
           </motion.div>
         )}
@@ -92,25 +100,25 @@ const Footer = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [location.pathname]);
 
-  const quickLinks = [
-    { to: '/', label: 'Home' },
-    { to: '/about', label: 'About Us' },
-    { to: '/gallery', label: 'Gallery' },
-    { to: '/projects', label: 'Projects' },
-    { to: '/clients', label: 'Clients' },
-    { to: '/why-us', label: 'Why Us' },
+  const quickLinks: FooterLink[] = [
+    { to: '/', label: 'Home', icon: Home },
+    { to: '/about', label: 'About Us', icon: Users },
+    { to: '/gallery', label: 'Gallery', icon: Image },
+    { to: '/projects', label: 'Projects', icon: FolderKanban },
+    { to: '/clients', label: 'Clients', icon: Handshake },
+    { to: '/why-us', label: 'Why Us', icon: Award },
   ];
 
-  const serviceLinks = [
-    { to: '/services', label: 'All Services' },
-    { to: '/manufacturing-supply', label: 'Manufacturing & Supply' },
+  const serviceLinks: FooterLink[] = [
+    { to: '/services', label: 'All Services', icon: Wrench },
+    { to: '/manufacturing-supply', label: 'Manufacturing & Supply', icon: Factory },
   ];
 
-  const offeringsLinks = [
-    { to: '/services#consultancy', label: 'Expert Consultancy' },
-    { to: '/services#automation', label: 'Smart Automation' },
-    { to: '/services#turnkey', label: 'Turnkey Projects' },
-    { to: '/services#erection', label: 'Erection & Commissioning' },
+  const offeringsLinks: FooterLink[] = [
+    { to: '/services#consultancy', label: 'Expert Consultancy', icon: Lightbulb },
+    { to: '/services#automation', label: 'Smart Automation', icon: BrainCircuit },
+    { to: '/services#turnkey', label: 'Turnkey Projects', icon: Zap },
+    { to: '/services#erection', label: 'Erection & Commissioning', icon: HardHat },
   ];
 
   return (
