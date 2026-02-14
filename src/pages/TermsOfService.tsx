@@ -1,47 +1,59 @@
-import { motion } from 'framer-motion';
-import { FaFileContract } from 'react-icons/fa';
+import { motion } from "framer-motion";
+import { FaFileContract } from "react-icons/fa";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+  },
+};
 
 const TermsOfService = () => {
   return (
-    <motion.div
-      className="min-h-screen bg-gradient-to-b from-[#1e2a44] to-[#2a9d8f] bg-fixed"
-      animate={{ backgroundPosition: ['0% 0%', '100% 100%'] }}
-      transition={{ duration: 20, ease: 'linear', repeat: Infinity, repeatType: 'reverse' }}
-    >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-24 md:pt-28 lg:pt-44 pb-16 flex flex-col items-center">
-        {/* Header Section */}
-        <div className="flex flex-col items-center mb-6 sm:mb-10">
-          <motion.div
-            className="bg-[#2a9d8f] rounded-full p-4 shadow-lg mb-4"
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-          >
-            <FaFileContract className="text-white text-5xl" />
-          </motion.div>
-          <h1 className="font-montserrat font-extrabold text-4xl sm:text-5xl mb-2 text-[#e0f7fa] drop-shadow-lg tracking-tight text-center relative">
+    <div className="min-h-screen bg-gradient-to-b from-[#1e2a44] to-[#2a9d8f]">
+      <div className="container mx-auto px-6 pt-32 pb-20 flex flex-col items-center">
+
+        {/* Header */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col items-center mb-12 text-center"
+        >
+          <div className="bg-[#2a9d8f] rounded-full p-4 shadow-md mb-5">
+            <FaFileContract className="text-white text-4xl" />
+          </div>
+
+          <h1 className="font-montserrat font-extrabold text-4xl sm:text-5xl text-[#e0f7fa] tracking-tight">
             Terms of Service
-            <motion.span
-              className="absolute bottom-0 left-0 w-full h-1 bg-[#ff6f61] rounded-full"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
-            />
           </h1>
-          <p className="text-[#e0f7fa] text-lg font-medium text-center max-w-xl opacity-90">
+
+          <p className="text-[#e0f7fa]/80 mt-3 max-w-xl">
             Governing Your Use of Our Services
           </p>
-        </div>
+        </motion.div>
+
         {/* Content Card */}
         <motion.div
-          className="w-full max-w-4xl bg-white/95 backdrop-blur-lg rounded-2xl shadow-lg p-8 md:p-12 text-[#1e2a44] relative z-10 border border-[#2a9d8f]/20"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          transition={{ delay: 0.15 }}
+          className="w-full max-w-4xl bg-white rounded-2xl shadow-md p-8 md:p-12 text-[#1e2a44]"
         >
-          <div className="prose max-w-none text-[#1e2a44] prose-headings:text-[#ff6f61] prose-a:text-[#2a9d8f] prose-a:hover:text-[#ff6f61] text-base leading-relaxed">
-            <p className="mb-4 text-right text-sm text-[#666]">
-              <strong>Last Updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</strong>
+          <div className="prose max-w-none prose-headings:text-[#1e2a44] prose-a:text-[#2a9d8f]">
+
+            <p className="text-right text-sm text-gray-500">
+              <strong>
+                Last Updated:{" "}
+                {new Date().toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </strong>
             </p>
             <p className="mb-6">
               Welcome to <strong>www.gvscontrols.com</strong> (the "Website"), operated by <strong>M/s GVS Controls</strong> ("Company", "we", "us", or "our"), a proprietary firm established in 2017 with 30+ years of Promoter Experience in EPC Projects. Our vision—"Our Vision To Your Solution"—reflects our commitment to delivering innovative, cost-effective Engineering solutions. These Terms of Service ("Terms") govern your access to and use of the Website and any services, information, or content provided by GVS Controls, including but not limited to Electrical Control Panel Manufacturing, PLC Automation, Consultancy, Engineering, Erection, Testing & Commissioning, Renovation & Revamping, and Turnkey Project solutions. By accessing or using the Website, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you do not agree to these Terms, please refrain from using the Website.
@@ -202,7 +214,7 @@ const TermsOfService = () => {
           </div>
         </motion.div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
