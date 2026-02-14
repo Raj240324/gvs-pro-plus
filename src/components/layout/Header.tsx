@@ -127,6 +127,7 @@ const TopContactBar = () => (
           href="https://www.linkedin.com/company/gvs-controls"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Follow us on LinkedIn"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="flex items-center justify-center w-7 h-7 rounded-lg bg-blue-600 text-white shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 transition-all"
@@ -155,6 +156,7 @@ const TopContactBar = () => (
       <motion.a 
         href="mailto:projects@gvscontrols.com" 
         className="flex items-center gap-2 group"
+        aria-label="Email us at projects@gvscontrols.com"
         whileHover={{ y: -1 }}
       >
         <div className="p-1.5 rounded-md bg-orange-50 dark:bg-orange-900/20 text-orange-500 group-hover:bg-orange-100 dark:group-hover:bg-orange-900/30 transition-colors">
@@ -170,6 +172,7 @@ const TopContactBar = () => (
       <motion.a 
         href="tel:+917338880027" 
         className="flex items-center gap-2 group"
+        aria-label="Call us at +91 7338880027"
         whileHover={{ y: -1 }}
       >
         <div className="p-1.5 rounded-md bg-green-50 dark:bg-green-900/20 text-green-600 group-hover:bg-green-100 dark:group-hover:bg-green-900/30 transition-colors">
@@ -358,7 +361,7 @@ const Header = () => {
                 </NavLink>
               </div>
 
-              <nav className="hidden lg:flex items-center flex-1 px-1 xl:px-4">
+              <nav aria-label="Main navigation" className="hidden lg:flex items-center flex-1 px-1 xl:px-4">
                 <div className="flex items-center w-full justify-between bg-white/20 border border-white/30 rounded-full py-1.5 px-3 xl:px-4 shadow-sm backdrop-blur-sm">
                   <motion.div
                     onMouseLeave={() => setHovered(null)}
@@ -469,6 +472,7 @@ const Header = () => {
                  </div>
                  <button
                     onClick={() => setMobileMenuOpen(false)}
+                    aria-label="Close navigation menu"
                     className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
                  >
                     <XIcon size={24} />
@@ -477,7 +481,7 @@ const Header = () => {
 
               {/* Navigation Links */}
               <div className="flex-1 flex flex-col justify-center px-8 relative">
-                <nav className="flex flex-col gap-3">
+                <nav aria-label="Mobile navigation" className="flex flex-col gap-3">
                   {navLinks.map((link, index) => (
                     <motion.div
                       key={link.name}
@@ -536,6 +540,7 @@ const Header = () => {
                        href="https://www.linkedin.com/company/gvs-controls"
                        target="_blank"
                        rel="noopener noreferrer"
+                       aria-label="Visit our LinkedIn page"
                        className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 hover:scale-110 transition-transform"
                      >
                        <Linkedin size={20} />

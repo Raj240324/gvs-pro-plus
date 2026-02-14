@@ -122,7 +122,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gradient-to-br from-indigo-600 via-teal-500 to-purple-600 text-white font-sans">
+    <footer aria-label="Site footer" className="bg-gradient-to-br from-indigo-600 via-teal-500 to-purple-600 text-white font-sans">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
         
         {/* Top Section: Logo & Breadcrumbs style */}
@@ -136,10 +136,10 @@ const Footer = () => {
            </div>
            
            <div className="flex gap-4">
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors">
+              <a href="https://linkedin.com" target="_blank" rel="noreferrer" aria-label="Visit our LinkedIn page" className="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors">
                 <Linkedin size={16} />
               </a>
-              <a href="mailto:projects@gvscontrols.com" className="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors">
+              <a href="mailto:projects@gvscontrols.com" aria-label="Email us at projects@gvscontrols.com" className="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors">
                 <Mail size={16} />
               </a>
            </div>
@@ -148,11 +148,17 @@ const Footer = () => {
         {/* Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           
-          <FooterSection title="Explore" links={quickLinks} />
+          <nav aria-label="Footer Explore navigation">
+            <FooterSection title="Explore" links={quickLinks} />
+          </nav>
           
-          <FooterSection title="Services" links={serviceLinks} />
+          <nav aria-label="Footer Services navigation">
+            <FooterSection title="Services" links={serviceLinks} />
+          </nav>
 
-          <FooterSection title="Offerings" links={offeringsLinks} />
+          <nav aria-label="Footer Offerings navigation">
+            <FooterSection title="Offerings" links={offeringsLinks} />
+          </nav>
           
           <FooterSection title="Contact">
              <div className="flex flex-col gap-3">
