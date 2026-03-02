@@ -5,7 +5,15 @@ const SmoothScroll = memo(() => {
   useEffect(() => {
     // Mobile: no smooth scroll, no GSAP ticker, no Lenis RAF loop
     // Desktop: identical behavior to original — Lenis + GSAP + ScrollTrigger
-    if (!isDesktop()) return;
+    useEffect(() => {
+  const isTouchDevice =
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0;
+
+  if (isTouchDevice) return;
+
+  // initialize GSAP + Lenis
+}, []);
 
     let cleanup: (() => void) | undefined;
     let ScrollTriggerRef: any;

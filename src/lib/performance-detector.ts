@@ -20,18 +20,19 @@ const DESKTOP_BREAKPOINT = 1024;
 function detectTier(): PerformanceTier {
   if (typeof window === 'undefined') return PerformanceTier.DESKTOP;
 
-  const width = window.innerWidth;
+  const isTouchDevice =
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0;
 
-  // Desktop: full experience, no degradation ever
-  if (width >= DESKTOP_BREAKPOINT) {
+  if (!isTouchDevice) {
+    // Non-touch device → full desktop experience
     return PerformanceTier.DESKTOP;
   }
 
-  // Mobile classification based on hardware signals
+  // Touch device → mobile classification
   const cores = navigator.hardwareConcurrency || 2;
-  const memory = (navigator as any).deviceMemory || 4; // GB, Chrome-only API
+  const memory = (navigator as any).deviceMemory || 4;
 
-  // Low-end: <= 4 cores OR <= 2GB RAM
   if (cores <= 4 || memory <= 2) {
     return PerformanceTier.MOBILE_LOW;
   }
