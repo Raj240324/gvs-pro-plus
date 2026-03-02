@@ -41,6 +41,7 @@ const staggerGrid = {
 // --- Components ---
 
 const ProductSpotlightCard = ({ product }: { product: Product }) => {
+   const { enableParallax } = usePerformance();
    const divRef = useRef<HTMLDivElement>(null);
    const [position, setPosition] = useState({ x: 0, y: 0 });
    const [opacity, setOpacity] = useState(0);
@@ -51,85 +52,101 @@ const ProductSpotlightCard = ({ product }: { product: Product }) => {
       setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
    };
 
-   return (
-      <div className="w-full max-w-6xl mx-auto">
-         <TiltedCard
-            containerHeight="100%"
-            containerWidth="100%"
-            scaleOnHover={1.01}
-            rotateAmplitude={2}
-            className="w-full"
-         >
-            <div 
-               ref={divRef}
-               onMouseMove={handleMouseMove}
-               onMouseEnter={() => setOpacity(1)}
-               onMouseLeave={() => setOpacity(0)}
-               className="relative w-full bg-slate-900 border border-slate-700 overflow-hidden group min-h-[500px] flex flex-col md:flex-row"
-            >
-               {/* Spotlight */}
-               <div 
-                 className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100 mix-blend-screen"
-                 style={{
-                   opacity,
-                   background: `radial-gradient(800px circle at ${position.x}px ${position.y}px, rgba(245, 158, 11, 0.15), transparent 40%)`
-                 }}
-               />
+   // Shared inner content — used by both Desktop (TiltedCard) and Mobile (plain div)
+   const cardContent = (
+      <div 
+         ref={divRef}
+         {...(enableParallax ? {
+           onMouseMove: handleMouseMove,
+           onMouseEnter: () => setOpacity(1),
+           onMouseLeave: () => setOpacity(0),
+         } : {})}
+         className="relative w-full bg-slate-900 border border-slate-700 overflow-hidden group min-h-[500px] flex flex-col md:flex-row"
+      >
+         {/* Spotlight — desktop only */}
+         {enableParallax && (
+           <div 
+             className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100 mix-blend-screen"
+             style={{
+               opacity,
+               background: `radial-gradient(800px circle at ${position.x}px ${position.y}px, rgba(245, 158, 11, 0.15), transparent 40%)`
+             }}
+           />
+         )}
 
-               {/* Left: Content */}
-               <div className="p-8 md:p-16 relative z-10 flex flex-col justify-center border-r border-white/5 w-full md:w-1/2">
-                  <div className="mb-6">
-                     <span className="text-amber-500 font-mono text-sm tracking-widest uppercase mb-2 block">// Core Expertise</span>
-                     <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white leading-tight">
-                        {product.name}
-                     </h2>
-                  </div>
-                  
-                  {/* Description Rendered as Div to allow nested paragraphs */}
-                  <div className="text-slate-400 text-sm sm:text-base md:text-lg leading-relaxed mb-8">
-                     {product.description}
-                  </div>
-                  
-                  <div className="space-y-4 font-mono text-sm text-slate-300">
-                     <div className="flex items-center gap-4 py-3 border-b border-white/10">
-                        <span className="w-32 text-slate-500">Expertise</span>
-                        <span>EPC Projects, Turnkey Solutions</span>
-                     </div>
-                     <div className="flex items-center gap-4 py-3 border-b border-white/10">
-                        <span className="w-32 text-slate-500">Compliance</span>
-                        <span>IE Rules & CEIG Regulations</span>
-                     </div>
-                  </div>
+         {/* Left: Content */}
+         <div className="p-8 md:p-16 relative z-10 flex flex-col justify-center border-r border-white/5 w-full md:w-1/2">
+            <div className="mb-6">
+               <span className="text-amber-500 font-mono text-sm tracking-widest uppercase mb-2 block">// Core Expertise</span>
+               <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white leading-tight">
+                  {product.name}
+               </h2>
+            </div>
+            
+            <div className="text-slate-400 text-sm sm:text-base md:text-lg leading-relaxed mb-8">
+               {product.description}
+            </div>
+            
+            <div className="space-y-4 font-mono text-sm text-slate-300">
+               <div className="flex items-center gap-4 py-3 border-b border-white/10">
+                  <span className="w-32 text-slate-500">Expertise</span>
+                  <span>EPC Projects, Turnkey Solutions</span>
                </div>
-
-               {/* Right: Visual Abstract */}
-               <div className="relative bg-slate-950/50 p-8 md:p-16 flex items-center justify-center overflow-hidden w-full md:w-1/2">
-                  {/* Rotating Gear Effect */}
-                  <div className="absolute inset-0 opacity-10">
-                     <Factory className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] text-slate-700 animate-spin-slow" />
-                  </div>
-                  
-                  <div className="relative z-10 grid grid-cols-2 gap-4 w-full">
-                     {[
-                        { val: "2017", label: "GVS Est." },
-                        { val: "30+", label: "Promoter Exp." },
-                        { val: "Client", label: "Focused" },
-                        { val: "Cost", label: "Effective" },
-                     ].map((stat, i) => (
-                        <div key={i} className="bg-slate-900 border border-slate-800 p-6 text-center hover:border-amber-500/50 transition-colors">
-                           <div className="text-xl md:text-2xl font-bold text-white mb-1">{stat.val}</div>
-                           <div className="text-xs text-slate-500 font-mono uppercase">{stat.label}</div>
-                        </div>
-                     ))}
-                  </div>
+               <div className="flex items-center gap-4 py-3 border-b border-white/10">
+                  <span className="w-32 text-slate-500">Compliance</span>
+                  <span>IE Rules & CEIG Regulations</span>
                </div>
             </div>
-         </TiltedCard>
+         </div>
+
+         {/* Right: Visual Abstract */}
+         <div className="relative bg-slate-950/50 p-8 md:p-16 flex items-center justify-center overflow-hidden w-full md:w-1/2">
+            {enableParallax && (
+              <div className="absolute inset-0 opacity-10">
+                <Factory className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] text-slate-700 animate-spin-slow" />
+              </div>
+            )}
+            
+            <div className="relative z-10 grid grid-cols-2 gap-4 w-full">
+               {[
+                  { val: "2017", label: "GVS Est." },
+                  { val: "30+", label: "Promoter Exp." },
+                  { val: "Client", label: "Focused" },
+                  { val: "Cost", label: "Effective" },
+               ].map((stat, i) => (
+                  <div key={i} className="bg-slate-900 border border-slate-800 p-6 text-center hover:border-amber-500/50 transition-colors">
+                     <div className="text-xl md:text-2xl font-bold text-white mb-1">{stat.val}</div>
+                     <div className="text-xs text-slate-500 font-mono uppercase">{stat.label}</div>
+                  </div>
+               ))}
+            </div>
+         </div>
+      </div>
+   );
+
+   return (
+      <div className="w-full max-w-6xl mx-auto">
+         {enableParallax ? (
+           <TiltedCard
+              containerHeight="100%"
+              containerWidth="100%"
+              scaleOnHover={1.01}
+              rotateAmplitude={2}
+              className="w-full"
+           >
+             {cardContent}
+           </TiltedCard>
+         ) : (
+           <div className="w-full">
+             {cardContent}
+           </div>
+         )}
       </div>
    );
 };
 
 const ProductSection = ({ product }: { product: Product }) => {
+  const { enableParallax } = usePerformance();
   return (
     <section className="py-24 relative z-10">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -147,10 +164,10 @@ const ProductSection = ({ product }: { product: Product }) => {
             </div>
 
             <motion.div 
-               variants={staggerGrid}
-               initial="hidden"
-               whileInView="visible"
-               viewport={{ once: true, margin: "-100px" }}
+               variants={enableParallax ? staggerGrid : undefined}
+               initial={enableParallax ? "hidden" : false}
+               whileInView={enableParallax ? "visible" : undefined}
+               viewport={enableParallax ? { once: true, margin: "-100px" } : undefined}
                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
               {product.items.map((item, i) => (
@@ -180,43 +197,44 @@ const ProductSection = ({ product }: { product: Product }) => {
   );
 };
 
-const ManufacturingSupply = () => {
-  const { scrollY } = useScroll();
-  const contactModal = useContactModal();
-  const { enableParallax } = usePerformance();
-  
-  // Parallax: disabled on mobile — hero stays static
-  const heroY = useTransform(scrollY, [0, 500], [0, enableParallax ? 150 : 0]);
-  const heroOpacity = useTransform(scrollY, [0, 400], [1, enableParallax ? 0 : 1]);
-
-  const product: Product = {
-    id: 'control-panels',
-    name: 'Electrical Control Panels',
-    description: (
-      <div className="space-y-6">
-        <p>
-          <strong className="text-brand-white">GVS Controls</strong> started in <span className="text-amber-500">2017</span> as a Proprietary Company with a single-minded dedication to customer satisfaction. We provide Innovative Engineering Solutions ensuring optimal Man-Machine interface.
+// --- Shared product data ---
+const product: Product = {
+  id: 'control-panels',
+  name: 'Electrical Control Panels',
+  description: (
+    <div className="space-y-6">
+      <p>
+        <strong className="text-brand-white">GVS Controls</strong> started in <span className="text-amber-500">2017</span> as a Proprietary Company with a single-minded dedication to customer satisfaction. We provide Innovative Engineering Solutions ensuring optimal Man-Machine interface.
+      </p>
+      <div className="border-l-2 border-amber-500/30 pl-4 py-1">
+        <p className="text-slate-300 italic">
+          Backed by <strong className="text-white">Promoters</strong> with <strong className="text-amber-400">30+ Years of Experience</strong> in EPC Projects, working with industry giants like L&T and Shriram EPC for clients like SAIL, TISCO, & RINL.
         </p>
-        <div className="border-l-2 border-amber-500/30 pl-4 py-1">
-          <p className="text-slate-300 italic">
-            Backed by <strong className="text-white">Promoters</strong> with <strong className="text-amber-400">30+ Years of Experience</strong> in EPC Projects, working with industry giants like L&T and Shriram EPC for clients like SAIL, TISCO, & RINL.
-          </p>
-        </div>
       </div>
-    ),
-    items: [
-      'Electrical 415 V Panel with Single (or) Double Bus System',
-      'Power Control Centers, Power Distribution Panels, Motor Control Centers & Process Control Panels',
-      'EB & DG Synchronizing Control Panels & Auto Transfer Switch Panels',
-      'LT Bus Ducts, Sandwich Type Bus Ducts & Rising Main Panels',
-      'APFC Panels, AMF Control Panels, Relay Logic & PLC Control Panel',
-      'Local Push Button Station, Junction Boxes, Lighting Panels MLDB, LDB, SLDB, and Utility DBs',
-      'VFD Control Panels & Special Purpose and Other Custom Built Panels'
-    ],
-    icon: <Factory className="w-16 h-16 text-white" />,
-    color: [[245, 158, 11], [30, 41, 59]], // Amber to Slate
-  };
+    </div>
+  ),
+  items: [
+    'Electrical 415 V Panel with Single (or) Double Bus System',
+    'Power Control Centers, Power Distribution Panels, Motor Control Centers & Process Control Panels',
+    'EB & DG Synchronizing Control Panels & Auto Transfer Switch Panels',
+    'LT Bus Ducts, Sandwich Type Bus Ducts & Rising Main Panels',
+    'APFC Panels, AMF Control Panels, Relay Logic & PLC Control Panel',
+    'Local Push Button Station, Junction Boxes, Lighting Panels MLDB, LDB, SLDB, and Utility DBs',
+    'VFD Control Panels & Special Purpose and Other Custom Built Panels'
+  ],
+  icon: <Factory className="w-16 h-16 text-white" />,
+  color: [[245, 158, 11], [30, 41, 59]],
+};
 
+// --- Shared Layout (receives heroY/heroOpacity as props) ---
+interface ManufacturingLayoutProps {
+  heroY: any;
+  heroOpacity: any;
+  contactModal: { onOpen: () => void };
+  enableParallax: boolean;
+}
+
+const ManufacturingLayout = ({ heroY, heroOpacity, contactModal, enableParallax }: ManufacturingLayoutProps) => {
   return (
     <main className="bg-slate-950 min-h-screen pt-[84px] lg:pt-[128px] overflow-hidden font-sans">
       <SEO 
@@ -236,14 +254,18 @@ const ManufacturingSupply = () => {
              }} 
         />
         
-        {/* Ambient Glows */}
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+        {/* Ambient Glows — desktop only (blur-[120px] = massive GPU cost) */}
+        {enableParallax && (
+          <>
+            <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+          </>
+        )}
 
         <div className="container mx-auto px-4 relative z-10 text-center">
           <motion.div style={{ y: heroY, opacity: heroOpacity }} className="max-w-5xl mx-auto">
             
-            {/* Badge - Technical Look - Updated to focus on GVS */}
+            {/* Badge */}
             <motion.div
                initial={{ opacity: 0, y: -20 }}
                animate={{ opacity: 1, y: 0 }}
@@ -307,10 +329,10 @@ const ManufacturingSupply = () => {
                ].map((item, idx) => (
                   <motion.div 
                      key={idx}
-                     initial={{ opacity: 0, y: 20 }}
-                     whileInView={{ opacity: 1, y: 0 }}
-                     transition={{ delay: idx * 0.1 }}
-                     viewport={{ once: true }}
+                     initial={enableParallax ? { opacity: 0, y: 20 } : false}
+                     whileInView={enableParallax ? { opacity: 1, y: 0 } : undefined}
+                     transition={enableParallax ? { delay: idx * 0.1 } : undefined}
+                     viewport={enableParallax ? { once: true } : undefined}
                      className="relative z-10"
                   >
                      <div className="bg-slate-950 border border-slate-800 p-8 h-full hover:border-amber-500/50 transition-all duration-300 group">
@@ -330,7 +352,6 @@ const ManufacturingSupply = () => {
             </div>
          </div>
       </section>
-
 
       {/* --- CTA: The Command --- */}
       <section className="py-24 relative overflow-hidden bg-amber-500">
@@ -357,6 +378,39 @@ const ManufacturingSupply = () => {
 
     </main>
   );
+};
+
+// --- Desktop: full scroll-driven parallax ---
+const ManufacturingSupplyDesktop = () => {
+  const { scrollY } = useScroll();
+  const contactModal = useContactModal();
+
+  const heroY = useTransform(scrollY, [0, 500], [0, 150]);
+  const heroOpacity = useTransform(scrollY, [0, 400], [1, 0]);
+
+  return (
+    <ManufacturingLayout heroY={heroY} heroOpacity={heroOpacity} contactModal={contactModal} enableParallax={true} />
+  );
+};
+
+// --- Mobile: NO scroll hooks, NO motion values, NO listeners ---
+const ManufacturingSupplyMobile = () => {
+  const contactModal = useContactModal();
+
+  return (
+    <ManufacturingLayout heroY={0} heroOpacity={1} contactModal={contactModal} enableParallax={false} />
+  );
+};
+
+// --- Export: switch based on device capability ---
+const ManufacturingSupply = () => {
+  const { enableParallax } = usePerformance();
+
+  if (!enableParallax) {
+    return <ManufacturingSupplyMobile />;
+  }
+
+  return <ManufacturingSupplyDesktop />;
 };
 
 export default ManufacturingSupply;
