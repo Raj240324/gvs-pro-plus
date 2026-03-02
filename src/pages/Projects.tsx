@@ -153,10 +153,10 @@ const Projects: React.FC = () => {
 
       {/* --- TABS (Floating Glass Dock) --- */}
       {/* Tab Navigation */}
-      <section className="py-8 bg-white dark:bg-slate-900 sticky top-0 z-40 shadow-sm/50 backdrop-blur-xl bg-white/80 dark:bg-slate-900/80 border-b border-slate-200/50 dark:border-slate-800/50">
+      <section className="py-6 md:py-8 bg-white dark:bg-slate-900 border-b border-slate-200/50 dark:border-slate-800/50 relative z-40">
         <div className="container mx-auto px-4 flex justify-center">
           <LayoutGroup>
-            <div className="bg-slate-100 dark:bg-slate-800/50 p-1.5 rounded-full inline-flex relative">
+            <div className="bg-slate-100 dark:bg-slate-800/50 p-1 md:p-1.5 rounded-2xl md:rounded-full flex flex-col md:flex-row relative w-full sm:w-auto gap-1 md:gap-0 max-w-sm sm:max-w-none">
               {[
                 { id: 'gvs', label: 'GVS Controls (2017-Present)', icon: Building2 },
                 { id: 'founder', label: "Founder's Legacy (Prior)", icon: Briefcase }
@@ -164,7 +164,7 @@ const Projects: React.FC = () => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
-                  className={`relative z-10 flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold transition-colors duration-200 ${
+                  className={`relative z-10 flex items-center justify-center gap-2 px-4 py-3 md:px-6 md:py-2.5 rounded-xl md:rounded-full text-xs sm:text-sm font-bold transition-colors duration-200 flex-1 md:flex-none ${
                     activeTab === tab.id 
                       ? 'text-slate-900 dark:text-white' 
                       : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'
@@ -173,12 +173,12 @@ const Projects: React.FC = () => {
                   {activeTab === tab.id && (
                     <motion.div
                       layoutId="active-tab-pill"
-                      className="absolute inset-0 bg-white dark:bg-slate-700 shadow-sm rounded-full border border-slate-200/50 dark:border-slate-600"
+                      className="absolute inset-0 bg-white dark:bg-slate-700 shadow-sm rounded-xl md:rounded-full border border-slate-200/50 dark:border-slate-600"
                       transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                     />
                   )}
-                  <tab.icon className="w-4 h-4 relative z-20" />
-                  <span className="relative z-20">{tab.label}</span>
+                  <tab.icon className="w-4 h-4 md:w-4 md:h-4 shrink-0 relative z-20" />
+                  <span className="relative z-20 text-center">{tab.label}</span>
                 </button>
               ))}
             </div>
