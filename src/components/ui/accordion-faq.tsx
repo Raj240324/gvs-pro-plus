@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, ReactNode } from "react";
 import { motion } from "framer-motion";
 import { 
   Briefcase, 
@@ -20,7 +20,7 @@ import { cn } from "@/lib/utils";
 interface FAQItem {
   id: string;
   question: string;
-  answer: string;
+  answer: ReactNode;
   icon: LucideIcon;
 }
 
@@ -76,7 +76,15 @@ const faqs: FAQItem[] = [
   {
     id: "9",
     question: "How can I contact GVS CONTROLS?",
-    answer: "Office & Works: Plot No.1476, Segundram Main Road, Gokulapuram- MaraimalaiNagar, Chengalpattu-(District), Pin:603209\nReg. Office: No.46/1, 5th Cross Street, Bagavathy Nagar Govindarajapuram, Nandhivaram, Guduvanchery – 603202, Chengalpattu-(Dist)\nMobile: 7338880027 & 9884001597\nEmail: projects@gvscontrols.com & gvscontrols@gmail.com\nWebsite: www.gvscontrols.com",
+    answer: (
+      <div className="flex flex-col gap-2 mt-1">
+        <div><span className="font-semibold text-cyan-400">Office & Works:</span> Plot No.1476, Segundram Main Road, Gokulapuram- MaraimalaiNagar, Chengalpattu-(District), Pin:603209</div>
+        <div><span className="font-semibold text-purple-400">Reg. Office:</span> No.46/1, 5th Cross Street, Bagavathy Nagar Govindarajapuram, Nandhivaram, Guduvanchery – 603202, Chengalpattu-(Dist)</div>
+        <div><span className="font-semibold text-amber-400">Mobile:</span> 7338880027 & 9884001597</div>
+        <div><span className="font-semibold text-emerald-400">Email:</span> projects@gvscontrols.com & gvscontrols@gmail.com</div>
+        <div><span className="font-semibold text-blue-400">Website:</span> www.gvscontrols.com</div>
+      </div>
+    ),
     icon: Phone
   },
 ];
