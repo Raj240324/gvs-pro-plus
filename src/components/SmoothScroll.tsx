@@ -9,7 +9,6 @@ const SmoothScroll = memo(() => {
     if (isTouchDevice) return;
 
     let cleanup: (() => void) | undefined;
-    let ScrollTriggerRef: any;
 
     Promise.all([
       import("gsap"),
@@ -18,45 +17,37 @@ const SmoothScroll = memo(() => {
     ]).then(([gsapModule, scrollTriggerModule, lenisModule]) => {
       const gsap = gsapModule.default;
       const ScrollTrigger = scrollTriggerModule.ScrollTrigger;
-      ScrollTriggerRef = ScrollTrigger;
       const Lenis = lenisModule.default;
 
       gsap.registerPlugin(ScrollTrigger);
 
       const lenis = new Lenis({
-        duration: 1.15,
+        duration: 1.1,
         easing: (t: number) => 1 - Math.pow(1 - t, 3),
         smoothWheel: true,
         wheelMultiplier: 0.9,
-        touchMultiplier: 2,
       });
 
-      const raf = (time: number) => {
-        lenis.raf(time * 1000);
-        ScrollTrigger.update();
-      };
+      // 🔥 Correct GSAP-Lenis integration
+      lenis.on("scroll", ScrollTrigger.update);
 
-      gsap.ticker.add(raf);
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+
       gsap.ticker.lagSmoothing(0);
 
-      // Defers layout measurement to next paint cycle to avoid mid-render thrash
-      ScrollTrigger.config({ ignoreMobileResize: true });
-      requestAnimationFrame(() => {
-        ScrollTrigger.refresh(true);
-      });
+      // 🚫 REMOVE refresh on mount
+      // Let ScrollTrigger auto-handle layout
 
       cleanup = () => {
-        gsap.ticker.remove(raf);
-        ScrollTrigger.getAll().forEach((t: any) => t.kill());
         lenis.destroy();
+        ScrollTrigger.getAll().forEach((t: any) => t.kill());
       };
     });
 
     return () => {
       cleanup?.();
-      if (ScrollTriggerRef) {
-        ScrollTriggerRef.getAll().forEach((t: any) => t.kill());
-      }
     };
   }, []);
 

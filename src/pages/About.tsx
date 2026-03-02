@@ -43,12 +43,33 @@ const SectionHeader = ({ badge, title, subtitle, textColor }: { badge: string, t
   </motion.div>
 );
 
+const colorStyles = {
+  blue: "bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400",
+  emerald: "bg-emerald-100 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400",
+  amber: "bg-amber-100 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400",
+  rose: "bg-rose-100 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400",
+  purple: "bg-purple-100 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400",
+};
+
+const textColorStyles = {
+  blue: "text-blue-600 dark:text-blue-400",
+  emerald: "text-emerald-600 dark:text-emerald-400",
+  amber: "text-amber-600 dark:text-amber-400",
+  rose: "text-rose-600 dark:text-rose-400",
+  purple: "text-purple-600 dark:text-purple-400",
+};
+
 export default function AboutUnified() {
   const { scrollYProgress } = useScroll();
   const contactModal = useContactModal();
   const { enableParallax } = usePerformance();
-  const heroOpacity = transformScroll(scrollYProgress, [0, 0.3], [1, enableParallax ? 0 : 1]);
-  const heroScale = transformScroll(scrollYProgress, [0, 0.3], [1, enableParallax ? 0.95 : 1]);
+
+  const heroOpacityRaw = transformScroll(scrollYProgress, [0, 0.3], [1, 0]);
+  const heroScaleRaw = transformScroll(scrollYProgress, [0, 0.3], [1, 0.95]);
+
+  const heroStyle = enableParallax
+    ? { opacity: heroOpacityRaw, scale: heroScaleRaw }
+    : undefined;
 
   const timelineEvents = useMemo<TimelineEvent[]>(() => [
     {
@@ -112,7 +133,7 @@ export default function AboutUnified() {
           
           <div className="container mx-auto px-4 relative z-10 text-center">
             <motion.div 
-              style={{ opacity: heroOpacity, scale: heroScale }}
+              style={heroStyle}
               className="max-w-4xl mx-auto"
             >
               <motion.div
@@ -217,16 +238,16 @@ export default function AboutUnified() {
            
            <div className="container mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
               {[
-                  { icon: Settings, color: 'blue', title: 'Innovation', sub: 'Pioneering Solutions', back: 'Future Ready', desc: 'Constantly exploring new tech to deliver state-of-the-art results.' },
-                  { icon: ShieldCheck, color: 'emerald', title: 'Quality', sub: 'Standard Compliant', back: 'Certified', desc: 'Adhering strictly to IE & CEIG regulations for highest safety.' },
-                  { icon: Handshake, color: 'amber', title: 'Integrity', sub: 'Honest Partnerships', back: 'Trust First', desc: 'Building relationships through transparency and ethical practices.' },
-                  { icon: Users, color: 'rose', title: 'Focus', sub: 'Client First', back: 'You Matter', desc: 'Dedicated to understanding and exceeding client expectations.' },
-                  { icon: Award, color: 'purple', title: 'Excellence', sub: 'Pursuit of Best', back: 'Top Tier', desc: 'Leveraging 30+ years of expertise for premium results.' },
+                  { icon: Settings, color: 'blue' as const, title: 'Innovation', sub: 'Pioneering Solutions', back: 'Future Ready', desc: 'Constantly exploring new tech to deliver state-of-the-art results.' },
+                  { icon: ShieldCheck, color: 'emerald' as const, title: 'Quality', sub: 'Standard Compliant', back: 'Certified', desc: 'Adhering strictly to IE & CEIG regulations for highest safety.' },
+                  { icon: Handshake, color: 'amber' as const, title: 'Integrity', sub: 'Honest Partnerships', back: 'Trust First', desc: 'Building relationships through transparency and ethical practices.' },
+                  { icon: Users, color: 'rose' as const, title: 'Focus', sub: 'Client First', back: 'You Matter', desc: 'Dedicated to understanding and exceeding client expectations.' },
+                  { icon: Award, color: 'purple' as const, title: 'Excellence', sub: 'Pursuit of Best', back: 'Top Tier', desc: 'Leveraging 30+ years of expertise for premium results.' },
               ].map((item, i) => (
                   <FlipCard key={i}
                      frontContent={
                         <div className="h-full flex flex-col items-center justify-center text-center">
-                           <div className={`p-3 rounded-2xl bg-${item.color}-100 dark:bg-${item.color}-900/20 text-${item.color}-600 dark:text-${item.color}-400 mb-4`}>
+                           <div className={`p-3 rounded-2xl mb-4 ${colorStyles[item.color]}`}>
                               <item.icon size={24} />
                            </div>
                            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">{item.title}</h3>
@@ -235,7 +256,7 @@ export default function AboutUnified() {
                      }
                      backContent={
                         <div className="h-full flex flex-col items-center justify-center text-center p-2">
-                            <h4 className={`text-base font-bold text-${item.color}-600 dark:text-${item.color}-400 mb-2`}>{item.back}</h4>
+                            <h4 className={`text-base font-bold mb-2 ${textColorStyles[item.color]}`}>{item.back}</h4>
                             <p className="text-slate-600 dark:text-slate-300 text-xs leading-relaxed">{item.desc}</p>
                         </div>
                      }
