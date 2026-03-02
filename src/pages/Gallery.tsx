@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useContactModal } from '../hooks/use-contact-modal';
 import SEO from '../components/SEO';
+import { usePerformance } from '../lib/usePerformance';
 
 // Images
 import cop1 from '../assets/cop-1.webp';
@@ -80,15 +81,8 @@ const Gallery = () => {
   const [index, setIndex] = useState<number | null>(null);
   const [direction, setDirection] = useState(0); 
   const contactModal = useContactModal();
-  const [isMobile, setIsMobile] = useState(false);
   const [visibleCount, setVisibleCount] = useState(6);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 1024);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
+  const { isMobile, enableParallax } = usePerformance();
 
   // Handle Scroll Lock
   useEffect(() => {
@@ -191,13 +185,13 @@ const Gallery = () => {
             {galleryImages.slice(0, visibleCount).map((image, i) => (
               <motion.div
                 key={image.id}
-                initial={isMobile ? false : { opacity: 0, y: 20 }}
-                whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-                viewport={isMobile ? undefined : { once: true, margin: "-50px" }}
+                initial={enableParallax ? { opacity: 0, y: 20 } : false}
+                whileInView={enableParallax ? { opacity: 1, y: 0 } : undefined}
+                viewport={enableParallax ? { once: true, margin: "-50px" } : undefined}
                 transition={{ duration: 0.4 }}
                 className="relative overflow-hidden rounded-2xl cursor-zoom-in group aspect-[4/3] bg-slate-800 shadow-lg"
                 onClick={() => { setIndex(i); setDirection(0); }}
-                whileHover={isMobile ? undefined : { scale: 1.02 }}
+                whileHover={enableParallax ? { scale: 1.02 } : undefined}
               >
                  <img
                    src={image.src}
@@ -312,9 +306,9 @@ const Gallery = () => {
 
          <div className="container mx-auto px-4 text-center relative z-10">
             <motion.div
-               initial={isMobile ? false : { opacity: 0, scale: 0.95 }}
-               whileInView={isMobile ? undefined : { opacity: 1, scale: 1 }}
-               viewport={isMobile ? undefined : { once: true }}
+               initial={enableParallax ? { opacity: 0, scale: 0.95 } : false}
+               whileInView={enableParallax ? { opacity: 1, scale: 1 } : undefined}
+               viewport={enableParallax ? { once: true } : undefined}
                transition={{ duration: 0.8 }}
                className="max-w-3xl mx-auto"
             >
