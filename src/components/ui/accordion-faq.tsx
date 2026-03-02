@@ -166,8 +166,10 @@ export function AccordionFAQ() {
                   </div>
                   <ChevronDown
                     className={cn(
-                      "w-5 h-5 transition-transform",
-                      isOpen && "rotate-180 text-cyan-400"
+                      "w-5 h-5 transition-all duration-300",
+                      isOpen 
+                        ? "rotate-180 text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.6)]" 
+                        : "text-cyan-200/50 group-hover:text-cyan-300 drop-shadow-[0_0_4px_rgba(103,232,249,0.3)]"
                     )}
                   />
                 </button>
