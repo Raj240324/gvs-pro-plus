@@ -6,7 +6,11 @@ const ScrollToTop = () => {
 
   useEffect(() => {
     // We use instant scroll to avoid jitter with page transitions and animations
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "auto"
+    });
   }, [pathname]);
 
   return null;

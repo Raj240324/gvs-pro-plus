@@ -190,14 +190,26 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
   const contactModal = useContactModal();
   const prevScrollY = useRef(0);
   const [hovered, setHovered] = useState<number | null>(null);
 
+  // Detect mobile to disable scroll-hide animation
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
 
 
   useEffect(() => {
+    // Mobile: no scroll-hide animation — header stays fixed and visible
+    if (isMobile) return;
+
     let lastScrollY = 0;
     let rafId: number;
     let ticking = false;
@@ -205,7 +217,6 @@ const Header = () => {
     const update = () => {
       const scrollY = window.scrollY;
 
-      // Only update if scroll position changed significantly
       if (Math.abs(scrollY - lastScrollY) > 5) {
         setScrolled(scrollY > 20);
 
@@ -233,30 +244,17 @@ const Header = () => {
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
     if (mobileMenuOpen) {
-      // Calculate scrollbar width
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-      document.documentElement.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
-      
-      document.body.classList.add("no-scroll");
-      document.documentElement.classList.add("no-scroll");
-      window.dispatchEvent(new Event("resize")); // 🔑 Lenis sync
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.classList.remove("no-scroll");
-      document.documentElement.classList.remove("no-scroll");
-      // Optional: Reset variable after animation
-      setTimeout(() => {
-        if (!mobileMenuOpen) {
-          document.documentElement.style.setProperty('--scrollbar-width', '0px');
-        }
-      }, 300);
+      document.body.style.overflow = "";
     }
+
     return () => {
-      document.body.classList.remove("no-scroll");
-      document.documentElement.classList.remove("no-scroll");
+      document.body.style.overflow = "";
     };
   }, [mobileMenuOpen]);
 
@@ -328,9 +326,11 @@ const Header = () => {
   return (
     <>
       <motion.header
-        variants={headerVariants}
-        initial="visible"
-        animate={isVisible ? "visible" : "hidden"}
+        key="main-header"
+        variants={!isMobile ? headerVariants : undefined}
+        initial={false}
+        animate={!isMobile ? (isVisible ? "visible" : "hidden") : undefined}
+        transition={!isMobile ? { type: "tween", duration: 0.25 } : undefined}
         className={cn(
           "fixed top-0 left-0 w-full z-[1000] will-change-transform",
           scrolled

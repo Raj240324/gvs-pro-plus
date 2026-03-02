@@ -3,6 +3,7 @@ import { Toaster as SonnerToaster } from "../src/components/ui/sonner";
 import { TooltipProvider } from "../src/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Outlet, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { HelmetProvider } from 'react-helmet-async';
 import ReactGA from "react-ga4";
@@ -70,7 +71,11 @@ const App = () => {
               <SmoothScroll />
               <Header />
               <main id="main-content" tabIndex={-1} className="focus:outline-none">
-                <Outlet />
+                <AnimatePresence mode="wait">
+                  <div key={location.pathname}>
+                    <Outlet />
+                  </div>
+                </AnimatePresence>
               </main>
               <Footer />
 

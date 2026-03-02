@@ -55,6 +55,7 @@ const bentoScale = { hidden: { opacity: 0, scale: 0.98 }, visible: { opacity: 1,
 
 // --- Lazy Map Section: IntersectionObserver deferred iframe ---
 const LazyMapSection = () => {
+  const { enableParallax } = usePerformance();
   const mapRef = useRef<HTMLDivElement>(null);
   const [showIframe, setShowIframe] = useState(false);
 
@@ -79,7 +80,7 @@ const LazyMapSection = () => {
   return (
     <div
       ref={mapRef}
-      className="bg-slate-200 dark:bg-slate-800 rounded-2xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-700 h-full min-h-[400px] relative group"
+      className={`bg-slate-200 dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-700 h-full min-h-[400px] relative group ${enableParallax ? "shadow-lg" : ""}`}
     >
       {showIframe ? (
         <iframe
@@ -101,7 +102,7 @@ const LazyMapSection = () => {
         <a
           href="https://www.linkedin.com/feed/update/urn:li:activity:7386648123668021248/"
           target="_blank"
-          className="w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110"
+          className={`w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center transition-transform hover:scale-110 ${enableParallax ? "shadow-lg" : ""}`}
         >
           <Linkedin size={18} />
         </a>
@@ -391,7 +392,7 @@ const Contact = () => {
                               <SelectTrigger className="w-full h-12 px-4 text-sm bg-slate-50 dark:bg-slate-800 border-transparent focus:bg-white dark:focus:bg-slate-950 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl transition-all font-medium text-slate-900 dark:text-white">
                                 <SelectValue placeholder="Select a subject" />
                               </SelectTrigger>
-                              <SelectContent className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50 rounded-xl shadow-2xl z-50">
+                              <SelectContent className={`border rounded-xl z-50 ${enableParallax ? "bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-slate-200/50 dark:border-slate-700/50 shadow-2xl" : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 shadow-lg"}`}>
                                 <SelectItem value="General Inquiry">General Inquiry</SelectItem>
                                 <SelectItem value="Project Consultation">Project Consultation</SelectItem>
                                 <SelectItem value="Product Information">Product Information</SelectItem>
@@ -414,7 +415,7 @@ const Contact = () => {
                           type="submit" 
                           isSubmitting={isSubmitting}
                           isSubmitted={isSubmitted}
-                          className="w-full h-12 text-base font-bold rounded-lg shadow-lg shadow-indigo-500/20"
+                          className={`w-full h-12 text-base font-bold rounded-lg ${enableParallax ? "shadow-lg shadow-indigo-500/20" : ""}`}
                           text="Send Request"
                        />
                     </div>
