@@ -23,21 +23,30 @@ const clients: Client[] = [
 ];
 
 const Clients: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
   const contactModal = useContactModal();
   const { enableParallax } = usePerformance();
   const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
+    target: heroRef,
+    offset: ["start start", "end start"]
   });
 
-  // Parallax: disabled on mobile — hero stays at full opacity
-  const yHero = useTransform(scrollYProgress, [0, 0.4], [0, enableParallax ? 150 : 0]);
-  const opacityHero = useTransform(scrollYProgress, [0, 0.3], [1, enableParallax ? 0 : 1]);
-  const smoothY = useSpring(yHero, { stiffness: 100, damping: 20, mass: 0.5 });
+  // Parallax: always pass MotionValue to useSpring to preserve stable types on mount
+  const yRaw = useTransform(scrollYProgress, [0, 0.4], [0, 150]);
+  const opacityRaw = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+
+  const smoothY = useSpring(yRaw, {
+    stiffness: 100,
+    damping: 20,
+    mass: 0.5,
+  });
+
+  const heroStyle = enableParallax
+    ? { y: smoothY, opacity: opacityRaw }
+    : undefined;
 
   return (
-    <main ref={containerRef} className="bg-black text-white min-h-screen pt-[84px] lg:pt-[128px] overflow-x-hidden">
+    <main className="bg-black text-white min-h-screen pt-[84px] lg:pt-[128px] overflow-x-hidden">
       <SEO
         title="Trusted Industrial Partners & Clients"
         description="GVS Controls is trusted by industry leaders including Aumund, Loesche, and 50+ partners across the global Power and Material Handling sectors."
@@ -48,7 +57,7 @@ const Clients: React.FC = () => {
           Removed 'sticky' and massive height to fix jitter. 
           Standard relative positioning with GPU-accelerated transforms. 
       */}
-      <section className="relative min-h-[60vh] flex flex-col items-center justify-center p-4 rounded-b-[3rem] shadow-2xl z-10">
+      <section ref={heroRef} className="relative min-h-[60vh] flex flex-col items-center justify-center p-4 rounded-b-[3rem] shadow-2xl z-10">
          {/* Animated Background Mesh */}
          <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-emerald-500/10 rounded-[100%] blur-[120px]" />
@@ -56,7 +65,7 @@ const Clients: React.FC = () => {
          </div>
 
          <motion.div 
-           style={{ y: smoothY, opacity: opacityHero }}
+           style={heroStyle}
            className="relative z-10 text-center max-w-4xl mx-auto will-change-transform"
          >
             <motion.div
