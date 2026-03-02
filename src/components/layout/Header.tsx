@@ -99,7 +99,7 @@ const AnimatedMenuButton = ({ open, onClick }: { open: boolean; onClick: () => v
           height="2.5"
           rx="1.25"
           animate={open ? { rotate: 45, y: 11, x: 6 } : { rotate: 0, y: 10, x: 6 }}
-          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          transition={{ type: "tween", duration: 0.2, ease: "easeOut" }}
           fill="currentColor"
         />
         <motion.rect
@@ -109,7 +109,7 @@ const AnimatedMenuButton = ({ open, onClick }: { open: boolean; onClick: () => v
           height="2.5"
           rx="1.25"
           animate={open ? { rotate: -45, y: 11, x: 6 } : { rotate: 0, y: 19.5, x: 6 }}
-          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          transition={{ type: "tween", duration: 0.2, ease: "easeOut" }}
           fill="currentColor"
         />
       </motion.svg>
@@ -290,34 +290,31 @@ const Header = () => {
   const mobileMenuVariants = {
     closed: { 
       opacity: 0, 
-      scale: 0.95,
-      y: -20,
+      y: -10,
       transition: { 
-        duration: 0.2, 
+        duration: 0.15, 
         ease: [0.4, 0, 1, 1] 
       } 
     },
     open: { 
       opacity: 1, 
-      scale: 1,
       y: 0,
       transition: { 
-        type: "spring",
-        stiffness: 300,
-        damping: 30,
-        mass: 0.8
+        duration: 0.25,
+        ease: [0, 0, 0.2, 1]
       } 
     },
   };
 
   const navItemVariants = {
-    closed: { opacity: 0, y: 10 },
+    closed: { opacity: 0, y: 8 },
     open: (i: number) => ({
       opacity: 1,
       y: 0,
       transition: { 
-        y: { type: "spring", stiffness: 260, damping: 20, delay: 0.1 + i * 0.04 },
-        opacity: { duration: 0.2, delay: 0.1 + i * 0.04 }
+        duration: 0.15,
+        ease: "easeOut",
+        delay: 0.05 + i * 0.03
       },
     }),
   };
@@ -451,7 +448,7 @@ const Header = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="lg:hidden fixed inset-0 bg-black/50 dark:bg-black/70 backdrop-blur-md z-[1999]"
+              className="lg:hidden fixed inset-0 bg-black/60 z-[1999]"
               onClick={() => setMobileMenuOpen(false)}
               style={{ willChange: "opacity" }}
             />
@@ -461,8 +458,8 @@ const Header = () => {
               initial="closed"
               animate="open"
               exit="closed"
-              className="lg:hidden fixed inset-4 z-[2000] flex flex-col bg-white/95 dark:bg-slate-900/95 rounded-[2rem] shadow-2xl overflow-hidden ring-1 ring-black/5 dark:ring-white/10 backdrop-blur-xl"
-              style={{ willChange: "transform, opacity" }}
+              className="lg:hidden fixed inset-4 z-[2000] flex flex-col bg-white/[.98] dark:bg-slate-900/[.98] rounded-[2rem] shadow-2xl overflow-hidden ring-1 ring-black/5 dark:ring-white/10"
+              style={{ willChange: "opacity" }}
             >
               {/* Close Button Area */}
               <div className="flex items-center justify-between px-6 py-4 shrink-0">
@@ -513,7 +510,7 @@ const Header = () => {
                  initial={{ opacity: 0, y: 20 }}
                  animate={{ opacity: 1, y: 0 }}
                  transition={{ delay: 0.5, duration: 0.4 }}
-                 className="p-6 bg-slate-50/50 dark:bg-slate-900/50 backdrop-blur-md border-t border-slate-200/50 dark:border-slate-800/50"
+                 className="p-6 bg-slate-50/80 dark:bg-slate-900/80 border-t border-slate-200/50 dark:border-slate-800/50"
               >
                   <Button
                     variant="gradient"

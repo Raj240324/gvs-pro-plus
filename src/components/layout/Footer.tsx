@@ -1,6 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { Mail, Phone, MapPin, Linkedin, ChevronDown, Home, Users, Image, FolderKanban, Handshake, Award, Wrench, Factory, BrainCircuit, Lightbulb, Zap, HardHat, type LucideIcon } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 
 // Link Interface
@@ -29,6 +28,9 @@ const FooterSection = ({ title, links, children }: FooterSectionProps) => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // On desktop, always show content (no animation needed)
+  const showContent = isOpen || !isMobile;
+
   return (
     <div className="border-b border-white/10 md:border-none last:border-none">
       <button 
@@ -47,48 +49,45 @@ const FooterSection = ({ title, links, children }: FooterSectionProps) => {
         )}
       </button>
 
-      <AnimatePresence initial={false}>
-        {(isOpen || !isMobile) && (
-          <motion.div
-            initial={isMobile ? { height: 0, opacity: 0 } : { height: 'auto', opacity: 1 }}
-            animate={isMobile ? { height: 'auto', opacity: 1 } : { height: 'auto', opacity: 1 }}
-            exit={isMobile ? { height: 0, opacity: 0 } : undefined}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="overflow-hidden"
-          >
-            <div className="pb-6 md:pb-0 md:pt-4 flex flex-col gap-2.5">
-              {children ? children : links?.map((link) => {
-                const Icon = link.icon;
-                const content = (
-                  <span className="flex items-center gap-2.5 group/link">
-                    {Icon && <Icon size={14} className="text-white/50 group-hover/link:text-white transition-colors flex-shrink-0" />}
-                    <span>{link.label}</span>
-                  </span>
-                );
-                return link.to ? (
-                  <NavLink
-                    key={link.label}
-                    to={link.to}
-                    className="text-sm text-gray-200 hover:text-white transition-colors w-fit font-medium tracking-wide"
-                  >
-                    {content}
-                  </NavLink>
-                ) : (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-gray-200 hover:text-white transition-colors w-fit font-medium tracking-wide"
-                  >
-                    {content}
-                  </a>
-                );
-              })}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* CSS-only accordion — no framer-motion, no layout thrashing */}
+      <div
+        className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+          showContent ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+        }`}
+      >
+        <div className="overflow-hidden">
+          <div className="pb-6 md:pb-0 md:pt-4 flex flex-col gap-2.5">
+            {children ? children : links?.map((link) => {
+              const Icon = link.icon;
+              const content = (
+                <span className="flex items-center gap-2.5 group/link">
+                  {Icon && <Icon size={14} className="text-white/50 group-hover/link:text-white transition-colors flex-shrink-0" />}
+                  <span>{link.label}</span>
+                </span>
+              );
+              return link.to ? (
+                <NavLink
+                  key={link.label}
+                  to={link.to}
+                  className="text-sm text-gray-200 hover:text-white transition-colors w-fit font-medium tracking-wide"
+                >
+                  {content}
+                </NavLink>
+              ) : (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-gray-200 hover:text-white transition-colors w-fit font-medium tracking-wide"
+                >
+                  {content}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
