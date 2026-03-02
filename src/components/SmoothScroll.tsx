@@ -38,7 +38,12 @@ const SmoothScroll = memo(() => {
 
       gsap.ticker.add(raf);
       gsap.ticker.lagSmoothing(0);
-      ScrollTrigger.refresh();
+
+      // Defers layout measurement to next paint cycle to avoid mid-render thrash
+      ScrollTrigger.config({ ignoreMobileResize: true });
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh(true);
+      });
 
       cleanup = () => {
         gsap.ticker.remove(raf);

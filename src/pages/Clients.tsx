@@ -66,7 +66,7 @@ const Clients: React.FC = () => {
 
          <motion.div 
            style={heroStyle}
-           className="relative z-10 text-center max-w-4xl mx-auto will-change-transform"
+           className="relative z-10 text-center max-w-4xl mx-auto will-change-transform transform-gpu"
          >
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
