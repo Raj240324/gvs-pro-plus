@@ -80,6 +80,15 @@ const Gallery = () => {
   const [index, setIndex] = useState<number | null>(null);
   const [direction, setDirection] = useState(0); 
   const contactModal = useContactModal();
+  const [isMobile, setIsMobile] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(6);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   // Handle Scroll Lock
   useEffect(() => {
@@ -90,6 +99,17 @@ const Gallery = () => {
     }
     return () => { document.body.style.overflow = ''; };
   }, [index]);
+
+  // Progressive Loading for Mobile (Stops Mount Spike)
+  useEffect(() => {
+    if (visibleCount >= galleryImages.length) return;
+
+    const timer = setTimeout(() => {
+      setVisibleCount((prev) => prev + 6);
+    }, 150);
+
+    return () => clearTimeout(timer);
+  }, [visibleCount]);
 
   // Handle Navigation
   const changeImage = useCallback((newDirection: number) => {
@@ -124,10 +144,13 @@ const Gallery = () => {
 
       {/* --- HERO --- */}
       <section className="relative min-h-[50vh] flex flex-col items-center justify-center text-center px-4 pb-12 overflow-hidden rounded-b-[3rem] shadow-2xl z-10">
-         <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
-             <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[100px]" />
-             <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-[100px]" />
-         </div>
+         {/* Hero Blobs - GPU heavy, disabled on mobile */}
+         {!isMobile && (
+           <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
+               <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[100px]" />
+               <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-[100px]" />
+           </div>
+         )}
 
          <div className="relative z-10 max-w-5xl mx-auto">
             <motion.div
@@ -165,16 +188,16 @@ const Gallery = () => {
       <section className="relative z-10 px-4 sm:px-6 lg:px-8 pb-32">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-max">
-            {galleryImages.map((image, i) => (
+            {galleryImages.slice(0, visibleCount).map((image, i) => (
               <motion.div
                 key={image.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
+                initial={isMobile ? false : { opacity: 0, y: 20 }}
+                whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
+                viewport={isMobile ? undefined : { once: true, margin: "-50px" }}
+                transition={{ duration: 0.4 }}
                 className="relative overflow-hidden rounded-2xl cursor-zoom-in group aspect-[4/3] bg-slate-800 shadow-lg"
                 onClick={() => { setIndex(i); setDirection(0); }}
-                whileHover={{ scale: 1.02 }}
+                whileHover={isMobile ? undefined : { scale: 1.02 }}
               >
                  <img
                    src={image.src}
@@ -202,7 +225,7 @@ const Gallery = () => {
           >
              {/* Backdrop */}
              <div 
-                className="absolute inset-0 bg-black/95 backdrop-blur-md" 
+                className="absolute inset-0 bg-black/95" 
                 onClick={() => setIndex(null)} 
              />
 
@@ -245,8 +268,8 @@ const Gallery = () => {
                     src={selectedImage.src}
                     alt={selectedImage.alt}
                     className="max-w-full max-h-[65vh] sm:max-h-[85vh] object-contain shadow-2xl rounded-sm pointer-events-auto"
-                    drag="x"
-                    dragConstraints={{ left: 0, right: 0 }}
+                    drag={isMobile ? false : "x"}
+                    dragConstraints={isMobile ? undefined : { left: 0, right: 0 }}
                     dragElastic={0.8}
                     onDragEnd={(e, { offset, velocity }) => {
                       const swipe = Math.abs(offset.x) * velocity.x;
@@ -281,15 +304,17 @@ const Gallery = () => {
 
       {/* --- CTA SECTION --- */}
       <section className="relative py-32 border-t border-white/5 bg-gradient-to-b from-black to-indigo-950/20 overflow-hidden">
-         <div className="absolute inset-0 z-0 pointer-events-none">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-indigo-500/10 blur-[100px] rounded-full" />
-         </div>
+         {!isMobile && (
+           <div className="absolute inset-0 z-0 pointer-events-none">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-indigo-500/10 blur-[100px] rounded-full" />
+           </div>
+         )}
 
          <div className="container mx-auto px-4 text-center relative z-10">
             <motion.div
-               initial={{ opacity: 0, scale: 0.95 }}
-               whileInView={{ opacity: 1, scale: 1 }}
-               viewport={{ once: true }}
+               initial={isMobile ? false : { opacity: 0, scale: 0.95 }}
+               whileInView={isMobile ? undefined : { opacity: 1, scale: 1 }}
+               viewport={isMobile ? undefined : { once: true }}
                transition={{ duration: 0.8 }}
                className="max-w-3xl mx-auto"
             >
