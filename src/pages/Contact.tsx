@@ -7,6 +7,7 @@ import { Textarea } from '../components/ui/textarea';
 import { useContactModal } from '../hooks/use-contact-modal';
 import Button from '../components/ui/Button';
 import SEO from '../components/SEO';
+import { usePerformance } from '../lib/usePerformance';
 
 import { Input } from '../components/ui/input';
 import { 
@@ -116,6 +117,7 @@ const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const { toast } = useToast();
   const contactModal = useContactModal();
+  const { enableParallax } = usePerformance();
 
 
 
@@ -219,14 +221,16 @@ const Contact = () => {
         {/* --- Hero Section (Preserved Background & Smaller Text) --- */}
         <section className="relative overflow-hidden min-h-[40vh] flex items-center justify-center bg-gradient-to-br from-teal-600 via-indigo-600 to-purple-700 pb-32 rounded-b-[3rem] shadow-2xl z-10">
            {/* Abstract Shapes (Subtle) */}
-           <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
-              <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white rounded-full blur-[120px] mix-blend-overlay animate-pulse-slow" />
-              <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-teal-400 rounded-full blur-[100px] mix-blend-overlay" />
-           </div>
+           {enableParallax && (
+             <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+               <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white rounded-full blur-[120px] mix-blend-overlay animate-pulse-slow" />
+               <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-teal-400 rounded-full blur-[100px] mix-blend-overlay" />
+             </div>
+           )}
 
            <div className="container mx-auto px-4 mt-6 text-center relative z-10">
-              <motion.div variants={staggerContainer} initial="hidden" animate="visible">
-                <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/90 text-xs font-medium mb-4">
+              <motion.div variants={enableParallax ? staggerContainer : undefined} initial={enableParallax ? "hidden" : false} animate={enableParallax ? "visible" : undefined}>
+                <motion.div variants={enableParallax ? fadeInUp : undefined} className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium mb-4 ${enableParallax ? "bg-white/10 backdrop-blur-md border-white/20 text-white/90" : "bg-white/20 border-white/30 text-white"}`}>
                    <div className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
                    Available for New Inquiries
                 </motion.div>
@@ -250,14 +254,14 @@ const Contact = () => {
            
            {/* Bento Grid Layout (Restored Content) */}
            <motion.div 
-             variants={staggerContainer}
-             initial="hidden"
-             whileInView="visible"
-             viewport={{ once: true, margin: "-100px" }}
+             variants={enableParallax ? staggerContainer : undefined}
+             initial={enableParallax ? "hidden" : false}
+             whileInView={enableParallax ? "visible" : undefined}
+             viewport={enableParallax ? { once: true, margin: "-100px" } : undefined}
              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6"
            >
               {/* Card 1: Office & Works */}
-              <motion.div variants={bentoScale} className="col-span-1 md:col-span-2 bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 flex flex-col justify-between min-h-[280px] group hover:shadow-2xl transition-all">
+              <motion.div variants={enableParallax ? bentoScale : undefined} className={`col-span-1 md:col-span-2 bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-100 dark:border-slate-800 flex flex-col justify-between min-h-[280px] group transition-all ${enableParallax ? "shadow-xl shadow-slate-200/50 dark:shadow-none hover:shadow-2xl" : ""}`}>
                  <div className="flex items-start justify-between">
                     <div>
                         <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-indigo-600 dark:text-indigo-400 mb-4 group-hover:scale-110 transition-transform">
@@ -275,7 +279,7 @@ const Contact = () => {
               </motion.div>
 
               {/* Card 2: Reg Office */}
-              <motion.div variants={bentoScale} className="col-span-1 md:col-span-2 lg:col-span-2 bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 flex flex-col justify-between min-h-[280px] group hover:shadow-2xl transition-all">
+              <motion.div variants={enableParallax ? bentoScale : undefined} className={`col-span-1 md:col-span-2 lg:col-span-2 bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-100 dark:border-slate-800 flex flex-col justify-between min-h-[280px] group transition-all ${enableParallax ? "shadow-xl shadow-slate-200/50 dark:shadow-none hover:shadow-2xl" : ""}`}>
                  <div className="flex items-start justify-between">
                     <div>
                         <div className="w-10 h-10 bg-teal-50 dark:bg-teal-900/30 rounded-xl flex items-center justify-center text-teal-600 dark:text-teal-400 mb-4 group-hover:scale-110 transition-transform">
@@ -293,7 +297,7 @@ const Contact = () => {
               </motion.div>
 
               {/* Card 3: Contact Numbers */}
-              <motion.div variants={bentoScale} className="col-span-1 lg:col-span-2 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-2xl p-6 shadow-xl text-white flex flex-col justify-between min-h-[240px]">
+              <motion.div variants={enableParallax ? bentoScale : undefined} className={`col-span-1 lg:col-span-2 bg-gradient-to-br from-teal-500 to-emerald-600 rounded-2xl p-6 text-white flex flex-col justify-between min-h-[240px] ${enableParallax ? "shadow-xl" : ""}`}>
                  <div>
                     <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><Phone size={18} /> Call Us</h3>
                     <div className="space-y-2">
@@ -307,14 +311,14 @@ const Contact = () => {
                    <a href={`tel:${phoneNumbers[0].replace(/[^0-9+]/g, '')}`} className="flex items-center justify-center py-2.5 bg-white text-teal-700 text-sm rounded-lg font-bold hover:bg-teal-50 transition-colors">
                       Call Now
                    </a>
-                   <a href="https://wa.me/917338880027" target="_blank" className="flex items-center justify-center py-2.5 bg-teal-700/50 backdrop-blur-md text-white border border-teal-400/30 text-sm rounded-lg font-semibold hover:bg-teal-700 transition-colors">
+                   <a href="https://wa.me/917338880027" target="_blank" className={`flex items-center justify-center py-2.5 text-white border text-sm rounded-lg font-semibold hover:bg-teal-700 transition-colors ${enableParallax ? "bg-teal-700/50 backdrop-blur-md border-teal-400/30" : "bg-teal-700/60 border-teal-400/40"}`}>
                       WhatsApp
                    </a>
                  </div>
               </motion.div>
 
                {/* Card 4: Emails */}
-               <motion.div variants={bentoScale} className="col-span-1 lg:col-span-2 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-6 shadow-xl text-white flex flex-col justify-between min-h-[240px]">
+               <motion.div variants={enableParallax ? bentoScale : undefined} className={`col-span-1 lg:col-span-2 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-6 text-white flex flex-col justify-between min-h-[240px] ${enableParallax ? "shadow-xl" : ""}`}>
                  <div>
                     <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><Mail size={18} /> Email Us</h3>
                     <div className="space-y-3">
@@ -335,15 +339,15 @@ const Contact = () => {
 
            {/* Row 2: Form & Map Split */}
            <motion.div 
-             variants={fadeInUp}
-             initial="hidden" 
-             whileInView="visible"
-             viewport={{ once: true }}
+             variants={enableParallax ? fadeInUp : undefined}
+             initial={enableParallax ? "hidden" : false} 
+             whileInView={enableParallax ? "visible" : undefined}
+             viewport={enableParallax ? { once: true } : undefined}
              className="grid grid-cols-1 lg:grid-cols-2 gap-6"
            >
               
               {/* Interactive Form */}
-              <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800">
+              <div className={`bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 border border-slate-100 dark:border-slate-800 ${enableParallax ? "shadow-xl shadow-slate-200/50 dark:shadow-none" : ""}`}>
                  <div className="mb-8">
                     <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Send a Message</h3>
                     <p className="text-sm text-slate-500 dark:text-slate-400">Fill out the form below and we'll get back to you shortly.</p>
