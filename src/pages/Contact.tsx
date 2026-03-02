@@ -1,4 +1,4 @@
-import { useState, Component, ErrorInfo, ReactNode } from 'react';
+import { useState, useRef, useEffect, Component, ErrorInfo, ReactNode } from 'react';
 import SendButton from '../components/ui/SendButton';
 import { Mail, Phone, MapPin, Send, Linkedin, Clock, ArrowRight, MessageSquare, Globe, Building2, ChevronDown } from 'lucide-react';
 import { useToast } from "../hooks/use-toast";
@@ -51,6 +51,63 @@ interface FormData {
 const fadeInUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } } };
 const staggerContainer = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.1 } } };
 const bentoScale = { hidden: { opacity: 0, scale: 0.98 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: "easeOut" } } };
+
+// --- Lazy Map Section: IntersectionObserver deferred iframe ---
+const LazyMapSection = () => {
+  const mapRef = useRef<HTMLDivElement>(null);
+  const [showIframe, setShowIframe] = useState(false);
+
+  useEffect(() => {
+    const el = mapRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowIframe(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' } // Start loading 200px before visible
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={mapRef}
+      className="bg-slate-200 dark:bg-slate-800 rounded-2xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-700 h-full min-h-[400px] relative group"
+    >
+      {showIframe ? (
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3890.313100667616!2d80.03353331481997!3d12.770406090991582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5251147040843f%3A0x6d9006930514210e!2s12%C2%B046&#39;13.5%22N%2080%C2%B002&#39;10.0%22E!5e0!3m2!1sen!2sin!4v1677654321098!5m2!1sen!2sin"
+          width="100%"
+          height="100%"
+          style={{ border: 0 }}
+          allowFullScreen
+          loading="lazy"
+          className="grayscale-[50%] group-hover:grayscale-0 transition-all duration-700 block"
+          title="GVS Controls Location"
+        />
+      ) : (
+        <div className="w-full h-full flex items-center justify-center text-slate-400 dark:text-slate-600">
+          <MapPin className="w-8 h-8 animate-pulse" />
+        </div>
+      )}
+      <div className="absolute top-4 right-4">
+        <a
+          href="https://www.linkedin.com/feed/update/urn:li:activity:7386648123668021248/"
+          target="_blank"
+          className="w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110"
+        >
+          <Linkedin size={18} />
+        </a>
+      </div>
+    </div>
+  );
+};
 
 const Contact = () => {
   const [formData, setFormData] = useState<FormData>({ name: '', email: '', phone: '', subject: '', message: '' });
@@ -360,24 +417,8 @@ const Contact = () => {
                  </form>
               </div>
 
-              {/* Map Column */}
-              <div className="bg-slate-200 dark:bg-slate-800 rounded-2xl overflow-hidden shadow-lg border border-slate-100 dark:border-slate-700 h-full min-h-[400px] relative group">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3890.313100667616!2d80.03353331481997!3d12.770406090991582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5251147040843f%3A0x6d9006930514210e!2s12%C2%B046&#39;13.5%22N%2080%C2%B002&#39;10.0%22E!5e0!3m2!1sen!2sin!4v1677654321098!5m2!1sen!2sin"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    className="grayscale-[50%] group-hover:grayscale-0 transition-all duration-700 block"
-                    title="GVS Controls Location"
-                />
-                <div className="absolute top-4 right-4">
-                     <a href="https://www.linkedin.com/feed/update/urn:li:activity:7386648123668021248/" target="_blank" className="w-10 h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110">
-                        <Linkedin size={18} />
-                     </a>
-                </div>
-              </div>
+              {/* Map Column — Lazy-loaded iframe via IntersectionObserver */}
+              <LazyMapSection />
 
            </motion.div>
 

@@ -8,6 +8,7 @@ import ContactModal from "../ContactModal";
 import { useNavigate } from "react-router-dom";
 import { FloatingButton, FloatingButtonItem } from "../../components/ui/floating-button";
 import { cn } from "../../lib/utils";
+import { usePerformance } from "../../lib/usePerformance";
 
 // 1. Define allowed icon keys
 type IconKey = "Mail" | "BookOpen" | "Phone" | "WhatsApp";
@@ -40,6 +41,7 @@ const Hero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isButtonsOpen, setIsButtonsOpen] = useState(false);
   const navigate = useNavigate();
+  const { isMobile, enableInfiniteAnimations, enableHoverAnimations } = usePerformance();
 
   const buttonVariants = {
     hidden: { scale: 0, opacity: 0, x: 0, y: 0 },
@@ -96,22 +98,18 @@ y: { duration: 0.28, ease: "easeOut" }
 
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-teal-400 to-purple-500 dark:from-indigo-900 dark:via-teal-800 dark:to-purple-900 pt-32 sm:pt-36 lg:pt-48 pb-16 overflow-hidden shadow-2xl z-10">
-      {/* Background Animation */}
+      {/* Background Animation — static on mobile, animated on desktop */}
       <div className="absolute inset-0 overflow-hidden">
-       <motion.div
-  className="absolute w-full h-full bg-gradient-to-r from-teal-500/10 to-blue-500/10"
-  animate={{ x: [0, 100, 0] }}
-  transition={{
-    repeat: Infinity,
-    duration: 30,
-    ease: "linear"
-  }}
-  style={{
-    willChange: "transform",
-    transform: "translate3d(0,0,0)"
-  }}
-/>
-
+       {enableInfiniteAnimations ? (
+         <motion.div
+           className="absolute w-full h-full bg-gradient-to-r from-teal-500/10 to-blue-500/10"
+           animate={{ x: [0, 100, 0] }}
+           transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
+           style={{ willChange: "transform", transform: "translate3d(0,0,0)" }}
+         />
+       ) : (
+         <div className="absolute w-full h-full bg-gradient-to-r from-teal-500/10 to-blue-500/10" />
+       )}
       </div>
 
       {/* Decorative Parallelograms */}
@@ -229,11 +227,10 @@ y: { duration: 0.28, ease: "easeOut" }
             <motion.button
               onClick={() => navigate("/services")}
               className="mt-4 px-6 py-3 rounded-lg bg-gradient-to-r from-[#ff6f61] to-[#4a0e78] text-white font-semibold shadow-md hover:from-[#4a0e78] hover:to-[#ff6f61] transition-all duration-300 text-base sm:text-lg"
-            whileHover={{ scale: 1.04, transition: { duration: 0.15 } }}
-whileTap={{ scale: 0.96, transition: { duration: 0.1 } }}
-
+              whileHover={enableHoverAnimations ? { scale: 1.04, transition: { duration: 0.15 } } : undefined}
+              whileTap={enableHoverAnimations ? { scale: 0.96, transition: { duration: 0.1 } } : undefined}
               style={{
-                willChange: "transform",
+                willChange: enableHoverAnimations ? "transform" : "auto",
                 transform: "translateZ(0)",
                 backfaceVisibility: "hidden"
               }}

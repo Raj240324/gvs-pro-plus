@@ -1,36 +1,61 @@
 import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { isDesktop } from '../../lib/performance-detector';
 
 const FeaturedClients = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   // ─────────────────────────────────────────────
   // GSAP – RUN ONCE, NO SCROLL BINDING
+  // Desktop: GSAP ScrollTrigger animation (dynamically imported)
+  // Mobile: IntersectionObserver CSS reveal
   // ─────────────────────────────────────────────
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.fc-reveal',
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          ease: 'power3.out',
-          stagger: 0.15,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
-            once: true,
-          },
-        }
-      );
-    }, sectionRef);
+    if (isDesktop()) {
+      let ctx: any;
+      Promise.all([
+        import('gsap'),
+        import('gsap/ScrollTrigger'),
+      ]).then(([gsapModule, stModule]) => {
+        const gsap = gsapModule.default;
+        const ScrollTrigger = stModule.ScrollTrigger;
+        gsap.registerPlugin(ScrollTrigger);
 
-    return () => ctx.revert();
+        ctx = gsap.context(() => {
+          gsap.fromTo(
+            '.fc-reveal',
+            { opacity: 0, y: 40 },
+            {
+              opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.15,
+              scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
+            }
+          );
+        }, sectionRef);
+      });
+
+      return () => ctx?.revert();
+    } else {
+      // Mobile: simple IntersectionObserver based reveal
+      const section = sectionRef.current;
+      if (!section) return;
+      const items = section.querySelectorAll<HTMLElement>('.fc-reveal');
+      items.forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; });
+
+      const observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          items.forEach((el, i) => {
+            setTimeout(() => {
+              el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+              el.style.opacity = '1';
+              el.style.transform = 'translateY(0)';
+            }, i * 100);
+          });
+          observer.disconnect();
+        }
+      }, { threshold: 0.1 });
+
+      observer.observe(section);
+      return () => observer.disconnect();
+    }
   }, []);
 
   const clients = [

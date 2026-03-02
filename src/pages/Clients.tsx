@@ -5,6 +5,7 @@ import { Factory, MapPin, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useContactModal } from '../hooks/use-contact-modal';
 import SEO from '../components/SEO';
+import { usePerformance } from '../lib/usePerformance';
 
 interface Client {
   name: string;
@@ -24,16 +25,15 @@ const clients: Client[] = [
 const Clients: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const contactModal = useContactModal();
+  const { enableParallax } = usePerformance();
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
 
-  // Optimized Parallax: Smoother damping, less distance
-  const yHero = useTransform(scrollYProgress, [0, 0.4], [0, 150]);
-  const opacityHero = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
-  
-  // High-performance spring physics for non-jittery updates
+  // Parallax: disabled on mobile — hero stays at full opacity
+  const yHero = useTransform(scrollYProgress, [0, 0.4], [0, enableParallax ? 150 : 0]);
+  const opacityHero = useTransform(scrollYProgress, [0, 0.3], [1, enableParallax ? 0 : 1]);
   const smoothY = useSpring(yHero, { stiffness: 100, damping: 20, mass: 0.5 });
 
   return (

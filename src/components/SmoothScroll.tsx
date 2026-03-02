@@ -1,41 +1,55 @@
 import { useEffect, memo } from 'react';
-import Lenis from 'lenis';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { isDesktop } from '../lib/performance-detector';
 
 const SmoothScroll = memo(() => {
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+    // Mobile: no smooth scroll, no GSAP ticker, no Lenis RAF loop
+    // Desktop: identical behavior to original — Lenis + GSAP + ScrollTrigger
+    if (!isDesktop()) return;
 
-    const lenis = new Lenis({
-      duration: 1.15, // slightly tighter than 1.2
-      easing: (t) => 1 - Math.pow(1 - t, 3), // smoother + cheaper than expo
-      smoothWheel: true,
-      wheelMultiplier: 0.9,
-      touchMultiplier: 2,
+    let cleanup: (() => void) | undefined;
+
+    // Dynamic import — GSAP/Lenis only loaded on desktop
+    // This ensures they're NOT in the mobile critical path
+    Promise.all([
+      import('gsap'),
+      import('gsap/ScrollTrigger'),
+      import('lenis'),
+    ]).then(([gsapModule, scrollTriggerModule, lenisModule]) => {
+      const gsap = gsapModule.default;
+      const ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+      const Lenis = lenisModule.default;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const lenis = new Lenis({
+        duration: 1.15,
+        easing: (t: number) => 1 - Math.pow(1 - t, 3),
+        smoothWheel: true,
+        wheelMultiplier: 0.9,
+        touchMultiplier: 2,
+      });
+
+      // 🔒 IMPORTANT: DO NOT use lenis.on('scroll', ScrollTrigger.update)
+
+      // Single RAF function reference (CRITICAL)
+      const raf = (time: number) => {
+        lenis.raf(time * 1000);
+        ScrollTrigger.update();
+      };
+
+      gsap.ticker.add(raf);
+      gsap.ticker.lagSmoothing(0);
+      ScrollTrigger.refresh();
+
+      cleanup = () => {
+        gsap.ticker.remove(raf);
+        lenis.destroy();
+      };
     });
 
-    // 🔒 IMPORTANT: DO NOT use lenis.on('scroll', ScrollTrigger.update)
-
-    // Single RAF function reference (CRITICAL)
-    const raf = (time: number) => {
-      // 1. Advance Lenis
-      lenis.raf(time * 1000);
-
-      // 2. Sync ScrollTrigger AFTER scroll updates
-      ScrollTrigger.update();
-    };
-
-    // GSAP becomes the master clock
-    gsap.ticker.add(raf);
-    gsap.ticker.lagSmoothing(0);
-
-    // Ensure proper refresh after setup
-    ScrollTrigger.refresh();
-
     return () => {
-      gsap.ticker.remove(raf);
-      lenis.destroy();
+      cleanup?.();
     };
   }, []);
 

@@ -782,10 +782,103 @@
   padding-right: var(--scrollbar-width, 0px);
 }
 
-/* Optimized blur for performance */
 .backdrop-blur-xl {
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   transform: translateZ(0); /* Force GPU */
 }
 
+/* ═══════════════════════════════════════════════
+   MOBILE PERFORMANCE LAYER
+   - Only affects viewports ≤ 768px
+   - Desktop is COMPLETELY unaffected
+   - Reduces GPU compositing, pauses infinite animations
+   ═══════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  /* --- Reduce backdrop-blur on mobile (expensive GPU compositing) --- */
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl,
+  .backdrop-blur-2xl,
+  .backdrop-blur-3xl {
+    -webkit-backdrop-filter: blur(4px) !important;
+    backdrop-filter: blur(4px) !important;
+  }
+
+  /* --- Reduce heavy blur radii on mobile (expensive GPU compositing) --- */
+  .blur-3xl {
+    filter: blur(16px) !important;
+  }
+
+
+  /* --- Pause infinite CSS animations & reduce GPU layers --- */
+  .animate-marquee {
+    animation-duration: 60s !important; /* Slow down, less GPU work */
+  }
+
+  .animate-pulse-slow,
+  .pulsating-bg,
+  .animate-gradient-shift,
+  .gradient-bg {
+    animation: none !important;
+  }
+
+  .animate-spin-slow {
+    animation: none !important;
+  }
+
+  .animate-bounce-slow {
+    animation: none !important;
+  }
+
+  /* --- Disable will-change on mobile (reduces compositor layers) --- */
+  .will-change-transform {
+    will-change: auto !important;
+  }
+
+  /* --- Reduce complex shadows on mobile --- */
+  .shadow-2xl {
+    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  .hover\:shadow-2xl:hover {
+    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  /* --- Disable tilt-on-hover (no hover on touch) --- */
+  .tilt-on-hover:hover {
+    transform: none !important;
+  }
+
+  /* --- Disable hover scale (no hover cursor on mobile) --- */
+  .hover-scale:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* --- Flip card: reduce perspective calc cost --- */
+  .flip-card {
+    height: 240px;
+  }
+
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg); /* Remove scale on mobile */
+  }
+}
+
+/* --- Respect prefers-reduced-motion (accessibility) --- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-marquee {
+    animation: none !important;
+  }
+}

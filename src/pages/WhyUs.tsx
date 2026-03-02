@@ -5,14 +5,17 @@ import { Link } from 'react-router-dom';
 import { useContactModal } from '../hooks/use-contact-modal';
 import SEO from '../components/SEO';
 import { Users, TrendingUp, Factory, Clock, Zap, ArrowRight, CheckCircle2, ShieldCheck, Award } from 'lucide-react';
+import { usePerformance } from '../lib/usePerformance';
 
 const WhyUs = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef });
   const contactModal = useContactModal();
+  const { enableParallax } = usePerformance();
   
-  const yHero = useTransform(scrollYProgress, [0, 0.5], [0, 100]);
-  const opacityHero = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+  // Parallax: disabled on mobile — hero stays static
+  const yHero = useTransform(scrollYProgress, [0, 0.5], [0, enableParallax ? 100 : 0]);
+  const opacityHero = useTransform(scrollYProgress, [0, 0.4], [1, enableParallax ? 0 : 1]);
   const smoothY = useSpring(yHero, { stiffness: 100, damping: 20 });
 
   const features = [

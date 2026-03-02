@@ -11,9 +11,11 @@ import StatCounter from '../components/home/StatCounter';
 import InfoCard from '../components/home/InfoCard';
 import RollingFlipCard from '../components/ui/RollingFlipCard';
 import { motion } from 'framer-motion';
+import { usePerformance } from '../lib/usePerformance';
 
 const Index = () => {
   const contactModal = useContactModal();
+  const { enableInfiniteAnimations } = usePerformance();
 
   return (
 <main
@@ -30,38 +32,33 @@ const Index = () => {
 
       {/* About / Info Cards Section (Restored & Modernized) */}
       <section className="section-padding bg-gradient-to-br from-gray-900 via-blue-900 to-teal-900 dark:from-gray-950 dark:via-blue-950 dark:to-teal-950 relative overflow-hidden">
-        {/* Animated Background Elements */}
+        {/* Animated Background Elements — static on mobile, animated on desktop */}
 <div
   className="absolute inset-0 pointer-events-none overflow-hidden"
   style={{
-    willChange: "transform",
+    willChange: enableInfiniteAnimations ? "transform" : "auto",
     transform: "translateZ(0)",
   }}
 >
-          <motion.div 
-            animate={{ 
-              scale: [1, 1.2, 1],
-              x: [0, 20, 0],
-              opacity: [0.3, 0.5, 0.3] 
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-
-            className="absolute top-0 left-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl will-change-transform" 
-          />
-          <motion.div 
-            animate={{ 
-              scale: [1, 1.3, 1],
-              x: [0, -30, 0],
-              opacity: [0.2, 0.4, 0.2] 
-            }}
-            transition={{ 
-              duration: 10, 
-              repeat: Infinity, 
-              ease: "easeInOut",
-              delay: 1 
-            }}
-            className="absolute bottom-0 right-0 w-96 h-96 bg-green-500/20 rounded-full blur-3xl will-change-transform" 
-          />
+          {enableInfiniteAnimations ? (
+            <>
+              <motion.div 
+                animate={{ scale: [1, 1.2, 1], x: [0, 20, 0], opacity: [0.3, 0.5, 0.3] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                className="absolute top-0 left-0 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl will-change-transform" 
+              />
+              <motion.div 
+                animate={{ scale: [1, 1.3, 1], x: [0, -30, 0], opacity: [0.2, 0.4, 0.2] }}
+                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className="absolute bottom-0 right-0 w-96 h-96 bg-green-500/20 rounded-full blur-3xl will-change-transform" 
+              />
+            </>
+          ) : (
+            <>
+              <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500/20 rounded-full blur-2xl opacity-30" />
+              <div className="absolute bottom-0 right-0 w-96 h-96 bg-green-500/20 rounded-full blur-2xl opacity-20" />
+            </>
+          )}
         </div>
 
         <div className="container mx-auto px-4 relative z-10">

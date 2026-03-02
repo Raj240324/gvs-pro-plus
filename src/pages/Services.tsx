@@ -14,6 +14,7 @@ import { TiltedCard } from '../components/ui/tilted-card';
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
 import { useContactModal } from '../hooks/use-contact-modal';
 import SEO from '../components/SEO';
+import { usePerformance } from '../lib/usePerformance';
 
 // --- Premium Animation Variants ---
 const fadeInUp = {
@@ -51,11 +52,12 @@ const Services: React.FC = () => {
   const location = useLocation();
   const contactModal = useContactModal();
   const { scrollY } = useScroll();
+  const { enableParallax } = usePerformance();
   
-  // Parallax & Fade effects for Hero
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
-  const heroScale = useTransform(scrollY, [0, 300], [1, 0.95]);
-  const heroY = useTransform(scrollY, [0, 300], [0, 50]);
+  // Parallax & Fade effects for Hero — disabled on mobile
+  const heroOpacity = useTransform(scrollY, [0, 300], [1, enableParallax ? 0 : 1]);
+  const heroScale = useTransform(scrollY, [0, 300], [1, enableParallax ? 0.95 : 1]);
+  const heroY = useTransform(scrollY, [0, 300], [0, enableParallax ? 50 : 0]);
 
   const updateHeaderHeight = useCallback(() => {
     const headerElement = document.querySelector('header');

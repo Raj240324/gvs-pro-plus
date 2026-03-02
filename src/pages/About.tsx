@@ -6,6 +6,7 @@ import ModernJourney, { TimelineEvent } from '@/components/ui/ModernJourney';
 import { ArrowRight, Award, Briefcase, Building2, CheckCircle2, Clock, Factory, Handshake, Settings, ShieldCheck, User, Users, History, Zap, MapPin } from 'lucide-react';
 import { useContactModal } from '../hooks/use-contact-modal';
 import SEO from '../components/SEO';
+import { usePerformance } from '../lib/usePerformance';
 import gvsMain from '../assets/about-image/gvs-main.jpeg';
 import infrastructure from '../assets/about-image/infrastructure.jpeg';
 import projectAbout from '../assets/about-image/project-about.jpeg';
@@ -45,8 +46,9 @@ const SectionHeader = ({ badge, title, subtitle, textColor }: { badge: string, t
 export default function AboutUnified() {
   const { scrollYProgress } = useScroll();
   const contactModal = useContactModal();
-  const heroOpacity = transformScroll(scrollYProgress, [0, 0.3], [1, 0]);
-  const heroScale = transformScroll(scrollYProgress, [0, 0.3], [1, 0.95]);
+  const { enableParallax } = usePerformance();
+  const heroOpacity = transformScroll(scrollYProgress, [0, 0.3], [1, enableParallax ? 0 : 1]);
+  const heroScale = transformScroll(scrollYProgress, [0, 0.3], [1, enableParallax ? 0.95 : 1]);
 
   const timelineEvents = useMemo<TimelineEvent[]>(() => [
     {

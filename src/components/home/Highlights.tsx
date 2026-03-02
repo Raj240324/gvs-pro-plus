@@ -1,7 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   FaRegLightbulb,
   FaCogs,
@@ -9,12 +7,11 @@ import {
   FaTools,
   FaSyncAlt,
 } from 'react-icons/fa';
+import { isDesktop } from '../../lib/performance-detector';
 
 import cop9 from '../../assets/cop-9.webp';
 import renovation from '../../assets/renovation.webp';
 import erection from '../../assets/electrical-erection.webp';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const Highlights = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -22,36 +19,63 @@ const Highlights = () => {
 
   // ─────────────────────────────────────────────
   // GSAP – PRE-WARMED, RUN ONCE, SCROLL-SAFE
+  // Desktop: full GSAP ScrollTrigger animation
+  // Mobile: simple CSS-based reveal (no GSAP loaded)
   // ─────────────────────────────────────────────
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray<HTMLElement>('.highlight-card');
+    if (isDesktop()) {
+      // Dynamic import — GSAP only loaded on desktop
+      let ctx: any;
+      Promise.all([
+        import('gsap'),
+        import('gsap/ScrollTrigger'),
+      ]).then(([gsapModule, stModule]) => {
+        const gsap = gsapModule.default;
+        const ScrollTrigger = stModule.ScrollTrigger;
+        gsap.registerPlugin(ScrollTrigger);
 
-      // Pre-set initial state (NO layout surprise on scroll)
-      gsap.set(cards, {
-        opacity: 0,
-        y: 40,
-        scale: 0.96,
-      });
+        ctx = gsap.context(() => {
+          const cards = gsap.utils.toArray<HTMLElement>('.highlight-card');
+          gsap.set(cards, { opacity: 0, y: 40, scale: 0.96 });
 
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: 'top 80%',
-        once: true,
-        onEnter: () => {
-          gsap.to(cards, {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.6,
-            ease: 'power3.out',
-            stagger: 0.12,
+          ScrollTrigger.create({
+            trigger: sectionRef.current,
+            start: 'top 80%',
+            once: true,
+            onEnter: () => {
+              gsap.to(cards, {
+                opacity: 1, y: 0, scale: 1,
+                duration: 0.6, ease: 'power3.out', stagger: 0.12,
+              });
+            },
           });
-        },
+        }, sectionRef);
       });
-    }, sectionRef);
 
-    return () => ctx.revert();
+      return () => ctx?.revert();
+    } else {
+      // Mobile: simple IntersectionObserver reveal
+      const section = sectionRef.current;
+      if (!section) return;
+      const cards = section.querySelectorAll<HTMLElement>('.highlight-card');
+      cards.forEach(card => { card.style.opacity = '0'; card.style.transform = 'translateY(20px)'; });
+
+      const observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          cards.forEach((card, i) => {
+            setTimeout(() => {
+              card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, i * 80);
+          });
+          observer.disconnect();
+        }
+      }, { threshold: 0.1 });
+
+      observer.observe(section);
+      return () => observer.disconnect();
+    }
   }, []);
 
   // ─────────────────────────────────────────────

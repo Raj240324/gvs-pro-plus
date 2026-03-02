@@ -7,20 +7,27 @@ import App from './App';
 import Preloader from './components/Preloader';
 import GlobalErrorBoundary from './components/GlobalErrorBoundary';
 
+// Keep homepage and 404 eager — they're first-load targets
 import Index from './pages/Index';
-import About from './pages/About';
-import Services from './pages/Services';
-import ManufacturingSupply from './pages/ManufacturingSupply';
-import Projects from './pages/Projects';
-import Clients from './pages/Clients';
-import WhyUs from './pages/WhyUs';
-import Gallery from './pages/Gallery'; // Keep Gallery lazy if it has many images
-import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 
-// Keep lesser used pages lazy if desired, or make all eager for max speed
+// All other pages lazy-loaded — dramatically reduces initial bundle size
+// Desktop downloads these instantly; mobile saves critical parse time
+const About = lazy(() => import('./pages/About'));
+const Services = lazy(() => import('./pages/Services'));
+const ManufacturingSupply = lazy(() => import('./pages/ManufacturingSupply'));
+const Projects = lazy(() => import('./pages/Projects'));
+const Clients = lazy(() => import('./pages/Clients'));
+const WhyUs = lazy(() => import('./pages/WhyUs'));
+const Gallery = lazy(() => import('./pages/Gallery'));
+const Contact = lazy(() => import('./pages/Contact'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
+
+// Suspense wrapper for lazy pages
+const LazyPage = ({ children }: { children: React.ReactNode }) => (
+  <Suspense fallback={<Preloader />}>{children}</Suspense>
+);
 
 const router = createBrowserRouter(
   [
@@ -29,16 +36,16 @@ const router = createBrowserRouter(
       element: <App />,
       children: [
         { path: '', element: <Index /> },
-        { path: 'about', element: <About /> },
-        { path: 'services', element: <Services /> },
-        { path: 'manufacturing-supply', element: <ManufacturingSupply /> },
-        { path: 'projects', element: <Projects /> },
-        { path: 'clients', element: <Clients /> },
-        { path: 'why-us', element: <WhyUs /> },
-        { path: 'gallery', element: <Gallery /> },
-        { path: 'contact', element: <Contact /> },
-        { path: 'privacy-policy', element: <Suspense fallback={<Preloader />}><PrivacyPolicy /></Suspense> },
-        { path: 'terms-of-service', element: <Suspense fallback={<Preloader />}><TermsOfService /></Suspense> },
+        { path: 'about', element: <LazyPage><About /></LazyPage> },
+        { path: 'services', element: <LazyPage><Services /></LazyPage> },
+        { path: 'manufacturing-supply', element: <LazyPage><ManufacturingSupply /></LazyPage> },
+        { path: 'projects', element: <LazyPage><Projects /></LazyPage> },
+        { path: 'clients', element: <LazyPage><Clients /></LazyPage> },
+        { path: 'why-us', element: <LazyPage><WhyUs /></LazyPage> },
+        { path: 'gallery', element: <LazyPage><Gallery /></LazyPage> },
+        { path: 'contact', element: <LazyPage><Contact /></LazyPage> },
+        { path: 'privacy-policy', element: <LazyPage><PrivacyPolicy /></LazyPage> },
+        { path: 'terms-of-service', element: <LazyPage><TermsOfService /></LazyPage> },
         { path: '*', element: <NotFound /> },
       ],
     },
