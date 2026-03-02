@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Mail, Phone, MapPin, Linkedin, ChevronDown, Home, Users, Image, FolderKanban, Handshake, Award, Wrench, Factory, BrainCircuit, Lightbulb, Zap, HardHat, type LucideIcon } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
@@ -93,11 +93,6 @@ const FooterSection = ({ title, links, children }: FooterSectionProps) => {
 };
 
 const Footer = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [location.pathname]);
 
   const quickLinks: FooterLink[] = [
     { to: '/', label: 'Home', icon: Home },

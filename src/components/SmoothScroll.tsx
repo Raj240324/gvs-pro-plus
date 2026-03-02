@@ -8,6 +8,7 @@ const SmoothScroll = memo(() => {
     if (!isDesktop()) return;
 
     let cleanup: (() => void) | undefined;
+    let ScrollTriggerRef: any;
 
     // Dynamic import — GSAP/Lenis only loaded on desktop
     // This ensures they're NOT in the mobile critical path
@@ -18,6 +19,7 @@ const SmoothScroll = memo(() => {
     ]).then(([gsapModule, scrollTriggerModule, lenisModule]) => {
       const gsap = gsapModule.default;
       const ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+      ScrollTriggerRef = ScrollTrigger;
       const Lenis = lenisModule.default;
 
       gsap.registerPlugin(ScrollTrigger);
@@ -44,12 +46,19 @@ const SmoothScroll = memo(() => {
 
       cleanup = () => {
         gsap.ticker.remove(raf);
+        // Kill ALL ScrollTrigger instances to prevent orphan accumulation
+        ScrollTrigger.getAll().forEach((t: any) => t.kill());
         lenis.destroy();
       };
     });
 
     return () => {
       cleanup?.();
+      // Also kill any orphaned triggers that may have been created
+      // by dynamically-imported components after cleanup was set
+      if (ScrollTriggerRef) {
+        ScrollTriggerRef.getAll().forEach((t: any) => t.kill());
+      }
     };
   }, []);
 

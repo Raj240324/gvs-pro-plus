@@ -5,6 +5,7 @@ import { TiltedCard } from '../components/ui/tilted-card';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useContactModal } from '../hooks/use-contact-modal';
 import SEO from '../components/SEO';
+import { usePerformance } from '../lib/usePerformance';
 
 // --- Types ---
 interface Product {
@@ -182,10 +183,11 @@ const ProductSection = ({ product }: { product: Product }) => {
 const ManufacturingSupply = () => {
   const { scrollY } = useScroll();
   const contactModal = useContactModal();
+  const { enableParallax } = usePerformance();
   
-  // Industrial Parallax
-  const heroY = useTransform(scrollY, [0, 500], [0, 150]);
-  const heroOpacity = useTransform(scrollY, [0, 400], [1, 0]);
+  // Parallax: disabled on mobile — hero stays static
+  const heroY = useTransform(scrollY, [0, 500], [0, enableParallax ? 150 : 0]);
+  const heroOpacity = useTransform(scrollY, [0, 400], [1, enableParallax ? 0 : 1]);
 
   const product: Product = {
     id: 'control-panels',
