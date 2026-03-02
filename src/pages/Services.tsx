@@ -51,13 +51,18 @@ const Services: React.FC = () => {
   const [headerHeight, setHeaderHeight] = useState(0);
   const location = useLocation();
   const contactModal = useContactModal();
-  const { scrollY } = useScroll();
   const { enableParallax } = usePerformance();
   
-  // Parallax & Fade effects for Hero — disabled on mobile
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, enableParallax ? 0 : 1]);
-  const heroScale = useTransform(scrollY, [0, 300], [1, enableParallax ? 0.95 : 1]);
-  const heroY = useTransform(scrollY, [0, 300], [0, enableParallax ? 50 : 0]);
+  // Parallax & Fade effects for Hero — always call useScroll, conditionally subscribe
+const { scrollY } = useScroll();
+
+const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
+const heroScale = useTransform(scrollY, [0, 300], [1, 0.95]);
+const heroY = useTransform(scrollY, [0, 300], [0, 50]);
+
+const heroStyle = enableParallax
+  ? { opacity: heroOpacity, scale: heroScale, y: heroY }
+  : undefined;
 
   const updateHeaderHeight = useCallback(() => {
     const headerElement = document.querySelector('header');
@@ -192,14 +197,16 @@ const Services: React.FC = () => {
       {/* Hero Section – Premium Smooth Scroll Fade */}
       <section className="relative min-h-[60vh] flex items-center justify-center py-20 overflow-hidden bg-slate-900 rounded-b-[3rem] shadow-2xl z-10">
         {/* Animated Background Mesh */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-             <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-blue-500/20 rounded-full blur-[120px] animate-pulse-slow" />
-             <div className="absolute bottom-[-20%] right-[-10%] w-[70%] h-[70%] bg-teal-500/20 rounded-full blur-[120px] animate-pulse-slow delay-1000" />
-        </div>
+        {enableParallax && (
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+               <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-blue-500/20 rounded-full blur-[120px] animate-pulse-slow" />
+               <div className="absolute bottom-[-20%] right-[-10%] w-[70%] h-[70%] bg-teal-500/20 rounded-full blur-[120px] animate-pulse-slow delay-1000" />
+          </div>
+        )}
         
         <div className="container mx-auto px-4 relative z-10 text-center">
           <motion.div 
-            style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
+            style={heroStyle}
             className="max-w-4xl mx-auto"
           >
             <motion.div
@@ -252,10 +259,10 @@ const Services: React.FC = () => {
 
            <motion.div 
              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-             variants={staggerContainer}
-             initial="hidden"
-             whileInView="visible"
-             viewport={{ once: true, margin: "-50px" }}
+             variants={enableParallax ? staggerContainer : undefined}
+             initial={enableParallax ? "hidden" : false}
+             whileInView={enableParallax ? "visible" : undefined}
+             viewport={enableParallax ? { once: true, margin: "-50px" } : undefined}
            >
              {services.map((service) => (
                <ServiceCardItem key={service.id} service={service} />
@@ -303,65 +310,78 @@ const Services: React.FC = () => {
 // 1. Optimized Service Card with CSS Spotlight (No Canvas)
 const ServiceCardItem = ({ service }: { service: Service }) => {
   const divRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const position = useRef({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
+  const { enableParallax } = usePerformance();
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!divRef.current) return;
     const rect = divRef.current.getBoundingClientRect();
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    position.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
   };
 
   const handleMouseEnter = () => setOpacity(1);
   const handleMouseLeave = () => setOpacity(0);
 
+  const cardContent = (
+    <div 
+      ref={divRef}
+      onMouseMove={enableParallax ? handleMouseMove : undefined}
+      onMouseEnter={enableParallax ? handleMouseEnter : undefined}
+      onMouseLeave={enableParallax ? handleMouseLeave : undefined}
+      className="relative h-full p-8 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden group"
+    >
+      {/* Spotlight Effect Gradient */}
+      {enableParallax && (
+        <div 
+          className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100"
+          style={{
+            opacity,
+            background: `radial-gradient(600px circle at ${position.current.x}px ${position.current.y}px, rgba(20, 184, 166, 0.1), transparent 40%)`
+          }}
+        />
+      )}
+      
+      <div className="relative z-10 flex flex-col h-full">
+         <div className={`w-14 h-14 rounded-xl mb-6 flex items-center justify-center bg-gradient-to-br ${service.gradient} shadow-lg`}>
+            {service.icon}
+         </div>
+         
+         <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
+           {service.title}
+         </h3>
+         
+         <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-8 flex-grow">
+           {service.description}
+         </p>
+         
+         <a href={service.ctaLink} className="inline-flex items-center text-teal-600 dark:text-teal-400 font-semibold group/link">
+           Explore Details 
+           <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover/link:translate-x-1" />
+         </a>
+      </div>
+    </div>
+  );
+
   return (
     <motion.div variants={fadeInUp} className="h-full">
-      <TiltedCard
-        containerHeight="100%"
-        containerWidth="100%"
-        scaleOnHover={1.02}
-        rotateAmplitude={5}
-        showMobileWarning={false}
-        showTooltip={false}
-        className="h-full"
-      >
-        <div 
-          ref={divRef}
-          onMouseMove={handleMouseMove}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          className="relative h-full p-8 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xl overflow-hidden group"
+      {enableParallax ? (
+        <TiltedCard
+          containerHeight="100%"
+          containerWidth="100%"
+          scaleOnHover={1.02}
+          rotateAmplitude={5}
+          showMobileWarning={false}
+          showTooltip={false}
+          className="h-full"
         >
-          {/* Spotlight Effect Gradient */}
-          <div 
-            className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100"
-            style={{
-              opacity,
-              background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(20, 184, 166, 0.1), transparent 40%)`
-            }}
-          />
-          
-          <div className="relative z-10 flex flex-col h-full">
-             <div className={`w-14 h-14 rounded-xl mb-6 flex items-center justify-center bg-gradient-to-br ${service.gradient} shadow-lg`}>
-                {service.icon}
-             </div>
-             
-             <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
-               {service.title}
-             </h3>
-             
-             <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-8 flex-grow">
-               {service.description}
-             </p>
-             
-             <a href={service.ctaLink} className="inline-flex items-center text-teal-600 dark:text-teal-400 font-semibold group/link">
-               Explore Details 
-               <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover/link:translate-x-1" />
-             </a>
-          </div>
+          {cardContent}
+        </TiltedCard>
+      ) : (
+        <div className="h-full w-full">
+          {cardContent}
         </div>
-      </TiltedCard>
+      )}
     </motion.div>
   );
 };
@@ -369,6 +389,7 @@ const ServiceCardItem = ({ service }: { service: Service }) => {
 // 2. Feature Section with Scroll Reveal
 const FeatureSection = ({ service, index, headerHeight }: { service: Service, index: number, headerHeight: number }) => {
   const contactModal = useContactModal();
+  const { enableParallax } = usePerformance();
   return (
     <section 
       id={service.id}
@@ -377,9 +398,9 @@ const FeatureSection = ({ service, index, headerHeight }: { service: Service, in
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-           initial={{ opacity: 0, y: 40 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           viewport={{ once: true, margin: "-100px" }}
+           initial={enableParallax ? { opacity: 0, y: 40 } : false}
+           whileInView={enableParallax ? { opacity: 1, y: 0 } : undefined}
+           viewport={enableParallax ? { once: true, margin: "-100px" } : undefined}
            transition={{ duration: 0.7 }}
            className="grid md:grid-cols-2 gap-12 items-start"
         >
@@ -409,10 +430,10 @@ const FeatureSection = ({ service, index, headerHeight }: { service: Service, in
                 {service.features.map((feature, i) => (
                   <motion.li 
                     key={i}
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
+                    initial={enableParallax ? { opacity: 0, x: 20 } : false}
+                    whileInView={enableParallax ? { opacity: 1, x: 0 } : undefined}
+                    viewport={enableParallax ? { once: true } : undefined}
+                    transition={{ duration: 0.4 }}
                     className="flex items-start gap-3 text-slate-600 dark:text-slate-300"
                   >
                     <CheckCircle2 className="w-5 h-5 text-teal-500 mt-0.5 shrink-0" />
