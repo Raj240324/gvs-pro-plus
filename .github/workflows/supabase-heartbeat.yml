@@ -1,0 +1,15 @@
+name: Supabase Heartbeat
+
+on:
+  schedule:
+    - cron: "30 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ping heartbeat
+        run: |
+          curl -s https://gvs-pro-plus.vercel.app/api/heartbeat
