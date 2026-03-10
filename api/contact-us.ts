@@ -23,9 +23,9 @@ const MAX_REQUEST_BODY_BYTES = 5 * 1024;
 
 // Rate limit: max N requests per window per IP
 const rateLimitMap = new Map<string, { count: number; firstRequest: number }>();
-// 3 requests / 10 minutes — better at absorbing bursts of spam
-const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
-const RATE_LIMIT_MAX_REQUESTS = 3;
+// 5 requests / 1 minute (prevents spam effectively)
+const RATE_LIMIT_WINDOW_MS = 1 * 60 * 1000;
+const RATE_LIMIT_MAX_REQUESTS = 5;
 
 // Time trap: require human-like delay between form render and submit
 const MIN_FORM_TIME_MS = 4_000; // 4 seconds
@@ -98,7 +98,12 @@ const contactSchema = z.object({
   email: z
     .string()
     .email('Invalid email address')
-    .max(254, 'Email must be under 254 characters'),
+    .max(254, 'Email must be under 254 characters')
+    .refine((val) => {
+      const lower = val.toLowerCase();
+      // Block common test/placeholder emails
+      return !lower.startsWith('test@') && !lower.startsWith('abc@');
+    }, { message: 'Please provide a valid business or personal email address' }),
   phone: z
     .string()
     .max(20, 'Phone must be under 20 characters')
@@ -543,6 +548,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const safeMessage = message.trim();
 
     // --- Persist submission in Supabase (server-side only) ---
+    let supabaseSuccess = false;
+    let fallbackToEmailOnly = false;
+
     try {
       const supabase = getSupabaseClient();
       const { error: dbError } = await supabase.from('contact_submissions').insert({
@@ -559,72 +567,103 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           error: dbError,
           ip: clientIp,
         });
-        return res.status(500).json({ error: 'An error occurred. Please try again later.' });
+        fallbackToEmailOnly = true;
+      } else {
+        supabaseSuccess = true;
       }
     } catch (dbException) {
       console.error('[DB] Supabase client error:', {
         error: dbException instanceof Error ? dbException.message : String(dbException),
         ip: clientIp,
       });
-      return res.status(500).json({ error: 'An error occurred. Please try again later.' });
+      // Do not return 500 here; allow the email fallback to execute
+      fallbackToEmailOnly = true;
     }
 
     // --- Send Emails via Resend SDK ---
+    let emailSuccess = false;
     const resendApiKey = process.env.RESEND_API_KEY;
+
     if (!resendApiKey) {
       console.error('[CONFIG] Missing RESEND_API_KEY environment variable');
-      return res.status(500).json({ error: 'Server configuration error' });
-    }
-
-    const resend = new Resend(resendApiKey);
-    const formData = {
-      name: safeName,
-      email: safeEmail,
-      phone: safePhone || '',
-      subject: safeSubject || '',
-      message: safeMessage,
-    };
-    // Prevent any header injection via CRLF
-    const headerSafeSubject = (safeSubject || 'General').replace(/[\r\n]/g, '');
-    const emailSubject = `New Inquiry: ${headerSafeSubject}`;
-
-    // Owner notification email
-    const { error: ownerError } = await resend.emails.send({
-      from: 'Contact Form <onboarding@resend.dev>',
-      to: ['nagarajan.webdev@gmail.com'],
-      subject: emailSubject,
-      html: createEmailTemplate(true, formData),
-    });
-
-    if (ownerError) {
-      console.error('[EMAIL] Owner notification failed:', ownerError);
-      throw new Error('Failed to send notification email');
-    }
-
-    // Auto-reply to customer (non-fatal)
-    try {
-      const { error: replyError } = await resend.emails.send({
-        from: 'GVS Controls <onboarding@resend.dev>',
-        to: [safeEmail],
-        subject: 'We received your message - GVS Controls',
-        html: createEmailTemplate(false, formData),
-      });
-
-      if (replyError) {
-        console.warn('[EMAIL] Auto-reply failed (non-fatal):', replyError);
+      // If we don't have Resend API Key AND Supabase failed, THEN we fail completely
+      if (fallbackToEmailOnly || !supabaseSuccess) {
+         return res.status(500).json({ error: 'Server configuration error. Could not save or send submission.' });
       }
-    } catch (replyErr) {
-      console.warn('[EMAIL] Auto-reply exception (non-fatal):', replyErr);
+    } else {
+      const resend = new Resend(resendApiKey);
+      const formData = {
+        name: safeName,
+        email: safeEmail,
+        phone: safePhone || '',
+        subject: safeSubject || '',
+        message: safeMessage,
+      };
+      
+      const headerSafeSubject = (safeSubject || 'General').replace(/[\r\n]/g, '');
+      const emailSubject = `New Inquiry: ${headerSafeSubject}`;
+
+      try {
+        // Owner notification email
+        const { error: ownerError } = await resend.emails.send({
+          from: 'Contact Form <onboarding@resend.dev>',
+          to: ['nagarajan.webdev@gmail.com'],
+          subject: emailSubject,
+          html: createEmailTemplate(true, formData),
+        });
+
+        if (ownerError) {
+          console.error('[EMAIL] Owner notification failed:', ownerError);
+        } else {
+          emailSuccess = true;
+          // Auto-reply to customer (non-fatal, only attempt if owner email succeeded)
+          try {
+            const { error: replyError } = await resend.emails.send({
+              from: 'GVS Controls <onboarding@resend.dev>',
+              to: [safeEmail],
+              subject: 'We received your message - GVS Controls',
+              html: createEmailTemplate(false, formData),
+            });
+
+            if (replyError) {
+              console.warn('[EMAIL] Auto-reply failed (non-fatal):', replyError);
+            }
+          } catch (replyErr) {
+            console.warn('[EMAIL] Auto-reply exception (non-fatal):', replyErr);
+          }
+        }
+      } catch (emailException) {
+          console.error('[EMAIL] Exception during email send:', emailException);
+      }
+    }
+    
+    // Final check: Did AT LEAST ONE of the methods (DB or Email) succeed?
+    if (supabaseSuccess || emailSuccess) {
+       return res.status(200).json({ success: true, method: supabaseSuccess ? 'db' : 'email' });
+    } else {
+       // Both failed - CRITICAL SYSTEM FAILURE
+       // Log the entire lead data to the console so it can be recovered via Vercel Logs
+       console.error("CRITICAL: Lead not saved. Both DB and Email failed.", {
+         leadData: {
+           name: safeName,
+           email: safeEmail,
+           phone: safePhone || 'None',
+           subject: safeSubject || 'General',
+           message: safeMessage
+         },
+         ip: clientIp,
+         timestamp: new Date().toISOString()
+       });
+       return res.status(500).json({ error: 'Failed to process submission. Please try again later.' });
     }
 
-    return res.status(200).json({ success: true });
   } catch (error: any) {
-    console.error('[ERROR] Contact form error:', {
+    console.error('[ERROR] Contact form unexpected error:', {
       message: error instanceof Error ? error.message : String(error),
       ip: clientIp,
       timestamp: new Date().toISOString(),
     });
     // Never expose internal error details to the client
-    return res.status(500).json({ error: 'An error occurred. Please try again later.' });
+    return res.status(500).json({ error: 'An unexpected error occurred. Please try again later.' });
   }
 }
