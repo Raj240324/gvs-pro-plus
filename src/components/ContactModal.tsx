@@ -57,9 +57,9 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
       case 'phone':
         // Allow digits, spaces, +, -, (, )
         if (value && !/^[\d\s\+\-\(\)]+$/.test(value)) return 'Invalid characters';
-        // Check for reasonable digit count (e.g. 10-15)
+        // Enforce exactly 10 digits (single phone number)
         const digits = value.replace(/\D/g, '');
-        if (value && (digits.length < 10 || digits.length > 15)) return 'Must be 10-15 digits';
+        if (value && digits.length !== 10) return 'Must be exactly 10 digits';
         return '';
       case 'message':
         if (value.length < 10) return 'Message must be at least 10 characters';

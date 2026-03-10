@@ -137,7 +137,7 @@ const Contact = () => {
       case 'phone':
         if (value && !/^[\d\s\+\-\(\)]+$/.test(value)) return 'Invalid characters in phone number';
         const digits = value.replace(/\D/g, '');
-        if (value && (digits.length < 10 || digits.length > 15)) return 'Phone number must be 10-15 digits';
+        if (value && digits.length !== 10) return 'Phone number must be exactly 10 digits';
         return '';
       case 'message':
         if (value.length < 10) return 'Message must be at least 10 characters';

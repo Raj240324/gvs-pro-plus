@@ -103,7 +103,12 @@ const contactSchema = z.object({
     .max(20, 'Phone must be under 20 characters')
     .regex(/^[\d\s\+\-\(\)]*$/, 'Invalid phone format')
     .optional()
-    .or(z.literal('')),
+    .or(z.literal(''))
+    .refine((val) => {
+      if (!val) return true;
+      const digits = val.replace(/\D/g, '');
+      return digits.length === 10;
+    }, { message: 'Phone must be exactly 10 digits' }),
   subject: z
     .string()
     .max(200, 'Subject must be under 200 characters')
