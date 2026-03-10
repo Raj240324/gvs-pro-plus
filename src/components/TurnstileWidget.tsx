@@ -16,8 +16,8 @@ export default function TurnstileWidget({ onToken }: TurnstileWidgetProps) {
   const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY as string;
 
   useEffect(() => {
-    if (!siteKey) {
-      console.error("Turnstile site key missing");
+    if (!siteKey || siteKey.includes("your_turnstile_site_key")) {
+      console.warn("Turnstile site key missing or invalid. Contact form CAPTCHA will be disabled or fail.");
       return;
     }
 

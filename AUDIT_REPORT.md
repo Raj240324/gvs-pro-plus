@@ -90,7 +90,7 @@ Extensive use of Radix UI primitives wrapped via shadcn/ui.
 - **Spacing:** Tailwind defaults, with custom `.section-padding` (`py-16 md:py-20 lg:py-24`).
 - **Border radius:** Defined via `--radius`, generally `0.5rem` (`rounded-lg`).
 - **Shadows:** Neumorphic light/dark (`shadow-neumorphic-light`, `shadow-neumorphic-dark`), Glassmorphic shadows (`shadow-glass`).
-- **Icons:** Lucide React, Phosphor Icons, Tabler Icons, React Icons.
+- **Icons:** Lucide React (Exclusively — consolidated for bundle size optimization).
 - **Imagery style:** Parallax images, modern layout, SVG particles, 3D Canvas elements.
 - **Dark mode:** Supported (class-based `.dark`). Toggled via `next-themes`.
 - **Motion & Animations:** 
@@ -159,7 +159,9 @@ Extensive use of Radix UI primitives wrapped via shadcn/ui.
 - **System Monitoring (API & Actions):**
   - `/api/system-health.ts`: Pings Supabase, Contact API, and public site. Reports JSON status. Alerts owner via Resend if failed.
   - `/api/heartbeat.ts`: Keeps Supabase instance awake.
-  - GitHub Actions run hourly cron to ping healthcheck APIs.
+  - UptimeRobot pings endpoints every 5 minutes (replaced hourly GitHub Actions cron).
+- **Error Tracking:**
+  - Sentry configured for React Router v6 capturing client-side crashes and routing errors.
 - **Dark Mode logic:** Toggleable via `next-themes` and stored in localStorage.
 
 
@@ -180,7 +182,7 @@ Extensive use of Radix UI primitives wrapped via shadcn/ui.
   - "Skip to main content" link present in `App.tsx` with high-contrast focus rings.
   - Radix UI wrappers (`src/components/ui/*.tsx`) provide robust ARIA roles, keyboard navigation, and focus management automatically.
 - **Performance Hook:** `usePerformance.ts` detects mobile/touch environments to gracefully degrade animations (e.g., removing Three.js particles on weak hardware).
-- **Fonts:** Loaded from Google Fonts (`Inter`, `Montserrat`, `Lato`, `Poppins`, `Futura`). No preload tags observed natively unless set in `index.html`.
+- **Fonts:** Optimized non-blocking font loading via `<link rel="preload">` + `onload` swap in `index.html`. Eliminates FOIT with `font-display: swap` and `system-ui` fallback stacks in Tailwind.
 
 ---
 
@@ -196,8 +198,8 @@ Extensive use of Radix UI primitives wrapped via shadcn/ui.
 ---
 
 ### 14. 🐛 ISSUES, GAPS & ANOMALIES
-- **⚠️ PERF ISSUE:** The inclusion of heavy libraries (`three`, `@react-three/fiber`, `@tsparticles`, `gsap`, `framer-motion`) means the overall JS bundle is quite large. While `vite.config.ts` mitigates this with `manualChunks`, low-end mobile CPUs might still experience jank before the `usePerformance` hook successfully disables them.
-- **🔴 UX ISSUE:** The system monitor relies on an hour cron `system-monitor.yml`. If the API fails right after a check, it could have an hour of downtime before detection. Better handled via a high-frequency external ping (UptimeRobot).
+- **⚠️ PERF ISSUE (Mitigated):** Heavy 3D/animation bundles have been offset by consolidating all icon libraries to `lucide-react` (reducing `ui-vendor` chunk size) and aggressive mobile capability detection via `usePerformance`.
+- **Infrastructure:** Previous monitoring gaps have been resolved via Sentry integration and 5-minute UptimeRobot pings.
 - **Consistency:** Highly consistent codebase enforced via `AGENTS.md`. Minimal anomalies found.
 
 ---
@@ -233,7 +235,7 @@ Extensive use of Radix UI primitives wrapped via shadcn/ui.
 ---
 
 ### 17. 🧱 CODEBASE ARCHITECTURE
-- **Build System:** Vite + SWC + TypeScript. `vite.config.ts` includes extensive `manualChunks` separation (react-vendor, framer-motion, ui-vendor, three-vendor).
+- **Build System:** Vite + SWC + TypeScript. `vite.config.ts` includes extensive `manualChunks` separation. Icon libraries consolidated to minimize JS bundle payload.
 - **Folders:**
   - `api/`: Vercel Serverless NodeJS Functions.
   - `src/components/ui/`: Contains 80+ isolated, reusable UI wrappers (Radix/shadcn).
@@ -265,9 +267,10 @@ Extensive use of Radix UI primitives wrapped via shadcn/ui.
 ### 20. 🛠️ DEVOPS & DEPLOYMENT PIPELINE
 - **Hosting Provider:** Vercel automatically manages deployment via standard push configs. Edge API routes mapped using Vercel NodeJS Runtime.
 - **Routing Overrides:** `vercel.json` intercepts `/(.*)` to `index.html` preventing React Router 404s on hard refresh.
-- **GitHub Actions (CI/CD):**
-  - `.github/workflows/system-monitor.yml`: Ping website health hourly. If failure (`"failed"` text string found), drops execution (alerts owner via standard API fallbacks).
+- **CI/CD & Monitoring:**
+  - `system-monitor.yml` GitHub Action has been intentionally disabled in favor of UptimeRobot's 5-minute interval monitoring.
   - `.github/workflows/supabase-heartbeat.yml`: Every 30 mins hits `/api/heartbeat` to prevent aggressive Supabase Free Tier pausing.
+  - **Sentry** integrated for real-time frontend exception monitoring.
 
 ---
 
@@ -279,12 +282,12 @@ Extensive use of Radix UI primitives wrapped via shadcn/ui.
 4. **Mobile Performance Awareness:** Specific logic explicitly halts high-end frame-hungry JS (Particles/ThreeJS) on weak hardware via the `usePerformance` hook.
 5. **Polished Brand Interface:** Seamless animations via Framer/GSAP build significant industrial credibility.
 
-**5 Improvement Opportunities:**
-1. Replace hourly cron GitHub Action with an external tool (Uptime Robot / Sentry) for real-time downtime detection.
-2. Although lazy-loading exists, `<link rel="preload">` strategies could trigger critical asset fetches even faster.
-3. Consolidate UI vendor packages to trim initial layout-shift penalties on the main thread for mid-tier devices.
-4. Integrate a unified monitoring layer (Sentry DSN) inside the React app to catch client-side unhandled promise rejections.
-5. Upgrade React 18 `lazy` patterns using Next.js 15+ in the future if SEO requires strict SSR/ISR capabilities for sub-pages.
+**Recent Production Upgrades (Implemented 2026-03-10):**
+1. **Infrastructure:** Replaced hourly cron with 5-minute UptimeRobot pings for real-time downtime detection.
+2. **Performance:** Eliminated render-blocking Google Fonts using `<link rel="preload">` swap strategies.
+3. **Bundle Optimization:** Consolidated UI icon packages (Phosphor, Tabler, React Icons) entirely to Lucide React.
+4. **Error Tracking:** Integrated Sentry DSN into the React router to catch client-side unhandled promise rejections and boundary failures.
+5. **Future Opportunity:** Upgrade React 18 `lazy` CSR patterns using Next.js 15+ if SEO requires strict SSR/ISR capabilities for sub-pages.
 
 **Overall Assessment:** 
 A highly sophisticated, secure, and structurally sound SPA. The engineering is vastly superior to the average corporate portfolio, relying on deep React structural patterns, aggressive form safeguards, and modular UI compositions. The project successfully isolates complex logic into hooks, protects serverless APIs via intensive checks, and scales component reuse effortlessly.
