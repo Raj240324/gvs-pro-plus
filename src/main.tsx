@@ -74,6 +74,7 @@ Sentry.init({
   ],
 
   // Scrub all PII before sending error data to Sentry servers
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   beforeSend(event: any) {
     // Helper: remove email addresses
     const scrubEmails = (str: string): string =>
@@ -106,6 +107,7 @@ Sentry.init({
 
     // 3. Scrub breadcrumb messages (user action trail)
     if (Array.isArray(event.breadcrumbs)) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       event.breadcrumbs = event.breadcrumbs.map((crumb: any) => ({
         ...crumb,
         message: crumb.message
@@ -113,7 +115,8 @@ Sentry.init({
           : crumb.message,
       }));
     } else if (event.breadcrumbs && 'values' in event.breadcrumbs) {
-      (event.breadcrumbs as any).values = (event.breadcrumbs as any).values.map((crumb: any) => ({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (event.breadcrumbs as any).values = ((event.breadcrumbs as any).values as any[]).map((crumb: any) => ({
         ...crumb,
         message: crumb.message
           ? scrub(crumb.message)
@@ -123,6 +126,7 @@ Sentry.init({
 
     // 4. Scrub exception values (error messages can contain PII)
     if (event.exception?.values) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       event.exception.values = event.exception.values.map((exception: any) => ({
         ...exception,
         value: exception.value
