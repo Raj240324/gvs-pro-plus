@@ -422,9 +422,20 @@ const Contact = () => {
 
                     <div className="space-y-1.5">
                        <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 ml-1">Message</label>
-                       <Textarea name="message" value={formData.message} onChange={handleChange} placeholder="How can we help you?" rows={4}
-                          className="text-sm bg-slate-50 dark:bg-slate-800 border-transparent focus:bg-white dark:focus:bg-slate-950 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl transition-all font-medium text-slate-900 dark:text-white resize-none p-4 min-h-[120px]" />
+                       <Textarea
+                         name="message"
+                         value={formData.message}
+                         onChange={handleChange}
+                         placeholder="How can we help you?"
+                         rows={4}
+                         className="text-sm bg-slate-50 dark:bg-slate-800 border-transparent focus:bg-white dark:focus:bg-slate-950 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10 rounded-xl transition-all font-medium text-slate-900 dark:text-white resize-none p-4 min-h-[120px]"
+                       />
                        {errors.message && <p className="text-red-500 text-[10px] ml-1">{errors.message}</p>}
+                    </div>
+
+                    {/* Human verification */}
+                    <div className="pt-2">
+                      <TurnstileWidget onToken={setTurnstileToken} />
                     </div>
 
                     <div className="pt-2">
