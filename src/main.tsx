@@ -61,14 +61,78 @@ const router = createBrowserRouter(
 
 const SentryRouterProvider = Sentry.withSentryReactRouterV6Routing(RouterProvider as any);
 
+const sentryDsn = import.meta.env.VITE_SENTRY_DSN;
+const isValidDsn = sentryDsn && !sentryDsn.includes("your_sentry_dsn") && !sentryDsn.includes("REPLACE_WITH");
+
 Sentry.init({
-  dsn: import.meta.env.VITE_SENTRY_DSN,
+  dsn: isValidDsn ? sentryDsn : undefined,
   environment: import.meta.env.MODE,
-  enabled: import.meta.env.PROD,
+  enabled: import.meta.env.PROD && isValidDsn,
   tracesSampleRate: 0.2,
   integrations: [
     Sentry.browserTracingIntegration(),
   ],
+
+  // Scrub all PII before sending error data to Sentry servers
+  beforeSend(event: any) {
+    // Helper: remove email addresses
+    const scrubEmails = (str: string): string =>
+      str.replace(
+        /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g,
+        "[email]"
+      );
+
+    // Helper: remove phone numbers (Indian + international formats)
+    const scrubPhones = (str: string): string =>
+      str.replace(/(\+?[\d\s\-().]{7,15})/g, "[phone]");
+
+    // Combined scrubber
+    const scrub = (str: string): string => scrubPhones(scrubEmails(str));
+
+    // 1. Remove user identity fields entirely
+    if (event.user) {
+      delete event.user.email;
+      delete event.user.ip_address;
+      delete event.user.username;
+    }
+
+    // 2. Scrub request body if it's a string
+    if (
+      event.request?.data &&
+      typeof event.request.data === "string"
+    ) {
+      event.request.data = scrub(event.request.data);
+    }
+
+    // 3. Scrub breadcrumb messages (user action trail)
+    if (Array.isArray(event.breadcrumbs)) {
+      event.breadcrumbs = event.breadcrumbs.map((crumb: any) => ({
+        ...crumb,
+        message: crumb.message
+          ? scrub(crumb.message)
+          : crumb.message,
+      }));
+    } else if (event.breadcrumbs && 'values' in event.breadcrumbs) {
+      (event.breadcrumbs as any).values = (event.breadcrumbs as any).values.map((crumb: any) => ({
+        ...crumb,
+        message: crumb.message
+          ? scrub(crumb.message)
+          : crumb.message,
+      }));
+    }
+
+    // 4. Scrub exception values (error messages can contain PII)
+    if (event.exception?.values) {
+      event.exception.values = event.exception.values.map((exception: any) => ({
+        ...exception,
+        value: exception.value
+          ? scrub(exception.value)
+          : exception.value,
+      }));
+    }
+
+    return event;
+  },
 });
 
 createRoot(document.getElementById('root')!).render(
