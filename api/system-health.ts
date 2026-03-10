@@ -56,7 +56,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const site = await fetch(domain);
     if (site.ok) {
-      report.website.status = "ok";
+      // TEMPORARILY FORCE A FAILURE FOR TESTING
+      report.website.status = "failed";
+      report.website.error = "TEST FORCED FAILURE (HTTP 200 OK)";
     } else {
       report.website.status = "failed";
       report.website.error = `HTTP ${site.status}`;
