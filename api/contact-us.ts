@@ -380,6 +380,9 @@ async function verifyTurnstileToken(token: string, ip: string | undefined) {
     return false;
   }
 
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 5000); // 5-second strict timeout
+
   try {
     const params = new URLSearchParams();
     params.append('secret', TURNSTILE_SECRET_KEY);
@@ -391,7 +394,10 @@ async function verifyTurnstileToken(token: string, ip: string | undefined) {
     const resp = await fetch(TURNSTILE_VERIFY_URL, {
       method: 'POST',
       body: params,
+      signal: controller.signal,
     });
+    
+    clearTimeout(timeoutId);
 
     if (!resp.ok) {
       console.warn('[SECURITY] Turnstile HTTP error:', resp.status, resp.statusText);
@@ -408,8 +414,13 @@ async function verifyTurnstileToken(token: string, ip: string | undefined) {
     }
 
     return data.success;
-  } catch (err) {
-    console.error('[SECURITY] Turnstile verification exception:', err);
+  } catch (err: any) {
+    clearTimeout(timeoutId);
+    if (err.name === 'AbortError') {
+      console.error('[SECURITY] Turnstile verification timed out after 5000ms');
+    } else {
+      console.error('[SECURITY] Turnstile verification exception:', err);
+    }
     return false;
   }
 }
