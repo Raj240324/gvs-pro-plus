@@ -1,0 +1,23 @@
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+
+let supabase: SupabaseClient | null = null;
+
+export function getSupabaseClient(): SupabaseClient {
+  if (!supabase) {
+    const url = process.env.SUPABASE_URL;
+    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    if (!url || !serviceRoleKey) {
+      throw new Error('[CONFIG] Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY');
+    }
+
+    supabase = createClient(url, serviceRoleKey, {
+      auth: {
+        persistSession: false,
+      },
+    });
+  }
+
+  return supabase;
+}
+

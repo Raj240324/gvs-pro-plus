@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { Resend } from 'resend';
 import { z } from 'zod';
+import { getSupabaseClient } from './supabaseClient';
 
 // ============================================================
 // 🔧 CONFIG
@@ -540,6 +541,33 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const safePhone = phone ? sanitizePlain(phone) : '';
     const safeSubject = subject ? sanitizePlain(subject) : '';
     const safeMessage = message.trim();
+
+    // --- Persist submission in Supabase (server-side only) ---
+    try {
+      const supabase = getSupabaseClient();
+      const { error: dbError } = await supabase.from('contact_submissions').insert({
+        name: safeName,
+        email: safeEmail,
+        phone: safePhone || null,
+        subject: safeSubject || null,
+        message: safeMessage,
+        ip: clientIp !== 'unknown' ? clientIp : null,
+      });
+
+      if (dbError) {
+        console.error('[DB] Failed to insert contact_submissions row:', {
+          error: dbError,
+          ip: clientIp,
+        });
+        return res.status(500).json({ error: 'An error occurred. Please try again later.' });
+      }
+    } catch (dbException) {
+      console.error('[DB] Supabase client error:', {
+        error: dbException instanceof Error ? dbException.message : String(dbException),
+        ip: clientIp,
+      });
+      return res.status(500).json({ error: 'An error occurred. Please try again later.' });
+    }
 
     // --- Send Emails via Resend SDK ---
     const resendApiKey = process.env.RESEND_API_KEY;
