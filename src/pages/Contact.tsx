@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, Component, ErrorInfo, ReactNode } from 'react';
+import { useState, useRef, useEffect, Component, ErrorInfo, ReactNode, useCallback } from 'react';
 import SendButton from '../components/ui/SendButton';
 import { Mail, Phone, MapPin, Send, Linkedin, Clock, ArrowRight, MessageSquare, Globe, Building2, ChevronDown } from 'lucide-react';
 import { useToast } from "../hooks/use-toast";
@@ -17,6 +17,7 @@ import {
   SelectTrigger, 
   SelectValue 
 } from '../components/ui/select';
+import TurnstileWidget from '../components/TurnstileWidget';
 
 // --- Error Boundary ---
 interface ErrorBoundaryProps { children: ReactNode; }
@@ -116,6 +117,8 @@ const Contact = () => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [startedAt] = useState<number>(() => Date.now());
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const { toast } = useToast();
   const contactModal = useContactModal();
   const { enableParallax } = usePerformance();
@@ -175,13 +178,26 @@ const Contact = () => {
       return;
     }
 
+    if (!turnstileToken) {
+      toast({
+        title: "Verification required",
+        description: "Please complete the human verification challenge before submitting.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
       const response = await fetch('/api/contact-us', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          startedAt,
+          turnstileToken,
+        }),
       });
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
@@ -190,6 +206,7 @@ const Contact = () => {
 
       setIsSubmitting(false);
       setIsSubmitted(true);
+      setTurnstileToken(null);
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
       setErrors({});
       toast({ title: "Received!", description: "We'll be in touch shortly.", className: "bg-teal-500 text-white border-0" });

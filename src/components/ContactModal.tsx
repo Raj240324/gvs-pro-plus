@@ -1,4 +1,4 @@
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, useEffect, FormEvent, useCallback } from 'react';
 import SendButton from './ui/SendButton';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../components/ui/dialog';
 import { Input } from '../components/ui/input';
@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { useToast } from '../hooks/use-toast';
 import { Send, CheckCircle, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
+import TurnstileWidget from './TurnstileWidget';
 
 
 interface ContactModalProps {
@@ -25,6 +26,8 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [startedAt] = useState<number>(() => Date.now());
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -114,6 +117,16 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
       return;
     }
 
+    if (!turnstileToken) {
+      toast({
+        title: "Verification required",
+        description: "Please complete the human verification challenge before submitting.",
+        variant: "destructive",
+        className: "bg-red-500 text-white rounded-lg shadow-lg max-w-[90vw] mx-auto bottom-4",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -121,7 +134,11 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
       const response = await fetch('/api/contact-us', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          startedAt,
+          turnstileToken,
+        }),
       });
 
       if (!response.ok) {
@@ -131,6 +148,7 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
 
       setIsSubmitting(false);
       setIsSubmitted(true);
+      setTurnstileToken(null);
       setFormData({
         name: '',
         email: '',
@@ -284,6 +302,11 @@ const ContactModal = ({ open, onOpenChange }: ContactModalProps) => {
                   className={`min-h-[120px] p-4 bg-slate-50 dark:bg-slate-800/50 border-0 rounded-xl focus:ring-4 focus:ring-blue-500/10 focus:bg-white dark:focus:bg-slate-800 transition-all duration-300 resize-none ${errors.message ? 'ring-2 ring-red-500/20 bg-red-50' : ''}`}
                 />
                 {errors.message && <p className="text-xs text-red-500 font-medium ml-1">{errors.message}</p>}
+              </div>
+
+              {/* Human verification */}
+              <div className="pt-2">
+                <TurnstileWidget onToken={setTurnstileToken} />
               </div>
 
               <div className="pt-4">
