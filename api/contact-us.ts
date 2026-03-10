@@ -618,7 +618,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         // Owner notification email
         const { error: ownerError } = await resend.emails.send({
           from: 'Contact Form <onboarding@resend.dev>',
-          to: ['nagarajanindirathi7991@gmail.com'],
+          to: ['nagarajan.webdev@gmail.com'],
           subject: emailSubject,
           html: createEmailTemplate(true, formData),
         });
