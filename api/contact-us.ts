@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { Resend } from 'resend';
 import { z } from 'zod';
-import { getSupabaseClient } from './supabaseClient';
+import { getSupabaseClient } from './supabaseClient.js';
 
 // ============================================================
 // 🔧 CONFIG
