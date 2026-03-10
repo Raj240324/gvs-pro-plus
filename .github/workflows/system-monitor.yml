@@ -1,0 +1,25 @@
+name: GVS System Monitor
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+jobs:
+  healthcheck:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check system health
+        run: |
+          RESPONSE=$(curl -s https://gvs-pro-plus.vercel.app/api/system-health)
+
+          echo "System Health Status:"
+          echo "$RESPONSE"
+
+          if echo "$RESPONSE" | grep -q '"failed"'; then
+            echo "⚠️ Service failure detected!"
+            exit 1
+          else
+            echo "✅ All systems operational"
+          fi
