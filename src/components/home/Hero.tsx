@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight } from "lucide-react";
-import { FaWhatsapp, FaFilePdf, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
+import { ArrowRight, MessageCircle, FileText, Phone, Mail } from "lucide-react";
 import TypewriterEffectSmoothDemo from "../../components/ui/typewriter-effect-demo-1";
 import { TextRoll } from "../../components/ui/text-roll";
 import ContactModal from "../ContactModal";
@@ -17,22 +16,22 @@ type IconKey = "Mail" | "BookOpen" | "Phone" | "WhatsApp";
 const iconMap: Record<IconKey, ({ size }: { size?: number }) => JSX.Element> = {
   Mail: ({ size = 24 }) => (
     <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-orange-400 to-yellow-400 shadow-lg">
-      <FaEnvelope size={size} color="#fff" />
+      <Mail size={size} color="#fff" />
     </span>
   ),
   BookOpen: ({ size = 24 }) => (
     <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-red-500 to-pink-500 shadow-lg">
-      <FaFilePdf size={size} color="#fff" />
+      <FileText size={size} color="#fff" />
     </span>
   ),
   Phone: ({ size = 24 }) => (
     <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg">
-      <FaPhoneAlt size={size} color="#fff" />
+      <Phone size={size} color="#fff" />
     </span>
   ),
   WhatsApp: ({ size = 24 }) => (
     <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 shadow-lg">
-      <FaWhatsapp size={size} color="#fff" />
+      <MessageCircle size={size} color="#fff" />
     </span>
   ),
 };

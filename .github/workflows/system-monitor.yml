@@ -1,12 +1,21 @@
+# ============================================================
+# DISABLED: Replaced by UptimeRobot external monitoring
+# UptimeRobot pings /api/system-health every 5 minutes
+# which is 12x faster than this hourly cron.
+# Keep this file for reference but do not re-enable.
+# To re-enable: remove the 'if: false' line below.
+# ============================================================
+
 name: GVS System Monitor
 
 on:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "0 * * * *"  # kept for reference, disabled below
   workflow_dispatch:
 
 jobs:
   healthcheck:
+    if: false  # DISABLED — UptimeRobot handles this externally
     runs-on: ubuntu-latest
 
     steps:

@@ -1,7 +1,7 @@
 import { useScroll, useTransform, motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 import { SparklesCore } from "./sparkles";
-import { FaRegStar } from "react-icons/fa";
+import { Star } from "lucide-react";
 
 interface TimelineEntry {
   title: string;
@@ -80,7 +80,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
             <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
               <div className="timeline-dot h-12 w-12 rounded-full bg-white flex items-center justify-center shadow-lg border-4 border-teal-200/60 relative animate-float sm:h-14 sm:w-14">
                 <span className="absolute inset-0 rounded-full bg-gradient-to-br from-teal-400/30 via-indigo-400/20 to-fuchsia-400/20 blur-md animate-pulse" />
-                <FaRegStar className="text-teal-500 text-xl sm:text-2xl z-10 animate-spin-slow" />
+                <Star className="text-teal-500 text-xl sm:text-2xl z-10 animate-spin-slow" />
               </div>
               {/* Year badge */}
               <span className="ml-0 md:ml-6 mt-3 md:mt-0 px-3 py-1 rounded-full bg-gradient-to-r from-teal-400 to-indigo-400 text-white text-xs md:text-base font-bold shadow-md border border-white/30 animate-float">
@@ -100,7 +100,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
                 <div className="absolute -inset-1.5 rounded-3xl bg-gradient-to-tr from-teal-300/40 via-indigo-300/30 to-fuchsia-300/30 blur-lg opacity-70 pointer-events-none z-0 animate-pulse" />
                 {/* Floating icon with glass effect */}
                 <div className="absolute top-4 right-4 z-10 animate-float backdrop-blur-md bg-white/60 rounded-full p-2 shadow-lg border border-teal-100/40">
-                  <FaRegStar className="text-fuchsia-400 text-2xl drop-shadow-lg" />
+                  <Star className="text-fuchsia-400 text-2xl drop-shadow-lg" />
                 </div>
                 {/* Responsive content layout */}
                 <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-6 p-6 md:p-10">

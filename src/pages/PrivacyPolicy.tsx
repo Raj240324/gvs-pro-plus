@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FaShieldAlt } from "react-icons/fa";
+import { Shield } from "lucide-react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -23,7 +23,7 @@ const PrivacyPolicy = () => {
           className="flex flex-col items-center mb-12 text-center"
         >
           <div className="bg-[#2a9d8f] rounded-full p-4 shadow-md mb-5">
-            <FaShieldAlt className="text-white text-4xl" />
+            <Shield className="text-white text-4xl" />
           </div>
 
           <h1 className="font-montserrat font-extrabold text-4xl sm:text-5xl text-[#e0f7fa] tracking-tight">

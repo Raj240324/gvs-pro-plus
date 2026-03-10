@@ -90,22 +90,10 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		fontFamily: {
-  			montserrat: [
-  				'Montserrat',
-  				'sans-serif'
-  			],
-  			lato: [
-  				'Lato',
-  				'sans-serif'
-  			],
-  			inter: [
-  				'Inter',
-  				'sans-serif'
-  			],
-  			poppins: [
-  				'Poppins',
-  				'sans-serif'
-  			]
+  			montserrat: ['Montserrat', 'system-ui', 'sans-serif'],
+  			lato: ['Lato', 'system-ui', 'sans-serif'],
+  			inter: ['Inter', 'system-ui', 'sans-serif'],
+  			poppins: ['Poppins', 'system-ui', 'sans-serif']
   		},
   		boxShadow: {
   			'neumorphic-light': '5px 5px 10px #d9d9d9, -5px -5px 10px #ffffff',

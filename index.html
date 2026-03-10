@@ -3,6 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+    <!-- ============================================ -->
+    <!-- FONT PERFORMANCE: Non-blocking Google Fonts  -->
+    <!-- ============================================ -->
+    
+    <!-- Step 1: Early TCP connection to Google Fonts servers -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Step 2: Load fonts without blocking render (onload swap trick) -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600&family=Inter:wght@400;500;600&family=Lato:wght@400;700&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    
+    <!-- Step 3: Fallback for browsers with JavaScript disabled -->
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600&family=Inter:wght@400;500;600&family=Lato:wght@400;700&display=swap"
+      />
+    </noscript>
     <title>GVS CONTROLS - Electrical, Instrumentation, Automation & Consultancy | Industrial Solutions</title>
     <meta name="description" content="Since 2017, GVS Controls delivers expert electrical engineering, PLC automation, control panel manufacturing, and consultancy for power plants, steel, cement, and renewable energy industries. Trusted by SAIL, TISCO, and CPCL." />
     <meta name="author" content="GVS Controls" />
@@ -145,9 +169,6 @@
     <link rel="apple-touch-icon" href="/gvs-logo.png" />
     <link rel="manifest" href="/manifest.json" />
   
-    <!-- Preconnect to External Resources -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Cloudflare Turnstile -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   </head>

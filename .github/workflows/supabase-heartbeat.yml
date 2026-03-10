@@ -1,3 +1,8 @@
+# ============================================================
+# KEEP ACTIVE: Prevents Supabase Free Tier from pausing
+# Runs every 30 minutes — do not disable
+# ============================================================
+
 name: Supabase Heartbeat
 
 on:

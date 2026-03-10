@@ -3,6 +3,7 @@ import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import React, { Suspense, lazy } from 'react';
+import * as Sentry from "@sentry/react";
 import App from './App';
 import Preloader from './components/Preloader';
 import GlobalErrorBoundary from './components/GlobalErrorBoundary';
@@ -58,10 +59,22 @@ const router = createBrowserRouter(
   }
 );
 
+const SentryRouterProvider = Sentry.withSentryReactRouterV6Routing(RouterProvider as any);
+
+Sentry.init({
+  dsn: import.meta.env.VITE_SENTRY_DSN,
+  environment: import.meta.env.MODE,
+  enabled: import.meta.env.PROD,
+  tracesSampleRate: 0.2,
+  integrations: [
+    Sentry.browserTracingIntegration(),
+  ],
+});
+
 createRoot(document.getElementById('root')!).render(
   <HelmetProvider>
     <GlobalErrorBoundary>
-      <RouterProvider router={router} />
+      <SentryRouterProvider router={router} />
     </GlobalErrorBoundary>
   </HelmetProvider>
 );

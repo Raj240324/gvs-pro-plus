@@ -1,12 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  FaRegLightbulb,
-  FaCogs,
-  FaIndustry,
-  FaTools,
-  FaSyncAlt,
-} from 'react-icons/fa';
+import { Lightbulb, Settings2, Factory, Wrench, RefreshCw } from "lucide-react";
 import { isDesktop } from '../../lib/performance-detector';
 
 import cop9 from '../../assets/cop-9.webp';
@@ -88,7 +82,7 @@ const Highlights = () => {
         'Project Management Consultancy (PMC), system & field studies, turnkey design, basic and detailed engineering, procurement assistance, inspection, and dispatch certification.',
       image:
         'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1350&q=80',
-      icon: <FaRegLightbulb />,
+      icon: <Lightbulb />,
       serviceId: 'consultancy-engineering',
       gradient: 'from-blue-600 to-indigo-700',
     },
@@ -98,7 +92,7 @@ const Highlights = () => {
         'Total automation and process control solutions using PLC, relay logic, and instrumentation with innovative and cost-effective systems.',
       image:
         'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1350&q=80',
-      icon: <FaCogs />,
+      icon: <Settings2 />,
       serviceId: 'automation-solutions',
       gradient: 'from-teal-600 to-cyan-700',
     },
@@ -107,7 +101,7 @@ const Highlights = () => {
       description:
         'Manufacturing of PCC, MCC, VFD, APFC, AMF, PLC panels, bus ducts, lighting panels, and custom-built control systems.',
       image: cop9,
-      icon: <FaIndustry />,
+      icon: <Factory />,
       serviceId: 'panel-manufacturing',
       gradient: 'from-orange-600 to-red-700',
     },
@@ -116,7 +110,7 @@ const Highlights = () => {
       description:
         'Erection, testing, commissioning, troubleshooting, shutdown services, and complete start-up support.',
       image: erection,
-      icon: <FaTools />,
+      icon: <Wrench />,
       serviceId: 'installation-commissioning',
       gradient: 'from-gray-600 to-blue-700',
     },
@@ -125,7 +119,7 @@ const Highlights = () => {
       description:
         'Renovation and revamping of electrical systems to improve safety, efficiency, and reliability.',
       image: renovation,
-      icon: <FaSyncAlt />,
+      icon: <RefreshCw />,
       serviceId: 'renovation-revamping',
       gradient: 'from-purple-600 to-pink-700',
     },
