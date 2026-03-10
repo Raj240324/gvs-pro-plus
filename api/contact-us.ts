@@ -66,11 +66,11 @@ function isRateLimited(ip: string): boolean {
 
   // Clean up old entries periodically
   if (rateLimitMap.size > 500) {
-    for (const [key, val] of rateLimitMap) {
+    rateLimitMap.forEach((val, key) => {
       if (now - val.firstRequest > RATE_LIMIT_WINDOW_MS) {
         rateLimitMap.delete(key);
       }
-    }
+    });
   }
 
   if (!entry || now - entry.firstRequest > RATE_LIMIT_WINDOW_MS) {
