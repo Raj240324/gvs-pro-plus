@@ -3,10 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Lightbulb, Settings2, Factory, Wrench, RefreshCw } from "lucide-react";
 import { isDesktop } from '../../lib/performance-detector';
 
-import cop9 from '../../assets/cop-9.webp';
-import renovation from '../../assets/renovation.webp';
-import erection from '../../assets/electrical-erection.webp';
-
 const Highlights = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -100,7 +96,7 @@ const Highlights = () => {
       title: 'Product Manufacturing',
       description:
         'Manufacturing of PCC, MCC, VFD, APFC, AMF, PLC panels, bus ducts, lighting panels, and custom-built control systems.',
-      image: cop9,
+      image: '/assets/cop-9.webp',
       icon: <Factory />,
       serviceId: 'panel-manufacturing',
       gradient: 'from-orange-600 to-red-700',
@@ -109,7 +105,7 @@ const Highlights = () => {
       title: 'Erection & Commissioning',
       description:
         'Erection, testing, commissioning, troubleshooting, shutdown services, and complete start-up support.',
-      image: erection,
+      image: '/assets/electrical-erection.webp',
       icon: <Wrench />,
       serviceId: 'installation-commissioning',
       gradient: 'from-gray-600 to-blue-700',
@@ -118,7 +114,7 @@ const Highlights = () => {
       title: 'Renovation & Revamping',
       description:
         'Renovation and revamping of electrical systems to improve safety, efficiency, and reliability.',
-      image: renovation,
+      image: '/assets/renovation.webp',
       icon: <RefreshCw />,
       serviceId: 'renovation-revamping',
       gradient: 'from-purple-600 to-pink-700',
@@ -185,6 +181,12 @@ const Highlights = () => {
     decoding="async"
     width={800}
     height={600}
+    onError={(e) => {
+      const img = e.currentTarget;
+      if (img.dataset.fallbackApplied === 'true') return;
+      img.dataset.fallbackApplied = 'true';
+      img.src = '/gvs-logo.png';
+    }}
     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
   />
 

@@ -7,9 +7,10 @@ import { ArrowRight, Award, Briefcase, Building2, CheckCircle2, Clock, Factory, 
 import { useContactModal } from '../hooks/use-contact-modal';
 import SEO from '../components/SEO';
 import { usePerformance } from '../lib/usePerformance';
-import gvsMain from '../assets/about-image/gvs-main.jpeg';
-import infrastructure from '../assets/about-image/infrastructure.jpeg';
-import projectAbout from '../assets/about-image/project-about.jpeg';
+
+const gvsMain = '/assets/about-image/gvs-main.jpeg';
+const infrastructure = '/assets/about-image/infrastructure.jpeg';
+const projectAbout = '/assets/about-image/project-about.jpeg';
 
 // --- Animated Counter (Simple) ---
 const Counter = ({ value, label }: { value: string, label: string }) => (

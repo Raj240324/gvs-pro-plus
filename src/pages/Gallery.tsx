@@ -7,27 +7,6 @@ import { useContactModal } from '../hooks/use-contact-modal';
 import SEO from '../components/SEO';
 import { usePerformance } from '../lib/usePerformance';
 
-// Images
-import cop1 from '../assets/cop-1.webp';
-import cop2 from '../assets/cop-2.webp';
-import cop3 from '../assets/cop-3.webp';
-import cop4 from '../assets/cop-4.webp';
-import cop5 from '../assets/cop-5.webp';
-import cop6 from '../assets/cop-6.webp';
-import cop7 from '../assets/cop-7.webp';
-import cop8 from '../assets/cop-8.webp';
-import cop9 from '../assets/cop-9.webp';
-import cop10 from '../assets/cop-10.webp';
-import cop11 from '../assets/cop-11.webp';
-import cop12 from '../assets/cop-12.webp';
-import cop13 from '../assets/cop-13.webp';
-import cop14 from '../assets/cop-14.webp';
-import cop15 from '../assets/cop-15.webp';
-import cop16 from '../assets/cop-16.webp';
-import cop17 from '../assets/cop-17.webp';
-import cop18 from '../assets/cop-18.webp';
-import cop19 from '../assets/cop-19.webp';
-
 interface GalleryImage {
   id: string;
   src: string;
@@ -35,25 +14,25 @@ interface GalleryImage {
 }
 
 const galleryImages: GalleryImage[] = [
-  { id: '1', src: cop1, alt: 'Gallery Image' },
-  { id: '2', src: cop2, alt: 'Gallery Image' },
-  { id: '3', src: cop3, alt: 'Gallery Image' },
-  { id: '4', src: cop4, alt: 'Gallery Image' },
-  { id: '5', src: cop5, alt: 'Gallery Image' },
-  { id: '6', src: cop6, alt: 'Gallery Image' },
-  { id: '7', src: cop7, alt: 'Gallery Image' },
-  { id: '8', src: cop8, alt: 'Gallery Image' },
-  { id: '9', src: cop9, alt: 'Gallery Image' },
-  { id: '10', src: cop10, alt: 'Gallery Image' },
-  { id: '11', src: cop11, alt: 'Gallery Image' },
-  { id: '12', src: cop12, alt: 'Gallery Image' },
-  { id: '13', src: cop13, alt: 'Gallery Image' },
-  { id: '14', src: cop14, alt: 'Gallery Image' },
-  { id: '15', src: cop15, alt: 'Gallery Image' },
-  { id: '16', src: cop16, alt: 'Gallery Image' },
-  { id: '17', src: cop17, alt: 'Gallery Image' },
-  { id: '18', src: cop18, alt: 'Gallery Image' },
-  { id: '19', src: cop19, alt: 'Gallery Image' }
+  { id: '1', src: '/assets/cop-1.webp', alt: 'Control panel installation - front view' },
+  { id: '2', src: '/assets/cop-2.webp', alt: 'Control panel lineup in factory' },
+  { id: '3', src: '/assets/cop-3.webp', alt: 'MCC panel with labeled breakers' },
+  { id: '4', src: '/assets/cop-4.webp', alt: 'PCC panel with cable terminations' },
+  { id: '5', src: '/assets/cop-5.webp', alt: 'PLC cum VFD control panel' },
+  { id: '6', src: '/assets/cop-6.webp', alt: 'Control panel internal wiring detail' },
+  { id: '7', src: '/assets/cop-7.webp', alt: 'Control panel testing and commissioning' },
+  { id: '8', src: '/assets/cop-8.webp', alt: 'Outdoor control panel installation' },
+  { id: '9', src: '/assets/cop-9.webp', alt: 'Factory floor with multiple control panels' },
+  { id: '10', src: '/assets/cop-10.webp', alt: 'Panel door open showing internal components' },
+  { id: '11', src: '/assets/cop-11.webp', alt: 'VFD panel front view' },
+  { id: '12', src: '/assets/cop-12.webp', alt: 'MCC panel bus bar section' },
+  { id: '13', src: '/assets/cop-13.webp', alt: 'PCC panel with status indicators' },
+  { id: '14', src: '/assets/cop-14.webp', alt: 'Control panel with HMI screen' },
+  { id: '15', src: '/assets/cop-15.webp', alt: 'Large control room panel lineup' },
+  { id: '16', src: '/assets/cop-16.webp', alt: 'Automation panel wiring close-up' },
+  { id: '17', src: '/assets/cop-17.webp', alt: 'Industrial control cabinet interior' },
+  { id: '18', src: '/assets/cop-18.webp', alt: 'Panel installation at customer site' },
+  { id: '19', src: '/assets/cop-19.webp', alt: 'Completed MCC panel project' }
 ];
 
 /* Animation Variants for Smooth Slide */
@@ -83,6 +62,13 @@ const Gallery = () => {
   const contactModal = useContactModal();
   const [visibleCount, setVisibleCount] = useState(6);
   const { isMobile, enableParallax } = usePerformance();
+
+  const handleImageError = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = e.currentTarget;
+    if (img.dataset.fallbackApplied === 'true') return;
+    img.dataset.fallbackApplied = 'true';
+    img.src = '/gvs-logo.png';
+  }, []);
 
   // Handle Scroll Lock
   useEffect(() => {
@@ -198,6 +184,7 @@ const Gallery = () => {
                    alt={image.alt}
                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                    loading="lazy"
+                   onError={handleImageError}
                  />
                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
               </motion.div>
@@ -262,6 +249,7 @@ const Gallery = () => {
                     src={selectedImage.src}
                     alt={selectedImage.alt}
                     className="max-w-full max-h-[65vh] sm:max-h-[85vh] object-contain shadow-2xl rounded-sm pointer-events-auto"
+                    onError={handleImageError}
                     drag={isMobile ? false : "x"}
                     dragConstraints={isMobile ? undefined : { left: 0, right: 0 }}
                     dragElastic={0.8}
